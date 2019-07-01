@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org" >
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>MetaMooc登录</title>
+  
+  <!-- Tell the browser to be responsive to screen width -->
+  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+	<!-- Bootstrap 3.3.7 -->
+	<link rel="stylesheet" th:href="@{/bower_components/bootstrap/dist/css/bootstrap.min.css}">
+	
+	<!-- Theme style -->
+	<link rel="stylesheet" th:href="@{/dist/css/AdminLTE.min.css}">
+	<!-- iCheck -->
+	<link rel="stylesheet" th:href="@{/plugins/iCheck/square/blue.css}">
+  
+  <style>
+    /*改变"记住我"与前置复选框的间距及高度*/
+  	.icheckbox_square-blue{margin-right: 5px; top: -2px}
+  </style>
+</head>
+<body class="hold-transition login-page" >
+	<div class="login-box">
+	  <div class="login-logo">
+	    <span><b>Meta</b>MOOC管理平台</span>
+	  </div>
+	  
+	  <div class="login-box-body">
+	    <p class="login-box-msg">
+	    	<img th:src="@{/images/logo/logo2.png}"/>
+	    </p>
+	    <form name="info" autocomplete="off" action="common/main.jsp" >
+	      <div class="form-group has-feedback">
+	        <input type="text" name="acName" class="form-control" value="admin" required placeholder="账号">
+	        <span class="glyphicon glyphicon-user form-control-feedback"></span>
+	      </div>
+	      <div class="form-group has-feedback">
+	        <input type="password" name="acPass" class="form-control" value="123qwe" required placeholder="密码" onblur="checkPass(this)">
+	        <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+	      </div>
+	      <div class="row">
+	        <div class="col-xs-8">
+	          <div class="checkbox icheck">
+	            <label>
+	              <input type="checkbox" name="rememberMe" value="true"> 记住账号
+	            </label>
+	          </div>
+	        </div>
+	        <div class="col-xs-4">
+	          <button type="submit" class="btn btn-primary btn-block btn-flat">登 录</button>
+	        </div>
+	      </div>
+	    </form>
+			<p style="color:red;text-align:center; display:none;">登录失败的提示</p>
+	  </div>
+	</div>
+</body>
+	<!-- jQuery 3 -->
+	<script th:src="@{/bower_components/jquery/dist/jquery.min.js}"></script>
+	<!-- jQuery UI 1.11.4 -->
+	<script th:src="@{/plugins/jQueryUI/jquery-ui.min.js}"></script>
+	<!-- Bootstrap 3.3.7 -->
+	<script th:src="@{/bower_components/bootstrap/dist/js/bootstrap.min.js}"></script>
+	<!-- AdminLTE App -->
+	<script th:src="@{/dist/js/adminlte.min.js}"></script>
+	<!-- iCheck -->
+	<script th:src="@{/plugins/iCheck/icheck.min.js}"></script>
+	
+
+  <script type="text/javascript" >
+  
+  	$.widget.bridge('uibutton', $.ui.button);
+  	  
+		//根据key得到cookie中的值
+		function getCookie(c_name) {
+			if(document.cookie.length > 0) {
+				c_start = document.cookie.indexOf(c_name + "=");//获取字符串的起点
+				if(c_start != -1) {
+					c_start = c_start + c_name.length + 1;//获取值的起点
+					c_end = document.cookie.indexOf(";", c_start);//获取结尾处
+					if(c_end == -1) c_end = document.cookie.length;//如果是最后一个，结尾就是cookie字符串的结尾
+					return decodeURI(document.cookie.substring(c_start, c_end));//截取字符串返回
+				}
+			}
+			return "";
+		}
+	  
+	  var accountName = getCookie('accountName');
+
+	  $(function () {
+	    $('input').iCheck({
+	      checkboxClass: 'icheckbox_square-blue',
+	      radioClass: 'iradio_square-blue',
+	      increaseArea: '20%' /* optional */
+	    });
+	  });
+
+  //密码验证
+  function checkPass(inputElement){
+	  var passwd = inputElement.value;
+	  var t = /^(?![0-9]+$)(?![a-zA-Z]+$)(?!([^(0-9a-zA-Z)]|[\\(\\)])+$)([^(0-9a-zA-Z)]|[\\(\\)]|[a-zA-Z]|[0-9]){6,20}$/;
+	  if(!t.test(passwd)){
+		  inputElement.validity.patternMismatch = true;
+		  inputElement.setCustomValidity("密码必须由数字、字母、特殊字符中至少两种组成，长度至少为6位，最多20位");
+		  return;
+	  }else{
+		  inputElement.validity.patternMismatch = false;
+		  inputElement.setCustomValidity("");
+	  }
+  }
+</script>
+</html>
