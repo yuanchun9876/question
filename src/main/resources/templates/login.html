@@ -30,7 +30,7 @@
 	    <p class="login-box-msg">
 	    	<img th:src="@{/images/logo/logo2.png}"/>
 	    </p>
-	    <form name="info" autocomplete="off" action="common/main.jsp" >
+	    <form name="info" autocomplete="off" action="common/main.html" th:action="@{/main}" th:method="post"  >
 	      <div class="form-group has-feedback">
 	        <input type="text" name="acName" class="form-control" value="admin" required placeholder="账号">
 	        <span class="glyphicon glyphicon-user form-control-feedback"></span>

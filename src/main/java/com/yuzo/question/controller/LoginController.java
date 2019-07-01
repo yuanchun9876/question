@@ -11,4 +11,18 @@ public class LoginController {
 		
 		return "/login";
 	}
+	
+	@RequestMapping("/main")
+	public String mainPage(){
+		
+		return "/common/main";
+	}
+	
+	
+	
+	@RequestMapping("/dashboard")
+	public String dashboard(){
+		
+		return "/common/dashboard";
+	}
 }
