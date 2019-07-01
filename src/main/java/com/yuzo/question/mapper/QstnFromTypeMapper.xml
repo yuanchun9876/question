@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yuzo.question.mapper.QstnFromTypeMapper" >
+  <resultMap id="BaseResultMap" type="com.yuzo.question.entity.QstnFromType" >
+    <id column="QSTN_FROM_TYPE_ID" property="qstnFromTypeId" jdbcType="VARCHAR" />
+    <result column="QSTN_FROM_TYPE_CODE" property="qstnFromTypeCode" jdbcType="VARCHAR" />
+    <result column="QSTN_FROM_TYPE_INFO" property="qstnFromTypeInfo" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    QSTN_FROM_TYPE_ID, QSTN_FROM_TYPE_CODE, QSTN_FROM_TYPE_INFO
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from qstn_from_type
+    where QSTN_FROM_TYPE_ID = #{qstnFromTypeId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from qstn_from_type
+    where QSTN_FROM_TYPE_ID = #{qstnFromTypeId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.yuzo.question.entity.QstnFromType" >
+    insert into qstn_from_type (QSTN_FROM_TYPE_ID, QSTN_FROM_TYPE_CODE, 
+      QSTN_FROM_TYPE_INFO)
+    values (#{qstnFromTypeId,jdbcType=VARCHAR}, #{qstnFromTypeCode,jdbcType=VARCHAR}, 
+      #{qstnFromTypeInfo,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.yuzo.question.entity.QstnFromType" >
+    insert into qstn_from_type
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="qstnFromTypeId != null" >
+        QSTN_FROM_TYPE_ID,
+      </if>
+      <if test="qstnFromTypeCode != null" >
+        QSTN_FROM_TYPE_CODE,
+      </if>
+      <if test="qstnFromTypeInfo != null" >
+        QSTN_FROM_TYPE_INFO,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="qstnFromTypeId != null" >
+        #{qstnFromTypeId,jdbcType=VARCHAR},
+      </if>
+      <if test="qstnFromTypeCode != null" >
+        #{qstnFromTypeCode,jdbcType=VARCHAR},
+      </if>
+      <if test="qstnFromTypeInfo != null" >
+        #{qstnFromTypeInfo,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.yuzo.question.entity.QstnFromType" >
+    update qstn_from_type
+    <set >
+      <if test="qstnFromTypeCode != null" >
+        QSTN_FROM_TYPE_CODE = #{qstnFromTypeCode,jdbcType=VARCHAR},
+      </if>
+      <if test="qstnFromTypeInfo != null" >
+        QSTN_FROM_TYPE_INFO = #{qstnFromTypeInfo,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where QSTN_FROM_TYPE_ID = #{qstnFromTypeId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.yuzo.question.entity.QstnFromType" >
+    update qstn_from_type
+    set QSTN_FROM_TYPE_CODE = #{qstnFromTypeCode,jdbcType=VARCHAR},
+      QSTN_FROM_TYPE_INFO = #{qstnFromTypeInfo,jdbcType=VARCHAR}
+    where QSTN_FROM_TYPE_ID = #{qstnFromTypeId,jdbcType=VARCHAR}
+  </update>
+</mapper>

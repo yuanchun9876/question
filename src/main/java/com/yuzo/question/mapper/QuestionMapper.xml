@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yuzo.question.mapper.QuestionMapper" >
+  <resultMap id="BaseResultMap" type="com.yuzo.question.entity.Question" >
+    <id column="QSTN_ID" property="qstnId" jdbcType="VARCHAR" />
+    <result column="SUBJ_SCTN_ID" property="subjSctnId" jdbcType="VARCHAR" />
+    <result column="QSTN_TYPE_ID" property="qstnTypeId" jdbcType="VARCHAR" />
+    <result column="QSTN_FROM_TYPE_ID" property="qstnFromTypeId" jdbcType="VARCHAR" />
+    <result column="QSTN_TITLE" property="qstnTitle" jdbcType="VARCHAR" />
+    <result column="QSTN_INPUT_TIME" property="qstnInputTime" jdbcType="DATE" />
+    <result column="QSTN_PICTEXT" property="qstnPictext" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    QSTN_ID, SUBJ_SCTN_ID, QSTN_TYPE_ID, QSTN_FROM_TYPE_ID, QSTN_TITLE, QSTN_INPUT_TIME, 
+    QSTN_PICTEXT
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from question
+    where QSTN_ID = #{qstnId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from question
+    where QSTN_ID = #{qstnId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.yuzo.question.entity.Question" >
+    insert into question (QSTN_ID, SUBJ_SCTN_ID, QSTN_TYPE_ID, 
+      QSTN_FROM_TYPE_ID, QSTN_TITLE, QSTN_INPUT_TIME, 
+      QSTN_PICTEXT)
+    values (#{qstnId,jdbcType=VARCHAR}, #{subjSctnId,jdbcType=VARCHAR}, #{qstnTypeId,jdbcType=VARCHAR}, 
+      #{qstnFromTypeId,jdbcType=VARCHAR}, #{qstnTitle,jdbcType=VARCHAR}, #{qstnInputTime,jdbcType=DATE}, 
+      #{qstnPictext,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.yuzo.question.entity.Question" >
+    insert into question
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="qstnId != null" >
+        QSTN_ID,
+      </if>
+      <if test="subjSctnId != null" >
+        SUBJ_SCTN_ID,
+      </if>
+      <if test="qstnTypeId != null" >
+        QSTN_TYPE_ID,
+      </if>
+      <if test="qstnFromTypeId != null" >
+        QSTN_FROM_TYPE_ID,
+      </if>
+      <if test="qstnTitle != null" >
+        QSTN_TITLE,
+      </if>
+      <if test="qstnInputTime != null" >
+        QSTN_INPUT_TIME,
+      </if>
+      <if test="qstnPictext != null" >
+        QSTN_PICTEXT,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="qstnId != null" >
+        #{qstnId,jdbcType=VARCHAR},
+      </if>
+      <if test="subjSctnId != null" >
+        #{subjSctnId,jdbcType=VARCHAR},
+      </if>
+      <if test="qstnTypeId != null" >
+        #{qstnTypeId,jdbcType=VARCHAR},
+      </if>
+      <if test="qstnFromTypeId != null" >
+        #{qstnFromTypeId,jdbcType=VARCHAR},
+      </if>
+      <if test="qstnTitle != null" >
+        #{qstnTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="qstnInputTime != null" >
+        #{qstnInputTime,jdbcType=DATE},
+      </if>
+      <if test="qstnPictext != null" >
+        #{qstnPictext,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.yuzo.question.entity.Question" >
+    update question
+    <set >
+      <if test="subjSctnId != null" >
+        SUBJ_SCTN_ID = #{subjSctnId,jdbcType=VARCHAR},
+      </if>
+      <if test="qstnTypeId != null" >
+        QSTN_TYPE_ID = #{qstnTypeId,jdbcType=VARCHAR},
+      </if>
+      <if test="qstnFromTypeId != null" >
+        QSTN_FROM_TYPE_ID = #{qstnFromTypeId,jdbcType=VARCHAR},
+      </if>
+      <if test="qstnTitle != null" >
+        QSTN_TITLE = #{qstnTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="qstnInputTime != null" >
+        QSTN_INPUT_TIME = #{qstnInputTime,jdbcType=DATE},
+      </if>
+      <if test="qstnPictext != null" >
+        QSTN_PICTEXT = #{qstnPictext,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where QSTN_ID = #{qstnId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.yuzo.question.entity.Question" >
+    update question
+    set SUBJ_SCTN_ID = #{subjSctnId,jdbcType=VARCHAR},
+      QSTN_TYPE_ID = #{qstnTypeId,jdbcType=VARCHAR},
+      QSTN_FROM_TYPE_ID = #{qstnFromTypeId,jdbcType=VARCHAR},
+      QSTN_TITLE = #{qstnTitle,jdbcType=VARCHAR},
+      QSTN_INPUT_TIME = #{qstnInputTime,jdbcType=DATE},
+      QSTN_PICTEXT = #{qstnPictext,jdbcType=VARCHAR}
+    where QSTN_ID = #{qstnId,jdbcType=VARCHAR}
+  </update>
+</mapper>

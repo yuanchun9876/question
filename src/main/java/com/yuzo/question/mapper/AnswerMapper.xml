@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yuzo.question.mapper.AnswerMapper" >
+  <resultMap id="BaseResultMap" type="com.yuzo.question.entity.Answer" >
+    <id column="ANS_ID" property="ansId" jdbcType="VARCHAR" />
+    <result column="QSTN_ID" property="qstnId" jdbcType="VARCHAR" />
+    <result column="ANS_CONTENT" property="ansContent" jdbcType="VARCHAR" />
+    <result column="ANS_ISRIGHT" property="ansIsright" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ANS_ID, QSTN_ID, ANS_CONTENT, ANS_ISRIGHT
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from answer
+    where ANS_ID = #{ansId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from answer
+    where ANS_ID = #{ansId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.yuzo.question.entity.Answer" >
+    insert into answer (ANS_ID, QSTN_ID, ANS_CONTENT, 
+      ANS_ISRIGHT)
+    values (#{ansId,jdbcType=VARCHAR}, #{qstnId,jdbcType=VARCHAR}, #{ansContent,jdbcType=VARCHAR}, 
+      #{ansIsright,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.yuzo.question.entity.Answer" >
+    insert into answer
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="ansId != null" >
+        ANS_ID,
+      </if>
+      <if test="qstnId != null" >
+        QSTN_ID,
+      </if>
+      <if test="ansContent != null" >
+        ANS_CONTENT,
+      </if>
+      <if test="ansIsright != null" >
+        ANS_ISRIGHT,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="ansId != null" >
+        #{ansId,jdbcType=VARCHAR},
+      </if>
+      <if test="qstnId != null" >
+        #{qstnId,jdbcType=VARCHAR},
+      </if>
+      <if test="ansContent != null" >
+        #{ansContent,jdbcType=VARCHAR},
+      </if>
+      <if test="ansIsright != null" >
+        #{ansIsright,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.yuzo.question.entity.Answer" >
+    update answer
+    <set >
+      <if test="qstnId != null" >
+        QSTN_ID = #{qstnId,jdbcType=VARCHAR},
+      </if>
+      <if test="ansContent != null" >
+        ANS_CONTENT = #{ansContent,jdbcType=VARCHAR},
+      </if>
+      <if test="ansIsright != null" >
+        ANS_ISRIGHT = #{ansIsright,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ANS_ID = #{ansId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.yuzo.question.entity.Answer" >
+    update answer
+    set QSTN_ID = #{qstnId,jdbcType=VARCHAR},
+      ANS_CONTENT = #{ansContent,jdbcType=VARCHAR},
+      ANS_ISRIGHT = #{ansIsright,jdbcType=VARCHAR}
+    where ANS_ID = #{ansId,jdbcType=VARCHAR}
+  </update>
+</mapper>

@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yuzo.question.mapper.TeacherMapper" >
+  <resultMap id="BaseResultMap" type="com.yuzo.question.entity.Teacher" >
+    <id column="TCH_ID" property="tchId" jdbcType="VARCHAR" />
+    <result column="TCH_NAME" property="tchName" jdbcType="VARCHAR" />
+    <result column="TCH_INFO" property="tchInfo" jdbcType="VARCHAR" />
+    <result column="TCH_SEX" property="tchSex" jdbcType="INTEGER" />
+    <result column="TCH_REG_TIME" property="tchRegTime" jdbcType="DATE" />
+    <result column="TCH_PIC" property="tchPic" jdbcType="VARCHAR" />
+    <result column="TCH_USER" property="tchUser" jdbcType="VARCHAR" />
+    <result column="TCH_PASS" property="tchPass" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    TCH_ID, TCH_NAME, TCH_INFO, TCH_SEX, TCH_REG_TIME, TCH_PIC, TCH_USER, TCH_PASS
+  </sql>
+  
+  <select id="queryAll" resultMap="BaseResultMap"  >
+    select 
+    <include refid="Base_Column_List" />
+    from teacher
+  
+  </select>
+  
+  
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from teacher
+    where TCH_ID = #{tchId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from teacher
+    where TCH_ID = #{tchId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.yuzo.question.entity.Teacher" >
+    insert into teacher (TCH_ID, TCH_NAME, TCH_INFO, 
+      TCH_SEX, TCH_REG_TIME, TCH_PIC, 
+      TCH_USER, TCH_PASS)
+    values (#{tchId,jdbcType=VARCHAR}, #{tchName,jdbcType=VARCHAR}, #{tchInfo,jdbcType=VARCHAR}, 
+      #{tchSex,jdbcType=INTEGER}, #{tchRegTime,jdbcType=DATE}, #{tchPic,jdbcType=VARCHAR}, 
+      #{tchUser,jdbcType=VARCHAR}, #{tchPass,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.yuzo.question.entity.Teacher" >
+    insert into teacher
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="tchId != null" >
+        TCH_ID,
+      </if>
+      <if test="tchName != null" >
+        TCH_NAME,
+      </if>
+      <if test="tchInfo != null" >
+        TCH_INFO,
+      </if>
+      <if test="tchSex != null" >
+        TCH_SEX,
+      </if>
+      <if test="tchRegTime != null" >
+        TCH_REG_TIME,
+      </if>
+      <if test="tchPic != null" >
+        TCH_PIC,
+      </if>
+      <if test="tchUser != null" >
+        TCH_USER,
+      </if>
+      <if test="tchPass != null" >
+        TCH_PASS,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="tchId != null" >
+        #{tchId,jdbcType=VARCHAR},
+      </if>
+      <if test="tchName != null" >
+        #{tchName,jdbcType=VARCHAR},
+      </if>
+      <if test="tchInfo != null" >
+        #{tchInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="tchSex != null" >
+        #{tchSex,jdbcType=INTEGER},
+      </if>
+      <if test="tchRegTime != null" >
+        #{tchRegTime,jdbcType=DATE},
+      </if>
+      <if test="tchPic != null" >
+        #{tchPic,jdbcType=VARCHAR},
+      </if>
+      <if test="tchUser != null" >
+        #{tchUser,jdbcType=VARCHAR},
+      </if>
+      <if test="tchPass != null" >
+        #{tchPass,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.yuzo.question.entity.Teacher" >
+    update teacher
+    <set >
+      <if test="tchName != null" >
+        TCH_NAME = #{tchName,jdbcType=VARCHAR},
+      </if>
+      <if test="tchInfo != null" >
+        TCH_INFO = #{tchInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="tchSex != null" >
+        TCH_SEX = #{tchSex,jdbcType=INTEGER},
+      </if>
+      <if test="tchRegTime != null" >
+        TCH_REG_TIME = #{tchRegTime,jdbcType=DATE},
+      </if>
+      <if test="tchPic != null" >
+        TCH_PIC = #{tchPic,jdbcType=VARCHAR},
+      </if>
+      <if test="tchUser != null" >
+        TCH_USER = #{tchUser,jdbcType=VARCHAR},
+      </if>
+      <if test="tchPass != null" >
+        TCH_PASS = #{tchPass,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where TCH_ID = #{tchId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.yuzo.question.entity.Teacher" >
+    update teacher
+    set TCH_NAME = #{tchName,jdbcType=VARCHAR},
+      TCH_INFO = #{tchInfo,jdbcType=VARCHAR},
+      TCH_SEX = #{tchSex,jdbcType=INTEGER},
+      TCH_REG_TIME = #{tchRegTime,jdbcType=DATE},
+      TCH_PIC = #{tchPic,jdbcType=VARCHAR},
+      TCH_USER = #{tchUser,jdbcType=VARCHAR},
+      TCH_PASS = #{tchPass,jdbcType=VARCHAR}
+    where TCH_ID = #{tchId,jdbcType=VARCHAR}
+  </update>
+</mapper>
