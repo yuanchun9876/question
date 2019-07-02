@@ -16,4 +16,6 @@ public interface ISubjectCourseService {
 
 	int dels(String[] ids);
 
+	int update(SubjectCourse subj);
+
 }

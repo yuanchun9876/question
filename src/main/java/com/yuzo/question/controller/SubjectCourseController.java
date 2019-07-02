@@ -33,7 +33,7 @@ public class SubjectCourseController {
 	
 	@RequestMapping("addPage")
 	public String addPage(HttpSession session, Model model) {
-		return "jsp/subj/add_subj";
+		return "subj/add_subj";
 	}
 	
 	@RequestMapping("addSave")
@@ -59,22 +59,31 @@ public class SubjectCourseController {
 		
 		System.out.println("sctn:" + count);
 		
-		return "redirect:query.action";
+		return "redirect:query";
 	}
 	
-	@RequestMapping("editPage")
+	@RequestMapping("/editPage")
 	public String editPage(String subjId,HttpSession session, Model model) {
 		
 		SubjectCourse subj = subjectCourseService.queryById(subjId);
 		model.addAttribute("subj", subj);
 		
-		return "jsp/subj/edit_subj";
+		return "subj/edit_subj";
 	}
+	
+	@RequestMapping("/editSave")
+	public String editSave(SubjectCourse subj) {
+		
+		int count = subjectCourseService.update(subj);
+	
+		return "redirect:query";
+	}
+	
 	@RequestMapping("/dels")
 	public String dels(String[] ids) {		
 		int count = subjectCourseService.dels(ids);
 		System.out.println("��ɾ��:" + count);
-		return "redirect:query.action";
+		return "redirect:query";
 	}
 	
 }

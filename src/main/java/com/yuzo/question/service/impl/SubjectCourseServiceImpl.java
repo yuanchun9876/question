@@ -46,4 +46,10 @@ public class SubjectCourseServiceImpl implements ISubjectCourseService{
 		}
 		return count;
 	}
+
+	@Override
+	public int update(SubjectCourse subj) {
+		// TODO Auto-generated method stub
+		return subjMapper.updateByPrimaryKeySelective(subj);
+	}
 }

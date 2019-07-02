@@ -99,7 +99,9 @@
          	科目单元查询
         </h1>
         <ol class="breadcrumb">
-          <li><a href="#"><i class="fa fa-dashboard"></i> 科目单元</a></li>
+        <li>
+			<a th:href="@{/dashboard}"><i class="glyphicon glyphicon-globe"></i>导航</a>
+		</li>
           <li class="active"><a href="#">科目单元查询</a></li>
         </ol>
       </section>
@@ -114,7 +116,7 @@
 					<button class="btn btn-info" name="queryInfo">查询</button>
 					<button class="btn btn-primary" name="queryInfo">清空</button>
 					<button class="btn btn-success"  type="button" name="queryInfo"  onclick="addPage()" >添加</button>
-					<button class="btn btn-warning" name="delBtn"  onclick="dels()" >删除</button>
+					<button class="btn btn-warning"  type="button" name="delBtn"  onclick="dels()" >删除</button>
 				</div>
         	</div>
         	</form>
@@ -132,21 +134,19 @@
 						<th>操作</th>
         			</tr>
         			<form name="delForm"  method="post"  action="#"  th:action="@{/subj/dels}"  >    
-        			<tbody th:remove="all-but-first" >
-        			  	
+        			<tbody th:remove="all-but-first" >       			  	
         			<tr  th:each="row,i:${list}" >
 	        			<td th:text="${i.count }">1</td>
 	        			<td ><input type="checkbox" name="ids"  value="1"    th:value="${row.subjId}"  ></td>
-	       				<td th:text="${row.subjTitle}" >科目单元名称</td>
-	       				<td th:text="${row.subjNum}">科目单元序号</td>
-	       				<td th:text="${row.subjCode}">科目单元代号</td>
-	       				<td th:text="${row.subjProgress}">科目完成进度</td>
-	       				<td th:text="${row.subjInfo}">知识章说明</td>
+	       				<td th:text="${row.subjTitle}" >JavaSE</td>
+	       				<td th:text="${row.subjNum}">1</td>
+	       				<td th:text="${row.subjCode}">JAVASE</td>
+	       				<td th:text="${row.subjProgress}">85</td>
+	       				<td th:text="${row.subjInfo}">java语言基础语法</td>
 						<td>
-<button type="button" class="btn btn-primary btn-sm"  th:onclick="|editpage(this)|"     onclick="javascript:editpage('1')"    >修改</button>
+							<button type="button" class="btn btn-primary btn-sm"  th:onclick="editpage([[${row.subjId}]])"     onclick="javascript:editpage('1')"    >修改</button>
 						</td>
-       				</tr>	
-       		
+       				</tr>	       			  		
         		</tbody>
         		</form>
         		</table>
@@ -181,18 +181,18 @@
 	function dels(){
 
 		if(window.confirm("确定要删除吗?")){
-			console.log(document.delForm.action);
+			//console.log(document.delForm.action);
 			document.delForm.submit();
 		}
 	}
 	  
 	function addPage(){
-		location.href = "<%=request.getContextPath()%>/subj/addPage.action"; 
+		location.href = "/subj/addPage"; 
 	}
 
-	function editpage(row){
-		console.log($(this).attr("data-id"));
-		//location.href = "<%=request.getContextPath()%>/subjSctn/editPage.action?subjSctnId=" + id; 
+	function editpage(id){
+		//console.log(id);
+		location.href = "/subj/editPage?subjId=" + id; 
 	}
 	
 

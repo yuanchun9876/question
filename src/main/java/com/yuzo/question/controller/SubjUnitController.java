@@ -80,7 +80,7 @@ public class SubjUnitController {
 		return "redirect:query.action";
 	}
 	
-	@RequestMapping("editPage")
+	@RequestMapping("/editPage")
 	public String editPage(String subjUnitId,HttpSession session, Model model) {
 		
 		SubjUnit unit = subjUnitService.queryById(subjUnitId);
@@ -98,7 +98,7 @@ public class SubjUnitController {
 		System.out.println("ids:" + Arrays.toString(ids));
 		int count = subjUnitService.dels(ids);
 		System.out.println("��ɾ��:" + count);
-		return "redirect:query.action";
+		return "redirect:query";
 	}
 	
 }
