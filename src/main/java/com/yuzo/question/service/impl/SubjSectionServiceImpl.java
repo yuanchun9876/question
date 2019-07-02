@@ -68,4 +68,10 @@ public class SubjSectionServiceImpl implements ISubjSectionService{
 		// TODO Auto-generated method stub
 		return sctnMapper.queryByUnit(unitId);
 	}
+
+	@Override
+	public int update(SubjSection sctn) {
+		// TODO Auto-generated method stub
+		return sctnMapper.updateByPrimaryKeySelective(sctn);
+	}
 }

@@ -6,8 +6,7 @@
   <title>查询页面</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
- 
-  <include th:replace="/common/css :: commoncss"/>
+	   <include th:replace="/common/css :: commoncss"/>
 
 	<style type="text/css">
 	 	.content-wrapper {
@@ -33,13 +32,13 @@
       <!-- Content Header (Page header) -->
       <section class="content-header">
         <h1>
-         	科目单元查询
+         	知识节查询
         </h1>
         <ol class="breadcrumb">
-        <li>
+         <li>
 			<a th:href="@{/dashboard}"><i class="glyphicon glyphicon-globe"></i>导航</a>
 		</li>
-          <li class="active"><a href="#">科目单元查询</a></li>
+          <li class="active"><a href="#">知识节查询</a></li>
         </ol>
       </section>
   
@@ -49,9 +48,11 @@
         <div class="box">
          <form name="infoForm" id="queryForm" method="post" >
         	<div class="box-header clearfix">
+
 				<div class="box-search btn-group">
+				
 					<button class="btn btn-success"  type="button" name="queryInfo"  onclick="addPage()" >添加</button>
-					<button class="btn btn-warning"  type="button" name="delBtn"  onclick="dels()" >删除</button>
+					<button class="btn btn-warning" type="button"  name="queryInfo"  onclick="dels()">删除</button>
 				</div>
         	</div>
         	</form>
@@ -61,29 +62,27 @@
         			<tr>
         				<th>序号</th>
         				<th>全选</th>
-        				<th>科目单元名称</th>     				
-        				<th>科目单元序号</th>
-        				<th>科目单元代号</th>
-        				<th>科目完成进度</th>
-        				<th>知识章说明</th>
+        				<th>知识节名称</th>
+        				<th>知识节序号</th>
+        				<th>知识节代号</th>
+						<th>总时长</th>
 						<th>操作</th>
         			</tr>
-        			<form name="delForm"  method="post"  action="#"  th:action="@{/subj/dels}"  >    
+        			<form name="delForm"  method="post"  th:action="@{/subjSctn/dels}">
         			<tbody th:remove="all-but-first" >       			  	
         			<tr  th:each="row,i:${list}" >
-	        			<td th:text="${i.count }">1</td>
-	        			<td ><input type="checkbox" name="ids"  value="1"    th:value="${row.subjId}"  ></td>
-	       				<td th:text="${row.subjTitle}" >JavaSE</td>
-	       				<td th:text="${row.subjNum}">1</td>
-	       				<td th:text="${row.subjCode}">JAVASE</td>
-	       				<td th:text="${row.subjProgress}">85</td>
-	       				<td th:text="${row.subjInfo}">java语言基础语法</td>
+        			  <td  th:text="${i.count }" >1</td>
+        			  <td ><input type="checkbox" name="ids" value="1"    th:value="${row.subjSctnId}"  ></td>
+        				<td   th:text="${row.subjSctnTitle}">${scth.subjSctnTitle }</td>
+        				<td   th:text="${row.subjSctnNum}">${scth.subjSctnNum }</td>
+        				<td   th:text="${row.subjSctnCode}">${scth.subjSctnCode }</td>
+        				<td   th:text="${row.subjSctnVideoLen}">${scth.subjSctnVideoLen }</td>
 						<td>
-							<button type="button" class="btn btn-primary btn-sm"  th:onclick="editpage([[${row.subjId}]])"     onclick="javascript:editpage('1')"    >修改</button>
+							<button type="button" class="btn btn-primary btn-sm"  th:onclick="editpage([[${row.subjSctnId}]])"   onclick="javascript:editpage('1')">修改</button>
 						</td>
-       				</tr>	       			  		
-        		</tbody>
-        		</form>
+        			</tr>
+        			</tbody>
+        			</form>
         		</table>
         	</div>
 <!--         	/.box-body -->
@@ -94,15 +93,24 @@
       </section>
       <!-- /.content -->
     </div>
-
+<div th:replace="/common/js :: commonjs"></div>
 </div>
 <!-- ./wrapper -->
-<div th:replace="/common/js :: commonjs"></div>
 </body>
+
 	
-<script type="text/javascript">
+	<script type="text/javascript">
+	
 
+	  
+	function addPage(){
+		location.href = "/subjSctn/addPage"; 
+	}
 
+	function editpage(id){
+		location.href = "/subjSctn/editPage?subjSctnId=" + id; 
+	}
+	
 	function dels(){
 		var ids = $("[name=ids]:checked");
 		if(ids.length==0){
@@ -110,21 +118,38 @@
 			return;
 		}
 		if(window.confirm("确定要删除吗?")){
-			//console.log(document.delForm.action);
 			document.delForm.submit();
 		}
 	}
-	  
-	function addPage(){
-		location.href = "/subj/addPage"; 
-	}
-
-	function editpage(id){
-		//console.log(id);
-		location.href = "/subj/editPage?subjId=" + id; 
-	}
 	
+	function playpage(title, id){
+		 bootbox.dialog({
+			  // dialog的内容
+			  message: "<iframe src='<%=request.getContextPath()%>/subjSctn/videoPlay.action?subjSctnId=" + id + "' style='width:100%;height:369px;border:0 solid;'></iframe>",
+			   
+			  // dialog的标题
+			  title: title,
+			   
+			  // 是否显示此dialog，默认true
+			  show: true,
 
+			     // 显示尺寸，可选 small  /large
+			 size: "large",
+
+			  // 是否显示body的遮罩，默认true
+			  backdrop: true,
+			   
+			  // 是否显示关闭按钮，默认true
+			  closeButton: true,
+			   
+			  // 是否动画弹出dialog，IE10以下版本不支持
+			  animate: true,
+			   
+			  // dialog的类名
+			  className: "my-modal",
+			   
+			});
+	}
 
 </script>
 

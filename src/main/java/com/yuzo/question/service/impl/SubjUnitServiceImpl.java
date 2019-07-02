@@ -72,4 +72,11 @@ public class SubjUnitServiceImpl implements ISubjUnitService{
 		// TODO Auto-generated method stub
 		return unitMapper.queryBySubj(subjId);
 	}
+
+
+	@Override
+	public int update(SubjUnit unit) {
+		// TODO Auto-generated method stub
+		return unitMapper.updateByPrimaryKeySelective(unit);
+	}
 }

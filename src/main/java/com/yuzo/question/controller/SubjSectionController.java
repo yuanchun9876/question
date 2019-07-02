@@ -35,7 +35,7 @@ public class SubjSectionController {
 		String tchId = "1"; // tch.getTchId()
 		List<SubjSection> list = subjSctnService.queryByTchId(tchId);
 		model.addAttribute("list", list);
-		return "jsp/subjsctn/list_sctn";
+		return "subjsctn/list_sctn";
 	}
 	
 	
@@ -55,37 +55,40 @@ public class SubjSectionController {
 		model.addAttribute("tchId", tchId);
 		List<SubjUnit> unitList = subjSctnService.queryUnitByTchId(tchId);
 		model.addAttribute("unitList", unitList);
-		return "jsp/subjsctn/add_sctn";
+		return "subjsctn/add_sctn";
 	}
 	
 	@RequestMapping("addSave")
-	public String addSave(SubjSection sctn,@RequestParam("sctnPicUrl")CommonsMultipartFile picFile,@RequestParam("sctnVideoUrl") CommonsMultipartFile videoFile, HttpSession session) throws IllegalStateException, IOException {
+	public String addSave(SubjSection sctn
+//			,@RequestParam("sctnPicUrl")CommonsMultipartFile picFile
+//			,@RequestParam("sctnVideoUrl") CommonsMultipartFile videoFile
+			, HttpSession session) throws IllegalStateException, IOException {
 		// �ϴ�logoͼƬ
 		ServletContext app = session.getServletContext();
-		if(picFile != null) {
-			System.out.println("picFile-fileName��" + picFile.getOriginalFilename());
-			String picRootPath = app.getRealPath("/upload/sctn/pic/");
-	        String picPath = new Date().getTime() + picFile.getOriginalFilename();	         
-	        File sctnPicFile = new File(picRootPath + picPath);
-	        //ͨ��CommonsMultipartFile�ķ���ֱ��д�ļ���ע�����ʱ��
-	        picFile.transferTo(sctnPicFile);
-	        sctn.setSubjSctnLogoUrl("/upload/sctn/pic/" + picPath);
-		}
-		if(videoFile != null) {
-			System.out.println("videoFile-fileName��" + videoFile.getOriginalFilename());
-			String videoRootPath = app.getRealPath("/upload/sctn/video/");
-	        String videoPath = new Date().getTime() + videoFile.getOriginalFilename();	         
-	        File sctnVideoFile = new File(videoRootPath + videoPath);
-	        //ͨ��CommonsMultipartFile�ķ���ֱ��д�ļ���ע�����ʱ��
-	        videoFile.transferTo(sctnVideoFile);
-	        sctn.setSubjSctnVideoUrl("/upload/sctn/video/" + videoPath);
-		}
+//		if(picFile != null) {
+//			System.out.println("picFile-fileName��" + picFile.getOriginalFilename());
+//			String picRootPath = app.getRealPath("/upload/sctn/pic/");
+//	        String picPath = new Date().getTime() + picFile.getOriginalFilename();	         
+//	        File sctnPicFile = new File(picRootPath + picPath);
+//	        //ͨ��CommonsMultipartFile�ķ���ֱ��д�ļ���ע�����ʱ��
+//	        picFile.transferTo(sctnPicFile);
+//	        sctn.setSubjSctnLogoUrl("/upload/sctn/pic/" + picPath);
+//		}
+//		if(videoFile != null) {
+//			System.out.println("videoFile-fileName��" + videoFile.getOriginalFilename());
+//			String videoRootPath = app.getRealPath("/upload/sctn/video/");
+//	        String videoPath = new Date().getTime() + videoFile.getOriginalFilename();	         
+//	        File sctnVideoFile = new File(videoRootPath + videoPath);
+//	        //ͨ��CommonsMultipartFile�ķ���ֱ��д�ļ���ע�����ʱ��
+//	        videoFile.transferTo(sctnVideoFile);
+//	        sctn.setSubjSctnVideoUrl("/upload/sctn/video/" + videoPath);
+//		}
 		sctn.setSubjSctnId(UUID.randomUUID().toString());
 		int count = subjSctnService.save(sctn);
 		
 		System.out.println("sctn:" + count);
 		
-		return "redirect:query.action";
+		return "redirect:query";
 	}
 	
 	@RequestMapping("editPage")
@@ -99,7 +102,7 @@ public class SubjSectionController {
 		model.addAttribute("tchId", tchId);
 		List<SubjUnit> unitList = subjSctnService.queryUnitByTchId(tchId);
 		model.addAttribute("unitList", unitList);
-		return "jsp/subjsctn/edit_sctn";
+		return "subjsctn/edit_sctn";
 	}
 	
 	@RequestMapping("videoPlay")
@@ -108,13 +111,20 @@ public class SubjSectionController {
 		SubjSection sctn = subjSctnService.queryById(subjSctnId);
 		model.addAttribute("pic", sctn.getSubjSctnLogoUrl());
 		model.addAttribute("vv", sctn.getSubjSctnVideoUrl());
-		return "jsp/common/play_video";
+		return "common/play_video";
+	}
+	
+	@RequestMapping("/editSave")
+	public String editSave(SubjSection sctn) {		
+		int count = subjSctnService.update(sctn);
+		System.out.println("��ɾ��:" + count);
+		return "redirect:query";
 	}
 	
 	@RequestMapping("/dels")
 	public String dels(String[] ids) {		
 		int count = subjSctnService.dels(ids);
 		System.out.println("��ɾ��:" + count);
-		return "redirect:query.action";
+		return "redirect:query";
 	}
 }

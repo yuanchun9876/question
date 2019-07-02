@@ -32,7 +32,7 @@ public class SubjUnitController {
 		String tchId = "1"; // tch.getTchId()
 		List<SubjUnit> list = subjUnitService.queryAll();//queryByTchId(tchId);
 		model.addAttribute("list", list);
-		return "jsp/subjunit/list_unit";
+		return "subjunit/list_unit";
 	}
 	
 	
@@ -52,7 +52,7 @@ public class SubjUnitController {
 		model.addAttribute("tchId", tchId);
 		List<SubjectCourse> subjList = subjUnitService.querySubjectCourse();
 		model.addAttribute("subjList", subjList);
-		return "jsp/subjunit/add_unit";
+		return "subjunit/add_unit";
 	}
 	
 	@RequestMapping("addSave")
@@ -77,7 +77,7 @@ public class SubjUnitController {
 		
 		System.out.println("unit:" + count);
 		
-		return "redirect:query.action";
+		return "redirect:query";
 	}
 	
 	@RequestMapping("/editPage")
@@ -90,7 +90,15 @@ public class SubjUnitController {
 		model.addAttribute("tchId", tchId);
 		List<SubjectCourse> subjList = subjUnitService.querySubjectCourse();
 		model.addAttribute("subjList", subjList);
-		return "jsp/subjunit/edit_unit";
+		return "subjunit/edit_unit";
+	}
+	
+	@RequestMapping("/editSave")
+	public String editSave(SubjUnit unit) {		
+		
+		int count = subjUnitService.update(unit);
+		System.out.println("��ɾ��:" + count);
+		return "redirect:query";
 	}
 	
 	@RequestMapping("/dels")
@@ -100,5 +108,4 @@ public class SubjUnitController {
 		System.out.println("��ɾ��:" + count);
 		return "redirect:query";
 	}
-	
 }

@@ -23,4 +23,6 @@ public interface ISubjSectionService {
 
 	List<SubjSection> querySctnByUnit(String unitId);
 
+	int update(SubjSection sctn);
+
 }

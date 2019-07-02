@@ -23,4 +23,6 @@ public interface ISubjUnitService {
 
 	List<SubjUnit> queryUnitBySubj(String subjId);
 
+	int update(SubjUnit unit);
+
 }
