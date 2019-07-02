@@ -7,10 +7,10 @@
    <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <!-- Bootstrap 3.3.7 -->
-  <link rel="stylesheet" th:href="@{/bower_components/bootstrap/dist/css/bootstrap.min.css}">	
+  <link rel="stylesheet" th:href="@{/bower_components/bootstrap/dist/css/bootstrap.min.css}"  href="../static/bower_components/bootstrap/dist/css/bootstrap.min.css"   >	
   <!-- Theme style -->
-  <link rel="stylesheet" th:href="@{/dist/css/AdminLTE.min.css}">
-  <link rel="stylesheet" th:href="@{/dist/css/skins/_all-skins.min.css}">
+  <link rel="stylesheet" th:href="@{/dist/css/AdminLTE.min.css}" href="../static/dist/css/AdminLTE.min.css" >
+  <link rel="stylesheet" th:href="@{/dist/css/skins/_all-skins.min.css}"  href="../static/dist/css/skins/_all-skins.min.css"  >
   
 	<style >
       .modal-body .form-group{display: flex;}
@@ -44,7 +44,7 @@
   
   	<header class="main-header" >
   		<!-- Logo -->
-	    <a th:href="@{common/dashboard.html}" class="logo" target="ifr_content" >
+	    <a th:href="@{/dashboard}" class="logo" target="ifr_content" >
 	      <!-- mini logo for sidebar mini 50x50 pixels -->
 	      <span class="logo-mini">
 	      	<img th:src="@{/images/logo/yun_logo.png}" width="40"/>
@@ -151,7 +151,7 @@
 		            	</a>
 		            </li>
 		            <li >
-		            	<a th:href="@{common/dashboard.html}" target="ifr_content" >
+		            	<a th:href="@{/dashboard}" target="ifr_content" >
 		            		<i class="glyphicon glyphicon-record"></i>
 		            		<span >导航页面</span>
 		            	</a>
@@ -198,7 +198,7 @@
 						</a>
 						<ul class="treeview-menu">
 		            <li >
-		            	<a href="<%=request.getContextPath() %>/subj/query.action"  target="ifr_content" >
+		            	<a href="<%=request.getContextPath() %>/subj/query.action"   th:href="@{/subj/query}"  target="ifr_content" >
 		            		<i class="glyphicon glyphicon-record"></i>
 		            		<span >科目单元</span>
 		            	</a>
@@ -223,7 +223,7 @@
   	
 	  <!-- Content Wrapper. Contains page content -->
 	  <div class="content-wrapper">
-	  	<iframe  name="ifr_content"   th:src="/dashboard"  src="dashboard.html"  style="width:100%;height:580px;border:0px solid;"  ></iframe>
+	  	<iframe  name="ifr_content"   th:src="@{/dashboard}"  src="dashboard.html"  style="width:100%;height:580px;border:0px solid;"  ></iframe>
 	  </div>
 	  
 	  <!-- /.content-wrapper -->

@@ -16,19 +16,19 @@ import com.yuzo.question.entity.SubjectCourse;
 import com.yuzo.question.service.ISubjectCourseService;
 
 @Controller
-@RequestMapping("subj")
+@RequestMapping("/subj")
 public class SubjectCourseController {
 
 	@Autowired
 	private ISubjectCourseService  subjectCourseService;
 	
-	@RequestMapping("query")
+	@RequestMapping("/query")
 	public String query(HttpSession session, Model model) {
 		
 		List<SubjectCourse> list = subjectCourseService.query();
 		System.out.println(list);
 		model.addAttribute("list", list);		
-		return "jsp/subj/list_subj";
+		return "subj/list_subj";
 	}
 	
 	@RequestMapping("addPage")
