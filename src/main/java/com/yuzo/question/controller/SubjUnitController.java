@@ -8,6 +8,7 @@ import java.util.UUID;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpSession;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,7 +23,9 @@ import com.yuzo.question.service.ISubjUnitService;
 @Controller
 @RequestMapping("subjUnit")
 public class SubjUnitController {
-
+	
+	static Logger logger = Logger.getLogger(SubjUnitController.class);
+	
 	@Autowired
 	private ISubjUnitService  subjUnitService;
 	
@@ -39,7 +42,7 @@ public class SubjUnitController {
 	@RequestMapping("/selectSubj")
 	@ResponseBody
 	public List<SubjUnit> selectSubj(String subjId) {
-	
+		logger.debug("subjId:" + subjId);
 		List<SubjUnit> list = subjUnitService.queryUnitBySubj(subjId);//queryByTchId(tchId);
 		
 		return list;

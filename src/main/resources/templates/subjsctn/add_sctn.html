@@ -62,8 +62,15 @@
 										</div>
 										<div class="form-group">
 											<label for="birth" class="col-sm-2 control-label">所属科目</label>
-											<div class="col-sm-10">
-												<select class="form-control" name="subjUnitId">
+											<div class="col-sm-4">
+												<select class="form-control"    onchange="ajaxUnit(this.value)" >
+													<option  value = "" >请选择</option>				
+													<option  th:value = "${subj.subjId }"   th:each="subj,i:${subjList}"   th:text="${subj.subjTitle }"   >${unit.subjUnitTitle }</option>													
+												</select>
+											</div>
+											<label for="birth" class="col-sm-2 control-label">所属章</label>
+											<div class="col-sm-4">
+												<select class="form-control" name="subjUnitId"  id="unitSelect" >
 													<option  value = "" >请选择</option>				
 													<option  th:value = "${unit.subjUnitId }"   th:each="unit,i:${unitList}"   th:text="${unit.subjUnitTitle }"   >${unit.subjUnitTitle }</option>													
 												</select>
@@ -102,7 +109,17 @@
 	
 	<script type="text/javascript">
 		
-		
+		function ajaxUnit(subjId){
+			var url = "/subjUnit/selectSubj";
+			$.post(url, {"subjId": subjId}, function(resp){
+				console.log(resp);
+				$("#unitSelect").empty();
+				$.each(resp, function(i, item){
+					$("<option value='" + item.subjUnitId + "'>" + item.subjUnitTitle + "</option>")
+					.appendTo("#unitSelect");
+				});
+			});
+		}
 
 		//清空
 		function cleanUp(btn) {

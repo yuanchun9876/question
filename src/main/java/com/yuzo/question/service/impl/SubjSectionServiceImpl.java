@@ -7,8 +7,10 @@ import org.springframework.stereotype.Service;
 
 import com.yuzo.question.entity.SubjSection;
 import com.yuzo.question.entity.SubjUnit;
+import com.yuzo.question.entity.SubjectCourse;
 import com.yuzo.question.mapper.SubjSectionMapper;
 import com.yuzo.question.mapper.SubjUnitMapper;
+import com.yuzo.question.mapper.SubjectCourseMapper;
 import com.yuzo.question.service.ISubjSectionService;
 
 
@@ -21,6 +23,9 @@ public class SubjSectionServiceImpl implements ISubjSectionService{
 	
 	@Autowired
 	private SubjUnitMapper unitMapper;
+	
+	@Autowired
+	private SubjectCourseMapper subjMapper;
 
 	@Override
 	public List<SubjSection> queryByTchId(String tchId) {
@@ -73,5 +78,17 @@ public class SubjSectionServiceImpl implements ISubjSectionService{
 	public int update(SubjSection sctn) {
 		// TODO Auto-generated method stub
 		return sctnMapper.updateByPrimaryKeySelective(sctn);
+	}
+
+	@Override
+	public List<SubjectCourse> querySubj() {
+		// TODO Auto-generated method stub
+		return subjMapper.queryAll();
+	}
+
+	@Override
+	public SubjUnit queryUnitById(String subjUnitId) {
+		// TODO Auto-generated method stub
+		return unitMapper.selectByPrimaryKey(subjUnitId);
 	}
 }

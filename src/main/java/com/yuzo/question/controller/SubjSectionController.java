@@ -19,6 +19,7 @@ import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import com.yuzo.question.entity.SubjSection;
 import com.yuzo.question.entity.SubjUnit;
+import com.yuzo.question.entity.SubjectCourse;
 import com.yuzo.question.entity.Teacher;
 import com.yuzo.question.service.ISubjSectionService;
 
@@ -53,8 +54,12 @@ public class SubjSectionController {
 		Teacher tch = (Teacher) session.getAttribute("tch");
 		String tchId = "1"; // tch.getTchId()
 		model.addAttribute("tchId", tchId);
-		List<SubjUnit> unitList = subjSctnService.queryUnitByTchId(tchId);
+		List<SubjUnit> unitList = subjSctnService.queryUnit();//queryUnitByTchId(tchId);
 		model.addAttribute("unitList", unitList);
+		
+		List<SubjectCourse> subjList = subjSctnService.querySubj();
+		model.addAttribute("subjList", subjList);
+		
 		return "subjsctn/add_sctn";
 	}
 	
@@ -97,11 +102,21 @@ public class SubjSectionController {
 		SubjSection sctn = subjSctnService.queryById(subjSctnId);
 		model.addAttribute("sctn", sctn);
 		
+		SubjUnit unit = subjSctnService.queryUnitById(sctn.getSubjUnitId());
+		
+		model.addAttribute("subjId", unit.getSubjId());
+		
 		Teacher tch = (Teacher) session.getAttribute("tch");
 		String tchId = "1"; // tch.getTchId()
 		model.addAttribute("tchId", tchId);
-		List<SubjUnit> unitList = subjSctnService.queryUnitByTchId(tchId);
+		
+		List<SubjUnit> unitList = subjSctnService.queryUnit();//queryUnitByTchId(tchId);
 		model.addAttribute("unitList", unitList);
+		
+		List<SubjectCourse> subjList = subjSctnService.querySubj();
+		model.addAttribute("subjList", subjList);
+		
+		
 		return "subjsctn/edit_sctn";
 	}
 	
