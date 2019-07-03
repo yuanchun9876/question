@@ -25,7 +25,7 @@ public interface IQuestionService {
 
 	List<SubjSection> querySubjSctn();
 
-	JSONObject uploadSimditorImg(MultipartFile file, String picRootPath,String type, String contextPath );
+	JSONObject uploadSimditorImg(MultipartFile file, String type );
 
 	int save(Question qstn);
 
@@ -42,5 +42,9 @@ public interface IQuestionService {
 	SubjUnit queryUnitByUnitId(String subjUnitId);
 
 	List<Answer> queryAnswersByQstnId(String id);
+
+	int update(Question qstn);
+
+	int dels(String[] ids);
 
 }

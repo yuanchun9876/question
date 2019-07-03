@@ -1,5 +1,6 @@
 package com.yuzo.question.controller;
 
+import java.io.File;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -11,6 +12,7 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.ResourceUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
@@ -59,6 +61,16 @@ public class QuestionController {
 		return "qstn/add_qstn";
 	}
 	
+
+	@RequestMapping("addSave")
+	public String addSave(Question qstn, Model model){
+		qstn.setQstnId(UUID.randomUUID().toString());
+		qstn.setQstnInputTime(new Date());
+		int count = qstnService.save(qstn);
+		logger.debug("count:" + count);
+		return "redirect:query";
+	}
+	
 	@RequestMapping("editPage")
 	public String editPage(String id,Model model){
 		
@@ -85,21 +97,20 @@ public class QuestionController {
 		return "qstn/edit_qstn";
 	}
 	
-	@RequestMapping("/answerpage")
-	public String answerpage(String id,Model model){
-		
-		List<Answer> ansList = qstnService.queryAnswersByQstnId(id);
-		model.addAttribute("ansList", ansList);
-		
-		return "ans/list_ans";
-	}
 
-	@RequestMapping("addSave")
-	public String addSave(Question qstn, Model model){
-		qstn.setQstnId(UUID.randomUUID().toString());
-		qstn.setQstnInputTime(new Date());
-		int count = qstnService.save(qstn);
+	@RequestMapping("/editSave")
+	public String editSave(Question qstn, Model model){
+		//qstn.setQstnId(UUID.randomUUID().toString());
+		//qstn.setQstnInputTime(new Date());
+		int count = qstnService.update(qstn);
 		logger.debug("count:" + count);
+		return "redirect:query";
+	}
+	
+	@RequestMapping("/dels")
+	public String dels(String[] ids) {		
+		int count = qstnService.dels(ids);
+		System.out.println("��ɾ��:" + count);
 		return "redirect:query";
 	}
 	
@@ -108,14 +119,22 @@ public class QuestionController {
 	public JSONObject uploadSimditorImg(MultipartFile file, String type, HttpServletRequest request) {
 		JSONObject json = new JSONObject();
 		try {
-			ServletContext app = request.getServletContext();
-			String picRootPath = app.getRealPath("/upload/" );
-			json = qstnService.uploadSimditorImg(file, picRootPath, type, request.getContextPath());
+		
+			json = qstnService.uploadSimditorImg(file,  type );
 		} catch (Exception e) {
-			logger.debug("�ϴ��༭��ͼƬʧ�ܣ�" + e);
+			logger.debug("异常:" + e);
 		}
 		logger.debug("json:" + json);
 		return json;
 	}
 
+	
+	@RequestMapping("/answerpage")
+	public String answerpage(String id,Model model){
+		
+		List<Answer> ansList = qstnService.queryAnswersByQstnId(id);
+		model.addAttribute("ansList", ansList);
+		
+		return "ans/list_ans";
+	}
 }

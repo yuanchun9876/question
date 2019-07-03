@@ -67,7 +67,7 @@
 								<button class="btn btn-info" name="queryInfo">查询</button>
 								<button type="button" class="btn btn-primary" name="clearInfo" onclick="javascript:clearEle()">清空</button>
 								<button type="button" class="btn btn-success" name="addInfo" onclick="javascript:addPage()">添加</button>
-								<button type="button" class="btn btn-warning" name="dels">删除</button>
+								<button type="button" class="btn btn-warning" name="delbtn" onclick="javascript:dels()">删除</button>
 							</div>
 						</div>
 					</form>
@@ -84,6 +84,7 @@
 								<th width="10%">上传时间</th>
 								<th width="20%">操作</th>
 							</tr>
+							<form name="delForm"  method="post"  action="#"  th:action="@{/qstn/dels}"  >    
 							<tbody th:remove="all-but-first" >       			  	
 		        			<tr  th:each="row,i:${list}" >
 		        			  <td  th:text="${i.count }" >1</td>
@@ -98,6 +99,7 @@
 							 </td>
 							</tr>	
 							</tbody>
+							</form>
 						</table>
 					</div>
 				</div>
@@ -118,10 +120,21 @@
 			window.location.href = "<%=request.getContextPath() %>/qstn/answerpage.action?id=" + id;
 		}
 		
+		function dels(){
+			var ids = $("[name=ids]:checked");
+			if(ids.length==0){
+				alert("请选择要删除记录!");
+				return;
+			}
+			if(window.confirm("确定要删除吗?")){
+				//console.log(document.delForm.action);
+				document.delForm.submit();
+			}
+		}
 
 		function editpage(id) {
-			bootbox.alert(id);
-			window.location.href = "<%=request.getContextPath() %>/qstn/editPage.action?id=" + id;
+			//bootbox.alert(id);
+			window.location.href = "/qstn/editPage?id=" + id;
 		}
 
 		function clearEle() {
@@ -136,7 +149,7 @@
 		}
 		
 		function addPage(){
-			window.location.href = "<%=request.getContextPath() %>/qstn/addPage.action";
+			window.location.href = "/qstn/addPage";
 		}
 	</script>
 

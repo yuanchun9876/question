@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<title>修改页面</title>
+		<!-- Tell the browser to be responsive to screen width -->
+		<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+	   <include th:replace="/common/css :: commoncss"/>
+		<link rel="stylesheet"  type="text/css"  th:href="@{/simditor/styles/simditor.css}">
+		<style type="text/css">
+			
+			.content-wrapper {
+				margin-left: 0px;
+			}
+		</style>
+	</head>
+
+	<body class="hold-transition skin-blue sidebar-mini">
+		<div class="wrapper">
+
+			<!-- Content Wrapper. Contains page content -->
+			<div class="content-wrapper">
+				<!-- Content Header (Page header) -->
+				<section class="content-header">
+					<h1>
+			          	试题修改
+			        </h1>
+			        <ol class="breadcrumb">
+						<li>
+							<a href="<%=request.getContextPath() %>/common/dashboard.html"><i class="glyphicon glyphicon-globe"></i>导航</a>
+						</li>
+						<li class="active">
+							<a href="#">试题修改</a>
+						</li>
+					</ol>
+				</section>
+
+				<!-- Main content -->
+				<section class="content">
+					<div class="row">
+						<form class="form form-horizontal" method="get"   onsubmit="contextTextOnblur()"  th:action="@{/qstn/editSave}"  th:object="${qstn}" >
+							<input type="hidden" name="qstnId"   th:field="*{qstnId}"   >
+							<!-- left column -->
+							<div class="col-md-10 col-md-offset-1">
+								<!-- general form elements -->
+								<div class="box box-primary">
+									<div class="box-header with-border">
+										<h3 class="box-title">基本信息</h3>
+									</div>
+									<!-- /.box-header -->
+									<!-- form start -->
+									<div class="box-body">
+										<div class="form-group">
+											<label for="name" class="col-sm-2 control-label">试题内容:</label>
+											<div class="col-sm-10">
+											   <textarea id="editor" type="text/plain"   hidden="true" autofocus th:field="*{qstnTitle}"   >${qstn.qstnTitle }</textarea>
+											   <input type="hidden"  id="titleContent" name="qstnTitle"   >
+											</div>
+										</div>
+
+										<div class="form-group">
+											<label for="birth" class="col-sm-2 control-label">试题类型</label>
+											<div class="col-sm-4">
+												<select class="form-control" name="qstnTypeId"  th:field="*{qstnTypeId}" >
+													<option value="">请选择</option>
+													
+													<option   th:value = "${qstnType.qstnTypeId }"   th:each="qstnType,i:${qstnTypeList}"   th:text="${qstnType.qstnTypeName }"   >试题类型</option>
+													
+												</select>
+											</div>
+											<label for="birth" class="col-sm-2 control-label">试题来源</label>
+											<div class="col-sm-4">
+												<select class="form-control" name="qstnFromTypeId"  th:field="*{qstnFromTypeId}" >
+													<option value="">请选择</option>
+										
+													<option  th:value = "${qstnFrom.qstnFromTypeId }"   th:each="qstnFrom,i:${qstnFromList}"   th:text="${qstnFrom.qstnFromTypeCode}"  >试题来源</option>
+													
+												</select>
+											</div>
+										</div>
+
+										<div class="form-group">
+																		<label for="birth" class="col-sm-1 control-label">科目单元</label>
+											<div class="col-sm-3">
+												<select class="form-control"  onchange="selectSubj(this.value)"  th:value="${subjId}"  >
+													<option value="">请选择</option>
+													
+													<option  th:value = "${subj.subjId }"   th:each="subj,i:${subjList}"   th:text="${subj.subjTitle }"  >科目单元</option>
+												</select>
+											</div>
+											<label for="birth" class="col-sm-1 control-label">知识章</label>
+											<div class="col-sm-3">
+												<select class="form-control" onchange="selectUnit(this.value)"  id="unitSelect">
+													<option value="">请选择</option>
+													
+													<option  th:value = "${unit.subjUnitId}"   th:each="unit,i:${subjUnitList}"   th:text="${unit.subjUnitTitle }"  >知识章</option>
+												</select>
+											</div>
+											<label for="birth" class="col-sm-1 control-label">知识节</label>
+											<div class="col-sm-3">
+												<select class="form-control" name="subjSctnId"  id="sctnSelect"   th:field="*{subjSctnId}"  >
+													<option value="">请选择</option>
+													
+													<option  th:value = "${subjSctn.subjSctnId }"   th:each="subjSctn,i:${subjSctnList}"   th:text="${subjSctn.subjSctnTitle}" >知识节</option>
+												</select>
+											</div>
+										</div>
+										<div class="form-group">
+											<label for="name" class="col-sm-2 control-label">试题说明:</label>
+											<div class="col-sm-10">
+											   	<textarea id="editor2" type="text/plain"   hidden="true" autofocus    th:field="*{qstnPictext}"   >${qstn.qstnPictext }</textarea>
+												<input type="hidden" id="pictextContent"  name="qstnPictext" >
+											</div>
+										</div>
+									</div>
+									<!-- /.box-body -->
+									<div class="box-footer">
+										<button type="button" class="btn btn-default" onclick="javascript:history.back()">返回</button>
+										<button type="submit" class="btn btn-info pull-right">提交</button>
+									</div>
+									<!-- /.box-footer -->
+								</div>
+								<!-- /.box -->
+								<!-- /.modal -->
+							</div>
+							<!--/.col (right) -->
+						</form>
+					</div>
+					<!-- /.row -->
+				</section>
+				<!-- /.content -->
+			</div>
+			<!-- /.content-wrapper -->
+
+		</div>
+
+		<div th:replace="/common/js :: commonjs"></div>
+	</body>
+	
+
+	
+	<script type="text/javascript" th:src="@{/simditor/scripts/module.js}"></script>
+	<script type="text/javascript" th:src="@{/simditor/scripts/module.js}"></script>
+	<script type="text/javascript" th:src="@{/simditor/scripts/hotkeys.js}"></script>
+	<script type="text/javascript" th:src="@{/simditor/scripts/uploader.js}"></script>
+	<script type="text/javascript" th:src="@{/simditor/scripts/simditor.js}"></script>
+
+	<script type="text/javascript">
+		
+	
+	function selectSubj(subjId){
+		var url = "/subjUnit/selectSubj";
+		$.post(url,{"subjId":subjId},function(resp){
+			// unitSelect
+			console.log(resp);
+			$("#unitSelect").empty();
+			$.each(resp, function(i, item){
+				$("<option value='" + item.subjUnitId + "'>" + item.subjUnitNum + "." + item.subjUnitTitle + "</option>").appendTo("#unitSelect");
+			});
+			if(resp.length > 0){
+				selectUnit(resp[0].subjUnitId);
+			}
+			
+		});
+	}
+	
+	function selectUnit(unitId){
+		var url = "/subjSctn/selectUnit";
+		$.post(url,{"unitId":unitId},function(resp){
+			// sctnSelect
+			console.log(resp);
+			$("#sctnSelect").empty();
+			$.each(resp, function(i, item){
+				$("<option value='" + item.subjSctnId + "'>" + item.subjSctnNum + "." + item.subjSctnTitle + "</option>").appendTo("#sctnSelect");
+			});
+		});
+	}
+	
+	
+  	function contextTextOnblur() {
+		
+		var content = editor.getValue();
+		$("#titleContent").val(content);
+		
+		var content2 = editor2.getValue();
+		$("#pictextContent").val(content2);
+		
+	}
+  	
+  	
+ 	$(function(){
+        Simditor.locale = 'zh-CN';//设置中文
+        editor = new Simditor({
+            textarea: $("#editor"),  //textarea的id
+            placeholder: '请输入试题内容',
+            toolbar:  ['title', 'bold', 'italic', 'underline', 'strikethrough', 'fontScale', 'color', '|', 'ol', 'ul', 'blockquote', 'code', 'table', '|', 'link', 'image', 'hr', '|', 'indent', 'outdent', 'alignment'], //工具条都包含哪些内容
+            pasteImage: true,//允许粘贴图片
+            defaultImage: '@{/simditor/images/image.png}',//编辑器插入的默认图片，此处可以删除
+            upload : {
+                url : '/qstn/uploadSimditorImg', //文件上传的接口地址
+                params:  {"type":"title"}, //键值对,指定文件上传接口的额外参数,上传的时候随文件一起提交
+                fileKey:'file', //服务器端获取文件数据的参数名
+                connectionCount: 3,
+                leaveConfirm: '正在上传文件'
+            }
+        });
+        
+        editor2 = new Simditor({
+            textarea: $("#editor2"),  //textarea的id
+            placeholder: '请输入试题说明',
+            toolbar:  ['title', 'bold', 'italic', 'underline', 'strikethrough', 'fontScale', 'color', '|', 'ol', 'ul', 'blockquote', 'code', 'table', '|', 'link', 'image', 'hr', '|', 'indent', 'outdent', 'alignment'], //工具条都包含哪些内容
+            pasteImage: true,//允许粘贴图片
+            defaultImage: '@{/simditor/images/image.png}',//编辑器插入的默认图片，此处可以删除
+            upload : {
+                url : '/qstn/uploadSimditorImg', //文件上传的接口地址
+                params: {"type":"pictext"}, //键值对,指定文件上传接口的额外参数,上传的时候随文件一起提交
+                fileKey:'file', //服务器端获取文件数据的参数名
+                connectionCount: 3,
+                leaveConfirm: '正在上传文件'
+            }
+        });
+      });
+ 	
+	</script>
+
+</html>

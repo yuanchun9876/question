@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ResourceUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.alibaba.fastjson.JSONObject;
@@ -72,20 +73,34 @@ public class QuestionServiceImpl implements IQuestionService{
 	}
 
 	@Override
-	public JSONObject uploadSimditorImg(MultipartFile file, String picRootPath,String type, String contextPath) {
+	public JSONObject uploadSimditorImg(MultipartFile file, String type) {
 		// TODO Auto-generated method stub
 		JSONObject json = new JSONObject();
 		try {
-//			System.out.println("picFile-fileName��" + file.getOriginalFilename());
-//			System.out.println("picRootPath-picRootPath��" + picRootPath);
-//			System.out.println("ContextPath-ContextPath��" + contextPath);
+			File filePath=new File(ResourceUtils.getURL("classpath:").getPath());
+			if(!filePath.exists()  ){
+				filePath=new File("");
+			}
+			
+			String picRootPath = filePath.getAbsolutePath()+"\\static\\upload\\";
+			
+			File upload=new File(picRootPath);
+			if (!upload.exists()) {
+				upload.mkdirs();
+			}
+			
+			File typePath=new File(picRootPath + type + "\\");
+			if(!typePath.exists()  ){
+				typePath.mkdirs();
+			}
 			
 	        String picPath = new Date().getTime() + file.getOriginalFilename();	         
 	        File rsrcLogoUrlFile = new File(picRootPath + type + "/" + picPath);
-	        //ͨ��CommonsMultipartFile�ķ���ֱ��д�ļ���ע�����ʱ��
-	        file.transferTo(rsrcLogoUrlFile);        
+	        
+	        file.transferTo(rsrcLogoUrlFile);      
+	        
 	    	json.put("success", true);
-        	json.put("file_path", contextPath + "/upload/" + type + "/" + picPath);
+        	json.put("file_path", "/upload/" + type + "/" + picPath);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -141,5 +156,23 @@ public class QuestionServiceImpl implements IQuestionService{
 	public List<Answer> queryAnswersByQstnId(String qstnId) {
 		// TODO Auto-generated method stub
 		return ansMapper.queryByQstnId(qstnId);
+	}
+
+	@Override
+	public int update(Question qstn) {
+		// TODO Auto-generated method stub
+		
+		
+		return qstnMapper.updateByPrimaryKeySelective(qstn);
+	}
+
+	@Override
+	public int dels(String[] ids) {
+		// TODO Auto-generated method stub
+		int count = 0;
+		for (int i = 0; i < ids.length; i++) {
+			count += qstnMapper.deleteByPrimaryKey(ids[i]);
+		}
+		return count;
 	}
 }
