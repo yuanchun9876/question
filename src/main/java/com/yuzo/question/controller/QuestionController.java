@@ -38,7 +38,7 @@ public class QuestionController {
 	public String query(Model model){
 		List<Question> list = qstnService.queryAll();
 		model.addAttribute("list", list);
-		return "jsp/qstn/list_qstn";
+		return "qstn/list_qstn";
 	}
 	
 	@RequestMapping("addPage")
@@ -56,7 +56,7 @@ public class QuestionController {
 		List<SubjSection> subjSctnList = qstnService.querySubjSctn();
 		model.addAttribute("subjSctnList", subjSctnList);
 				
-		return "jsp/qstn/add_qstn";
+		return "qstn/add_qstn";
 	}
 	
 	@RequestMapping("editPage")
@@ -82,7 +82,7 @@ public class QuestionController {
 		String subjId = unit.getSubjId();
 		model.addAttribute("subjId", subjId );
 		
-		return "jsp/qstn/edit_qstn";
+		return "qstn/edit_qstn";
 	}
 	
 	@RequestMapping("/answerpage")
@@ -91,7 +91,7 @@ public class QuestionController {
 		List<Answer> ansList = qstnService.queryAnswersByQstnId(id);
 		model.addAttribute("ansList", ansList);
 		
-		return "jsp/ans/list_ans";
+		return "ans/list_ans";
 	}
 
 	@RequestMapping("addSave")
@@ -100,7 +100,7 @@ public class QuestionController {
 		qstn.setQstnInputTime(new Date());
 		int count = qstnService.save(qstn);
 		logger.debug("count:" + count);
-		return "redirect:query.action";
+		return "redirect:query";
 	}
 	
 	@RequestMapping("/uploadSimditorImg")

@@ -168,13 +168,13 @@
 						</a>
 						<ul class="treeview-menu">
 		            <li >
-		            	<a href="<%=request.getContextPath() %>/qstn/query.action"  target="ifr_content"  >
+		            	<a  th:href="@{/qstn/query}"  target="ifr_content"  >
 		            		<i class="glyphicon glyphicon-record"></i>
 		            		<span >试题列表</span>
 		            	</a>
 		            </li>
 		            <li >
-		            	<a href="<%=request.getContextPath() %>/qstn/addPage.action" target="ifr_content" >
+		            	<a th:href="@{/qstn/addPage}" target="ifr_content" >
 		            		<i class="glyphicon glyphicon-record"></i>
 		            		<span >新增试题</span>
 		            	</a>
