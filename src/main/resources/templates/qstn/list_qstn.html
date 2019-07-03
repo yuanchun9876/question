@@ -96,6 +96,7 @@
 							  <td  th:field="${#dates.format(row.qstnInputTime, 'yyyy-MM-dd')}" ></td>
 							  <td>
 								<button type="button" class="btn btn-primary btn-sm"  th:onclick="editpage([[${row.qstnId}]])"  onclick="javascript:editpage('1')">修改</button>
+								<button type="button" class="btn btn-info btn-sm"  th:onclick="answerpage([[${row.qstnId}]])"  onclick="javascript:editpage('1')">设置答案</button>
 							 </td>
 							</tr>	
 							</tbody>
@@ -117,7 +118,7 @@
 <script type="text/javascript">
 		
 		function answerpage(qstnId){
-			window.location.href = "<%=request.getContextPath() %>/qstn/answerpage.action?id=" + id;
+			window.location.href = "/ans/query?id=" + id;
 		}
 		
 		function dels(){

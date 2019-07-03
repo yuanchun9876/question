@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<title>查询页面</title>
+		<!-- Tell the browser to be responsive to screen width -->
+		<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+	
+	<include th:replace="/common/css :: commoncss"/>
+
+	<style type="text/css">
+	 	.content-wrapper {
+				margin-left: 0px;
+		}
+		.qstnTitle img{display: none;}
+		
+		@media only screen and (max-width: 768px) {
+			.box-header{
+				flex-direction: column;
+			}
+			.box-header .box-search{
+				margin: 10px auto;
+			}
+		}
+	</style>
+	</head>
+
+	<body class="hold-transition skin-blue sidebar-mini">
+		<div class="wrapper">
+
+			<!-- Content Wrapper. Contains page content -->
+			<div class="content-wrapper">
+				<!-- Content Header (Page header) -->
+				<section class="content-header">
+					<h1>
+			         	试题查询
+			        </h1>
+					<ol class="breadcrumb">
+						 <li>
+							<a th:href="@{/dashboard}"><i class="glyphicon glyphicon-globe"></i>导航</a>
+						</li>
+						<li class="active">
+							<a href="#">试题查询</a>
+						</li>
+					</ol>
+				</section>
+
+				<!-- Main content -->
+				<section class="content">
+					<div class="box">
+						<form name="infoForm" id="queryForm" method="post">
+							<div class="box-header clearfix">
+								<div class="box-search btn-group">
+									<button type="button" class="btn btn-success" name="addInfo" onclick="javascript:addPage()">添加</button>
+									<button type="button" class="btn btn-warning" name="dels">删除</button>
+								</div>
+							</div>
+						</form>
+						<!-- /.box-header -->
+						<div class="box-body no-padding">
+							<table class="table table-striped">
+								<tr>
+									<th width="5%">序号</th>
+									<th width="5%">全选</th>
+									<th >答案内容</th>
+									<th width="10%">答案状态</th>
+									<th width="20%">操作</th>
+								</tr>
+								<form name="delForm"  method="post"  action="#"  th:action="@{/qstn/dels}"  >    
+								<tbody th:remove="all-but-first" >       			  	
+			        			<tr  th:each="row,i:${list}" >
+			        			  <td  th:text="${i.count }" >1</td>
+			        			  <td ><input type="checkbox" name="ids" value="1"    th:value="${row.ansId}"  ></td>
+								  <td class="qstnTitle"  th:text="${row.ansContent}" >${qstn.qstnTitle }</td>
+								  <td  th:text="${row.ansIsright}" >${qstn.qstnTypeId }</td>
+								  <td>
+									<button type="button" class="btn btn-primary btn-sm"  th:onclick="editpage([[${row.ansId}]])"  onclick="javascript:editpage('1')">修改</button>
+								 </td>
+								</tr>	
+								</tbody>
+								</form>
+							</table>
+						</div>
+					</div>
+					<!-- /.row -->
+				</section>
+				<!-- /.content -->
+			</div>
+		</div>
+		<!-- ./wrapper -->
+<div th:replace="/common/js :: commonjs"></div>
+
+</body>
+
+
+<script type="text/javascript">
+		
+	
+		function dels(){
+			var ids = $("[name=ids]:checked");
+			if(ids.length==0){
+				alert("请选择要删除记录!");
+				return;
+			}
+			if(window.confirm("确定要删除吗?")){
+				//console.log(document.delForm.action);
+				document.delForm.submit();
+			}
+		}
+
+		function editpage(id) {
+			bootbox.alert(id);
+			window.location.href = "<%=request.getContextPath() %>/qstn/editPage.action?id=" + id;
+		}
+
+		function addPage(){
+			window.location.href = "<%=request.getContextPath() %>/qstn/addPage.action";
+		}
+	</script>
+
+</html>

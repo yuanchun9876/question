@@ -129,12 +129,5 @@ public class QuestionController {
 	}
 
 	
-	@RequestMapping("/answerpage")
-	public String answerpage(String id,Model model){
-		
-		List<Answer> ansList = qstnService.queryAnswersByQstnId(id);
-		model.addAttribute("ansList", ansList);
-		
-		return "ans/list_ans";
-	}
+
 }
