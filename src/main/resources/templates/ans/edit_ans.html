@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<title>修改页面</title>
+		<!-- Tell the browser to be responsive to screen width -->
+		<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+	   <include th:replace="/common/css :: commoncss"/>
+		<link rel="stylesheet"  type="text/css"  th:href="@{/simditor/styles/simditor.css}">
+		<style type="text/css">
+			
+			.content-wrapper {
+				margin-left: 0px;
+			}
+		</style>
+	</head>
+
+	<body class="hold-transition skin-blue sidebar-mini">
+		<div class="wrapper">
+
+			<!-- Content Wrapper. Contains page content -->
+			<div class="content-wrapper">
+				<!-- Content Header (Page header) -->
+				<section class="content-header">
+					<h1>
+			          	答案修改
+			        </h1>
+			        <ol class="breadcrumb">
+						<li>
+							<a href="<%=request.getContextPath() %>/common/dashboard.html"><i class="glyphicon glyphicon-globe"></i>导航</a>
+						</li>
+						<li class="active">
+							<a href="#">答案修改</a>
+						</li>
+					</ol>
+				</section>
+
+				<!-- Main content -->
+				<section class="content">
+					<div class="row">
+						<form class="form form-horizontal" method="get"   onsubmit="contextTextOnblur()"  th:action="@{/ans/editSave}"  th:object="${ans}" >
+							<input type="hidden" name="ansId"   th:field="*{ansId}"   >
+							<input type="hidden" name="qstnId"   th:field="*{qstnId}"   >
+							<!-- left column -->
+							<div class="col-md-10 col-md-offset-1">
+								<!-- general form elements -->
+								<div class="box box-primary">
+									<div class="box-header with-border">
+										<h3 class="box-title">基本信息</h3>
+									</div>
+									<!-- /.box-header -->
+									<!-- form start -->
+									<div class="box-body">
+										<div class="form-group">
+											<label for="name" class="col-sm-2 control-label">答案内容:</label>
+											<div class="col-sm-10">
+											   <textarea id="editor" type="text/plain"   hidden="true" autofocus  th:field="*{ansContent}"  ></textarea>
+											   <input type="hidden"  id="titleContent" name="ansContent"   >
+											</div>
+										</div>
+
+										<div class="form-group">
+											<label for="name" class="col-sm-2 control-label">答案状态:</label>
+											<div class="col-sm-10 radio text-left">
+										        <label>
+										          <input type="radio"  name="ansIsright" value="1"  checked >正确
+										        </label>
+										        <label>
+										          <input type="radio"  name="ansIsright" value="0">错误
+										        </label>
+											</div>
+										</div>
+									</div>
+									<!-- /.box-body -->
+									<div class="box-footer">
+										<button type="button" class="btn btn-default" onclick="javascript:history.back()">返回</button>
+										<button type="submit" class="btn btn-info pull-right">提交</button>
+									</div>
+									<!-- /.box-footer -->
+								</div>
+								<!-- /.box -->
+								<!-- /.modal -->
+							</div>
+							<!--/.col (right) -->
+						</form>
+					</div>
+					<!-- /.row -->
+				</section>
+				<!-- /.content -->
+			</div>
+			<!-- /.content-wrapper -->
+
+		</div>
+
+		<div th:replace="/common/js :: commonjs"></div>
+	</body>
+	
+
+	
+	<script type="text/javascript" th:src="@{/simditor/scripts/module.js}"></script>
+	<script type="text/javascript" th:src="@{/simditor/scripts/module.js}"></script>
+	<script type="text/javascript" th:src="@{/simditor/scripts/hotkeys.js}"></script>
+	<script type="text/javascript" th:src="@{/simditor/scripts/uploader.js}"></script>
+	<script type="text/javascript" th:src="@{/simditor/scripts/simditor.js}"></script>
+
+	<script type="text/javascript">
+		
+	
+
+	
+  	function contextTextOnblur() {
+		
+		var content = editor.getValue();
+		$("#titleContent").val(content);
+		
+	}
+  	
+  	
+ 	$(function(){
+        Simditor.locale = 'zh-CN';//设置中文
+        editor = new Simditor({
+            textarea: $("#editor"),  //textarea的id
+            placeholder: '请输入答案内容',
+            toolbar:  ['title', 'bold', 'italic', 'underline', 'strikethrough', 'fontScale', 'color', '|', 'ol', 'ul', 'blockquote', 'code', 'table', '|', 'link', 'image', 'hr', '|', 'indent', 'outdent', 'alignment'], //工具条都包含哪些内容
+            pasteImage: true,//允许粘贴图片
+            defaultImage: '@{/simditor/images/image.png}',//编辑器插入的默认图片，此处可以删除
+            upload : {
+                url : '/qstn/uploadSimditorImg', //文件上传的接口地址
+                params:  {"type":"ans_content"}, //键值对,指定文件上传接口的额外参数,上传的时候随文件一起提交
+                fileKey:'file', //服务器端获取文件数据的参数名
+                connectionCount: 3,
+                leaveConfirm: '正在上传文件'
+            }
+        });
+        
+     
+      });
+ 	
+	</script>
+
+</html>

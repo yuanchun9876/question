@@ -35,14 +35,14 @@
 				<!-- Content Header (Page header) -->
 				<section class="content-header">
 					<h1>
-			         	试题查询
+			         	答案查询
 			        </h1>
 					<ol class="breadcrumb">
 						 <li>
 							<a th:href="@{/dashboard}"><i class="glyphicon glyphicon-globe"></i>导航</a>
 						</li>
 						<li class="active">
-							<a href="#">试题查询</a>
+							<a href="#">答案查询</a>
 						</li>
 					</ol>
 				</section>
@@ -53,12 +53,15 @@
 						<form name="infoForm" id="queryForm" method="post">
 							<div class="box-header clearfix">
 								<div class="box-search btn-group">
-									<button type="button" class="btn btn-success" name="addInfo" onclick="javascript:addPage()">添加</button>
-									<button type="button" class="btn btn-warning" name="dels">删除</button>
+									<button type="button" class="btn btn-success" name="addInfo"   th:onclick="addPage([[${qstn.qstnId}]])"  onclick="javascript:addPage()">添加</button>
+									<button type="button" class="btn btn-warning" name="delBtn"  th:onclick="dels()">删除</button>
 								</div>
 							</div>
 						</form>
 						<!-- /.box-header -->
+						<div class="box-body no-padding">
+							<div th:field="${qstn.qstnTitle}" ></div>
+						</div>
 						<div class="box-body no-padding">
 							<table class="table table-striped">
 								<tr>
@@ -68,7 +71,7 @@
 									<th width="10%">答案状态</th>
 									<th width="20%">操作</th>
 								</tr>
-								<form name="delForm"  method="post"  action="#"  th:action="@{/qstn/dels}"  >    
+								<form name="delForm"  method="post"  action="#"  th:action="@{/ans/dels}"  >    
 								<tbody th:remove="all-but-first" >       			  	
 			        			<tr  th:each="row,i:${list}" >
 			        			  <td  th:text="${i.count }" >1</td>
@@ -111,12 +114,12 @@
 		}
 
 		function editpage(id) {
-			bootbox.alert(id);
-			window.location.href = "<%=request.getContextPath() %>/qstn/editPage.action?id=" + id;
+			//bootbox.alert(qstnId);
+			window.location.href = "/ans/editPage?id=" + id;
 		}
 
-		function addPage(){
-			window.location.href = "<%=request.getContextPath() %>/qstn/addPage.action";
+		function addPage(qstnId){
+			window.location.href = "/ans/addPage?qstnId=" + qstnId;
 		}
 	</script>
 

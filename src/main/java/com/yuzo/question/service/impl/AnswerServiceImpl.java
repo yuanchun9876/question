@@ -35,12 +35,42 @@ public class AnswerServiceImpl implements IAnswerService{
 	@Autowired
 	private AnswerMapper ansMapper;
 
-
+	@Autowired
+	private QuestionMapper qstnMapper;
+	
 
 	@Override
 	public List<Answer> queryByQstnId(String qstnId) {
-		// TODO Auto-generated method stub
 		return ansMapper.queryByQstnId(qstnId);
+	}
+
+	@Override
+	public Question queryQstnById(String id) {
+		return qstnMapper.selectByPrimaryKey(id);
+	}
+
+	@Override
+	public int save(Answer ans) {		
+		return ansMapper.insertSelective(ans);
+	}
+
+	@Override
+	public Answer queryById(String id) {
+		return ansMapper.selectByPrimaryKey(id);
+	}
+
+	@Override
+	public int update(Answer ans) {
+		return ansMapper.updateByPrimaryKeySelective(ans);
+	}
+
+	@Override
+	public int dels(String[] ids) {
+		int count = 0;
+		for (int i = 0; i < ids.length; i++) {
+			ansMapper.deleteByPrimaryKey(ids[i]);
+		}
+		return count;
 	}
 
 }
