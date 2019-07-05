@@ -40,7 +40,7 @@
 				<!-- Main content -->
 				<section class="content">
 					<div class="row">
-						<form class="form form-horizontal" method="get"   onsubmit="contextTextOnblur()"  th:action="@{/qstn/editSave}"  th:object="${qstn}" >
+						<form class="form form-horizontal" method="post"   th:action="@{/qstn/editSave}"  th:object="${qstn}" >
 							<input type="hidden" name="qstnId"   th:field="*{qstnId}"   >
 							<!-- left column -->
 							<div class="col-md-10 col-md-offset-1">
@@ -55,8 +55,8 @@
 										<div class="form-group">
 											<label for="name" class="col-sm-2 control-label">试题内容:</label>
 											<div class="col-sm-10">
-											   <textarea id="editor" type="text/plain"   hidden="true" autofocus th:field="*{qstnTitle}"   >${qstn.qstnTitle }</textarea>
-											   <input type="hidden"  id="titleContent" name="qstnTitle"   >
+											   <textarea id="editor" type="text/plain"   hidden="true" autofocus th:field="*{qstnTitle}"   name="qstnTitle"   >${qstn.qstnTitle }</textarea>
+											  
 											</div>
 										</div>
 
@@ -110,8 +110,8 @@
 										<div class="form-group">
 											<label for="name" class="col-sm-2 control-label">试题说明:</label>
 											<div class="col-sm-10">
-											   	<textarea id="editor2" type="text/plain"   hidden="true" autofocus    th:field="*{qstnPictext}"   >${qstn.qstnPictext }</textarea>
-												<input type="hidden" id="pictextContent"  name="qstnPictext" >
+											   	<textarea id="editor2" type="text/plain"   hidden="true" autofocus   name="qstnPictext"   th:field="*{qstnPictext}"   >${qstn.qstnPictext }</textarea>
+											
 											</div>
 										</div>
 									</div>
@@ -179,15 +179,7 @@
 	}
 	
 	
-  	function contextTextOnblur() {
-		
-		var content = editor.getValue();
-		$("#titleContent").val(content);
-		
-		var content2 = editor2.getValue();
-		$("#pictextContent").val(content2);
-		
-	}
+
   	
   	
  	$(function(){

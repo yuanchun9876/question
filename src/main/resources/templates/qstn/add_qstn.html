@@ -40,7 +40,7 @@
 				<!-- Main content -->
 				<section class="content">
 					<div class="row">
-						<form class="form form-horizontal" method="get"   onsubmit="contextTextOnblur()"  th:action="@{/qstn/addSave}">
+						<form class="form form-horizontal" method="post"  th:action="@{/qstn/addSave}">
 							<!-- left column -->
 							<div class="col-md-10 col-md-offset-1">
 								<!-- general form elements -->
@@ -54,8 +54,8 @@
 										<div class="form-group">
 											<label for="name" class="col-sm-2 control-label">试题内容:</label>
 											<div class="col-sm-10">
-											   <textarea id="editor" type="text/plain"   hidden="true" autofocus></textarea>
-											   <input type="hidden"  id="titleContent" name="qstnTitle"   >
+											   <textarea id="editor" type="text/plain"   hidden="true"   name="qstnTitle"    autofocus></textarea>
+											  
 											</div>
 										</div>
 
@@ -109,8 +109,8 @@
 										<div class="form-group">
 											<label for="name" class="col-sm-2 control-label">试题说明:</label>
 											<div class="col-sm-10">
-											   	<textarea id="editor2" type="text/plain"   hidden="true" autofocus></textarea>
-												<input type="hidden" id="pictextContent"  name="qstnPictext" >
+											   	<textarea id="editor2" type="text/plain"  name="qstnPictext"  hidden="true" autofocus></textarea>
+											
 											</div>
 										</div>
 									</div>
@@ -179,8 +179,8 @@
 		
 	  	function contextTextOnblur() {
 			
-			var content = editor.getValue();
-			$("#titleContent").val(content);
+//			var content = editor.getValue();
+//			$("#titleContent").val(content);
 			
 			var content2 = editor2.getValue();
 			$("#pictextContent").val(content2);
