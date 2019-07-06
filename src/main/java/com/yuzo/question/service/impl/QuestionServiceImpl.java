@@ -24,6 +24,7 @@ import com.yuzo.question.mapper.QuestionTypeMapper;
 import com.yuzo.question.mapper.SubjSectionMapper;
 import com.yuzo.question.mapper.SubjUnitMapper;
 import com.yuzo.question.mapper.SubjectCourseMapper;
+import com.yuzo.question.page.SubjSectionPage;
 import com.yuzo.question.service.IQuestionService;
 
 
@@ -69,7 +70,7 @@ public class QuestionServiceImpl implements IQuestionService{
 	@Override
 	public List<SubjSection> querySubjSctn() {
 		// TODO Auto-generated method stub
-		return sctnMapper.queryAll();
+		return sctnMapper.queryAll(null);
 	}
 
 	@Override

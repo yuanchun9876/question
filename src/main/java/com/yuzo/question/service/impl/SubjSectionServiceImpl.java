@@ -11,6 +11,7 @@ import com.yuzo.question.entity.SubjectCourse;
 import com.yuzo.question.mapper.SubjSectionMapper;
 import com.yuzo.question.mapper.SubjUnitMapper;
 import com.yuzo.question.mapper.SubjectCourseMapper;
+import com.yuzo.question.page.SubjSectionPage;
 import com.yuzo.question.service.ISubjSectionService;
 
 
@@ -90,5 +91,11 @@ public class SubjSectionServiceImpl implements ISubjSectionService{
 	public SubjUnit queryUnitById(String subjUnitId) {
 		// TODO Auto-generated method stub
 		return unitMapper.selectByPrimaryKey(subjUnitId);
+	}
+
+	@Override
+	public List<SubjSection> query(SubjSectionPage page) {
+		// TODO Auto-generated method stub
+		return sctnMapper.queryAll(page);
 	}
 }

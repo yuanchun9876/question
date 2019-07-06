@@ -70,7 +70,7 @@
         			</tr>
         			<form name="delForm"  method="post"  th:action="@{/subjSctn/dels}">
         			<tbody th:remove="all-but-first" >       			  	
-        			<tr  th:each="row,i:${list}" >
+        			<tr  th:each="row,i:${pageInfo.list}" >
         			  <td  th:text="${i.count }" >1</td>
         			  <td ><input type="checkbox" name="ids" value="1"    th:value="${row.subjSctnId}"  ></td>
         				<td   th:text="${row.subjSctnTitle}">${scth.subjSctnTitle }</td>

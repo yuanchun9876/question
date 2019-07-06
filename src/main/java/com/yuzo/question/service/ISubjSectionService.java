@@ -5,6 +5,7 @@ import java.util.List;
 import com.yuzo.question.entity.SubjSection;
 import com.yuzo.question.entity.SubjUnit;
 import com.yuzo.question.entity.SubjectCourse;
+import com.yuzo.question.page.SubjSectionPage;
 
 
 
@@ -29,5 +30,7 @@ public interface ISubjSectionService {
 	List<SubjectCourse> querySubj();
 
 	SubjUnit queryUnitById(String subjUnitId);
+
+	List<SubjSection> query(SubjSectionPage page);
 
 }

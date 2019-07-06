@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.ResultMap;
 import org.apache.ibatis.annotations.Select;
 
 import com.yuzo.question.entity.SubjSection;
+import com.yuzo.question.page.SubjSectionPage;
 
 
 
@@ -31,5 +32,5 @@ public interface SubjSectionMapper {
 			"    SUBJ_SCTN_LOGO_URL, SUBJ_SCTN_VIDEO_URL, SUBJ_SCTN_PIC_TEXT, SUBJ_SCTN_VIDEO_LEN\r\n" + 
 			"    from subj_section")
 	@ResultMap("BaseResultMap")
-	List<SubjSection> queryAll();
+	List<SubjSection> queryAll(SubjSectionPage page);
 }

@@ -1,41 +1,62 @@
 package com.yuzo.question.controller;
 
-import java.io.File;
 import java.io.IOException;
-import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpSession;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.multipart.commons.CommonsMultipartFile;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.yuzo.question.entity.SubjSection;
 import com.yuzo.question.entity.SubjUnit;
 import com.yuzo.question.entity.SubjectCourse;
 import com.yuzo.question.entity.Teacher;
+import com.yuzo.question.page.SubjSectionPage;
 import com.yuzo.question.service.ISubjSectionService;
 
 @Controller
 @RequestMapping("subjSctn")
+@SessionAttributes("sctnpage")
 public class SubjSectionController {
 
+	// 日志
+	static Logger logger = Logger.getLogger(SubjSectionController.class);
+	
 	@Autowired
 	private ISubjSectionService  subjSctnService;
 	
+	/**
+	 * 初始化分页对象,并放到model里
+	 */
+	@ModelAttribute("sctnpage")
+	public SubjSectionPage initPage() {
+		return new SubjSectionPage();
+	}
+	
 	@RequestMapping("query")
-	public String query(HttpSession session, Model model) {
+	public String query(@ModelAttribute("sctnpage")SubjSectionPage page, HttpSession session, Model model) {
 		Teacher tch = (Teacher) session.getAttribute("tch");
 		String tchId = "1"; // tch.getTchId()
-		List<SubjSection> list = subjSctnService.queryByTchId(tchId);
-		model.addAttribute("list", list);
+		System.out.println("page:" + page);
+		//获取第1页，10条内容，默认查询总数count		
+		PageHelper.startPage(page.getPageNum(), page.getPageSize());		
+		List<SubjSection> list = subjSctnService.query(page);		
+		PageInfo<SubjSection> pageInfo = new PageInfo<SubjSection>(list);
+		System.out.println(list.size());
+        model.addAttribute("pageInfo",pageInfo);
+        System.out.println(pageInfo);
+		//model.addAttribute("list", list);
 		return "subjsctn/list_sctn";
 	}
 	
