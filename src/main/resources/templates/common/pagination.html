@@ -1,0 +1,122 @@
+<div th:fragment="pagination(uri,page)">
+<style type="text/css">
+.paginationzg {
+	display: inline-block;
+	border: 1px solid #CDCDCD;
+	border-radius: 3px;
+}
+.paginationzg a {
+	display: block;
+	float: left;
+	width: 60px;
+	height: 40px;
+	outline: none;
+	border-right: 1px solid #CDCDCD;
+	border-left: 1px solid #CDCDCD;
+	color: #555555;
+	vertical-align: middle;
+	text-align: center;
+	text-decoration: none;
+	font-weight: bold;
+	font-size: 25px;
+	font-family: Times, 'Times New Roman', Georgia, Palatino;
+	/* ATTN: need a better font stack */
+	background-color: #f3f3f3;
+	background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #f3f3f3),
+		color-stop(100%, lightgrey));
+	background-image: -webkit-linear-gradient(#f3f3f3, lightgrey);
+	background-image: linear-gradient(#f3f3f3, lightgrey);
+}
+.paginationzg a:hover, .paginationzg a:focus, .paginationzg a:active {
+	background-color: #cecece;
+	background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #e4e4e4),
+		color-stop(100%, #cecece));
+	background-image: -webkit-linear-gradient(#e4e4e4, #cecece);
+	background-image: linear-gradient(#e4e4e4, #cecece);
+}
+.paginationzg a.disabled, .paginationzg a.disabled:hover, .paginationzg a.disabled:focus,
+	.paginationzg a.disabled:active {
+	background-color: #f3f3f3;
+	background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #f3f3f3),
+		color-stop(100%, lightgrey));
+	background-image: -webkit-linear-gradient(#f3f3f3, lightgrey);
+	background-image: linear-gradient(#f3f3f3, lightgrey);
+	color: #A8A8A8;
+	cursor: default;
+}
+.paginationzg a:first-child {
+	border: none;
+	border-radius: 2px 0 0 2px;
+}
+.paginationzg a:last-child {
+	border: none;
+	border-radius: 0 2px 2px 0;
+}
+.paginationzg input {
+	float: left;
+	margin: 0;
+	padding: 0;
+	width: 220px;
+	height: 40px;
+	outline: none;
+	border: none;
+	vertical-align: middle;
+	text-align: center;
+	font-size: 20px;
+}
+</style>
+<div class="paginationzg">
+	<a th:href="|javascript:zhuan('1')|" class="first" >&laquo;</a>
+	<a th:href="|javascript:zhuan('${page.hasPreviousPage ? page.prePage : 1}')|" class="previous" >&lsaquo;</a>
+	<input type="text" class="pageinput" th:value="|第 ${page.pageNum} 页, 共 ${page.pages}页|" value="Page 1 of 2" onfocus="pageChufa(this)" onblur="pagelikai(this)"/>
+	<a th:href="|javascript:zhuan('${page.hasNextPage ? page.nextPage : page.pages  }')|" class="next" >&rsaquo;</a>
+	<a th:href="|javascript:zhuan('${page.pages}')|" class="last" >&raquo;</a>
+</div>
+<script type="text/javascript" th:inline="javascript">
+	function zhuan(str){
+		var fh = parseUri([[${uri}]]);
+		location.href = [[${uri}]] + fh + "pageNum="+str;
+	}
+	function pageChufa(o){
+		o.value = "";
+	}
+	function pagelikai(o){
+		o.value = "Page [[${page.pageNum}]] of [[${page.pages}]]";
+	}
+	$(".pageinput").on({
+		keydown:function(e){
+			if(e.keyCode>=48 && e.keyCode <= 57){
+				return true;
+			}else if(e.keyCode>=96 && e.keyCode <= 105){
+				return true;
+			}else if(e.keyCode == 8){
+				return true;
+			}
+			return false;
+		},
+		keyup:function(e){
+			var v = $(this).val();
+			var lastPage = [[page.pages]];
+			if(Number(v) < 1){
+				$(this).val("1");
+			}
+			if(Number(v) > Number(lastPage)){
+				$(this).val(lastPage);
+			}
+			if(e.keyCode == 13){
+				var fh = parseUri([[${uri}]]);
+				location.href = [[${uri}]] + fh + "pageNum="+v;
+			}
+			return true;
+		}
+	});
+	//判断传入的uri中是否存在？   如果有就加个&号，没有就加个？号
+	function parseUri(uri2){
+		var p = uri2.lastIndexOf("?");
+		if( p == -1 ){
+			return "?";
+		}else{
+			return "&";
+		}
+	}
+</script>
