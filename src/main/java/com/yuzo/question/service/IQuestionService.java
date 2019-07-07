@@ -13,6 +13,7 @@ import com.yuzo.question.entity.QuestionType;
 import com.yuzo.question.entity.SubjSection;
 import com.yuzo.question.entity.SubjUnit;
 import com.yuzo.question.entity.SubjectCourse;
+import com.yuzo.question.page.QuestionPage;
 
 
 
@@ -29,7 +30,7 @@ public interface IQuestionService {
 
 	int save(Question qstn);
 
-	List<Question> queryAll();
+	List<Question> queryAll(QuestionPage page);
 
 	Question queryById(String id);
 

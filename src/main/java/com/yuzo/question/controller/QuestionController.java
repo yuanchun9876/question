@@ -1,45 +1,83 @@
 package com.yuzo.question.controller;
 
-import java.io.File;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
-import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.log4j.Logger;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.util.ResourceUtils;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.alibaba.fastjson.JSONObject;
-import com.yuzo.question.entity.Answer;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.yuzo.question.entity.QstnFromType;
 import com.yuzo.question.entity.Question;
 import com.yuzo.question.entity.QuestionType;
 import com.yuzo.question.entity.SubjSection;
 import com.yuzo.question.entity.SubjUnit;
 import com.yuzo.question.entity.SubjectCourse;
+import com.yuzo.question.page.QuestionPage;
+import com.yuzo.question.page.SubjSectionPage;
 import com.yuzo.question.service.IQuestionService;
 
 @Controller
 @RequestMapping("qstn")
+@SessionAttributes("qstnpage")
 public class QuestionController {
 	
 	private Logger logger = Logger.getLogger(QuestionController.class);
 	
 	@Autowired
 	private IQuestionService qstnService;
+	
+	/**
+	 * 初始化分页对象,并放到model里
+	 */
+	@ModelAttribute("qstnpage")
+	public QuestionPage initPage() {
+		return new QuestionPage();
+	}
 
 	@RequestMapping("query")
-	public String query(Model model){
-		List<Question> list = qstnService.queryAll();
-		model.addAttribute("list", list);
+	public String query(@ModelAttribute("qstnpage")QuestionPage page, Model model,String clearpage) {
+		if (clearpage != null) {
+			BeanUtils.copyProperties(new QuestionPage(), page);
+		}
+		//	
+		System.out.println("page: " + page);
+		
+		model.addAttribute("page", page);
+		
+		PageHelper.startPage(page.getPageNum(), page.getPageSize());		
+		List<Question> list = qstnService.queryAll(page);
+		PageInfo<Question> pageInfo = new PageInfo<Question>(list);
+        model.addAttribute("pageInfo",pageInfo);
+        System.out.println("pageInfo: " + pageInfo);
+        
+        // 用于条件查询
+		List<QstnFromType> qstnFromList = qstnService.queryQstnFrom();
+		model.addAttribute("qstnFromList", qstnFromList);
+		List<QuestionType> qstnTypeList = qstnService.queryQstnType();
+		model.addAttribute("qstnTypeList", qstnTypeList);
+		
+		List<SubjectCourse> subjList = qstnService.querySubj();
+		model.addAttribute("subjList", subjList);
+		List<SubjUnit> subjUnitList = qstnService.querySubjUnit();
+		model.addAttribute("subjUnitList", subjUnitList);
+		List<SubjSection> subjSctnList = qstnService.querySubjSctn();
+		model.addAttribute("subjSctnList", subjSctnList);
+        
+        
 		return "qstn/list_qstn";
 	}
 	

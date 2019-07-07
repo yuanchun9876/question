@@ -24,6 +24,7 @@ import com.yuzo.question.mapper.QuestionTypeMapper;
 import com.yuzo.question.mapper.SubjSectionMapper;
 import com.yuzo.question.mapper.SubjUnitMapper;
 import com.yuzo.question.mapper.SubjectCourseMapper;
+import com.yuzo.question.page.QuestionPage;
 import com.yuzo.question.page.SubjSectionPage;
 import com.yuzo.question.service.IQuestionService;
 
@@ -118,9 +119,9 @@ public class QuestionServiceImpl implements IQuestionService{
 	}
 
 	@Override
-	public List<Question> queryAll() {
+	public List<Question> queryAll(QuestionPage page) {
 		// TODO Auto-generated method stub
-		return qstnMapper.queryAll();
+		return qstnMapper.queryAll(page);
 	}
 
 	@Override

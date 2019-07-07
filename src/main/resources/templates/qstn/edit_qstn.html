@@ -63,7 +63,7 @@
 										<div class="form-group">
 											<label for="birth" class="col-sm-2 control-label">试题类型</label>
 											<div class="col-sm-4">
-												<select class="form-control" name="qstnTypeId"  th:field="*{qstnTypeId}" >
+												<select class="form-control" name="qstnTypeId"  th:field="*{qstnTypeId}"   required="required"  >
 													<option value="">请选择</option>
 													
 													<option   th:value = "${qstnType.qstnTypeId }"   th:each="qstnType,i:${qstnTypeList}"   th:text="${qstnType.qstnTypeName }"   >试题类型</option>
@@ -72,7 +72,7 @@
 											</div>
 											<label for="birth" class="col-sm-2 control-label">试题来源</label>
 											<div class="col-sm-4">
-												<select class="form-control" name="qstnFromTypeId"  th:field="*{qstnFromTypeId}" >
+												<select class="form-control" name="qstnFromTypeId"  th:field="*{qstnFromTypeId}"   required="required"  >
 													<option value="">请选择</option>
 										
 													<option  th:value = "${qstnFrom.qstnFromTypeId }"   th:each="qstnFrom,i:${qstnFromList}"   th:text="${qstnFrom.qstnFromTypeCode}"  >试题来源</option>
@@ -84,7 +84,7 @@
 										<div class="form-group">
 																		<label for="birth" class="col-sm-1 control-label">科目单元</label>
 											<div class="col-sm-3">
-												<select class="form-control"  onchange="selectSubj(this.value)"  th:value="${subjId}"  >
+												<select class="form-control"  onchange="selectSubj(this.value)"  th:value="${subjId}"   required="required"  >
 													<option value="">请选择</option>
 													
 													<option  th:value = "${subj.subjId }"   th:each="subj,i:${subjList}"   th:text="${subj.subjTitle }"  >科目单元</option>
@@ -92,7 +92,7 @@
 											</div>
 											<label for="birth" class="col-sm-1 control-label">知识章</label>
 											<div class="col-sm-3">
-												<select class="form-control" onchange="selectUnit(this.value)"  id="unitSelect">
+												<select class="form-control" onchange="selectUnit(this.value)"  id="unitSelect"    required="required"  >
 													<option value="">请选择</option>
 													
 													<option  th:value = "${unit.subjUnitId}"   th:each="unit,i:${subjUnitList}"   th:text="${unit.subjUnitTitle }"  >知识章</option>
@@ -100,7 +100,7 @@
 											</div>
 											<label for="birth" class="col-sm-1 control-label">知识节</label>
 											<div class="col-sm-3">
-												<select class="form-control" name="subjSctnId"  id="sctnSelect"   th:field="*{subjSctnId}"  >
+												<select class="form-control" name="subjSctnId"  id="sctnSelect"   th:field="*{subjSctnId}"   required="required"   >
 													<option value="">请选择</option>
 													
 													<option  th:value = "${subjSctn.subjSctnId }"   th:each="subjSctn,i:${subjSctnList}"   th:text="${subjSctn.subjSctnTitle}" >知识节</option>

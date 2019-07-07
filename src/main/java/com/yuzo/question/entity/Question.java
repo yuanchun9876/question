@@ -16,6 +16,18 @@ public class Question {
     private Date qstnInputTime;
 
     private String qstnPictext;
+    
+    
+    private String subjSctnTitle;
+
+    private String qstnTypeName;
+
+    private String qstnFromTypeCode;
+    
+    private String subjUnitTitle;
+    
+    private String subjTitle;
+    
 
     public String getQstnId() {
         return qstnId;
@@ -72,4 +84,46 @@ public class Question {
     public void setQstnPictext(String qstnPictext) {
         this.qstnPictext = qstnPictext == null ? null : qstnPictext.trim();
     }
+
+	public String getSubjSctnTitle() {
+		return subjSctnTitle;
+	}
+
+	public void setSubjSctnTitle(String subjSctnTitle) {
+		this.subjSctnTitle = subjSctnTitle;
+	}
+
+	public String getQstnTypeName() {
+		return qstnTypeName;
+	}
+
+	public void setQstnTypeName(String qstnTypeName) {
+		this.qstnTypeName = qstnTypeName;
+	}
+
+	public String getQstnFromTypeCode() {
+		return qstnFromTypeCode;
+	}
+
+	public void setQstnFromTypeCode(String qstnFromTypeCode) {
+		this.qstnFromTypeCode = qstnFromTypeCode;
+	}
+
+	public String getSubjUnitTitle() {
+		return subjUnitTitle;
+	}
+
+	public void setSubjUnitTitle(String subjUnitTitle) {
+		this.subjUnitTitle = subjUnitTitle;
+	}
+
+	public String getSubjTitle() {
+		return subjTitle;
+	}
+
+	public void setSubjTitle(String subjTitle) {
+		this.subjTitle = subjTitle;
+	}
+    
+    
 }

@@ -55,9 +55,9 @@ public class SubjSectionController {
 		List<SubjSection> list = subjSctnService.query(page);	
 		
 		PageInfo<SubjSection> pageInfo = new PageInfo<SubjSection>(list);
-		System.out.println(list.size());
+		//System.out.println(list.size());
         model.addAttribute("pageInfo",pageInfo);
-        System.out.println(pageInfo);
+        //System.out.println(pageInfo);
 		//model.addAttribute("list", list);
 		return "subjsctn/list_sctn";
 	}
