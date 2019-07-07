@@ -132,7 +132,7 @@
 	        <li class="treeview" >
 						<a href="#">
 							<i class="glyphicon glyphicon-tasks"></i> 
-							<span >菜单一</span>
+							<span >系统设置</span>
 							<span  class="pull-right-container">
 								<i class="glyphicon glyphicon-chevron-left pull-right"></i>
 							</span>	
@@ -141,19 +141,25 @@
 		            <li >
 		            	<a href="<%=request.getContextPath() %>/example/list.html"  target="ifr_content"  >
 		            		<i class="glyphicon glyphicon-record"></i>
-		            		<span >列表页面</span>
+		            		<span >用户维护</span>
 		            	</a>
 		            </li>
 		            <li >
 		            	<a href="<%=request.getContextPath() %>/example/add.html" target="ifr_content" >
 		            		<i class="glyphicon glyphicon-record"></i>
-		            		<span >添加页面</span>
+		            		<span >角色维护</span>
 		            	</a>
 		            </li>
 		            <li >
 		            	<a th:href="@{/dashboard}" target="ifr_content" >
 		            		<i class="glyphicon glyphicon-record"></i>
-		            		<span >导航页面</span>
+		            		<span >权限维护</span>
+		            	</a>
+		            </li>
+		             <li >
+		            	<a th:href="@{/dashboard}" target="ifr_content" >
+		            		<i class="glyphicon glyphicon-record"></i>
+		            		<span >菜单管理</span>
 		            	</a>
 		            </li>
 		        </ul>
@@ -182,7 +188,7 @@
 		            <li >
 		            	<a href="dashboard.html" target="ifr_content" >
 		            		<i class="glyphicon glyphicon-record"></i>
-		            		<span >测试</span>
+		            		<span >出题</span>
 		            	</a>
 		            </li>
 		        </ul>

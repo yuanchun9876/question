@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yuzo.question.mapper.TestPlanMapper" >
+  <resultMap id="BaseResultMap" type="com.yuzo.question.entity.TestPlan" >
+    <id column="TP_ID" property="tpId" jdbcType="VARCHAR" />
+    <result column="TP_TITLE" property="tpTitle" jdbcType="VARCHAR" />
+    <result column="TP_BEGIN_DATE" property="tpBeginDate" jdbcType="TIMESTAMP" />
+    <result column="TP_END_DATE" property="tpEndDate" jdbcType="TIMESTAMP" />
+    <result column="TP_COUNT" property="tpCount" jdbcType="INTEGER" />
+    <result column="TP_TOTAL" property="tpTotal" jdbcType="INTEGER" />
+    <result column="TP_DATE" property="tpDate" jdbcType="TIMESTAMP" />
+    <result column="TP_INFO" property="tpInfo" jdbcType="VARCHAR" />
+    <result column="TP_TYPE" property="tpType" jdbcType="VARCHAR" />
+    <result column="TP_TARGET" property="tpTarget" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    TP_ID, TP_TITLE, TP_BEGIN_DATE, TP_END_DATE, TP_COUNT, TP_TOTAL, TP_DATE, TP_INFO, 
+    TP_TYPE, TP_TARGET
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from test_plan
+    where TP_ID = #{tpId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from test_plan
+    where TP_ID = #{tpId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.yuzo.question.entity.TestPlan" >
+    insert into test_plan (TP_ID, TP_TITLE, TP_BEGIN_DATE, 
+      TP_END_DATE, TP_COUNT, TP_TOTAL, 
+      TP_DATE, TP_INFO, TP_TYPE, 
+      TP_TARGET)
+    values (#{tpId,jdbcType=VARCHAR}, #{tpTitle,jdbcType=VARCHAR}, #{tpBeginDate,jdbcType=TIMESTAMP}, 
+      #{tpEndDate,jdbcType=TIMESTAMP}, #{tpCount,jdbcType=INTEGER}, #{tpTotal,jdbcType=INTEGER}, 
+      #{tpDate,jdbcType=TIMESTAMP}, #{tpInfo,jdbcType=VARCHAR}, #{tpType,jdbcType=VARCHAR}, 
+      #{tpTarget,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.yuzo.question.entity.TestPlan" >
+    insert into test_plan
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="tpId != null" >
+        TP_ID,
+      </if>
+      <if test="tpTitle != null" >
+        TP_TITLE,
+      </if>
+      <if test="tpBeginDate != null" >
+        TP_BEGIN_DATE,
+      </if>
+      <if test="tpEndDate != null" >
+        TP_END_DATE,
+      </if>
+      <if test="tpCount != null" >
+        TP_COUNT,
+      </if>
+      <if test="tpTotal != null" >
+        TP_TOTAL,
+      </if>
+      <if test="tpDate != null" >
+        TP_DATE,
+      </if>
+      <if test="tpInfo != null" >
+        TP_INFO,
+      </if>
+      <if test="tpType != null" >
+        TP_TYPE,
+      </if>
+      <if test="tpTarget != null" >
+        TP_TARGET,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="tpId != null" >
+        #{tpId,jdbcType=VARCHAR},
+      </if>
+      <if test="tpTitle != null" >
+        #{tpTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="tpBeginDate != null" >
+        #{tpBeginDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="tpEndDate != null" >
+        #{tpEndDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="tpCount != null" >
+        #{tpCount,jdbcType=INTEGER},
+      </if>
+      <if test="tpTotal != null" >
+        #{tpTotal,jdbcType=INTEGER},
+      </if>
+      <if test="tpDate != null" >
+        #{tpDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="tpInfo != null" >
+        #{tpInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="tpType != null" >
+        #{tpType,jdbcType=VARCHAR},
+      </if>
+      <if test="tpTarget != null" >
+        #{tpTarget,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.yuzo.question.entity.TestPlan" >
+    update test_plan
+    <set >
+      <if test="tpTitle != null" >
+        TP_TITLE = #{tpTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="tpBeginDate != null" >
+        TP_BEGIN_DATE = #{tpBeginDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="tpEndDate != null" >
+        TP_END_DATE = #{tpEndDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="tpCount != null" >
+        TP_COUNT = #{tpCount,jdbcType=INTEGER},
+      </if>
+      <if test="tpTotal != null" >
+        TP_TOTAL = #{tpTotal,jdbcType=INTEGER},
+      </if>
+      <if test="tpDate != null" >
+        TP_DATE = #{tpDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="tpInfo != null" >
+        TP_INFO = #{tpInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="tpType != null" >
+        TP_TYPE = #{tpType,jdbcType=VARCHAR},
+      </if>
+      <if test="tpTarget != null" >
+        TP_TARGET = #{tpTarget,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where TP_ID = #{tpId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.yuzo.question.entity.TestPlan" >
+    update test_plan
+    set TP_TITLE = #{tpTitle,jdbcType=VARCHAR},
+      TP_BEGIN_DATE = #{tpBeginDate,jdbcType=TIMESTAMP},
+      TP_END_DATE = #{tpEndDate,jdbcType=TIMESTAMP},
+      TP_COUNT = #{tpCount,jdbcType=INTEGER},
+      TP_TOTAL = #{tpTotal,jdbcType=INTEGER},
+      TP_DATE = #{tpDate,jdbcType=TIMESTAMP},
+      TP_INFO = #{tpInfo,jdbcType=VARCHAR},
+      TP_TYPE = #{tpType,jdbcType=VARCHAR},
+      TP_TARGET = #{tpTarget,jdbcType=VARCHAR}
+    where TP_ID = #{tpId,jdbcType=VARCHAR}
+  </update>
+</mapper>

@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yuzo.question.mapper.TestPlanDetailedMapper" >
+  <resultMap id="BaseResultMap" type="com.yuzo.question.entity.TestPlanDetailed" >
+    <id column="TP_DTD_ID" property="tpDtdId" jdbcType="VARCHAR" />
+    <result column="TP_ID" property="tpId" jdbcType="VARCHAR" />
+    <result column="SUBJ_UNIT_ID" property="subjUnitId" jdbcType="VARCHAR" />
+    <result column="SUBJ_SCTN_ID" property="subjSctnId" jdbcType="VARCHAR" />
+    <result column="SUBJ_ID" property="subjId" jdbcType="VARCHAR" />
+    <result column="QSTN_TYPE_ID" property="qstnTypeId" jdbcType="VARCHAR" />
+    <result column="QSTN_FROM_TYPE_ID" property="qstnFromTypeId" jdbcType="VARCHAR" />
+    <result column="FROM_NUM" property="fromNum" jdbcType="INTEGER" />
+    <result column="TYPE_NUM" property="typeNum" jdbcType="INTEGER" />
+    <result column="SUBJ_NUM" property="subjNum" jdbcType="INTEGER" />
+    <result column="UNIT_NUM" property="unitNum" jdbcType="INTEGER" />
+    <result column="SCTN_NUM" property="sctnNum" jdbcType="INTEGER" />
+    <result column="TP_DTD_TYPE" property="tpDtdType" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    TP_DTD_ID, TP_ID, SUBJ_UNIT_ID, SUBJ_SCTN_ID, SUBJ_ID, QSTN_TYPE_ID, QSTN_FROM_TYPE_ID, 
+    FROM_NUM, TYPE_NUM, SUBJ_NUM, UNIT_NUM, SCTN_NUM, TP_DTD_TYPE
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from test_plan_detailed
+    where TP_DTD_ID = #{tpDtdId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from test_plan_detailed
+    where TP_DTD_ID = #{tpDtdId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.yuzo.question.entity.TestPlanDetailed" >
+    insert into test_plan_detailed (TP_DTD_ID, TP_ID, SUBJ_UNIT_ID, 
+      SUBJ_SCTN_ID, SUBJ_ID, QSTN_TYPE_ID, 
+      QSTN_FROM_TYPE_ID, FROM_NUM, TYPE_NUM, 
+      SUBJ_NUM, UNIT_NUM, SCTN_NUM, 
+      TP_DTD_TYPE)
+    values (#{tpDtdId,jdbcType=VARCHAR}, #{tpId,jdbcType=VARCHAR}, #{subjUnitId,jdbcType=VARCHAR}, 
+      #{subjSctnId,jdbcType=VARCHAR}, #{subjId,jdbcType=VARCHAR}, #{qstnTypeId,jdbcType=VARCHAR}, 
+      #{qstnFromTypeId,jdbcType=VARCHAR}, #{fromNum,jdbcType=INTEGER}, #{typeNum,jdbcType=INTEGER}, 
+      #{subjNum,jdbcType=INTEGER}, #{unitNum,jdbcType=INTEGER}, #{sctnNum,jdbcType=INTEGER}, 
+      #{tpDtdType,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.yuzo.question.entity.TestPlanDetailed" >
+    insert into test_plan_detailed
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="tpDtdId != null" >
+        TP_DTD_ID,
+      </if>
+      <if test="tpId != null" >
+        TP_ID,
+      </if>
+      <if test="subjUnitId != null" >
+        SUBJ_UNIT_ID,
+      </if>
+      <if test="subjSctnId != null" >
+        SUBJ_SCTN_ID,
+      </if>
+      <if test="subjId != null" >
+        SUBJ_ID,
+      </if>
+      <if test="qstnTypeId != null" >
+        QSTN_TYPE_ID,
+      </if>
+      <if test="qstnFromTypeId != null" >
+        QSTN_FROM_TYPE_ID,
+      </if>
+      <if test="fromNum != null" >
+        FROM_NUM,
+      </if>
+      <if test="typeNum != null" >
+        TYPE_NUM,
+      </if>
+      <if test="subjNum != null" >
+        SUBJ_NUM,
+      </if>
+      <if test="unitNum != null" >
+        UNIT_NUM,
+      </if>
+      <if test="sctnNum != null" >
+        SCTN_NUM,
+      </if>
+      <if test="tpDtdType != null" >
+        TP_DTD_TYPE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="tpDtdId != null" >
+        #{tpDtdId,jdbcType=VARCHAR},
+      </if>
+      <if test="tpId != null" >
+        #{tpId,jdbcType=VARCHAR},
+      </if>
+      <if test="subjUnitId != null" >
+        #{subjUnitId,jdbcType=VARCHAR},
+      </if>
+      <if test="subjSctnId != null" >
+        #{subjSctnId,jdbcType=VARCHAR},
+      </if>
+      <if test="subjId != null" >
+        #{subjId,jdbcType=VARCHAR},
+      </if>
+      <if test="qstnTypeId != null" >
+        #{qstnTypeId,jdbcType=VARCHAR},
+      </if>
+      <if test="qstnFromTypeId != null" >
+        #{qstnFromTypeId,jdbcType=VARCHAR},
+      </if>
+      <if test="fromNum != null" >
+        #{fromNum,jdbcType=INTEGER},
+      </if>
+      <if test="typeNum != null" >
+        #{typeNum,jdbcType=INTEGER},
+      </if>
+      <if test="subjNum != null" >
+        #{subjNum,jdbcType=INTEGER},
+      </if>
+      <if test="unitNum != null" >
+        #{unitNum,jdbcType=INTEGER},
+      </if>
+      <if test="sctnNum != null" >
+        #{sctnNum,jdbcType=INTEGER},
+      </if>
+      <if test="tpDtdType != null" >
+        #{tpDtdType,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.yuzo.question.entity.TestPlanDetailed" >
+    update test_plan_detailed
+    <set >
+      <if test="tpId != null" >
+        TP_ID = #{tpId,jdbcType=VARCHAR},
+      </if>
+      <if test="subjUnitId != null" >
+        SUBJ_UNIT_ID = #{subjUnitId,jdbcType=VARCHAR},
+      </if>
+      <if test="subjSctnId != null" >
+        SUBJ_SCTN_ID = #{subjSctnId,jdbcType=VARCHAR},
+      </if>
+      <if test="subjId != null" >
+        SUBJ_ID = #{subjId,jdbcType=VARCHAR},
+      </if>
+      <if test="qstnTypeId != null" >
+        QSTN_TYPE_ID = #{qstnTypeId,jdbcType=VARCHAR},
+      </if>
+      <if test="qstnFromTypeId != null" >
+        QSTN_FROM_TYPE_ID = #{qstnFromTypeId,jdbcType=VARCHAR},
+      </if>
+      <if test="fromNum != null" >
+        FROM_NUM = #{fromNum,jdbcType=INTEGER},
+      </if>
+      <if test="typeNum != null" >
+        TYPE_NUM = #{typeNum,jdbcType=INTEGER},
+      </if>
+      <if test="subjNum != null" >
+        SUBJ_NUM = #{subjNum,jdbcType=INTEGER},
+      </if>
+      <if test="unitNum != null" >
+        UNIT_NUM = #{unitNum,jdbcType=INTEGER},
+      </if>
+      <if test="sctnNum != null" >
+        SCTN_NUM = #{sctnNum,jdbcType=INTEGER},
+      </if>
+      <if test="tpDtdType != null" >
+        TP_DTD_TYPE = #{tpDtdType,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where TP_DTD_ID = #{tpDtdId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.yuzo.question.entity.TestPlanDetailed" >
+    update test_plan_detailed
+    set TP_ID = #{tpId,jdbcType=VARCHAR},
+      SUBJ_UNIT_ID = #{subjUnitId,jdbcType=VARCHAR},
+      SUBJ_SCTN_ID = #{subjSctnId,jdbcType=VARCHAR},
+      SUBJ_ID = #{subjId,jdbcType=VARCHAR},
+      QSTN_TYPE_ID = #{qstnTypeId,jdbcType=VARCHAR},
+      QSTN_FROM_TYPE_ID = #{qstnFromTypeId,jdbcType=VARCHAR},
+      FROM_NUM = #{fromNum,jdbcType=INTEGER},
+      TYPE_NUM = #{typeNum,jdbcType=INTEGER},
+      SUBJ_NUM = #{subjNum,jdbcType=INTEGER},
+      UNIT_NUM = #{unitNum,jdbcType=INTEGER},
+      SCTN_NUM = #{sctnNum,jdbcType=INTEGER},
+      TP_DTD_TYPE = #{tpDtdType,jdbcType=VARCHAR}
+    where TP_DTD_ID = #{tpDtdId,jdbcType=VARCHAR}
+  </update>
+</mapper>

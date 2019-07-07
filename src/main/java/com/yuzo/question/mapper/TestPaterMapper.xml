@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yuzo.question.mapper.TestPaterMapper" >
+  <resultMap id="BaseResultMap" type="com.yuzo.question.entity.TestPater" >
+    <id column="TP_PT_ID" property="tpPtId" jdbcType="VARCHAR" />
+    <result column="TP_ID" property="tpId" jdbcType="VARCHAR" />
+    <result column="QSTN_ID" property="qstnId" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    TP_PT_ID, TP_ID, QSTN_ID
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from test_pater
+    where TP_PT_ID = #{tpPtId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from test_pater
+    where TP_PT_ID = #{tpPtId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.yuzo.question.entity.TestPater" >
+    insert into test_pater (TP_PT_ID, TP_ID, QSTN_ID
+      )
+    values (#{tpPtId,jdbcType=VARCHAR}, #{tpId,jdbcType=VARCHAR}, #{qstnId,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.yuzo.question.entity.TestPater" >
+    insert into test_pater
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="tpPtId != null" >
+        TP_PT_ID,
+      </if>
+      <if test="tpId != null" >
+        TP_ID,
+      </if>
+      <if test="qstnId != null" >
+        QSTN_ID,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="tpPtId != null" >
+        #{tpPtId,jdbcType=VARCHAR},
+      </if>
+      <if test="tpId != null" >
+        #{tpId,jdbcType=VARCHAR},
+      </if>
+      <if test="qstnId != null" >
+        #{qstnId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.yuzo.question.entity.TestPater" >
+    update test_pater
+    <set >
+      <if test="tpId != null" >
+        TP_ID = #{tpId,jdbcType=VARCHAR},
+      </if>
+      <if test="qstnId != null" >
+        QSTN_ID = #{qstnId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where TP_PT_ID = #{tpPtId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.yuzo.question.entity.TestPater" >
+    update test_pater
+    set TP_ID = #{tpId,jdbcType=VARCHAR},
+      QSTN_ID = #{qstnId,jdbcType=VARCHAR}
+    where TP_PT_ID = #{tpPtId,jdbcType=VARCHAR}
+  </update>
+</mapper>
