@@ -3,7 +3,7 @@ package com.yuzo.question.page;
 public class SubjSectionPage {
 	
 	private Integer pageNum = 1;
-	private Integer pageSize = 10;
+	private Integer pageSize = 8;
 	
 	
 	

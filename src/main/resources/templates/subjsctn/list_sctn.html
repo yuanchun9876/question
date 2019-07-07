@@ -46,7 +46,7 @@
      
      	 <section class="content">
         <div class="box">
-         <form name="infoForm" id="queryForm" method="post" >
+         	<form name="infoForm" id="queryForm" method="post" >
         	<div class="box-header clearfix">
 
 				<div class="box-search btn-group">
@@ -57,8 +57,9 @@
         	</div>
         	</form>
         	<!-- /.box-header -->
-        	<div class="box-body no-padding">
-        		<table class="table table-striped">
+        	<div class="box-body ">
+        		<table class="table table-bordered table-striped">
+        			<thead>
         			<tr>
         				<th>序号</th>
         				<th>全选</th>
@@ -68,10 +69,11 @@
 						<th>总时长</th>
 						<th>操作</th>
         			</tr>
+        			</thead>
         			<form name="delForm"  method="post"  th:action="@{/subjSctn/dels}">
         			<tbody th:remove="all-but-first" >       			  	
         			<tr  th:each="row,i:${pageInfo.list}" >
-        			  <td  th:text="${i.count }" >1</td>
+        			  <td  th:text="${i.count} + ${pageInfo.startRow}" >1</td>
         			  <td ><input type="checkbox" name="ids" value="1"    th:value="${row.subjSctnId}"  ></td>
         				<td   th:text="${row.subjSctnTitle}">${scth.subjSctnTitle }</td>
         				<td   th:text="${row.subjSctnNum}">${scth.subjSctnNum }</td>
@@ -83,17 +85,20 @@
         			</tr>
         			</tbody>
         			</form>
+        			
         		</table>
+        		<br/>
+        		<div th:replace="/common/js :: commonjs"></div>
+				<div th:include="common/pagination::pagination(uri='/subjSctn/query',page=${pageInfo})" align="center" ></div>
+				
         	</div>
-<!--         	/.box-body -->
-			
-<!-- 		/. box-footer -->
+<!--         	/.box-body -->			
         </div>
-        <!-- /.row -->
+        <!-- /.box -->
       </section>
       <!-- /.content -->
     </div>
-<div th:replace="/common/js :: commonjs"></div>
+
 </div>
 <!-- ./wrapper -->
 </body>

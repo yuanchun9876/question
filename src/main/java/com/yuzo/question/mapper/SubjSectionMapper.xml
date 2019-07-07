@@ -38,7 +38,12 @@
     where SUBJ_UNIT_ID = #{value,jdbcType=VARCHAR}
   </select>
   
-  
+  <select id="queryAll" resultMap="BaseResultMap" parameterType="com.yuzo.question.page.SubjSectionPage" >
+    select 
+    SUBJ_SCTN_ID, SUBJ_UNIT_ID, SUBJ_SCTN_TITLE, SUBJ_SCTN_NUM, SUBJ_SCTN_CODE, SUBJ_SCTN_INFO, 
+    SUBJ_SCTN_LOGO_URL, SUBJ_SCTN_VIDEO_URL, SUBJ_SCTN_PIC_TEXT, SUBJ_SCTN_VIDEO_LEN
+    from subj_section
+  </select>
   
   
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >

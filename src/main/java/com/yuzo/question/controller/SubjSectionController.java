@@ -51,7 +51,8 @@ public class SubjSectionController {
 		System.out.println("page:" + page);
 		//获取第1页，10条内容，默认查询总数count		
 		PageHelper.startPage(page.getPageNum(), page.getPageSize());		
-		List<SubjSection> list = subjSctnService.query(page);		
+		List<SubjSection> list = subjSctnService.query(page);	
+		
 		PageInfo<SubjSection> pageInfo = new PageInfo<SubjSection>(list);
 		System.out.println(list.size());
         model.addAttribute("pageInfo",pageInfo);
