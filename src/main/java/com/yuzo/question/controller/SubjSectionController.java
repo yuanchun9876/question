@@ -8,6 +8,7 @@ import javax.servlet.ServletContext;
 import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -45,11 +46,11 @@ public class SubjSectionController {
 	}
 	
 	@RequestMapping("query")
-	public String query(@ModelAttribute("sctnpage")SubjSectionPage page, HttpSession session, Model model) {
-		Teacher tch = (Teacher) session.getAttribute("tch");
-		String tchId = "1"; // tch.getTchId()
-		System.out.println("page:" + page);
-		//获取第1页，10条内容，默认查询总数count		
+	public String query(@ModelAttribute("sctnpage")SubjSectionPage page, Model model,String clearpage) {
+		if (clearpage != null) {
+			BeanUtils.copyProperties(new SubjSectionPage(), page);
+		}
+		//	
 		PageHelper.startPage(page.getPageNum(), page.getPageSize());		
 		List<SubjSection> list = subjSctnService.query(page);	
 		
