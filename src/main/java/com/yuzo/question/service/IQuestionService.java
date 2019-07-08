@@ -25,6 +25,10 @@ public interface IQuestionService {
 	List<QuestionType> queryQstnType();
 
 	List<SubjSection> querySubjSctn();
+	
+	List<SubjectCourse> querySubj();
+
+	List<SubjUnit> querySubjUnit();
 
 	JSONObject uploadSimditorImg(MultipartFile file, String type );
 
@@ -34,9 +38,7 @@ public interface IQuestionService {
 
 	Question queryById(String id);
 
-	List<SubjectCourse> querySubj();
 
-	List<SubjUnit> querySubjUnit();
 
 	SubjSection querySctnBySctnId(String subjSctnId);
 

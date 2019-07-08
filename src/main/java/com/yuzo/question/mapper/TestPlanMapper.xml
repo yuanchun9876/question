@@ -17,6 +17,14 @@
     TP_ID, TP_TITLE, TP_BEGIN_DATE, TP_END_DATE, TP_COUNT, TP_TOTAL, TP_DATE, TP_INFO, 
     TP_TYPE, TP_TARGET
   </sql>
+  
+  <select id="queryAll" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    TP_ID, TP_TITLE, TP_BEGIN_DATE, TP_END_DATE, TP_COUNT, TP_TOTAL, TP_DATE, TP_INFO, TP_TYPE, TP_TARGET
+    from test_plan  
+  </select>
+  
+  
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />

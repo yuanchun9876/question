@@ -1,5 +1,7 @@
 package com.yuzo.question.mapper;
 
+import java.util.List;
+
 import com.yuzo.question.entity.TestPlan;
 
 public interface TestPlanMapper {
@@ -14,4 +16,6 @@ public interface TestPlanMapper {
     int updateByPrimaryKeySelective(TestPlan record);
 
     int updateByPrimaryKey(TestPlan record);
+
+	List<TestPlan> queryAll();
 }

@@ -1,11 +1,17 @@
 <th:block  th:fragment="commoncss">
   <!-- Bootstrap 3.3.7 -->
-  <link rel="stylesheet" th:href="@{/bower_components/bootstrap/dist/css/bootstrap.min.css}"  href="../static/bower_components/bootstrap/dist/css/bootstrap.min.css"   >	
+  <link rel="stylesheet" th:href="@{/bower_components/bootstrap/dist/css/bootstrap.min.css}"  >	
+  
+  <link rel="stylesheet" th:href="@{/plugins/jQueryUI/jquery-ui.min.css}">
   <!-- Theme style -->
-  <link rel="stylesheet" th:href="@{/dist/css/AdminLTE.min.css}" href="../static/dist/css/AdminLTE.min.css" >
-  <link rel="stylesheet" th:href="@{/dist/css/skins/_all-skins.min.css}"  href="../static/dist/css/skins/_all-skins.min.css"  >
+  <link rel="stylesheet" th:href="@{/dist/css/AdminLTE.min.css}"  >
+
+  <link rel="stylesheet" th:href="@{/dist/css/skins/_all-skins.min.css}"  >
+	<!-- iCheck -->
+	<link rel="stylesheet" th:href="@{/plugins/iCheck/square/blue.css}">
+
 	  <style>
-				/*表格条件查询的样式  */
+				
 			
 			.box-header {
 				display: flex;
@@ -19,7 +25,7 @@
 			.box-header .box-search:last-child {
 				margin-left: auto;
 			}
-			/*表格中td的样式 */
+			/*锟斤拷锟斤拷锟絫d锟斤拷锟斤拷式 */
 			
 			.box-body table th {
 				text-align: center;

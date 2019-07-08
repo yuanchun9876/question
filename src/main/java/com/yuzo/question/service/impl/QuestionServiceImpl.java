@@ -75,6 +75,18 @@ public class QuestionServiceImpl implements IQuestionService{
 	}
 
 	@Override
+	public List<SubjectCourse> querySubj() {
+		// TODO Auto-generated method stub
+		return subjMapper.queryAll();
+	}
+
+	@Override
+	public List<SubjUnit> querySubjUnit() {
+		// TODO Auto-generated method stub
+		return unitMapper.queryAll();
+	}
+
+	@Override
 	public JSONObject uploadSimditorImg(MultipartFile file, String type) {
 		// TODO Auto-generated method stub
 		JSONObject json = new JSONObject();
@@ -128,18 +140,6 @@ public class QuestionServiceImpl implements IQuestionService{
 	public Question queryById(String id) {
 		// TODO Auto-generated method stub
 		return qstnMapper.selectByPrimaryKey(id);
-	}
-
-	@Override
-	public List<SubjectCourse> querySubj() {
-		// TODO Auto-generated method stub
-		return subjMapper.queryAll();
-	}
-
-	@Override
-	public List<SubjUnit> querySubjUnit() {
-		// TODO Auto-generated method stub
-		return unitMapper.queryAll();
 	}
 
 	@Override
