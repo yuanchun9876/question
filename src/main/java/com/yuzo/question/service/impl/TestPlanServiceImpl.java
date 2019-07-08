@@ -81,6 +81,12 @@ public class TestPlanServiceImpl implements ITestPlanService {
 		// TODO Auto-generated method stub
 		return planMapper.queryAll();
 	}
+
+	@Override
+	public int save(TestPlan plan) {
+		// TODO Auto-generated method stub
+		return planMapper.insertSelective(plan);
+	}
 	
 	
 }

@@ -2,13 +2,16 @@ package com.yuzo.question.entity;
 
 import java.util.Date;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 public class TestPlan {
     private String tpId;
 
     private String tpTitle;
 
+    @DateTimeFormat(pattern="yyyy-MM-dd")
     private Date tpBeginDate;
-
+    @DateTimeFormat(pattern="yyyy-MM-dd")
     private Date tpEndDate;
 
     private Integer tpCount;

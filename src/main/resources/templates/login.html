@@ -58,8 +58,6 @@
 </body>
 	<!-- jQuery 3 -->
 	<script th:src="@{/bower_components/jquery/dist/jquery.min.js}"></script>
-	<!-- jQuery UI 1.11.4 -->
-	<script th:src="@{/plugins/jQueryUI/jquery-ui.min.js}"></script>
 	<!-- Bootstrap 3.3.7 -->
 	<script th:src="@{/bower_components/bootstrap/dist/js/bootstrap.min.js}"></script>
 	<!-- AdminLTE App -->
@@ -70,8 +68,7 @@
 
   <script type="text/javascript" >
   
-  	$.widget.bridge('uibutton', $.ui.button);
-  	  
+  
 		//根据key得到cookie中的值
 		function getCookie(c_name) {
 			if(document.cookie.length > 0) {

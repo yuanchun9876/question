@@ -1,8 +1,7 @@
 <th:block th:fragment="commonjs">
 	<!-- jQuery 3 -->
 	<script th:src="@{/bower_components/jquery/dist/jquery.min.js}"></script>
-	<!-- jQuery UI 1.11.4 -->
-	<script th:src="@{/plugins/jQueryUI/jquery-ui.min.js}"></script>
+
 	<!-- Bootstrap 3.3.7 -->
 	<script th:src="@{/bower_components/bootstrap/dist/js/bootstrap.min.js}"></script>
 	<!-- AdminLTE App -->
@@ -15,9 +14,7 @@
 	<script th:src="@{/plugins/iCheck/icheck.min.js}"></script>
 
 	<!-- bootbox -->
-	<script src="../static/bower_components/bootbox/js/bootbox.js"  th:src="@{/bower_components/bootbox/js/bootbox.js}"></script>
+	<script  th:src="@{/bower_components/bootbox/js/bootbox.js}"></script>
 	
-	<script type="text/javascript">
-	  $.widget.bridge('uibutton', $.ui.button);
-  	</script>
+
 </th:block>

@@ -22,4 +22,6 @@ public interface ITestPlanService {
 	List<SubjectCourse> querySubj();
 
 	List<SubjUnit> querySubjUnit();
+
+	int save(TestPlan plan);
 }
