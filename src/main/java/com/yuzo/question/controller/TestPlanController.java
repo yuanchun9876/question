@@ -1,5 +1,6 @@
 package com.yuzo.question.controller;
 
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -12,6 +13,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.yuzo.question.entity.QstnFromType;
+import com.yuzo.question.entity.QuestionType;
+import com.yuzo.question.entity.SubjSection;
+import com.yuzo.question.entity.SubjUnit;
+import com.yuzo.question.entity.SubjectCourse;
 import com.yuzo.question.entity.TestPlan;
 import com.yuzo.question.service.ITestPlanService;
 
@@ -36,19 +42,7 @@ public class TestPlanController {
 
 	@RequestMapping("addPage")
 	public String addPage(HttpSession session, Model model) {
-		
-//		List<QstnFromType> qstnFromList = testPlanService.queryQstnFrom();
-//		model.addAttribute("qstnFromList", qstnFromList);
-//		List<QuestionType> qstnTypeList = testPlanService.queryQstnType();
-//		model.addAttribute("qstnTypeList", qstnTypeList);
-//		
-//		List<SubjectCourse> subjList = testPlanService.querySubj();
-//		model.addAttribute("subjList", subjList);
-//		List<SubjUnit> subjUnitList = testPlanService.querySubjUnit();
-//		model.addAttribute("subjUnitList", subjUnitList);
-//		List<SubjSection> subjSctnList = testPlanService.querySubjSctn();
-//		model.addAttribute("subjSctnList", subjSctnList);
-
+	
 		return "testplan/add_plan";
 	}
 	
@@ -64,33 +58,51 @@ public class TestPlanController {
 		
 		return "redirect:query";
 	}
-//	
-//	@RequestMapping("/editPage")
-//	public String editPage(String subjUnitId,HttpSession session, Model model) {
-//		
-//		SubjUnit unit = subjUnitService.queryById(subjUnitId);
-//		model.addAttribute("unit", unit);	
-//		Teacher tch = (Teacher) session.getAttribute("tch");
-//		String tchId = "1"; // tch.getTchId()
-//		model.addAttribute("tchId", tchId);
-//		List<SubjectCourse> subjList = subjUnitService.querySubjectCourse();
-//		model.addAttribute("subjList", subjList);
-//		return "subjunit/edit_unit";
-//	}
-//	
-//	@RequestMapping("/editSave")
-//	public String editSave(SubjUnit unit) {		
-//		
-//		int count = subjUnitService.update(unit);
-//		System.out.println("��ɾ��:" + count);
-//		return "redirect:query";
-//	}
-//	
-//	@RequestMapping("/dels")
-//	public String dels(String[] ids) {		
-//		System.out.println("ids:" + Arrays.toString(ids));
-//		int count = subjUnitService.dels(ids);
-//		System.out.println("��ɾ��:" + count);
-//		return "redirect:query";
-//	}
+	
+	@RequestMapping("/editPage")
+	public String editPage(String tpId, Model model) {
+		
+		TestPlan plan = testPlanService.queryById(tpId);
+		model.addAttribute("plan", plan);	
+
+		return "testplan/edit_plan";
+	}
+	
+	@RequestMapping("/setPage")
+	public String setPage(String tpId, Model model) {
+		
+		TestPlan plan = testPlanService.queryById(tpId);
+		model.addAttribute("plan", plan);	
+		
+		List<QstnFromType> qstnFromList = testPlanService.queryQstnFrom();
+		model.addAttribute("qstnFromList", qstnFromList);
+		List<QuestionType> qstnTypeList = testPlanService.queryQstnType();
+		model.addAttribute("qstnTypeList", qstnTypeList);
+		
+		List<SubjectCourse> subjList = testPlanService.querySubj();
+		model.addAttribute("subjList", subjList);
+		List<SubjUnit> subjUnitList = testPlanService.querySubjUnit();
+		model.addAttribute("subjUnitList", subjUnitList);
+		List<SubjSection> subjSctnList = testPlanService.querySubjSctn();
+		model.addAttribute("subjSctnList", subjSctnList);
+		
+		return "testplan/set_plan";
+	}
+	
+	
+	@RequestMapping("/editSave")
+	public String editSave(TestPlan plan) {		
+		
+		int count = testPlanService.update(plan);
+		System.out.println(":" + count);
+		return "redirect:query";
+	}
+	
+	@RequestMapping("/dels")
+	public String dels(String[] ids) {		
+		System.out.println("ids:" + Arrays.toString(ids));
+		int count = testPlanService.dels(ids);
+		System.out.println(":" + count);
+		return "redirect:query";
+	}
 }

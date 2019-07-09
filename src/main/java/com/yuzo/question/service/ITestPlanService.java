@@ -24,4 +24,10 @@ public interface ITestPlanService {
 	List<SubjUnit> querySubjUnit();
 
 	int save(TestPlan plan);
+
+	TestPlan queryById(String tpId);
+
+	int update(TestPlan plan);
+
+	int dels(String[] ids);
 }

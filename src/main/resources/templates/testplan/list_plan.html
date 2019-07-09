@@ -64,22 +64,26 @@
         				<th>开始时间</th>
         				<th>结束时间</th>
         				<th>类型</th>
-        				<th>说明</th>
+        				
 						<th>操作</th>
         			</tr>
-        			<form name="delForm"  method="post"  action="/subjUnit/dels.action"  th:action="@{/testplan/dels}" >
+        			<form name="delForm"  method="post"  action="/testplan/dels.action"  th:action="@{/testplan/dels}" >
         		
         			<tbody th:remove="all-but-first" >       			  	
         			<tr  th:each="row,i:${list}" >
         			  <td  th:text="${i.count }" >1</td>
         			  <td ><input type="checkbox" name="ids" value="1"    th:value="${row.tpId}"  ></td>
         				<td  th:text="${row.tpTitle}"  >${unit.subjUnitTitle }</td>
-        				<td  th:text="${row.tpBeginDate}" >${unit.subjTitle }</td>
-        				<td  th:text="${row.tpEndDate}" >${unit.subjUnitNum }</td>
-        				<td  th:text="${row.tpType}" >${unit.subjUnitCode }</td>
-        				<td  th:text="${row.tpInfo}" >${unit.subjUnitInfo }</td>
+        				<td  th:text="${#dates.format(row.tpBeginDate, 'yyyy-MM-dd')}" >${unit.subjTitle }</td>
+        				<td  th:text="${#dates.format(row.tpEndDate, 'yyyy-MM-dd')}" >${unit.subjUnitNum }</td>
+        				<td th:switch="${row.tpType}">
+								<span  th:case="'1'">固定出题</span>
+								<span  th:case="'0'">随机出题</span>
+						</td>
+        				
 						<td>
 							<button type="button" class="btn btn-primary btn-sm"  th:onclick="editpage([[${row.tpId}]])"  onclick="javascript:editpage('1')">修改</button>
+							<button type="button" class="btn btn-primary btn-sm"  th:onclick="setpage([[${row.tpId}]])"  onclick="javascript:editpage('1')">设置明细</button>
 						</td>
         			</tr>
         			</tbody>
@@ -113,6 +117,10 @@
 
 	function editpage(id){
 		location.href = "/testplan/editPage?tpId=" + id; 
+	}
+	
+	function setpage(id){
+		location.href = "/testplan/setPage?tpId=" + id; 
 	}
 	
 	function dels(){

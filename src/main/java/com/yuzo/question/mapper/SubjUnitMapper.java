@@ -24,4 +24,6 @@ public interface SubjUnitMapper {
 	List<SubjUnit> queryBySubj(String subjId);
 
 	List<SubjUnit> queryByTchId(String tchId);
+
+	List<SubjUnit> queryUnitsBySubjs(String[] subjIds);
 }

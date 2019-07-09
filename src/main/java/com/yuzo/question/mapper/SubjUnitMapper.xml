@@ -31,13 +31,30 @@
 	    order by SUBJ_UNIT_NUM
 	</select>
 	
-  <!-- queryAll  全查 -->
+	
+	  <!-- queryAll  全查 -->
     <select id="queryAll" resultMap="BaseResultMap"  >
 	    select SUBJ_UNIT_ID, su.SUBJ_ID, su.TCH_ID, SUBJ_UNIT_TITLE, SUBJ_UNIT_NUM, SUBJ_UNIT_CODE, SUBJ_UNIT_INFO, SUBJ_UNIT_LOGO_URL
 	    , tch.TCH_NAME
 	    , sc.SUBJ_TITLE
 	    from subj_unit  su left join teacher tch  on su.TCH_ID = tch.TCH_ID
 	    left join subject_course sc  on su.SUBJ_ID = sc.SUBJ_ID
+	    order by sc.SUBJ_NUM, SUBJ_UNIT_NUM
+	</select>
+	
+	
+  <!-- queryUnitsBySubjs  根据科目 -->
+    <select id="queryUnitsBySubjs" resultMap="BaseResultMap"  >
+	    select SUBJ_UNIT_ID, su.SUBJ_ID, su.TCH_ID, SUBJ_UNIT_TITLE, SUBJ_UNIT_NUM, SUBJ_UNIT_CODE, SUBJ_UNIT_INFO, SUBJ_UNIT_LOGO_URL
+	    , tch.TCH_NAME
+	    , sc.SUBJ_TITLE
+	    from subj_unit  su left join teacher tch  on su.TCH_ID = tch.TCH_ID
+	    left join subject_course sc  on su.SUBJ_ID = sc.SUBJ_ID
+	  	<where>
+	  		<if test="array != null ">
+	  			<foreach collection="array"  item="subjId"  open="  and  su.SUBJ_ID in ("  close=")" separator="," >#{subjId}</foreach>
+	  		</if>
+	  	</where>
 	    order by sc.SUBJ_NUM, SUBJ_UNIT_NUM
 	</select>
 	

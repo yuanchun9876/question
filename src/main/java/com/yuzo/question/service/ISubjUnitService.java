@@ -25,4 +25,6 @@ public interface ISubjUnitService {
 
 	int update(SubjUnit unit);
 
+	List<SubjUnit> queryUnitsBySubjs(String[] subjIds);
+
 }

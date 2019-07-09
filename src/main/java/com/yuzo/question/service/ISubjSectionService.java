@@ -33,4 +33,6 @@ public interface ISubjSectionService {
 
 	List<SubjSection> query(SubjSectionPage page);
 
+	List<SubjSection> querySctnsByUnits(String[] unitIds);
+
 }

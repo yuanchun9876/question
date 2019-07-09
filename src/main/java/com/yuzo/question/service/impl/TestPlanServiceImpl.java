@@ -87,6 +87,28 @@ public class TestPlanServiceImpl implements ITestPlanService {
 		// TODO Auto-generated method stub
 		return planMapper.insertSelective(plan);
 	}
+
+	@Override
+	public TestPlan queryById(String tpId) {
+		// TODO Auto-generated method stub
+		return planMapper.selectByPrimaryKey(tpId);
+	}
+
+	@Override
+	public int update(TestPlan plan) {
+		// TODO Auto-generated method stub
+		return planMapper.updateByPrimaryKeySelective(plan);
+	}
+
+	@Override
+	public int dels(String[] ids) {
+		// TODO Auto-generated method stub
+		int count = 0;
+		for (int i = 0; i < ids.length; i++) {
+			count += planMapper.deleteByPrimaryKey(ids[i]);
+		}
+		return count;
+	}
 	
 	
 }

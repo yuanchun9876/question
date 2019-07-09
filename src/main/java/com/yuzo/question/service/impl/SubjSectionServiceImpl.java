@@ -98,4 +98,10 @@ public class SubjSectionServiceImpl implements ISubjSectionService{
 		// TODO Auto-generated method stub
 		return sctnMapper.queryAll(page);
 	}
+
+	@Override
+	public List<SubjSection> querySctnsByUnits(String[] unitIds) {
+		// TODO Auto-generated method stub
+		return sctnMapper.querySctnsByUnits(unitIds);
+	}
 }

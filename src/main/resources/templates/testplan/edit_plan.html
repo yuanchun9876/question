@@ -8,7 +8,7 @@
 		<!-- Tell the browser to be responsive to screen width -->
 		<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
 	  <include th:replace="/common/css :: commoncss"/>
-
+ 	 
 		<style type="text/css">
 			
 			.content-wrapper {
@@ -25,21 +25,21 @@
 				<!-- Content Header (Page header) -->
 				<section class="content-header">
 					<h1>
-          				知识章修改
+          				测试方案修改
 			        </h1>
 			       <ol class="breadcrumb">
 			       		<li>
 							<a th:href="@{/dashboard}"><i class="glyphicon glyphicon-globe"></i>导航</a>
 						</li>
-			          <li class="active"><a href="#">知识章修改</a></li>
+			          <li class="active"><a href="#">测试方案修改</a></li>
 			        </ol>
 				</section>
 
 				<!-- Main content -->
 				<section class="content">
 					<div class="row">
-						<form class="form form-horizontal" method="post"  th:object="${unit}"   th:action="@{/subjUnit/editSave}"  >
-							<input type="hidden" name="subjUnitId"  th:field="*{subjUnitId}"  >
+						<form class="form form-horizontal" method="post"  th:object="${plan}"    th:action="@{/testplan/editSave}"  >
+							<input type="hidden" name="tpId"  th:field="*{tpId}"  >
 							<!-- left column -->
 							<div class="col-md-8 col-md-offset-2">
 								<!-- general form elements -->
@@ -54,28 +54,40 @@
 									<!-- form start -->
 									<div class="box-body">
 										<div class="form-group">
-											<label for="name" class="col-sm-2 control-label">知识章名称</label>
+											<label for="name" class="col-sm-2 control-label">方案名称</label>
 											<div class="col-sm-10">
-												<input type="text" class="form-control" name="subjUnitTitle"  th:field="*{subjUnitTitle}"    placeholder="请输入知识章名称" required="required">
+												<input type="text" class="form-control" name="tpTitle"   th:field="*{tpTitle}"   placeholder="请输入方案名称" required="required">
 											</div>
 										</div>
 										<div class="form-group">
-											<label for="birth" class="col-sm-2 control-label">所属科目</label>
-											<div class="col-sm-10">
-												<select class="form-control" name="subjId"  th:field="*{subjId}" >
-													<option  value = "" >请选择</option>													
-													<option  th:value = "${subj.subjId }"   th:each="subj,i:${subjList}"   th:text="${subj.subjTitle }" >所属科目</option>											
-												</select>
+											<label for="name" class="col-sm-2 control-label">开始时间</label>
+											<div class="col-sm-4">
+												<input type="date" class="form-control" name="tpBeginDate"   th:field="*{tpBeginDate}"  placeholder="请输入开始时间" required="required">
+											</div>
+											<label for="name" class="col-sm-2 control-label">结束时间</label>
+											<div class="col-sm-4">
+												<input type="date" class="form-control" name="tpEndDate"   th:field="*{tpEndDate}"  placeholder="请输入结束时间" required="required">
 											</div>
 										</div>
 										<div class="form-group">
-											<label for="cardid" class="col-sm-2 control-label">知识章序号</label>
-											<div class="col-sm-10">
-												<input type="number" class="form-control" name='subjUnitNum'  th:field="*{subjUnitNum}"   placeholder="请输入知识章序号"  required="required">
+											<label for="name" class="col-sm-2 control-label">出题方式</label>
+											<div class="col-sm-10 radio text-left">
+												<label>
+										          <input type="radio"  value="0" name="tpType" th:field="*{tpType}"  th:value="0"  th:checked="checked"  >随机出题
+										        </label>
+										         <label>
+										          <input type="radio"  value="1" name="tpType"  th:field="*{tpType}"  th:value="1"  th:checked="checked" >固定出题
+										        </label>
 											</div>
 										</div>
-									
+										<div class="form-group">
+											<label for="name" class="col-sm-2 control-label">方案说明</label>
+											<div class="col-sm-10">
+												<textarea class="form-control" name="tpInfo"  placeholder="请输入方案说明" required="required"   th:field="*{tpInfo}" ></textarea>
+											</div>
+										</div>
 									</div>
+								
 									<!-- /.box-body -->
 									<div class="box-footer">
 										<button type="button" class="btn btn-danger" onclick="cleanUp(this)">清空</button>
@@ -94,13 +106,21 @@
 				<!-- /.content -->
 			</div>
 			<!-- /.content-wrapper -->
-		
 		</div>
 		<div th:replace="/common/js :: commonjs"></div>
 	</body>
 	
 	<script type="text/javascript">
+
 		
+	
+	 	$(function () {
+		    $('input').iCheck({
+		      checkboxClass: 'icheckbox_square-blue',
+		      radioClass: 'iradio_square-blue',
+		      increaseArea: '20%' /* optional */
+		    });
+		  });
 
 		//清空
 		function cleanUp(btn) {

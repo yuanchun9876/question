@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.yuzo.question.entity.SubjUnit;
@@ -44,6 +45,15 @@ public class SubjUnitController {
 	public List<SubjUnit> selectSubj(String subjId) {
 		logger.debug("subjId:" + subjId);
 		List<SubjUnit> list = subjUnitService.queryUnitBySubj(subjId);//queryByTchId(tchId);
+		
+		return list;
+	}
+	
+	@RequestMapping("/selectUnitsBySubjs")
+	@ResponseBody
+	public List<SubjUnit> selectUnitsBySubjs(@RequestParam("subjIds[]")  String[] subjIds) {
+		System.out.println("subjIds:" + Arrays.toString(subjIds));
+		List<SubjUnit> list = subjUnitService.queryUnitsBySubjs(subjIds);
 		
 		return list;
 	}

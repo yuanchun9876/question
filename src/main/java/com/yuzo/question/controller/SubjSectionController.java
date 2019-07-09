@@ -1,6 +1,7 @@
 package com.yuzo.question.controller;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
@@ -67,6 +69,15 @@ public class SubjSectionController {
 	@ResponseBody
 	public List<SubjSection> selectUnit(String unitId) {
 		List<SubjSection> list = subjSctnService.querySctnByUnit(unitId);
+		
+		return list;
+	}
+	
+	@RequestMapping("/selectSctnsByUnits")
+	@ResponseBody
+	public List<SubjSection> selectSctnsByUnits(@RequestParam("unitIds[]")  String[] unitIds) {
+		System.out.println("unitIds:" + Arrays.toString(unitIds));
+		List<SubjSection> list = subjSctnService.querySctnsByUnits(unitIds);
 		
 		return list;
 	}
