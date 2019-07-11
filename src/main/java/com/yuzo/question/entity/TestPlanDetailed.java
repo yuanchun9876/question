@@ -25,7 +25,9 @@ public class TestPlanDetailed {
 
     private Integer sctnNum;
 
-    private String tpDtdType; //1.类型 2.来源 3.科目 4.章 5.节
+    private String tpDtdType;
+
+    private Integer typePoints;
 
     public String getTpDtdId() {
         return tpDtdId;
@@ -129,5 +131,13 @@ public class TestPlanDetailed {
 
     public void setTpDtdType(String tpDtdType) {
         this.tpDtdType = tpDtdType == null ? null : tpDtdType.trim();
+    }
+
+    public Integer getTypePoints() {
+        return typePoints;
+    }
+
+    public void setTypePoints(Integer typePoints) {
+        this.typePoints = typePoints;
     }
 }

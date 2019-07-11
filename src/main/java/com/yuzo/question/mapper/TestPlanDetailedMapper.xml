@@ -15,10 +15,11 @@
     <result column="UNIT_NUM" property="unitNum" jdbcType="INTEGER" />
     <result column="SCTN_NUM" property="sctnNum" jdbcType="INTEGER" />
     <result column="TP_DTD_TYPE" property="tpDtdType" jdbcType="VARCHAR" />
+    <result column="TYPE_POINTS" property="typePoints" jdbcType="INTEGER" />
   </resultMap>
   <sql id="Base_Column_List" >
     TP_DTD_ID, TP_ID, SUBJ_UNIT_ID, SUBJ_SCTN_ID, SUBJ_ID, QSTN_TYPE_ID, QSTN_FROM_TYPE_ID, 
-    FROM_NUM, TYPE_NUM, SUBJ_NUM, UNIT_NUM, SCTN_NUM, TP_DTD_TYPE
+    FROM_NUM, TYPE_NUM, SUBJ_NUM, UNIT_NUM, SCTN_NUM, TP_DTD_TYPE, TYPE_POINTS
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
@@ -35,12 +36,12 @@
       SUBJ_SCTN_ID, SUBJ_ID, QSTN_TYPE_ID, 
       QSTN_FROM_TYPE_ID, FROM_NUM, TYPE_NUM, 
       SUBJ_NUM, UNIT_NUM, SCTN_NUM, 
-      TP_DTD_TYPE)
+      TP_DTD_TYPE, TYPE_POINTS)
     values (#{tpDtdId,jdbcType=VARCHAR}, #{tpId,jdbcType=VARCHAR}, #{subjUnitId,jdbcType=VARCHAR}, 
       #{subjSctnId,jdbcType=VARCHAR}, #{subjId,jdbcType=VARCHAR}, #{qstnTypeId,jdbcType=VARCHAR}, 
       #{qstnFromTypeId,jdbcType=VARCHAR}, #{fromNum,jdbcType=INTEGER}, #{typeNum,jdbcType=INTEGER}, 
       #{subjNum,jdbcType=INTEGER}, #{unitNum,jdbcType=INTEGER}, #{sctnNum,jdbcType=INTEGER}, 
-      #{tpDtdType,jdbcType=VARCHAR})
+      #{tpDtdType,jdbcType=VARCHAR}, #{typePoints,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="com.yuzo.question.entity.TestPlanDetailed" >
     insert into test_plan_detailed
@@ -84,6 +85,9 @@
       <if test="tpDtdType != null" >
         TP_DTD_TYPE,
       </if>
+      <if test="typePoints != null" >
+        TYPE_POINTS,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="tpDtdId != null" >
@@ -124,6 +128,9 @@
       </if>
       <if test="tpDtdType != null" >
         #{tpDtdType,jdbcType=VARCHAR},
+      </if>
+      <if test="typePoints != null" >
+        #{typePoints,jdbcType=INTEGER},
       </if>
     </trim>
   </insert>
@@ -166,6 +173,9 @@
       <if test="tpDtdType != null" >
         TP_DTD_TYPE = #{tpDtdType,jdbcType=VARCHAR},
       </if>
+      <if test="typePoints != null" >
+        TYPE_POINTS = #{typePoints,jdbcType=INTEGER},
+      </if>
     </set>
     where TP_DTD_ID = #{tpDtdId,jdbcType=VARCHAR}
   </update>
@@ -182,7 +192,8 @@
       SUBJ_NUM = #{subjNum,jdbcType=INTEGER},
       UNIT_NUM = #{unitNum,jdbcType=INTEGER},
       SCTN_NUM = #{sctnNum,jdbcType=INTEGER},
-      TP_DTD_TYPE = #{tpDtdType,jdbcType=VARCHAR}
+      TP_DTD_TYPE = #{tpDtdType,jdbcType=VARCHAR},
+      TYPE_POINTS = #{typePoints,jdbcType=INTEGER}
     where TP_DTD_ID = #{tpDtdId,jdbcType=VARCHAR}
   </update>
 </mapper>
