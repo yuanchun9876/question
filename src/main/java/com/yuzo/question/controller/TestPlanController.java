@@ -40,6 +40,19 @@ public class TestPlanController {
 	
 	
 
+	@RequestMapping("setSave")
+	public String setSave(
+			String[] typeIds, Integer[] typeNums, Integer[] typePns,
+			String[] fromIds, Integer[] fromNums,
+			String[] subjIds, Integer[] subjNums,
+			String[] unitIds, Integer[] unitNums,
+			String[] sctnIds, Integer[] sctnNums,			
+			Model model) {
+		
+		
+		return "redirect:query";
+	}
+	
 	@RequestMapping("addPage")
 	public String addPage(HttpSession session, Model model) {
 	
