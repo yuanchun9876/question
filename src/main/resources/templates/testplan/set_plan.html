@@ -55,12 +55,22 @@
 											<div class="col-sm-6">
 												<table class="table table-striped">
 													<caption><b>试题类型</b></caption>
+													<thead>
+													<tr   >
+								        			  	<td >序号</td>
+								        			  	<td >选择</td>
+							        					<td >名称</td>
+							        					<td >数量</td>
+							        					<td >分数</td>
+								        			</tr>
+													</thead>
 								        			<tbody th:remove="all-but-first" >       			  	
 								        			<tr  th:each="qstnType,i:${qstnTypeList}" >
 								        			  	<td  th:text="${i.count }" >1</td>
-								        			  	<td ><input type="checkbox" name="ids"   th:value="${qstnType.qstnTypeId}"  ></td>
+								        			  	<td ><input type="checkbox" name="typeIds"   th:value="${qstnType.qstnTypeId}"  ></td>
 							        					<td  th:text="${qstnType.qstnTypeName}"  ></td>
-							        					<td   ><input></td>
+							        					<td   ><input size="4" name="typeNums" type="number" max="100" min="0" ></td>
+							        					<td   ><input size="4" name="typePns" type="number" max="5" min="0" ></td>
 								        			</tr>
 								        			</tbody>
 								        		</table>
@@ -71,9 +81,9 @@
 								        			<tbody th:remove="all-but-first" >       			  	
 								        			<tr  th:each="qstnFrom,i:${qstnFromList}" >
 								        			  	<td  th:text="${i.count }" >1</td>
-								        			  	<td ><input type="checkbox" name="ids"   th:value="${qstnFrom.qstnFromTypeId}"  ></td>
+								        			  	<td ><input type="checkbox" name="fromIds"   th:value="${qstnFrom.qstnFromTypeId}"  ></td>
 							        					<td  th:text="${qstnFrom.qstnFromTypeCode}"  ></td>
-							        					<td   ><input></td>
+							        					<td ><input name="fromNums" type="number" max="100" min="0" ></td>
 								        			</tr>
 								        			</tbody>
 								        		</table>
@@ -86,9 +96,9 @@
 								        			<tbody th:remove="all-but-first" id="subjTbody" >       			  	
 								        			<tr  th:each="subj,i:${subjList}" >
 								        			  	<td  th:text="${i.count }" >1</td>
-								        			  	<td ><input type="checkbox" name="ids"   checked='checked'  th:value="${subj.subjId}"  th:onclick="selectSubj(this,[[${subj.subjId}]])"  ></td>
+								        			  	<td ><input type="checkbox" name="subjIds"   checked='checked'  th:value="${subj.subjId}"  th:onclick="selectSubj(this,[[${subj.subjId}]])"  ></td>
 							        					<td  th:text="${subj.subjTitle}"  ></td>
-							        					<td   ><input></td>
+							        					<td   ><input name="subjNums" type="number" max="100" min="0" ></td>
 								        			</tr>
 								        			</tbody>
 								        		</table>
@@ -152,9 +162,9 @@
 					$("#unitTbody").empty();
 					$.each(resp, function(i, item){
 						var tds = "<td>" + (i+1) + "</td>";
-							tds += "<td><input type='checkbox'  checked='checked'  name='ids' value='" + item.subjUnitId + "'  onclick='selectUnit()'  ><td>";
+							tds += "<td><input type='checkbox'  checked='checked'  name='unitIds' value='" + item.subjUnitId + "'  onclick='selectUnit()'  ><td>";
 							tds += "<td>" + item.subjUnitNum + "." + item.subjUnitTitle + "</td>";
-							tds += "<td><input></td>";
+							tds += "<td><input name='unitNums' type='number' max='100' min='0'  ></td>";
 						$("<tr>" + tds + "</tr>").appendTo("#unitTbody");
 					});	
 			   },
@@ -163,6 +173,7 @@
 			});
 		}else{
 			$("#unitTbody").empty();
+			$("#sctnTbody").empty();
 		}
 	}
 	
@@ -182,9 +193,9 @@
 					$("#sctnTbody").empty();
 					$.each(resp, function(i, item){
 						var tds = "<td>" + (i+1) + "</td>";
-						tds += "<td><input type='checkbox'  checked='checked' name='ids' value='" + item.subjSctnId + "' ><td>";
+						tds += "<td><input type='checkbox'  checked='checked' name='sctnIds' value='" + item.subjSctnId + "' ><td>";
 						tds += "<td>" + item.subjSctnNum + "." + item.subjSctnTitle + "</td>";
-						tds += "<td><input></td>";
+						tds += "<td><input  name='sctnNums' type='number' max='100' min='0' ></td>";
 					$("<tr>" + tds + "</tr>").appendTo("#sctnTbody");
 					});
 			   },
