@@ -42,12 +42,29 @@ public class TestPlanController {
 
 	@RequestMapping("setSave")
 	public String setSave(
+			String tpId,
 			String[] typeIds, Integer[] typeNums, Integer[] typePns,
 			String[] fromIds, Integer[] fromNums,
 			String[] subjIds, Integer[] subjNums,
 			String[] unitIds, Integer[] unitNums,
 			String[] sctnIds, Integer[] sctnNums,			
 			Model model) {
+		System.out.println("tpId:" + tpId);
+		System.out.println("typeIds:" + Arrays.toString(typeIds));
+		System.out.println("typeNums:" + Arrays.toString(typeNums));
+		System.out.println("typePns:" + Arrays.toString(typePns));
+		System.out.println("fromIds:" + Arrays.toString(fromIds));
+		System.out.println("fromNums:" + Arrays.toString(fromNums));
+		System.out.println("subjIds:" + Arrays.toString(subjIds));
+		System.out.println("subjNums:" + Arrays.toString(subjNums));
+		System.out.println("unitIds:" + Arrays.toString(unitIds));
+		System.out.println("unitNums:" + Arrays.toString(unitNums));
+		System.out.println("sctnIds:" + Arrays.toString(sctnIds));
+		System.out.println("sctnNums:" + Arrays.toString(sctnNums));
+		
+		
+		
+		int count = testPlanService.saveSet(tpId, typeIds, typeNums, typePns, fromIds, fromNums, subjIds, subjNums, unitIds, unitNums, sctnIds, sctnNums);
 		
 		
 		return "redirect:query";

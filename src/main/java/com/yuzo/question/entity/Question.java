@@ -17,6 +17,8 @@ public class Question {
 
     private String qstnPictext;
     
+    private Integer qstnNum;
+    
     
     private String subjSctnTitle;
 
@@ -125,5 +127,11 @@ public class Question {
 		this.subjTitle = subjTitle;
 	}
     
-    
+    public Integer getQstnNum() {
+        return qstnNum;
+    }
+
+    public void setQstnNum(Integer qstnNum) {
+        this.qstnNum = qstnNum;
+    }
 }

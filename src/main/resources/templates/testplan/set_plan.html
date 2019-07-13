@@ -38,7 +38,7 @@
 				<!-- Main content -->
 				<section class="content">
 					<div class="row">
-						<form class="form form-horizontal" method="post"  th:object="${plan}"    th:action="@{/testplan/setSave}"  >
+						<form class="form form-horizontal" method="post"  th:object="${plan}"  th:onsubmit="return( doSub() )"  th:action="@{/testplan/setSave}"  >
 							<input type="hidden" name="tpId"  th:field="*{tpId}"  >
 							<!-- left column -->
 							<div class="col-md-12 ">
@@ -207,6 +207,27 @@
 		}
 	}
 	
+	
+	function doSub(){
+	
+		var typeIdsLen = $("[name=typeIds]:checked").length
+		if(typeIdsLen<=0){
+			bootbox.alert("请选择类型");
+			return false;
+		}
+		var fromIdsLen = $("[name=fromIds]:checked").length
+		if(fromIdsLen<=0){
+			bootbox.alert("请选择来源:" + fromIdsLen);
+			return false;
+		}
+		var subjIdsLen = $("[name=subjIds]:checked").length
+		if(subjIdsLen<=0){
+			bootbox.alert("请知识类型:" + subjIdsLen);
+			return false;
+		}
+		return true;
+		
+	}
 	
 		
 	

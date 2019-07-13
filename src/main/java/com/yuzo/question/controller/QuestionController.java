@@ -139,7 +139,8 @@ public class QuestionController {
 	@RequestMapping("/editSave")
 	public String editSave(Question qstn, Model model){
 		//qstn.setQstnId(UUID.randomUUID().toString());
-		//qstn.setQstnInputTime(new Date());
+		qstn.setQstnInputTime(new Date());
+	
 		int count = qstnService.update(qstn);
 		logger.debug("count:" + count);
 		return "redirect:query";

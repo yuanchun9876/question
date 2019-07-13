@@ -22,6 +22,8 @@ public class SubjUnit {
     private String subjTitle;
     
     
+    
+    
 
     @Override
 	public String toString() {

@@ -52,6 +52,8 @@ public class SubjSectionController {
 		if (clearpage != null) {
 			BeanUtils.copyProperties(new SubjSectionPage(), page);
 		}
+		
+		model.addAttribute("page",page);
 		//	
 		PageHelper.startPage(page.getPageNum(), page.getPageSize());		
 		List<SubjSection> list = subjSctnService.query(page);	
@@ -61,6 +63,13 @@ public class SubjSectionController {
         model.addAttribute("pageInfo",pageInfo);
         //System.out.println(pageInfo);
 		//model.addAttribute("list", list);
+        
+        List<SubjUnit> unitList = subjSctnService.queryUnit();
+		model.addAttribute("unitList", unitList);
+		
+		List<SubjectCourse> subjList = subjSctnService.querySubj();
+		model.addAttribute("subjList", subjList);
+		
 		return "subjsctn/list_sctn";
 	}
 	

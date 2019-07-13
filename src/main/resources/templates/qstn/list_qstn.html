@@ -113,7 +113,7 @@
 					</form>
 					<!-- /.box-header -->
 					<div class="box-body no-padding">
-						<table class="table table-striped">
+						<table class="table table-bordered  table-striped">
 							<tr>
 								<th width="5%">序号</th>
 								<th width="5%">全选</th>
@@ -121,6 +121,7 @@
 								<th width="10%">试题类型</th>
 								<th width="10%">来源类型</th>
 								<th width="15%">所属知识</th>
+								<th width="5%">序号</th>
 								<th width="10%">上传时间</th>
 								<th width="20%">操作</th>
 							</tr>
@@ -130,10 +131,11 @@
 		        			  <td  th:text="${i.index} + ${pageInfo.startRow}" >1</td>
 		        			  <td ><input type="checkbox" name="ids" value="1"    th:value="${row.qstnId}"  ></td>
 							  <td class="qstnTitle"  th:text="${#strings.substring(row.qstnTitle,0,30)}" >${qstn.qstnTitle }</td>
-							  <td  th:text="${row.qstnTypeId}" >${qstn.qstnTypeId }</td>
-							  <td  th:text="${row.qstnFromTypeId}" >${qstn.qstnFromTypeId }</td>
-							  <td  th:text="${row.subjSctnId}"  >${qstn.subjSctnId }</td>
-							  <td  th:field="${#dates.format(row.qstnInputTime, 'yyyy-MM-dd')}" ></td>
+							  <td  th:text="${row.qstnTypeName}" >${qstn.qstnTypeId }</td>
+							  <td  th:text="${row.qstnFromTypeCode}" >${qstn.qstnFromTypeId }</td>
+							  <td  th:text="${row.subjSctnTitle}"  >${qstn.subjSctnId }</td>
+							  <td  th:text="${row.qstnNum}"  >${qstn.subjSctnId }</td>
+							  <td  th:text="${#dates.format(row.qstnInputTime, 'yyyy-MM-dd')}" ></td>
 							  <td>
 								<button type="button" class="btn btn-primary btn-sm"  th:onclick="editpage([[${row.qstnId}]])"  onclick="javascript:editpage('1')">修改</button>
 								<button type="button" class="btn btn-info btn-sm"  th:onclick="answerpage([[${row.qstnId}]])"  onclick="javascript:editpage('1')">设置答案</button>

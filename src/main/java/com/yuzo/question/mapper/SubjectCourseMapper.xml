@@ -19,6 +19,7 @@
     select 
     <include refid="Base_Column_List" />
     from subject_course
+    order by SUBJ_NUM
   </select>
   
   

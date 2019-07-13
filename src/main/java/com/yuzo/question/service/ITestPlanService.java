@@ -30,4 +30,8 @@ public interface ITestPlanService {
 	int update(TestPlan plan);
 
 	int dels(String[] ids);
+
+	int saveSet(String tpId, String[] typeIds, Integer[] typeNums, Integer[] typePns, String[] fromIds,
+			Integer[] fromNums, String[] subjIds, Integer[] subjNums, String[] unitIds, Integer[] unitNums,
+			String[] sctnIds, Integer[] sctnNums);
 }
