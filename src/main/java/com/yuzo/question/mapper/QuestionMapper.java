@@ -23,4 +23,6 @@ public interface QuestionMapper {
     int updateByPrimaryKey(Question record);
 
 	List<Question> queryAll(QuestionPage page);
+	
+	int queryCountByXxx(QuestionPage page);
 }

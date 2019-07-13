@@ -62,7 +62,7 @@ public class QuestionController {
 		List<Question> list = qstnService.queryAll(page);
 		PageInfo<Question> pageInfo = new PageInfo<Question>(list);
         model.addAttribute("pageInfo",pageInfo);
-        System.out.println("pageInfo: " + pageInfo);
+       // System.out.println("pageInfo: " + pageInfo);
         
         // 用于条件查询
 		List<QstnFromType> qstnFromList = qstnService.queryQstnFrom();

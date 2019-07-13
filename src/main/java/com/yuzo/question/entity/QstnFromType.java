@@ -6,8 +6,21 @@ public class QstnFromType {
     private String qstnFromTypeCode;
 
     private String qstnFromTypeInfo;
+    
+    private Integer qstnFromCount;
+    
+    
+    
 
-    public String getQstnFromTypeId() {
+    public Integer getQstnFromCount() {
+		return qstnFromCount;
+	}
+
+	public void setQstnFromCount(Integer qstnFromCount) {
+		this.qstnFromCount = qstnFromCount;
+	}
+
+	public String getQstnFromTypeId() {
         return qstnFromTypeId;
     }
 

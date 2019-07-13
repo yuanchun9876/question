@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yuzo.question.mapper.UserTeamMapper" >
+  <resultMap id="BaseResultMap" type="com.yuzo.question.entity.UserTeam" >
+    <id column="tm_id" property="tmId" jdbcType="VARCHAR" />
+    <result column="mc_id" property="mcId" jdbcType="VARCHAR" />
+    <result column="tm_name" property="tmName" jdbcType="VARCHAR" />
+    <result column="tm_slogan" property="tmSlogan" jdbcType="VARCHAR" />
+    <result column="tm_total" property="tmTotal" jdbcType="INTEGER" />
+    <result column="mc_code" property="mcCode" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    tm_id, mc_id, tm_name, tm_slogan, tm_total
+  </sql>
+  
+  <select id="queryAll" resultMap="BaseResultMap" >
+    select 
+     tm_id, tm.mc_id, tm_name, tm_slogan, tm_total, mc.mc_code
+    from user_team tm inner join  user_myclass mc on mc.mc_id = tm.mc_id
+  </select>
+  <select id="queryByMc" resultMap="BaseResultMap" parameterType="com.yuzo.question.page.UserTeamPage" >
+    select 
+     tm_id, tm.mc_id, tm_name, tm_slogan, tm_total, mc.mc_code
+    from user_team tm inner join  user_myclass mc on mc.mc_id = tm.mc_id
+    <where>
+    	<if test="mcId != null  and  mcId != '' ">
+    		and  tm.mc_id = #{mcId}
+    	</if>
+    </where>
+  </select>
+  
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from user_team
+    where tm_id = #{tmId,jdbcType=VARCHAR}
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from user_team
+    where tm_id = #{tmId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.yuzo.question.entity.UserTeam" >
+    insert into user_team (tm_id, mc_id, tm_name, 
+      tm_slogan, tm_total)
+    values (#{tmId,jdbcType=VARCHAR}, #{mcId,jdbcType=VARCHAR}, #{tmName,jdbcType=VARCHAR}, 
+      #{tmSlogan,jdbcType=VARCHAR}, #{tmTotal,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.yuzo.question.entity.UserTeam" >
+    insert into user_team
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="tmId != null" >
+        tm_id,
+      </if>
+      <if test="mcId != null" >
+        mc_id,
+      </if>
+      <if test="tmName != null" >
+        tm_name,
+      </if>
+      <if test="tmSlogan != null" >
+        tm_slogan,
+      </if>
+      <if test="tmTotal != null" >
+        tm_total,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="tmId != null" >
+        #{tmId,jdbcType=VARCHAR},
+      </if>
+      <if test="mcId != null" >
+        #{mcId,jdbcType=VARCHAR},
+      </if>
+      <if test="tmName != null" >
+        #{tmName,jdbcType=VARCHAR},
+      </if>
+      <if test="tmSlogan != null" >
+        #{tmSlogan,jdbcType=VARCHAR},
+      </if>
+      <if test="tmTotal != null" >
+        #{tmTotal,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.yuzo.question.entity.UserTeam" >
+    update user_team
+    <set >
+      <if test="mcId != null" >
+        mc_id = #{mcId,jdbcType=VARCHAR},
+      </if>
+      <if test="tmName != null" >
+        tm_name = #{tmName,jdbcType=VARCHAR},
+      </if>
+      <if test="tmSlogan != null" >
+        tm_slogan = #{tmSlogan,jdbcType=VARCHAR},
+      </if>
+      <if test="tmTotal != null" >
+        tm_total = #{tmTotal,jdbcType=INTEGER},
+      </if>
+    </set>
+    where tm_id = #{tmId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.yuzo.question.entity.UserTeam" >
+    update user_team
+    set mc_id = #{mcId,jdbcType=VARCHAR},
+      tm_name = #{tmName,jdbcType=VARCHAR},
+      tm_slogan = #{tmSlogan,jdbcType=VARCHAR},
+      tm_total = #{tmTotal,jdbcType=INTEGER}
+    where tm_id = #{tmId,jdbcType=VARCHAR}
+  </update>
+</mapper>

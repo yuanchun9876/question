@@ -30,8 +30,22 @@ public class Question {
     
     private String subjTitle;
     
+    
+    
+    private Integer qstnCount;
+    
+    
+    
 
-    public String getQstnId() {
+    public Integer getQstnCount() {
+		return qstnCount;
+	}
+
+	public void setQstnCount(Integer qstnCount) {
+		this.qstnCount = qstnCount;
+	}
+
+	public String getQstnId() {
         return qstnId;
     }
 

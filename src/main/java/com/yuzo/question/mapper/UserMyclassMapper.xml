@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yuzo.question.mapper.UserMyclassMapper" >
+  <resultMap id="BaseResultMap" type="com.yuzo.question.entity.UserMyclass" >
+    <id column="mc_id" property="mcId" jdbcType="VARCHAR" />
+    <result column="mc_code" property="mcCode" jdbcType="VARCHAR" />
+    <result column="mc_begin_date" property="mcBeginDate" jdbcType="DATE" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    mc_id, mc_code, mc_begin_date
+  </sql>
+  
+  <select id="queryAll" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from user_myclass
+  </select>
+  
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from user_myclass
+    where mc_id = #{mcId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from user_myclass
+    where mc_id = #{mcId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.yuzo.question.entity.UserMyclass" >
+    insert into user_myclass (mc_id, mc_code, mc_begin_date
+      )
+    values (#{mcId,jdbcType=VARCHAR}, #{mcCode,jdbcType=VARCHAR}, #{mcBeginDate,jdbcType=DATE}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.yuzo.question.entity.UserMyclass" >
+    insert into user_myclass
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="mcId != null" >
+        mc_id,
+      </if>
+      <if test="mcCode != null" >
+        mc_code,
+      </if>
+      <if test="mcBeginDate != null" >
+        mc_begin_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="mcId != null" >
+        #{mcId,jdbcType=VARCHAR},
+      </if>
+      <if test="mcCode != null" >
+        #{mcCode,jdbcType=VARCHAR},
+      </if>
+      <if test="mcBeginDate != null" >
+        #{mcBeginDate,jdbcType=DATE},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.yuzo.question.entity.UserMyclass" >
+    update user_myclass
+    <set >
+      <if test="mcCode != null" >
+        mc_code = #{mcCode,jdbcType=VARCHAR},
+      </if>
+      <if test="mcBeginDate != null" >
+        mc_begin_date = #{mcBeginDate,jdbcType=DATE},
+      </if>
+    </set>
+    where mc_id = #{mcId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.yuzo.question.entity.UserMyclass" >
+    update user_myclass
+    set mc_code = #{mcCode,jdbcType=VARCHAR},
+      mc_begin_date = #{mcBeginDate,jdbcType=DATE}
+    where mc_id = #{mcId,jdbcType=VARCHAR}
+  </update>
+</mapper>

@@ -54,6 +54,37 @@
 		order by QSTN_INPUT_TIME
   </select>
   
+  
+  
+    <select id="queryCountByXxx" resultType="int" parameterType="com.yuzo.question.page.QuestionPage" >
+   	select count(QSTN_ID)
+		FROM question qstn
+			left JOIN question_type qttype  on qttype.QSTN_TYPE_ID = qstn.QSTN_TYPE_ID
+			LEFT JOIN qstn_from_type  qtfrom on qtfrom.QSTN_FROM_TYPE_ID = qstn.QSTN_FROM_TYPE_ID
+			LEFT JOIN subj_section sctn on sctn.SUBJ_SCTN_ID = qstn.SUBJ_SCTN_ID
+			LEFT JOIN subj_unit unit on sctn.SUBJ_UNIT_ID = unit.SUBJ_UNIT_ID
+			LEFT JOIN subject_course subj on subj.SUBJ_ID = unit.SUBJ_ID
+	<where>
+		<if test="qstnTypeId != null   and  qstnTypeId  != ''  ">
+			and qstn.QSTN_TYPE_ID = #{qstnTypeId}
+		</if>
+		<if test="qstnFromTypeId != null   and  qstnFromTypeId  != ''  ">
+			and qstn.QSTN_FROM_TYPE_ID = #{qstnFromTypeId}
+		</if>
+		<if test="subjId != null   and  subjId  != ''  ">
+			and subj.SUBJ_ID = #{subjId}
+		</if>
+		<if test="unitId != null   and  unitId  != ''  ">
+			and unit.SUBJ_UNIT_ID = #{unitId}
+		</if>
+		<if test="subjSctnId != null   and  subjSctnId  != ''  ">
+			and qstn.SUBJ_SCTN_ID = #{subjSctnId}
+		</if>
+	</where>
+	
+  </select>
+  
+  
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />

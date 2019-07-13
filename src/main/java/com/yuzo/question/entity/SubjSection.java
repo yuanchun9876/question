@@ -21,8 +21,22 @@ public class SubjSection {
     private String subjSctnPicText;
 
     private Integer subjSctnVideoLen;
+    
+    private Integer sctnCount;
+    
+    
+    
+    
 
-    public String getSubjSctnId() {
+    public Integer getSctnCount() {
+		return sctnCount;
+	}
+
+	public void setSctnCount(Integer sctnCount) {
+		this.sctnCount = sctnCount;
+	}
+
+	public String getSubjSctnId() {
         return subjSctnId;
     }
 

@@ -13,7 +13,6 @@ import com.yuzo.question.entity.SubjUnit;
 import com.yuzo.question.entity.SubjectCourse;
 import com.yuzo.question.entity.TestPlan;
 import com.yuzo.question.entity.TestPlanDetailed;
-import com.yuzo.question.mapper.AnswerMapper;
 import com.yuzo.question.mapper.QstnFromTypeMapper;
 import com.yuzo.question.mapper.QuestionMapper;
 import com.yuzo.question.mapper.QuestionTypeMapper;
@@ -22,6 +21,7 @@ import com.yuzo.question.mapper.SubjUnitMapper;
 import com.yuzo.question.mapper.SubjectCourseMapper;
 import com.yuzo.question.mapper.TestPlanDetailedMapper;
 import com.yuzo.question.mapper.TestPlanMapper;
+import com.yuzo.question.page.QuestionPage;
 import com.yuzo.question.service.ITestPlanService;
 
 @Service
@@ -55,31 +55,66 @@ public class TestPlanServiceImpl implements ITestPlanService {
 	@Override
 	public List<QstnFromType> queryQstnFrom() {
 		// TODO Auto-generated method stub
-		return qstnFromMapper.queryAll();
+		List<QstnFromType> list = qstnFromMapper.queryAll();
+		for (QstnFromType qstnFromType : list) {
+			QuestionPage qpage = new QuestionPage();
+			qpage.setQstnFromTypeId(qstnFromType.getQstnFromTypeId());
+			qstnMapper.queryCountByXxx(qpage);
+			qstnFromType.setQstnFromCount(qstnMapper.queryCountByXxx(qpage));
+		}
+		return list;
 	}
 
 	@Override
 	public List<QuestionType> queryQstnType() {
 		// TODO Auto-generated method stub
-		return qstnTypeMapper.queryAll();
+		List<QuestionType> list =  qstnTypeMapper.queryAll();
+		for (QuestionType qstnType : list) {
+			QuestionPage qpage = new QuestionPage();
+			qpage.setQstnTypeId(qstnType.getQstnTypeId());
+			qstnMapper.queryCountByXxx(qpage);
+			qstnType.setQstnTypeCount(qstnMapper.queryCountByXxx(qpage));
+		}
+		return list;
 	}
 
 	@Override
 	public List<SubjSection> querySubjSctn() {
 		// TODO Auto-generated method stub
-		return sctnMapper.queryAll(null);
+		List<SubjSection> list = sctnMapper.queryAll(null);
+		for (SubjSection sctn : list) {
+			QuestionPage qpage = new QuestionPage();
+			qpage.setSubjSctnId(sctn.getSubjSctnId());
+			qstnMapper.queryCountByXxx(qpage);
+			sctn.setSctnCount(qstnMapper.queryCountByXxx(qpage));
+		}
+		return list;
 	}
 
 	@Override
 	public List<SubjectCourse> querySubj() {
 		// TODO Auto-generated method stub
-		return subjMapper.queryAll();
+		List<SubjectCourse> list = subjMapper.queryAll();
+		for (SubjectCourse subj : list) {
+			QuestionPage qpage = new QuestionPage();
+			qpage.setSubjId(subj.getSubjId());
+			qstnMapper.queryCountByXxx(qpage);
+			subj.setSubjCount(qstnMapper.queryCountByXxx(qpage));
+		}
+		return list;
 	}
 
 	@Override
 	public List<SubjUnit> querySubjUnit() {
 		// TODO Auto-generated method stub
-		return unitMapper.queryAll();
+		List<SubjUnit> list = unitMapper.queryAll();
+		for (SubjUnit unit : list) {
+			QuestionPage qpage = new QuestionPage();
+			qpage.setUnitId(unit.getSubjUnitId());
+			qstnMapper.queryCountByXxx(qpage);
+			unit.setUnitCount(qstnMapper.queryCountByXxx(qpage));
+		}
+		return list;
 	}
 	
 	@Override

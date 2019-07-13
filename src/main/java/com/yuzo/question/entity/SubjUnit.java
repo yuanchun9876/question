@@ -22,10 +22,19 @@ public class SubjUnit {
     private String subjTitle;
     
     
+    private Integer unitCount;
     
     
 
-    @Override
+    public Integer getUnitCount() {
+		return unitCount;
+	}
+
+	public void setUnitCount(Integer unitCount) {
+		this.unitCount = unitCount;
+	}
+
+	@Override
 	public String toString() {
 		return "SubjUnit [subjUnitId=" + subjUnitId + ", subjId=" + subjId + ", tchId=" + tchId + ", subjUnitTitle="
 				+ subjUnitTitle + ", subjUnitNum=" + subjUnitNum + ", subjUnitCode=" + subjUnitCode + ", subjUnitInfo="

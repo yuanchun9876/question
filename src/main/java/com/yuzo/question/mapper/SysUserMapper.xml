@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yuzo.question.mapper.SysUserMapper" >
+  <resultMap id="BaseResultMap" type="com.yuzo.question.entity.SysUser" >
+    <id column="user_id" property="userId" jdbcType="VARCHAR" />
+    <result column="user_name" property="userName" jdbcType="VARCHAR" />
+    <result column="user_pass" property="userPass" jdbcType="VARCHAR" />
+    <result column="nick_name" property="nickName" jdbcType="VARCHAR" />
+    <result column="user_state" property="userState" jdbcType="VARCHAR" />
+    <result column="user_info" property="userInfo" jdbcType="VARCHAR" />
+    <result column="user_sequ" property="userSequ" jdbcType="INTEGER" />
+    <result column="salt" property="salt" jdbcType="VARCHAR" />
+    <result column="user_phone" property="userPhone" jdbcType="VARCHAR" />
+    <result column="user_guardian" property="userGuardian" jdbcType="VARCHAR" />
+    <result column="user_gudn_phone" property="userGudnPhone" jdbcType="VARCHAR" />
+    <result column="tm_id" property="tmId" jdbcType="VARCHAR" />
+    <result column="tm_name" property="tmName" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    user_id, user_name, user_pass, nick_name, user_state, user_info, user_sequ, salt, 
+    user_phone, user_guardian, user_gudn_phone, tm_id
+  </sql>
+  
+    <select id="queryAll" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+     user_id, user_name, user_pass, nick_name, user_state, user_info, user_sequ, salt, 
+    user_phone, user_guardian, user_gudn_phone, user.tm_id, team.tm_name
+    from sys_user user  left join user_team  team  on team.tm_id = user.tm_id
+ 
+  </select>
+  
+  <select id="queryPage" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    user_id, user_name, user_pass, nick_name, user_state, user_info, user_sequ, salt, 
+    user_phone, user_guardian, user_gudn_phone, user.tm_id, team.tm_name
+    from sys_user user  left join user_team  team  on team.tm_id = user.tm_id
+    <where>
+    	<if test="tmId != null   and   tmId != ''  ">
+    		and  user.tm_id = #{tmId}
+    	</if>
+    </where>
+  </select>
+  
+  
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from sys_user
+    where user_id = #{userId,jdbcType=VARCHAR}
+  </select>
+  
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from sys_user
+    where user_id = #{userId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.yuzo.question.entity.SysUser" >
+    insert into sys_user (user_id, user_name, user_pass, 
+      nick_name, user_state, user_info, 
+      user_sequ, salt, user_phone, 
+      user_guardian, user_gudn_phone, tm_id
+      )
+    values (#{userId,jdbcType=VARCHAR}, #{userName,jdbcType=VARCHAR}, #{userPass,jdbcType=VARCHAR}, 
+      #{nickName,jdbcType=VARCHAR}, #{userState,jdbcType=VARCHAR}, #{userInfo,jdbcType=VARCHAR}, 
+      #{userSequ,jdbcType=INTEGER}, #{salt,jdbcType=VARCHAR}, #{userPhone,jdbcType=VARCHAR}, 
+      #{userGuardian,jdbcType=VARCHAR}, #{userGudnPhone,jdbcType=VARCHAR}, #{tmId,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.yuzo.question.entity.SysUser" >
+    insert into sys_user
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="userName != null" >
+        user_name,
+      </if>
+      <if test="userPass != null" >
+        user_pass,
+      </if>
+      <if test="nickName != null" >
+        nick_name,
+      </if>
+      <if test="userState != null" >
+        user_state,
+      </if>
+      <if test="userInfo != null" >
+        user_info,
+      </if>
+      <if test="userSequ != null" >
+        user_sequ,
+      </if>
+      <if test="salt != null" >
+        salt,
+      </if>
+      <if test="userPhone != null" >
+        user_phone,
+      </if>
+      <if test="userGuardian != null" >
+        user_guardian,
+      </if>
+      <if test="userGudnPhone != null" >
+        user_gudn_phone,
+      </if>
+      <if test="tmId != null" >
+        tm_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="userId != null" >
+        #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="userName != null" >
+        #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="userPass != null" >
+        #{userPass,jdbcType=VARCHAR},
+      </if>
+      <if test="nickName != null" >
+        #{nickName,jdbcType=VARCHAR},
+      </if>
+      <if test="userState != null" >
+        #{userState,jdbcType=VARCHAR},
+      </if>
+      <if test="userInfo != null" >
+        #{userInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="userSequ != null" >
+        #{userSequ,jdbcType=INTEGER},
+      </if>
+      <if test="salt != null" >
+        #{salt,jdbcType=VARCHAR},
+      </if>
+      <if test="userPhone != null" >
+        #{userPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="userGuardian != null" >
+        #{userGuardian,jdbcType=VARCHAR},
+      </if>
+      <if test="userGudnPhone != null" >
+        #{userGudnPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="tmId != null" >
+        #{tmId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.yuzo.question.entity.SysUser" >
+    update sys_user
+    <set >
+      <if test="userName != null" >
+        user_name = #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="userPass != null" >
+        user_pass = #{userPass,jdbcType=VARCHAR},
+      </if>
+      <if test="nickName != null" >
+        nick_name = #{nickName,jdbcType=VARCHAR},
+      </if>
+      <if test="userState != null" >
+        user_state = #{userState,jdbcType=VARCHAR},
+      </if>
+      <if test="userInfo != null" >
+        user_info = #{userInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="userSequ != null" >
+        user_sequ = #{userSequ,jdbcType=INTEGER},
+      </if>
+      <if test="salt != null" >
+        salt = #{salt,jdbcType=VARCHAR},
+      </if>
+      <if test="userPhone != null" >
+        user_phone = #{userPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="userGuardian != null" >
+        user_guardian = #{userGuardian,jdbcType=VARCHAR},
+      </if>
+      <if test="userGudnPhone != null" >
+        user_gudn_phone = #{userGudnPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="tmId != null" >
+        tm_id = #{tmId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where user_id = #{userId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.yuzo.question.entity.SysUser" >
+    update sys_user
+    set user_name = #{userName,jdbcType=VARCHAR},
+      user_pass = #{userPass,jdbcType=VARCHAR},
+      nick_name = #{nickName,jdbcType=VARCHAR},
+      user_state = #{userState,jdbcType=VARCHAR},
+      user_info = #{userInfo,jdbcType=VARCHAR},
+      user_sequ = #{userSequ,jdbcType=INTEGER},
+      salt = #{salt,jdbcType=VARCHAR},
+      user_phone = #{userPhone,jdbcType=VARCHAR},
+      user_guardian = #{userGuardian,jdbcType=VARCHAR},
+      user_gudn_phone = #{userGudnPhone,jdbcType=VARCHAR},
+      tm_id = #{tmId,jdbcType=VARCHAR}
+    where user_id = #{userId,jdbcType=VARCHAR}
+  </update>
+</mapper>

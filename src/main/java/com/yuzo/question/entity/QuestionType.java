@@ -6,8 +6,21 @@ public class QuestionType {
     private String qstnTypeName;
 
     private String qstnTypeInfo;
+    
+    private Integer qstnTypeCount;
+    
+    
+    
 
-    public String getQstnTypeId() {
+    public Integer getQstnTypeCount() {
+		return qstnTypeCount;
+	}
+
+	public void setQstnTypeCount(Integer qstnTypeCount) {
+		this.qstnTypeCount = qstnTypeCount;
+	}
+
+	public String getQstnTypeId() {
         return qstnTypeId;
     }
 

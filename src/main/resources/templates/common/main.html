@@ -129,41 +129,69 @@
 	      <!-- /.search form -->
 	      <!-- sidebar menu: : style can be found in sidebar.less -->
 	      <ul class="sidebar-menu" data-widget="tree">
-	        <li class="treeview" >
+	      			<li class="treeview" >
 						<a href="#">
-							<i class="glyphicon glyphicon-tasks"></i> 
-							<span >系统设置</span>
+							<i class="glyphicon glyphicon-paperclip"></i> 
+							<span >权限管理</span>
 							<span  class="pull-right-container">
 								<i class="glyphicon glyphicon-chevron-left pull-right"></i>
 							</span>	
 						</a>
 						<ul class="treeview-menu">
-		            <li >
-		            	<a href="<%=request.getContextPath() %>/example/list.html"  target="ifr_content"  >
-		            		<i class="glyphicon glyphicon-record"></i>
-		            		<span >用户维护</span>
-		            	</a>
-		            </li>
-		            <li >
-		            	<a href="<%=request.getContextPath() %>/example/add.html" target="ifr_content" >
-		            		<i class="glyphicon glyphicon-record"></i>
-		            		<span >角色维护</span>
-		            	</a>
-		            </li>
-		            <li >
-		            	<a th:href="@{/dashboard}" target="ifr_content" >
-		            		<i class="glyphicon glyphicon-record"></i>
-		            		<span >权限维护</span>
-		            	</a>
-		            </li>
-		             <li >
-		            	<a th:href="@{/dashboard}" target="ifr_content" >
-		            		<i class="glyphicon glyphicon-record"></i>
-		            		<span >菜单管理</span>
-		            	</a>
-		            </li>
-		        </ul>
+				            <li >
+				            	<a  th:href="@{/sysuser/query}"  target="ifr_content"  >
+				            		<i class="glyphicon glyphicon-record"></i>
+				            		<span >用户维护</span>
+				            	</a>
+				            </li>
+				            <li >
+				            	<a href="<%=request.getContextPath() %>/example/add.html" target="ifr_content" >
+				            		<i class="glyphicon glyphicon-record"></i>
+				            		<span >角色维护</span>
+				            	</a>
+				            </li>
+				            <li >
+				            	<a th:href="@{/dashboard}" target="ifr_content" >
+				            		<i class="glyphicon glyphicon-record"></i>
+				            		<span >权限维护</span>
+				            	</a>
+				            </li>
+				             <li >
+				            	<a th:href="@{/dashboard}" target="ifr_content" >
+				            		<i class="glyphicon glyphicon-record"></i>
+				            		<span >菜单管理</span>
+				            	</a>
+				            </li>
+				        </ul>
 					</li>
+					
+	       			 <li class="treeview" >
+						<a href="#">
+							<i class="glyphicon glyphicon-tasks"></i> 
+							<span >团队设置</span>
+							<span  class="pull-right-container">
+								<i class="glyphicon glyphicon-chevron-left pull-right"></i>
+							</span>	
+						</a>
+							<ul class="treeview-menu">
+							<li >
+				            	<a  th:href="@{/usermc/query}" target="ifr_content"  >
+				            		<i class="glyphicon glyphicon-record"></i>
+				            		<span >班级维护</span>
+				            	</a>
+				            </li>
+				            <li >
+				            	<a th:href="@{/usertm/query}"   target="ifr_content"  >
+				            		<i class="glyphicon glyphicon-record"></i>
+				            		<span >团队维护</span>
+				            	</a>
+				            </li>
+				      	</li>
+					
+					
+				 </ul>
+					</li>
+					
 					<li class="treeview" >
 						<a href="#">
 							<i class="glyphicon glyphicon-paperclip"></i> 

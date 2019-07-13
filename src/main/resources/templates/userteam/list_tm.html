@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>查询页面</title>
+  <!-- Tell the browser to be responsive to screen width -->
+  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+ 
+  <include th:replace="/common/css :: commoncss"/>
+
+	<style type="text/css">
+	 	.content-wrapper {
+				margin-left: 0px;
+		}
+		.qstnTitle img{display: none;}
+		
+		@media only screen and (max-width: 768px) {
+			.box-header{
+				flex-direction: column;
+			}
+			.box-header .box-search{
+				margin: 10px auto;
+			}
+		}
+	</style>
+</head>
+<body class="hold-transition skin-blue sidebar-mini">
+<div class="wrapper">
+
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+      <!-- Content Header (Page header) -->
+      <section class="content-header">
+        <h1>
+         	团队查询
+        </h1>
+        <ol class="breadcrumb">
+        <li>
+			<a th:href="@{/dashboard}"><i class="glyphicon glyphicon-globe"></i>导航</a>
+		</li>
+          <li class="active"><a href="#">团队查询</a></li>
+        </ol>
+      </section>
+  
+      <!-- Main content -->
+     
+     	 <section class="content">
+        <div class="box">
+         <form name="infoForm" id="queryForm" method="post"  th:object="${page}" >
+        	<div class="box-header clearfix">
+        		<div class="box-search">
+					<div class="input-group">
+						<span class="input-group-addon" style="background: #EEEEEE;">所属班级</span>
+						<select class="form-control" name="mcId"   th:field="*{mcId}"  >
+							<option value="">请选择</option>
+							<option  th:value = "${mc.mcId}"   th:each="mc,i:${mclist}"   th:text="${mc.mcCode }"  >所属班级</option>
+						</select>
+					</div>
+				</div>
+				<div class="box-search btn-group">
+					<button class="btn btn-info" name="queryInfo">查询</button>
+					<button type="button" class="btn btn-primary" name="clearInfo" onclick="javascript:clearEle()">清空</button>
+					<button class="btn btn-success"  type="button" name="queryInfo"  onclick="addPage()" >添加</button>
+					<button class="btn btn-warning"  type="button" name="delBtn"  onclick="dels()" >删除</button>
+				</div>
+        	</div>
+        	</form>
+        	<!-- /.box-header -->
+        	<div class="box-body no-padding">
+        		<table class="table table-striped">
+        			<tr>
+        				<th>序号</th>
+        				<th>全选</th>
+        				<th>所属班级</th>     				
+        				<th>团队名称</th>     				
+        				<th>团队口号</th>     				
+        				<th>总积分</th>     				
+        				<th>平均积分</th>
+						<th>操作</th>
+        			</tr>
+        			<form name="delForm"  method="post"  action="#"  th:action="@{/usertm/dels}"  >    
+        			<tbody th:remove="all-but-first" >       			  	
+        			<tr  th:each="row,i:${pageInfo.list}" >
+	        			<td th:text="${i.index} + ${pageInfo.startRow}">1</td>
+	        			<td ><input type="checkbox" name="ids"  value="1"    th:value="${row.tmId}"  ></td>
+	       				<td th:text="${row.mcCode}" >JavaSE</td>
+	       				<td th:text="${row.tmName}" >JavaSE</td>
+	       				<td th:text="${row.tmSlogan}" >JavaSE</td>
+	       				<td th:text="${row.tmTotal}" >JavaSE</td>
+	       				<td th:text="${row.tmAvg}" >JavaSE</td>
+	       				
+						<td>
+							<button type="button" class="btn btn-primary btn-sm"  th:onclick="editpage([[${row.tmId}]])"     onclick="javascript:editpage('1')"    >修改</button>
+						</td>
+       				</tr>	       			  		
+        		</tbody>
+        		</form>
+        		</table>
+        	<br/>
+		        		<div th:replace="/common/js :: commonjs"></div>
+						<div th:include="common/pagination::pagination(uri='/usertm/query',page=${pageInfo})" align="center" ></div>
+					</div>
+				</div>
+				<!-- /.row -->
+			</section>
+			<!-- /.content -->
+		</div>
+	</div>
+	<!-- ./wrapper -->
+
+</body>
+	
+<script type="text/javascript">
+
+
+	function dels(){
+		var ids = $("[name=ids]:checked");
+		if(ids.length==0){
+			alert("请选择要删除记录!");
+			return;
+		}
+		if(window.confirm("确定要删除吗?")){
+			//console.log(document.delForm.action);
+			document.delForm.submit();
+		}
+	}
+	  
+	function addPage(){
+		location.href = "/usertm/addPage"; 
+	}
+
+	function editpage(id){
+		//console.log(id);
+		location.href = "/usertm/editPage?tmId=" + id; 
+	}
+	
+	function clearEle() {
+
+		bootbox.confirm("确定要清空查询条件吗?", function(result) {
+			if(result) {
+				$("[name=infoForm] input").val("");
+				$("[name=infoForm] select").each(function(i, j) {
+					$(j).find("option:selected").prop("selected", false);
+					$(j).find("option").first().prop("selected", true);
+				});
+			} else {
+				console.log("no");
+			}
+		});
+	}
+
+</script>
+
+</html>

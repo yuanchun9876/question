@@ -14,8 +14,23 @@ public class SubjectCourse {
     private String subjInfo;
 
     private Integer subjProgress;
+    
+    
+    private Integer subjCount;
+    
+    
+    
+    
 
-    public String getSubjId() {
+    public Integer getSubjCount() {
+		return subjCount;
+	}
+
+	public void setSubjCount(Integer subjCount) {
+		this.subjCount = subjCount;
+	}
+
+	public String getSubjId() {
         return subjId;
     }
 
