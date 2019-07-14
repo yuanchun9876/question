@@ -209,7 +209,7 @@ public class TestPlanServiceImpl implements ITestPlanService {
 				TestPlanDetailed planDtd = new TestPlanDetailed();
 				planDtd.setTpDtdId(UUID.randomUUID().toString());
 				planDtd.setTpId(tpId);
-				planDtd.setSubjId(unitIds[i]);
+				planDtd.setSubjUnitId(unitIds[i]);
 				if (unitNums[i]==null) {
 					planDtd.setUnitNum(100);
 				} else {
@@ -222,11 +222,11 @@ public class TestPlanServiceImpl implements ITestPlanService {
 		
 		if(sctnIds!=null) {
 			
-			for (int i = 0; i < unitIds.length; i++) {
+			for (int i = 0; i < sctnIds.length; i++) {
 				TestPlanDetailed planDtd = new TestPlanDetailed();
 				planDtd.setTpDtdId(UUID.randomUUID().toString());
 				planDtd.setTpId(tpId);
-				planDtd.setSubjId(sctnIds[i]);
+				planDtd.setSubjSctnId(sctnIds[i]);
 				if (sctnNums[i]==null) {
 					planDtd.setSctnNum(100);
 				} else {

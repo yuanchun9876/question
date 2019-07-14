@@ -91,7 +91,6 @@ public class SysUserServiceImpl implements ISysUserService {
 		return userMyclassMapper.queryAll();
 	}
 	
-	
 
 	@Override
 	public List<SysUser> queryPage(SysUserPage page) {

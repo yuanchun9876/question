@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yuzo.question.mapper.UserReplyListMapper" >
+  <resultMap id="BaseResultMap" type="com.yuzo.question.entity.UserReplyList" >
+    <id column="ur_id" property="urId" jdbcType="VARCHAR" />
+    <result column="qstn_id" property="qstnId" jdbcType="VARCHAR" />
+    <result column="user_id" property="userId" jdbcType="VARCHAR" />
+    <result column="ur_flag" property="urFlag" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ur_id, qstn_id, user_id, ur_flag
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from user_reply_list
+    where ur_id = #{urId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from user_reply_list
+    where ur_id = #{urId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.yuzo.question.entity.UserReplyList" >
+    insert into user_reply_list (ur_id, qstn_id, user_id, 
+      ur_flag)
+    values (#{urId,jdbcType=VARCHAR}, #{qstnId,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR}, 
+      #{urFlag,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.yuzo.question.entity.UserReplyList" >
+    insert into user_reply_list
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="urId != null" >
+        ur_id,
+      </if>
+      <if test="qstnId != null" >
+        qstn_id,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="urFlag != null" >
+        ur_flag,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="urId != null" >
+        #{urId,jdbcType=VARCHAR},
+      </if>
+      <if test="qstnId != null" >
+        #{qstnId,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="urFlag != null" >
+        #{urFlag,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.yuzo.question.entity.UserReplyList" >
+    update user_reply_list
+    <set >
+      <if test="qstnId != null" >
+        qstn_id = #{qstnId,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="urFlag != null" >
+        ur_flag = #{urFlag,jdbcType=INTEGER},
+      </if>
+    </set>
+    where ur_id = #{urId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.yuzo.question.entity.UserReplyList" >
+    update user_reply_list
+    set qstn_id = #{qstnId,jdbcType=VARCHAR},
+      user_id = #{userId,jdbcType=VARCHAR},
+      ur_flag = #{urFlag,jdbcType=INTEGER}
+    where ur_id = #{urId,jdbcType=VARCHAR}
+  </update>
+</mapper>
