@@ -22,6 +22,8 @@ public interface IUserTeamService {
 
 	List<UserTeam> querytm(UserTeamPage page);
 
+	List<UserTeam> queryTmByMc(String mcId);
+
 
 
 }

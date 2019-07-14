@@ -173,7 +173,7 @@
 								<i class="glyphicon glyphicon-chevron-left pull-right"></i>
 							</span>	
 						</a>
-							<ul class="treeview-menu">
+						<ul class="treeview-menu">
 							<li >
 				            	<a  th:href="@{/usermc/query}" target="ifr_content"  >
 				            		<i class="glyphicon glyphicon-record"></i>
@@ -186,12 +186,15 @@
 				            		<span >团队维护</span>
 				            	</a>
 				            </li>
-				      	</li>
-					
-					
-				 </ul>
-					</li>
-					
+				            <li >
+				            	<a th:href="@{/usertm/query}"   target="ifr_content"  >
+				            		<i class="glyphicon glyphicon-record"></i>
+				            		<span >调整团队</span>
+				            	</a>
+				            </li>
+				        </ul>
+				      </li>
+
 					<li class="treeview" >
 						<a href="#">
 							<i class="glyphicon glyphicon-paperclip"></i> 
@@ -201,25 +204,25 @@
 							</span>	
 						</a>
 						<ul class="treeview-menu">
-		            <li >
-		            	<a  th:href="@{/qstn/query}"  target="ifr_content"  >
-		            		<i class="glyphicon glyphicon-record"></i>
-		            		<span >试题列表</span>
-		            	</a>
-		            </li>
-		            <li >
-		            	<a th:href="@{/qstn/addPage}" target="ifr_content" >
-		            		<i class="glyphicon glyphicon-record"></i>
-		            		<span >新增试题</span>
-		            	</a>
-		            </li>
-		            <li >
-		            	<a th:href="@{/testplan/query}" target="ifr_content" >
-		            		<i class="glyphicon glyphicon-record"></i>
-		            		<span >出题</span>
-		            	</a>
-		            </li>
-		        </ul>
+				            <li >
+				            	<a  th:href="@{/qstn/query}"  target="ifr_content"  >
+				            		<i class="glyphicon glyphicon-record"></i>
+				            		<span >试题列表</span>
+				            	</a>
+				            </li>
+				            <li >
+				            	<a th:href="@{/qstn/addPage}" target="ifr_content" >
+				            		<i class="glyphicon glyphicon-record"></i>
+				            		<span >新增试题</span>
+				            	</a>
+				            </li>
+				            <li >
+				            	<a th:href="@{/testplan/query}" target="ifr_content" >
+				            		<i class="glyphicon glyphicon-record"></i>
+				            		<span >出题</span>
+				            	</a>
+				            </li>
+				        </ul>
 					</li>
 					<li class="treeview" >
 						<a href="#">
@@ -231,27 +234,27 @@
 							</span>	
 						</a>
 						<ul class="treeview-menu">
-		            <li >
-		            	<a href="/subj/query.action"   th:href="@{/subj/query}"  target="ifr_content" >
-		            		<i class="glyphicon glyphicon-record"></i>
-		            		<span >科目单元</span>
-		            	</a>
-		            </li>
-		            <li >
-		            	<a href="/subjUnit/query.action"  th:href="@{/subjUnit/query}" target="ifr_content" >
-		            		<i class="glyphicon glyphicon-record"></i>
-		            		<span >知识章</span>
-		            	</a>
-		            </li>
-		            <li >
-		            	<a href="/subjSctn/query.action" th:href="@{/subjSctn/query}"  target="ifr_content" >
-		            		<i class="glyphicon glyphicon-record"></i>
-		            		<span >知识节</span>
-		            	</a>
-		            </li>
-		        </ul>
+				            <li >
+				            	<a href="/subj/query.action"   th:href="@{/subj/query}"  target="ifr_content" >
+				            		<i class="glyphicon glyphicon-record"></i>
+				            		<span >科目单元</span>
+				            	</a>
+				            </li>
+				            <li >
+				            	<a href="/subjUnit/query.action"  th:href="@{/subjUnit/query}" target="ifr_content" >
+				            		<i class="glyphicon glyphicon-record"></i>
+				            		<span >知识章</span>
+				            	</a>
+				            </li>
+				            <li >
+				            	<a href="/subjSctn/query.action" th:href="@{/subjSctn/query}"  target="ifr_content" >
+				            		<i class="glyphicon glyphicon-record"></i>
+				            		<span >知识节</span>
+				            	</a>
+				            </li>
+				        </ul>
 					</li>
-	      </ul>
+	      	</ul>
 	    </section>
   	</aside>
   	

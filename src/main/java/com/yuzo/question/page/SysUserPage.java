@@ -6,6 +6,8 @@ public class SysUserPage {
 	private Integer pageSize = 8;
 	
 	private String	tmId;
+	private String	mcId;
+	private String userName;
 	
 	
 	
@@ -13,7 +15,7 @@ public class SysUserPage {
 
 	@Override
 	public String toString() {
-		return "UserTeamPage [pageNum=" + pageNum + ", pageSize=" + pageSize + ", tmId=" + tmId + "]";
+		return "UserTeamPage [pageNum=" + pageNum + ", pageSize=" + pageSize + ", tmId=" + tmId + ", mcId=" + mcId + ", userName=" + userName + "]";
 	}
 	public Integer getPageNum() {
 		return pageNum;
@@ -32,6 +34,18 @@ public class SysUserPage {
 	}
 	public void setTmId(String tmId) {
 		this.tmId = tmId;
+	}
+	public String getMcId() {
+		return mcId;
+	}
+	public void setMcId(String mcId) {
+		this.mcId = mcId;
+	}
+	public String getUserName() {
+		return userName;
+	}
+	public void setUserName(String userName) {
+		this.userName = userName;
 	}
 
 

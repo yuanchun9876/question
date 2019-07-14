@@ -21,5 +21,7 @@ public interface UserTeamMapper {
 	List<UserTeam> queryAll();
 	
 	List<UserTeam> queryByMc(UserTeamPage page);
+
+	List<UserTeam> queryTmByMcId(String mcId);
 	
 }

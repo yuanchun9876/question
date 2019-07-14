@@ -29,6 +29,17 @@
     </where>
   </select>
   
+  <select id="queryTmByMcId" resultMap="BaseResultMap" parameterType="string" >
+    select 
+     tm_id, tm.mc_id, tm_name, tm_slogan, tm_total, mc.mc_code
+    from user_team tm inner join  user_myclass mc on mc.mc_id = tm.mc_id
+    <where>
+    	<if test="value != null  and  value != '' ">
+    		and  tm.mc_id = #{value}
+    	</if>
+    </where>
+  </select>
+  
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />

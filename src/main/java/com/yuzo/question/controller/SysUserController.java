@@ -42,7 +42,7 @@ public class SysUserController {
 			BeanUtils.copyProperties(new SysUserPage(), page);
 		}
 		//	
-		System.out.println("page: " + page);
+		System.out.println("userpage: " + page);
 		
 		model.addAttribute("page", page);
 		PageHelper.startPage(page.getPageNum(), page.getPageSize());		
@@ -55,6 +55,10 @@ public class SysUserController {
 		System.out.println(tmlist);
 		model.addAttribute("tmlist", tmlist);	
 		
+    	List<UserMyclass> mclist = userService.querymc();
+		System.out.println(mclist);
+		model.addAttribute("mclist", mclist);	
+		
 		return "sysuser/list_user";
 	}
 	
@@ -62,14 +66,19 @@ public class SysUserController {
 	public String addPage(HttpSession session, Model model) {
 		List<UserTeam> tmlist = userService.querytm();
 		System.out.println(tmlist);
-		model.addAttribute("mclist", tmlist);	
+		model.addAttribute("tmlist", tmlist);	
+		
+    	List<UserMyclass> mclist = userService.querymc();
+		System.out.println(mclist);
+		model.addAttribute("mclist", mclist);	
+		
 		return "sysuser/add_user";
 	}
 	
 	@RequestMapping("/sysuser/addSave")
-	public String addSave(SysUser tm)  {
-		System.out.println("tm:" + tm);
-		int count = userService.save(tm);		
+	public String addSave(SysUser tm, String mcId)  {
+		System.out.println("tm:" + mcId);
+		int count = userService.save(tm, mcId);		
 		System.out.println("usertm:" + count);		
 		return "redirect:query";
 	}
@@ -83,7 +92,11 @@ public class SysUserController {
 		
 		List<UserTeam> tmlist = userService.querytm();
 		System.out.println(tmlist);
-		model.addAttribute("mclist", tmlist);	
+		model.addAttribute("tmlist", tmlist);	
+		
+    	List<UserMyclass> mclist = userService.querymc();
+		System.out.println(mclist);
+		model.addAttribute("mclist", mclist);	
 		
 		return "sysuser/edit_user";
 	}
@@ -100,6 +113,55 @@ public class SysUserController {
 		int count = userService.dels(ids);
 		System.out.println(":" + count);
 		return "redirect:query";
+	}
+	
+	@RequestMapping("/sysuser/editUserMc")
+	public String editUserMc(String userId, String mcId) {		
+		int count = userService.updateUch(userId, mcId);
+		System.out.println(":" + count);
+		return "redirect:query";
+	}
+	
+	@RequestMapping("/sysuser/updatemc")
+	public String updatemc(String userId, Model model) {
+		
+		SysUser user = userService.queryById(userId);
+		System.out.println(user);
+		model.addAttribute("user", user);
+		
+		List<UserTeam> tmlist = userService.querytm();
+		System.out.println(tmlist);
+		model.addAttribute("tmlist", tmlist);	
+		
+    	List<UserMyclass> mclist = userService.querymc();
+		System.out.println(mclist);
+		model.addAttribute("mclist", mclist);	
+		
+		return "sysuser/edit_user_mc";
+	}
+	@RequestMapping("/sysuser/editUserTm")
+	public String editUserTm(SysUser user) {		
+		int count = userService.update(user);
+		System.out.println(":" + count);
+		return "redirect:query";
+	}
+	
+	@RequestMapping("/sysuser/updatetm")
+	public String updatetm(String userId, Model model) {
+		
+		SysUser user = userService.queryById(userId);
+		System.out.println(user);
+		model.addAttribute("user", user);
+		
+		List<UserTeam> tmlist = userService.querytm();
+		System.out.println(tmlist);
+		model.addAttribute("tmlist", tmlist);	
+		
+		List<UserMyclass> mclist = userService.querymc();
+		System.out.println(mclist);
+		model.addAttribute("mclist", mclist);	
+		
+		return "sysuser/edit_user_tm";
 	}
 	
 }

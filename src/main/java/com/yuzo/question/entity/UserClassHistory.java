@@ -1,5 +1,7 @@
 package com.yuzo.question.entity;
 
+import java.util.Date;
+
 public class UserClassHistory {
     private String ucId;
 
@@ -8,6 +10,10 @@ public class UserClassHistory {
     private String mcId;
 
     private Integer ucPoints;
+
+    private Date ucInDate;
+
+    private String ucState;
 
     public String getUcId() {
         return ucId;
@@ -39,5 +45,21 @@ public class UserClassHistory {
 
     public void setUcPoints(Integer ucPoints) {
         this.ucPoints = ucPoints;
+    }
+
+    public Date getUcInDate() {
+        return ucInDate;
+    }
+
+    public void setUcInDate(Date ucInDate) {
+        this.ucInDate = ucInDate;
+    }
+
+    public String getUcState() {
+        return ucState;
+    }
+
+    public void setUcState(String ucState) {
+        this.ucState = ucState == null ? null : ucState.trim();
     }
 }

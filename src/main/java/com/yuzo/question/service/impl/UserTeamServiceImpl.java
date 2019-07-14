@@ -71,4 +71,15 @@ public class UserTeamServiceImpl implements IUserTeamService {
 		return tmMapper.queryByMc(page);
 	}
 
+	@Override
+	public List<UserTeam> queryTmByMc(String mcId) {
+		// TODO Auto-generated method stub
+		if (mcId!=null  &&  !"".equals(mcId)) {
+			return tmMapper.queryTmByMcId(mcId);
+		} else {
+			return tmMapper.queryAll();
+		}
+		
+	}
+
 }

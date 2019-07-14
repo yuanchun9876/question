@@ -4,12 +4,12 @@
 	<head>
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
-		<title>添加页面</title>
+		<title>修改页面</title>
 		<!-- Tell the browser to be responsive to screen width -->
 		<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-	  <include th:replace="/common/css :: commoncss"/>
-		
-		
+  		
+  		<include th:replace="/common/css :: commoncss"/>
+				
 		<style type="text/css">
 			
 			.content-wrapper {
@@ -28,22 +28,21 @@
 				<!-- Content Header (Page header) -->
 				<section class="content-header">
 					<h1>
-          				用户添加
+          				用户团队修改
 			        </h1>
-			       <ol class="breadcrumb">
-						<li>
+			        <ol class="breadcrumb">
+			        	<li>
 							<a th:href="@{/dashboard}"><i class="glyphicon glyphicon-globe"></i>导航</a>
 						</li>
-						<li class="active">
-							<a href="#">用户添加</a>
-						</li>
-					</ol>
+			          <li class="active"><a href="#">用户团队修改</a></li>
+			        </ol>
 				</section>
 
 				<!-- Main content -->
 				<section class="content">
 					<div class="row">
-						<form class="form form-horizontal" method="post"    th:action="@{/sysuser/addSave}"  >
+						<form class="form form-horizontal" method="post"   th:action="@{/sysuser/editUserMc}"  th:object="${user}" >
+							<input type="hidden" name="userId"  th:field="*{userId}"  >
 							<!-- left column -->
 							<div class="col-md-8 col-md-offset-2">
 								<!-- general form elements -->
@@ -59,34 +58,26 @@
 									<div class="box-body">
 										<div class="form-group">
 											<label for="name" class="col-sm-2 control-label">用户账号</label>
-											<div class="col-sm-10">
-												<input type="text" class="form-control" name="userName"  placeholder="请输入用户账号" required="required">
+											<div class="col-sm-10"  th:text="*{userName}"  >
+												
 											</div>
 										</div>
 										<div class="form-group">
 											<label for="name" class="col-sm-2 control-label">用户昵称</label>
-											<div class="col-sm-10">
-												<input type="text" class="form-control" name="nickName"  placeholder="请输入用户昵称" required="required">
-											</div>
-										</div>
-										<div class="form-group">
-											<label for="name" class="col-sm-2 control-label">用户电话</label>
-											<div class="col-sm-10">
-												<input type="text" class="form-control" name="userPhone"  placeholder="请输入用户电话" required="required">
+											<div class="col-sm-10"   th:text="*{nickName}"  >
+												
 											</div>
 										</div>
 										<div class="form-group">
 											<label for="name" class="col-sm-2 control-label">所属班级</label>
-											<div class="col-sm-10">
-												<select class="form-control" name="mcId"     required="required">
+											<div class="col-sm-4">
+												<select class="form-control" name="mcId"      required="required">
 													<option value="">请选择</option>
 													<option  th:value = "${mc.mcId}"   th:each="mc,i:${mclist}"   th:text="${mc.mcCode }"  >所属班级</option>
 												</select>
 											</div>
-										
 										</div>
-										
-																								
+									</div>
 									<!-- /.box-body -->
 									<div class="box-footer">
 										<button type="button" class="btn btn-danger" onclick="cleanUp(this)">清空</button>
@@ -107,12 +98,14 @@
 			<!-- /.content-wrapper -->
 		
 		</div>
+		
 		<div th:replace="/common/js :: commonjs"></div>
 	</body>
-	
-	<script type="text/javascript">
-	
 
+
+
+	<script type="text/javascript">
+		
 		//清空
 		function cleanUp(btn) {
 			parDiv = $(btn).parent().parent();

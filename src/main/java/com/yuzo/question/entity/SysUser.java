@@ -27,6 +27,9 @@ public class SysUser {
     
     
     private String tmName;
+    
+    private String mcName;
+    
 
     public String getUserId() {
         return userId;
@@ -130,6 +133,14 @@ public class SysUser {
 
 	public void setTmName(String tmName) {
 		this.tmName = tmName;
+	}
+
+	public String getMcName() {
+		return mcName;
+	}
+
+	public void setMcName(String mcName) {
+		this.mcName = mcName;
 	}
     
     

@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.github.pagehelper.PageHelper;
@@ -57,6 +58,15 @@ public class UserTeamController {
 		model.addAttribute("mclist", mclist);	
         
 		return "userteam/list_tm";
+	}
+	
+	@RequestMapping("/usertm/selectTm")
+	@ResponseBody
+	public List<UserTeam> selectTm(String mcId) {
+		System.out.println("mcId:" + mcId);
+		List<UserTeam> tmlist = userTeamService.queryTmByMc(mcId);
+		System.out.println(tmlist);	
+		return tmlist;
 	}
 	
 	@RequestMapping("/usertm/addPage")

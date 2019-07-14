@@ -47,15 +47,30 @@
      
      	 <section class="content">
         <div class="box">
-         <form name="infoForm" id="queryForm" method="post"  th:object="${page}" >
+         <form name="infoForm" id="queryForm" method="post"  th:object="${page}"  th:action="@{/sysuser/query}" >
         	<div class="box-header clearfix">
+				<div class="box-search">
+					<div class="input-group">
+						<span class="input-group-addon" style="background: #EEEEEE;">所属班级</span>
+						<select class="form-control" name="mcId"   th:field="*{mcId}"   th:onchange="selectTm(this.value)" >
+							<option value="">请选择</option>
+							<option  th:value = "${mc.mcId}"   th:each="mc,i:${mclist}"   th:text="${mc.mcCode }"  >所属班级</option>
+						</select>
+					</div>
+				</div>
         		<div class="box-search">
 					<div class="input-group">
 						<span class="input-group-addon" style="background: #EEEEEE;">所属团队</span>
-						<select class="form-control" name="tmId"   th:field="*{tmId}"  >
+						<select class="form-control" name="tmId"   th:field="*{tmId}"  id="tmSelect"  >
 							<option value="">请选择</option>
 							<option  th:value = "${tm.tmId}"   th:each="tm,i:${tmlist}"   th:text="${tm.tmName }"  >所属团队</option>
 						</select>
+					</div>
+				</div>
+				<div class="box-search">
+					<div class="input-group">
+						<span class="input-group-addon" style="background: #EEEEEE;">用户昵称</span>
+						<input type="text" class="form-control"   th:field="*{userName}"  name="userName" placeholder="请输入用户昵称">
 					</div>
 				</div>
 				<div class="box-search btn-group">
@@ -72,6 +87,7 @@
         			<tr>
         				<th>序号</th>
         				<th>全选</th>
+        				<th>所属班级</th>     				
         				<th>所属团队</th>     				
         				<th>用户昵称</th>     				
         				<th>用户账号</th>     				
@@ -84,6 +100,7 @@
         			<tr  th:each="row,i:${pageInfo.list}" >
 	        			<td th:text="${i.index} + ${pageInfo.startRow}">1</td>
 	        			<td ><input type="checkbox" name="ids"  value="1"    th:value="${row.userId}"  ></td>
+	       				<td th:text="${row.mcName}" >JavaSE</td>
 	       				<td th:text="${row.tmName}" >JavaSE</td>
 	       				<td th:text="${row.nickName}" >JavaSE</td>
 	       				<td th:text="${row.userName}" >JavaSE</td>
@@ -91,6 +108,8 @@
 	       				<td  >0</td>	       				
 						<td>
 							<button type="button" class="btn btn-primary btn-sm"  th:onclick="editpage([[${row.userId}]])"     onclick="javascript:editpage('1')"    >修改</button>
+							<button type="button" class="btn btn-danger btn-sm"  th:onclick="updatemc([[${row.userId}]])"     onclick="javascript:editpage('1')"    >调整班级</button>
+							<button type="button" class="btn btn-info btn-sm"  th:onclick="updatetm([[${row.userId}]])"     onclick="javascript:editpage('1')"    >调整团队</button>
 						</td>
        				</tr>	       			  		
         		</tbody>
@@ -111,6 +130,46 @@
 </body>
 	
 <script type="text/javascript">
+
+	function updatemc(userId){
+		window.location.href = "/sysuser/updatemc?userId=" + userId;
+	}
+	
+	function updatetm(userId){
+		window.location.href = "/sysuser/updatetm?userId=" + userId;
+	}
+
+
+	function selectTm(mcId){
+		if(mcId){
+			/**/
+			var url = "/usertm/selectTm";
+			$.post(url,{"mcId":mcId},function(resp){
+				//console.log(resp.length>0)
+				$("#tmSelect").empty();
+				$("<option value=''>请选择</option>").appendTo("#tmSelect");
+				if(resp.length > 0){				
+					$.each(resp, function(i, item){
+						$("<option value='" + item.tmId + "'>" + item.tmName + "</option>").appendTo("#tmSelect");
+					});
+				}
+			});
+		}else{
+			
+			var url = "/usertm/selectTm";
+			$.post(url,{"mcId":null},function(resp){
+				//console.log(resp)
+				$("#tmSelect").empty();
+				$("<option value=''>请选择</option>").appendTo("#tmSelect");
+				if(resp.length > 0){				
+					$.each(resp, function(i, item){
+						$("<option value='" + item.tmId + "'>" + item.tmName + "</option>").appendTo("#tmSelect");
+					});
+				}
+			});
+		}
+	}
+
 
 
 	function dels(){

@@ -6,10 +6,23 @@
     <result column="user_id" property="userId" jdbcType="VARCHAR" />
     <result column="mc_id" property="mcId" jdbcType="VARCHAR" />
     <result column="uc_points" property="ucPoints" jdbcType="INTEGER" />
+    <result column="uc_in_date" property="ucInDate" jdbcType="DATE" />
+    <result column="uc_state" property="ucState" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
-    uc_id, user_id, mc_id, uc_points
+    uc_id, user_id, mc_id, uc_points, uc_in_date, uc_state
   </sql>
+  
+  
+  
+  <update id="updateState" parameterType="string" >
+    update user_class_history
+    set 
+      uc_state = '0'
+    where user_id = #{value}  and uc_state = '1'
+  </update>
+  
+  
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
@@ -22,9 +35,11 @@
   </delete>
   <insert id="insert" parameterType="com.yuzo.question.entity.UserClassHistory" >
     insert into user_class_history (uc_id, user_id, mc_id, 
-      uc_points)
+      uc_points, uc_in_date, uc_state
+      )
     values (#{ucId,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR}, #{mcId,jdbcType=VARCHAR}, 
-      #{ucPoints,jdbcType=INTEGER})
+      #{ucPoints,jdbcType=INTEGER}, #{ucInDate,jdbcType=DATE}, #{ucState,jdbcType=VARCHAR}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.yuzo.question.entity.UserClassHistory" >
     insert into user_class_history
@@ -41,6 +56,12 @@
       <if test="ucPoints != null" >
         uc_points,
       </if>
+      <if test="ucInDate != null" >
+        uc_in_date,
+      </if>
+      <if test="ucState != null" >
+        uc_state,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="ucId != null" >
@@ -54,6 +75,12 @@
       </if>
       <if test="ucPoints != null" >
         #{ucPoints,jdbcType=INTEGER},
+      </if>
+      <if test="ucInDate != null" >
+        #{ucInDate,jdbcType=DATE},
+      </if>
+      <if test="ucState != null" >
+        #{ucState,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -69,6 +96,12 @@
       <if test="ucPoints != null" >
         uc_points = #{ucPoints,jdbcType=INTEGER},
       </if>
+      <if test="ucInDate != null" >
+        uc_in_date = #{ucInDate,jdbcType=DATE},
+      </if>
+      <if test="ucState != null" >
+        uc_state = #{ucState,jdbcType=VARCHAR},
+      </if>
     </set>
     where uc_id = #{ucId,jdbcType=VARCHAR}
   </update>
@@ -76,7 +109,10 @@
     update user_class_history
     set user_id = #{userId,jdbcType=VARCHAR},
       mc_id = #{mcId,jdbcType=VARCHAR},
-      uc_points = #{ucPoints,jdbcType=INTEGER}
+      uc_points = #{ucPoints,jdbcType=INTEGER},
+      uc_in_date = #{ucInDate,jdbcType=DATE},
+      uc_state = #{ucState,jdbcType=VARCHAR}
     where uc_id = #{ucId,jdbcType=VARCHAR}
   </update>
+
 </mapper>
