@@ -10,6 +10,7 @@ import com.yuzo.question.page.QuestionPage;
 
 
 public interface QuestionMapper {
+	
     int deleteByPrimaryKey(String qstnId);
 
     int insert(Question record);
@@ -25,4 +26,6 @@ public interface QuestionMapper {
 	List<Question> queryAll(QuestionPage page);
 	
 	int queryCountByXxx(QuestionPage page);
+
+	List<Question> queryQstnByTpId(String tpId);
 }

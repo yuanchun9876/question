@@ -87,63 +87,17 @@
 		</div>
 	</div>
 	<!-- ./wrapper -->
-
+<div th:replace="/common/js :: commonjs"></div>
 </body>
 
 
 <script type="text/javascript">
 
-	function selectSubj(subjId){
-		var url = "/subjUnit/selectSubj";
-		$.post(url,{"subjId":subjId},function(resp){
-			// unitSelect
-			console.log(resp);
-			$("#unitSelect").empty();
-			$("<option value=''>请选择</option>").appendTo("#unitSelect");
-			$.each(resp, function(i, item){
-				$("<option value='" + item.subjUnitId + "'>" + item.subjUnitNum + "." + item.subjUnitTitle + "</option>").appendTo("#unitSelect");
-			});
-			if(resp.length > 0){
-				selectUnit(resp[0].subjUnitId);
-			}
-			
-		});
-	}
-	
-	function selectUnit(unitId){
-		var url = "/subjSctn/selectUnit";
-		$.post(url,{"unitId":unitId},function(resp){
-			// sctnSelect
-			console.log(resp);
-			$("#sctnSelect").empty();
-			$("<option value=''>请选择</option>").appendTo("#sctnSelect");
-			$.each(resp, function(i, item){
-				$("<option value='" + item.subjSctnId + "'>" + item.subjSctnNum + "." + item.subjSctnTitle + "</option>").appendTo("#sctnSelect");
-			});
-		});
-	}
+
 
 		
-		function answerpage(qstnId){
-			window.location.href = "/ans/query?id=" + qstnId;
-		}
-		
-		function dels(){
-			var ids = $("[name=ids]:checked");
-			if(ids.length==0){
-				alert("请选择要删除记录!");
-				return;
-			}
-			if(window.confirm("确定要删除吗?")){
-				//console.log(document.delForm.action);
-				document.delForm.submit();
-			}
-		}
 
-		function editpage(id) {
-			//bootbox.alert(id);
-			window.location.href = "/qstn/editPage?id=" + id;
-		}
+
 
 		function clearEle() {
 
@@ -160,9 +114,7 @@
 			});
 		}
 		
-		function addPage(){
-			window.location.href = "/qstn/addPage";
-		}
+
 	</script>
 
 </html>

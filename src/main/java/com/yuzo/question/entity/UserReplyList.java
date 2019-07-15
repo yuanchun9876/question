@@ -1,5 +1,7 @@
 package com.yuzo.question.entity;
 
+import java.util.Date;
+
 public class UserReplyList {
     private String urId;
 
@@ -8,6 +10,10 @@ public class UserReplyList {
     private String userId;
 
     private Integer urFlag;
+
+    private Date urTime;
+
+    private String urInfo;
 
     public String getUrId() {
         return urId;
@@ -39,5 +45,21 @@ public class UserReplyList {
 
     public void setUrFlag(Integer urFlag) {
         this.urFlag = urFlag;
+    }
+
+    public Date getUrTime() {
+        return urTime;
+    }
+
+    public void setUrTime(Date urTime) {
+        this.urTime = urTime;
+    }
+
+    public String getUrInfo() {
+        return urInfo;
+    }
+
+    public void setUrInfo(String urInfo) {
+        this.urInfo = urInfo == null ? null : urInfo.trim();
     }
 }

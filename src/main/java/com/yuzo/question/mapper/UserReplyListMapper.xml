@@ -6,9 +6,11 @@
     <result column="qstn_id" property="qstnId" jdbcType="VARCHAR" />
     <result column="user_id" property="userId" jdbcType="VARCHAR" />
     <result column="ur_flag" property="urFlag" jdbcType="INTEGER" />
+    <result column="ur_time" property="urTime" jdbcType="TIMESTAMP" />
+    <result column="ur_info" property="urInfo" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
-    ur_id, qstn_id, user_id, ur_flag
+    ur_id, qstn_id, user_id, ur_flag, ur_time, ur_info
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
@@ -22,9 +24,11 @@
   </delete>
   <insert id="insert" parameterType="com.yuzo.question.entity.UserReplyList" >
     insert into user_reply_list (ur_id, qstn_id, user_id, 
-      ur_flag)
+      ur_flag, ur_time, ur_info
+      )
     values (#{urId,jdbcType=VARCHAR}, #{qstnId,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR}, 
-      #{urFlag,jdbcType=INTEGER})
+      #{urFlag,jdbcType=INTEGER}, #{urTime,jdbcType=TIMESTAMP}, #{urInfo,jdbcType=VARCHAR}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.yuzo.question.entity.UserReplyList" >
     insert into user_reply_list
@@ -41,6 +45,12 @@
       <if test="urFlag != null" >
         ur_flag,
       </if>
+      <if test="urTime != null" >
+        ur_time,
+      </if>
+      <if test="urInfo != null" >
+        ur_info,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="urId != null" >
@@ -54,6 +64,12 @@
       </if>
       <if test="urFlag != null" >
         #{urFlag,jdbcType=INTEGER},
+      </if>
+      <if test="urTime != null" >
+        #{urTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="urInfo != null" >
+        #{urInfo,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -69,6 +85,12 @@
       <if test="urFlag != null" >
         ur_flag = #{urFlag,jdbcType=INTEGER},
       </if>
+      <if test="urTime != null" >
+        ur_time = #{urTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="urInfo != null" >
+        ur_info = #{urInfo,jdbcType=VARCHAR},
+      </if>
     </set>
     where ur_id = #{urId,jdbcType=VARCHAR}
   </update>
@@ -76,7 +98,9 @@
     update user_reply_list
     set qstn_id = #{qstnId,jdbcType=VARCHAR},
       user_id = #{userId,jdbcType=VARCHAR},
-      ur_flag = #{urFlag,jdbcType=INTEGER}
+      ur_flag = #{urFlag,jdbcType=INTEGER},
+      ur_time = #{urTime,jdbcType=TIMESTAMP},
+      ur_info = #{urInfo,jdbcType=VARCHAR}
     where ur_id = #{urId,jdbcType=VARCHAR}
   </update>
 </mapper>

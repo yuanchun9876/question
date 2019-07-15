@@ -14,4 +14,8 @@ public interface IUserReplyService {
 
 	List<Question> queryQstnByTp(String tpId);
 
+	UserMyclass queryMcById(String mcId);
+
+	void updatePoints(String qstnId, String replyType, String userId);
+
 }

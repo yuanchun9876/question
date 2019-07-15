@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.github.pagehelper.PageHelper;
@@ -37,7 +38,7 @@ public class SysUserController {
 	}
 	
 	@RequestMapping("/sysuser/query")
-	public String querymc(@ModelAttribute("userpage")SysUserPage page, Model model,String clearpage) {
+	public String query(@ModelAttribute("userpage")SysUserPage page, Model model,String clearpage) {
 		if (clearpage != null) {
 			BeanUtils.copyProperties(new SysUserPage(), page);
 		}
@@ -60,6 +61,22 @@ public class SysUserController {
 		model.addAttribute("mclist", mclist);	
 		
 		return "sysuser/list_user";
+	}
+	@RequestMapping("/sysuser/querybymc")
+	public String querybymc(String mcId, Model model) {
+		
+		SysUserPage page = new SysUserPage();
+		page.setMcId(mcId);
+		List<SysUser> list = userService.queryPage(page );
+		model.addAttribute("list", list);
+		return "sysuser/list_mc_user";
+	}
+	@RequestMapping("/sysuser/queryTmByUser")
+	@ResponseBody
+	public List<SysUser> queryTmByUser(String userId, Model model) {
+		
+		List<SysUser> list = userService.queryTmByUser(userId );
+		return list;
 	}
 	
 	@RequestMapping("/sysuser/addPage")

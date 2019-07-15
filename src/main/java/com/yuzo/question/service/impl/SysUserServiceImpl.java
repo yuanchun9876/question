@@ -126,4 +126,10 @@ public class SysUserServiceImpl implements ISysUserService {
 		return ucCount;
 	}
 
+	@Override
+	public List<SysUser> queryTmByUser(String userId) {
+		// TODO Auto-generated method stub
+		return mapper.queryTmByUser(userId);
+	}
+
 }

@@ -29,6 +29,15 @@
     from sys_user user  left join user_team  team  on team.tm_id = user.tm_id
  
   </select>
+    <select id="queryTmByUser" resultMap="BaseResultMap" parameterType="java.lang.String" >
+		select  user_id, nick_name
+		from sys_user 
+		where tm_id = (
+		select  tm_id
+			from sys_user  where user_id = #{value}
+		)
+ 
+  </select>
   
   <select id="queryPage" resultMap="BaseResultMap" parameterType="com.yuzo.question.page.SysUserPage" >
     select 

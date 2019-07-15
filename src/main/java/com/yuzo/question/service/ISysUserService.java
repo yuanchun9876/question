@@ -27,6 +27,8 @@ public interface ISysUserService {
 
 	int updateUch(String userId, String mcId);
 
+	List<SysUser> queryTmByUser(String userId);
+
 
 
 }

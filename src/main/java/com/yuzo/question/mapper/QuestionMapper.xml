@@ -24,6 +24,16 @@
   </sql>
   
   
+  <select id="queryQstnByTpId" resultMap="BaseResultMap" parameterType="string" >
+	  select * from question  qstn  where   qstn.SUBJ_SCTN_ID in (
+		select tpd.SUBJ_SCTN_ID 
+		from test_plan_detailed  tpd 
+					LEFT JOIN test_plan tp  on tpd.TP_ID = tp.TP_ID  
+			where tp.TP_ID = #{value}  and tpd.TP_DTD_TYPE = '5'
+		)
+		order by qstn.QSTN_INPUT_TIME
+  </select>
+  
   <select id="queryAll" resultMap="BaseResultMap" parameterType="com.yuzo.question.page.QuestionPage" >
    	select QSTN_ID, QSTN_TITLE, QSTN_INPUT_TIME, qstn.QSTN_TYPE_ID, qstn.QSTN_FROM_TYPE_ID, QSTN_PICTEXT, QSTN_NUM, qstn.SUBJ_SCTN_ID
 		,qttype.QSTN_TYPE_NAME , qtfrom.QSTN_FROM_TYPE_CODE  , sctn.SUBJ_SCTN_TITLE 

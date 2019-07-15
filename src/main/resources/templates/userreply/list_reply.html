@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>查询页面</title>
+	<!-- Tell the browser to be responsive to screen width -->
+	<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+	
+	<include th:replace="/common/css :: commoncss"/>
+
+	<style type="text/css">
+	 	.content-wrapper {
+				margin-left: 0px;
+		}
+		.qstnTitle img{display: none;}
+		
+		@media only screen and (max-width: 768px) {
+			.box-header{
+				flex-direction: column;
+			}
+			.box-header .box-search{
+				margin: 10px auto;
+			}
+		}
+	</style>
+		<style type="text/css">
+			.name_div{
+				width:80px;
+				height:30px;
+				border: 1px solid;
+				float:left;
+				margin: 10px;
+			}
+		</style>
+</head>
+
+<body class="hold-transition skin-blue sidebar-mini">
+	<div class="wrapper">
+		<!-- Content Wrapper. Contains page content -->
+		<div class="content-wrapper">
+			<!-- Content Header (Page header) -->
+			<section class="content-header">
+				<h1  th:text="${mc.mcCode + '  问题列表'}">
+		         	问题列表
+		        </h1>
+				<ol class="breadcrumb">
+					 <li>
+						<a th:href="@{/dashboard}"><i class="glyphicon glyphicon-globe"></i>导航</a>
+					</li>
+					<li class="active">
+						<a href="#">问题列表</a>
+					</li>
+				</ol>
+			</section>
+
+			<!-- Main content -->
+			<section class="content">
+				<div class="box">
+					<form name="infoForm" id="queryForm" method="post"   th:object="${page}"  >
+						<div class="box-header clearfix">
+							<input type="hidden" id="pmuser" >
+							<div class="input-group" id="teamdiv"></div>
+							<div class="box-search btn-group">		
+								<button type="button" class="btn btn-primary btn-lg" name="clearInfo" th:onclick="selectUser([[${mc.mcId}]], [[${mc.mcCode}]])">选择</button>
+							</div>
+						</div>
+					
+						
+					</form>
+					<!-- /.box-header -->
+					<div class="box-body no-padding">
+						<table class="table table-bordered  table-striped">
+							<tr>
+								<th width="5%">序号</th>
+								<th >试题内容</th>								
+								<th width="30%">操作</th>
+							</tr>
+							<form name="delForm"  method="post"  action="#"  th:action="@{/qstn/dels}"  >    
+							<tbody th:remove="all-but-first" >       			  	
+		        			<tr  th:each="row,i:${list}" >
+		        			  <td  th:text="${i.count}" >1</td>
+		        			 
+							  <td class="qstnTitle"  th:utext="${row.qstnTitle}" >title</td>
+							  <td>
+								<button type="button" class="btn btn-primary btn-md"  th:onclick="setpoints([[${row.qstnId}]],'a')"  onclick="javascript:editpage('1')">3分</button>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+								<button type="button" class="btn btn-info btn-md"     th:onclick="setpoints([[${row.qstnId}]],'b')"  onclick="javascript:editpage('1')">1分</button>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+								<button type="button" class="btn btn-danger btn-md"   th:onclick="setpoints([[${row.qstnId}]],'c')"  onclick="javascript:editpage('1')">-2分</button>
+							 </td>
+							</tr>	
+							</tbody>
+							</form>
+						</table>
+							<br/>
+		        		<div th:replace="/common/js :: commonjs"></div>
+						
+					</div>
+				</div>
+				<!-- /.row -->
+			</section>
+			<!-- /.content -->
+		</div>
+	</div>
+	<!-- ./wrapper -->
+	<div th:replace="/common/js :: commonjs"></div>
+</body>
+
+
+<script type="text/javascript">
+	function setpoints(qstnId, type){
+		console.log(qstnId);
+		console.log(type);
+		console.log($("#pmuser").val());
+		var data = {
+				"qstnId":qstnId,
+				"replyType":type,
+				"userId":$("#pmuser").val()	
+		}
+		var url = "/userreply/updatePoints"
+		$.post(url, data, function(resp){
+			console.log(resp);
+			
+		})
+	}
+
+
+	function selectUser(mcId, mcCode){
+		$("#teamdiv").empty();
+		//alert(mcId);
+		 bootbox.dialog({
+			  // dialog的内容
+			  message: "<iframe src='/sysuser/querybymc?mcId=" + mcId + "' style='width:100%;height:369px;border:0 solid;'></iframe>",
+			   
+			  // dialog的标题
+			  title: mcCode,
+			   
+			  // 是否显示此dialog，默认true
+			  show: true,
+
+			     // 显示尺寸，可选 small  /large
+			 size: "large",
+
+			  // 是否显示body的遮罩，默认true
+			  backdrop: true,
+			   
+			  // 是否显示关闭按钮，默认true
+			  closeButton: true,
+			   
+			  // 是否动画弹出dialog，IE10以下版本不支持
+			  animate: true,
+			   
+			  // dialog的类名
+			  className: "my-modal",
+			   
+			});
+	}
+	
+	function selUser(userId){
+		//alert(userId);
+		$("#pmuser").val(userId);
+		bootbox.hideAll()
+		var url = "/sysuser/queryTmByUser"
+		$.post(url,{"userId":userId},function(resp){
+			console.log(resp);
+			//teamdiv
+			$.each(resp, function(i, item){
+				var user = item.nickName;
+					//user +="<input type='hidden' value='" + item.userId + "'>";
+				$("<div>" + user + "</div>").addClass("name_div").appendTo("#teamdiv");
+			});
+		})
+	}
+	</script>
+
+</html>

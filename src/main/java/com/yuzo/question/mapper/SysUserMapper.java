@@ -21,4 +21,6 @@ public interface SysUserMapper {
 	List<SysUser> queryPage(SysUserPage page);
 
 	List<SysUser> queryAll();
+
+	List<SysUser> queryTmByUser(String userId);
 }

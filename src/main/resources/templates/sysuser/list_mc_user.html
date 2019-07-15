@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>查询页面</title>
+  <!-- Tell the browser to be responsive to screen width -->
+  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+ 
+  <include th:replace="/common/css :: commoncss"/>
+
+	<style type="text/css">
+	 	.content-wrapper {
+				margin-left: 0px;
+		}
+		.qstnTitle img{display: none;}
+		
+		@media only screen and (max-width: 768px) {
+			.box-header{
+				flex-direction: column;
+			}
+			.box-header .box-search{
+				margin: 10px auto;
+			}
+		}
+	</style>
+	<style type="text/css">
+			.name_div{
+				width:80px;
+				height:30px;
+				border: 1px solid;
+				float:left;
+				margin: 10px;
+			}
+		</style>
+</head>
+<body class="hold-transition skin-blue sidebar-mini">
+<div class="wrapper">
+
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+      <!-- Content Header (Page header) -->
+      <section class="content-header">
+        <div class="box-search btn-group">
+			<button  type="button"  class="btn btn-info" name="queryInfo"   onclick="selectdiv()"  >开始选择</button>
+			<button class="btn btn-success"  type="button" name="queryInfo" >&nbsp;&nbsp;&nbsp;</button>
+			<button type="button" class="btn btn-primary" name="clearInfo" onclick="stopdiv()" >停止选择</button>
+			<button class="btn btn-success"  type="button" name="queryInfo" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</button>
+			<button class="btn btn-warning"  type="button" name="delBtn"  onclick="selectedUser()" >确认选择</button>
+		</div>
+      </section>
+  
+      <!-- Main content -->
+     
+     	 <section class="content">
+        <div class="box">
+
+        	<!-- /.box-header -->
+        	<div class="box-body no-padding">
+					<input type="hidden" id="userinp"   >
+        			<div class="name_div"  th:each="row,i:${list}"  th:text="${i.count  +  row.nickName}"  th:data-id="${row.userId}" ></div>	       			  		
+
+					</div>
+				</div>
+				<!-- /.row -->
+			</section>
+			<!-- /.content -->
+		</div>
+	</div>
+	<!-- ./wrapper -->
+<div th:replace="/common/js :: commonjs"></div>
+</body>
+	
+<script type="text/javascript">
+var k = 0;
+	function selectdiv(){
+		bb = window.setInterval("bian()",10);
+	}
+	
+	function bian(){
+		var namedivs = document.getElementsByClassName("name_div");
+		for(var i=0; i<namedivs.length; i++){
+			namedivs[i].style.background = "#FFFFFF";
+		}
+		namedivs[k].style.background = "#AAAAAA";
+		if(k == namedivs.length-1){
+			k = 0;
+		}else{
+			k++;
+		}
+	}
+	
+	function stopdiv(){
+		window.clearInterval(bb);
+		//console.log(k);
+		var namedivs = $(".name_div")
+		var i = 0;
+		if(k==0){
+			i = namedivs.length-1;
+		}else{
+			i = k-1;
+		}
+		//console.log(k);
+		var userId = $($(".name_div")[i]).attr("data-id");
+		//console.log(userId);
+		$("#userinp").val(userId);
+	}
+	
+	function selectedUser(){
+		parent.selUser($("#userinp").val());
+	}
+</script>
+
+</html>

@@ -23,6 +23,13 @@
   </update>
   
   
+  <select id="queryByUserId" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from user_class_history
+    where user_id = #{value} and uc_state = '1'
+  </select>
+  
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />

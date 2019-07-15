@@ -16,4 +16,6 @@ public interface UserClassHistoryMapper {
     int updateByPrimaryKey(UserClassHistory record);
 
 	int updateState(String userId);
+
+	UserClassHistory queryByUserId(String userId);
 }

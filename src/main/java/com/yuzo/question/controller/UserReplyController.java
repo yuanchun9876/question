@@ -62,9 +62,18 @@ public class UserReplyController {
 		System.out.println(list);
 		model.addAttribute("list", list);
 		
-		model.addAttribute("mcId", mcId);	
+		UserMyclass mc = userReplyService.queryMcById(mcId);
+		model.addAttribute("mc", mc);	
 		
-		return "userreply/set_reply";
+		return "userreply/list_reply";
+	}
+	
+	@RequestMapping("/updatePoints")
+	@ResponseBody
+	public String updatePoints(String qstnId, String replyType, String userId) {
+		
+		userReplyService.updatePoints(qstnId, replyType,  userId);
+		return "";
 	}
 
 	
