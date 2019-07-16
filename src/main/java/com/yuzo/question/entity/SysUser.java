@@ -30,8 +30,19 @@ public class SysUser {
     
     private String mcName;
     
+    private Integer ucPoints;
+    
+    
+    
+    @Override
+	public String toString() {
+		return "SysUser [userId=" + userId + ", userName=" + userName + ", userPass=" + userPass + ", nickName="
+				+ nickName + ", userState=" + userState + ", userInfo=" + userInfo + ", userSequ=" + userSequ
+				+ ", salt=" + salt + ", userPhone=" + userPhone + ", userGuardian=" + userGuardian + ", userGudnPhone=" + ucPoints + ", ucPoints="
+				+ userGudnPhone + ", tmId=" + tmId + ", tmName=" + tmName + ", mcName=" + mcName + "]";
+	}
 
-    public String getUserId() {
+	public String getUserId() {
         return userId;
     }
 
@@ -141,6 +152,14 @@ public class SysUser {
 
 	public void setMcName(String mcName) {
 		this.mcName = mcName;
+	}
+
+	public Integer getUcPoints() {
+		return ucPoints;
+	}
+
+	public void setUcPoints(Integer ucPoints) {
+		this.ucPoints = ucPoints;
 	}
     
     

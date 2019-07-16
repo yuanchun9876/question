@@ -48,7 +48,7 @@ public class SysUserController {
 		model.addAttribute("page", page);
 		PageHelper.startPage(page.getPageNum(), page.getPageSize());		
 		List<SysUser> list = userService.queryPage(page);
-		
+		System.out.println(list);
 		PageInfo<SysUser> pageInfo = new PageInfo<SysUser>(list);
         model.addAttribute("pageInfo",pageInfo);
         
