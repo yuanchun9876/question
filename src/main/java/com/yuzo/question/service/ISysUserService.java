@@ -29,6 +29,8 @@ public interface ISysUserService {
 
 	List<SysUser> queryTmByUser(String userId);
 
+	List<SysUser> queryByMcId(String mcId);
+
 
 
 }

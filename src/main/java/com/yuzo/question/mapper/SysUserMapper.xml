@@ -22,6 +22,14 @@
     user_phone, user_guardian, user_gudn_phone, tm_id
   </sql>
   
+    <select id="queryByMcId" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+     user_id, user_name, user_pass, nick_name, user_state, user_info, user_sequ, salt, 
+    user_phone, user_guardian, user_gudn_phone, user.tm_id, team.tm_name
+    from sys_user user  left join user_team  team  on team.tm_id = user.tm_id
+ 	where  team.mc_id = #{value}
+  </select>
+  
     <select id="queryAll" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
      user_id, user_name, user_pass, nick_name, user_state, user_info, user_sequ, salt, 

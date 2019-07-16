@@ -123,6 +123,9 @@ public class SysUserServiceImpl implements ISysUserService {
 		
 		int ucCount = ucMapper.insertSelective(uch);
 		System.out.println("ucCount:" + ucCount);
+//		SysUser user = new SysUser();
+
+		
 		return ucCount;
 	}
 
@@ -130,6 +133,12 @@ public class SysUserServiceImpl implements ISysUserService {
 	public List<SysUser> queryTmByUser(String userId) {
 		// TODO Auto-generated method stub
 		return mapper.queryTmByUser(userId);
+	}
+
+	@Override
+	public List<SysUser> queryByMcId(String mcId) {
+		// TODO Auto-generated method stub
+		return mapper.queryByMcId(mcId);
 	}
 
 }

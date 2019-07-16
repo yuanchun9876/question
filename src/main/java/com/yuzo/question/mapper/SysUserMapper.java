@@ -23,4 +23,6 @@ public interface SysUserMapper {
 	List<SysUser> queryAll();
 
 	List<SysUser> queryTmByUser(String userId);
+
+	List<SysUser> queryByMcId(String mcId);
 }

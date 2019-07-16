@@ -62,15 +62,17 @@ public class SysUserController {
 		
 		return "sysuser/list_user";
 	}
+	
 	@RequestMapping("/sysuser/querybymc")
 	public String querybymc(String mcId, Model model) {
 		
-		SysUserPage page = new SysUserPage();
-		page.setMcId(mcId);
-		List<SysUser> list = userService.queryPage(page );
+
+		List<SysUser> list = userService.queryByMcId(mcId );
+		System.out.println("/sysuser/querybymc:" + list);
 		model.addAttribute("list", list);
 		return "sysuser/list_mc_user";
 	}
+	
 	@RequestMapping("/sysuser/queryTmByUser")
 	@ResponseBody
 	public List<SysUser> queryTmByUser(String userId, Model model) {
