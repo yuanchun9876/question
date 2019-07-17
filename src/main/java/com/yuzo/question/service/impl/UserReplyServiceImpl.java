@@ -100,7 +100,7 @@ public class UserReplyServiceImpl implements IUserReplyService{
 				UserReplyList ur2 = new UserReplyList();
 				ur2.setUrId(UUID.randomUUID().toString());
 				ur2.setQstnId(qstnId);
-				ur2.setUrInfo("1");
+				ur2.setUrInfo("0");
 				ur2.setUrTime(new Date());
 				ur2.setUserId(userId);
 								
