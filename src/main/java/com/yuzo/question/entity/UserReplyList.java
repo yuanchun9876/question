@@ -14,6 +14,8 @@ public class UserReplyList {
     private Date urTime;
 
     private String urInfo;
+    
+    private String qstnTitle;
 
     public String getUrId() {
         return urId;
@@ -62,4 +64,13 @@ public class UserReplyList {
     public void setUrInfo(String urInfo) {
         this.urInfo = urInfo == null ? null : urInfo.trim();
     }
+
+	public String getQstnTitle() {
+		return qstnTitle;
+	}
+
+	public void setQstnTitle(String qstnTitle) {
+		this.qstnTitle = qstnTitle;
+	}
+    
 }

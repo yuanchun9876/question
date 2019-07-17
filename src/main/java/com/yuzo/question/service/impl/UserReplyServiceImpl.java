@@ -102,7 +102,7 @@ public class UserReplyServiceImpl implements IUserReplyService{
 				ur2.setQstnId(qstnId);
 				ur2.setUrInfo("0");
 				ur2.setUrTime(new Date());
-				ur2.setUserId(userId);
+				ur2.setUserId(sysUser.getUserId());
 								
 				UserClassHistory uch2 = ucMapper.queryByUserId(sysUser.getUserId());
 				int points2 = uch2.getUcPoints();

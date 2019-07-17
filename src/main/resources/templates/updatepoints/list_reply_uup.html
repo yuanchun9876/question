@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>查询页面</title>
+  <!-- Tell the browser to be responsive to screen width -->
+  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+ 
+  <include th:replace="/common/css :: commoncss"/>
+
+	<style type="text/css">
+	 	.content-wrapper {
+				margin-left: 0px;
+		}
+		.qstnTitle img{display: none;}
+		
+		@media only screen and (max-width: 768px) {
+			.box-header{
+				flex-direction: column;
+			}
+			.box-header .box-search{
+				margin: 10px auto;
+			}
+		}
+	</style>
+</head>
+<body class="hold-transition skin-blue sidebar-mini">
+<div class="wrapper">
+
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+      <!-- Content Header (Page header) -->
+      <section class="content-header">
+        <h1 th:text="${user.nickName + '  答题得失分列表'}">
+         	答题得失分列表
+        </h1>
+        <ol class="breadcrumb">
+        <li>
+			<a th:href="@{/dashboard}"><i class="glyphicon glyphicon-globe"></i>导航</a>
+		</li>
+          <li class="active"><a href="#">答题得失分列表</a></li>
+        </ol>
+      </section>
+  
+      <!-- Main content -->
+     
+     	 <section class="content">
+        <div class="box">
+
+        	<!-- /.box-header -->
+        	<div class="box-body no-padding">
+        		<table class="table table-striped">
+        			<tr>
+        				<th>序号</th>
+        			
+        				<th>题目</th>     				
+        				<th>得分</th>
+        				<th>是否主体</th>
+        				<th>时间</th>
+						
+        			</tr>
+        		
+        			<tbody th:remove="all-but-first" >       			  	
+        			<tr  th:each="row,i:${replyList}" >
+	        			<td th:text="${i.count }">1</td>
+	        			
+	       				<td th:text="${row.qstnTitle}" >JavaSE</td>
+	       				<td th:text="${row.urFlag}">1</td>
+	       				<td th:text="${row.urInfo=='1'?'主体':''}">JAVASE</td>
+	       				<td th:text="${#dates.format(row.urTime, 'yyyy-MM-dd')}" >85</td>
+						
+       				</tr>	       			  		
+        		</tbody>
+        		
+        		</table>
+        	</div>
+<!--         	/.box-body -->
+			
+<!-- 		/. box-footer -->
+        </div>
+        <!-- /.row -->
+      </section>
+      <!-- /.content -->
+    </div>
+
+</div>
+<!-- ./wrapper -->
+<div th:replace="/common/js :: commonjs"></div>
+</body>
+	
+<script type="text/javascript">
+
+
+
+	
+
+
+</script>
+
+</html>

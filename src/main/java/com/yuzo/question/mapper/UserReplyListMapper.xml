@@ -8,16 +8,28 @@
     <result column="ur_flag" property="urFlag" jdbcType="INTEGER" />
     <result column="ur_time" property="urTime" jdbcType="TIMESTAMP" />
     <result column="ur_info" property="urInfo" jdbcType="VARCHAR" />
+    <result column="qstn_title" property="qstnTitle" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
     ur_id, qstn_id, user_id, ur_flag, ur_time, ur_info
   </sql>
+  
+  <select id="queryByUser" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+     ur_id, ur.qstn_id, user_id, ur_flag, ur_time, ur_info
+     ,qstn.qstn_title
+    from user_reply_list ur left join question qstn  on qstn.qstn_id = ur.qstn_id
+    where user_id = #{value}
+  </select>
+  
+  
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
     from user_reply_list
     where ur_id = #{urId,jdbcType=VARCHAR}
   </select>
+  
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
     delete from user_reply_list
     where ur_id = #{urId,jdbcType=VARCHAR}

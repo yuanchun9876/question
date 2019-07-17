@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yuzo.question.mapper.UserUpdatePointsMapper" >
+  <resultMap id="BaseResultMap" type="com.yuzo.question.entity.UserUpdatePoints" >
+    <id column="uup_id" property="uupId" jdbcType="VARCHAR" />
+    <result column="uupt_id" property="uuptId" jdbcType="VARCHAR" />
+    <result column="user_id" property="userId" jdbcType="VARCHAR" />
+    <result column="uup_time" property="uupTime" jdbcType="TIMESTAMP" />
+    <result column="uup_info" property="uupInfo" jdbcType="VARCHAR" />
+    <result column="uupt_info" property="uuptInfo" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    uup_id, uupt_id, user_id, uup_time, uup_info
+  </sql>
+  <select id="queryByUser" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+     uup_id, uup.uupt_id, user_id, uup_time, uup_info, uupt.uupt_info
+    from user_update_points  uup left join user_update_points_type uupt  on uup.uupt_id = uupt.uupt_id
+    where user_id = #{value}
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from user_update_points
+    where uup_id = #{uupId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from user_update_points
+    where uup_id = #{uupId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.yuzo.question.entity.UserUpdatePoints" >
+    insert into user_update_points (uup_id, uupt_id, user_id, 
+      uup_time, uup_info)
+    values (#{uupId,jdbcType=VARCHAR}, #{uuptId,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR}, 
+      #{uupTime,jdbcType=TIMESTAMP}, #{uupInfo,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.yuzo.question.entity.UserUpdatePoints" >
+    insert into user_update_points
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="uupId != null" >
+        uup_id,
+      </if>
+      <if test="uuptId != null" >
+        uupt_id,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="uupTime != null" >
+        uup_time,
+      </if>
+      <if test="uupInfo != null" >
+        uup_info,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="uupId != null" >
+        #{uupId,jdbcType=VARCHAR},
+      </if>
+      <if test="uuptId != null" >
+        #{uuptId,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="uupTime != null" >
+        #{uupTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="uupInfo != null" >
+        #{uupInfo,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.yuzo.question.entity.UserUpdatePoints" >
+    update user_update_points
+    <set >
+      <if test="uuptId != null" >
+        uupt_id = #{uuptId,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="uupTime != null" >
+        uup_time = #{uupTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="uupInfo != null" >
+        uup_info = #{uupInfo,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where uup_id = #{uupId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.yuzo.question.entity.UserUpdatePoints" >
+    update user_update_points
+    set uupt_id = #{uuptId,jdbcType=VARCHAR},
+      user_id = #{userId,jdbcType=VARCHAR},
+      uup_time = #{uupTime,jdbcType=TIMESTAMP},
+      uup_info = #{uupInfo,jdbcType=VARCHAR}
+    where uup_id = #{uupId,jdbcType=VARCHAR}
+  </update>
+</mapper>

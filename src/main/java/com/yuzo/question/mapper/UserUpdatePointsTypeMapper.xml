@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yuzo.question.mapper.UserUpdatePointsTypeMapper" >
+  <resultMap id="BaseResultMap" type="com.yuzo.question.entity.UserUpdatePointsType" >
+    <id column="uupt_id" property="uuptId" jdbcType="VARCHAR" />
+    <result column="uupt_info" property="uuptInfo" jdbcType="VARCHAR" />
+    <result column="uupt_type" property="uuptType" jdbcType="VARCHAR" />
+    <result column="uupt_primary_point" property="uuptPrimaryPoint" jdbcType="INTEGER" />
+    <result column="uupt_team_point" property="uuptTeamPoint" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    uupt_id, uupt_info, uupt_type, uupt_primary_point, uupt_team_point
+  </sql>
+  <select id="queryAll" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+   uupt_id, uupt_info,  uupt_primary_point, uupt_team_point
+   ,case uupt_type 
+   		when '0' then '个人'
+   		when '1' then '团队'
+   	end uupt_type
+    from user_update_points_type
+   
+  </select>
+  
+  
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from user_update_points_type
+    where uupt_id = #{uuptId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from user_update_points_type
+    where uupt_id = #{uuptId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.yuzo.question.entity.UserUpdatePointsType" >
+    insert into user_update_points_type (uupt_id, uupt_info, uupt_type, 
+      uupt_primary_point, uupt_team_point)
+    values (#{uuptId,jdbcType=VARCHAR}, #{uuptInfo,jdbcType=VARCHAR}, #{uuptType,jdbcType=VARCHAR}, 
+      #{uuptPrimaryPoint,jdbcType=INTEGER}, #{uuptTeamPoint,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.yuzo.question.entity.UserUpdatePointsType" >
+    insert into user_update_points_type
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="uuptId != null" >
+        uupt_id,
+      </if>
+      <if test="uuptInfo != null" >
+        uupt_info,
+      </if>
+      <if test="uuptType != null" >
+        uupt_type,
+      </if>
+      <if test="uuptPrimaryPoint != null" >
+        uupt_primary_point,
+      </if>
+      <if test="uuptTeamPoint != null" >
+        uupt_team_point,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="uuptId != null" >
+        #{uuptId,jdbcType=VARCHAR},
+      </if>
+      <if test="uuptInfo != null" >
+        #{uuptInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="uuptType != null" >
+        #{uuptType,jdbcType=VARCHAR},
+      </if>
+      <if test="uuptPrimaryPoint != null" >
+        #{uuptPrimaryPoint,jdbcType=INTEGER},
+      </if>
+      <if test="uuptTeamPoint != null" >
+        #{uuptTeamPoint,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.yuzo.question.entity.UserUpdatePointsType" >
+    update user_update_points_type
+    <set >
+      <if test="uuptInfo != null" >
+        uupt_info = #{uuptInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="uuptType != null" >
+        uupt_type = #{uuptType,jdbcType=VARCHAR},
+      </if>
+      <if test="uuptPrimaryPoint != null" >
+        uupt_primary_point = #{uuptPrimaryPoint,jdbcType=INTEGER},
+      </if>
+      <if test="uuptTeamPoint != null" >
+        uupt_team_point = #{uuptTeamPoint,jdbcType=INTEGER},
+      </if>
+    </set>
+    where uupt_id = #{uuptId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.yuzo.question.entity.UserUpdatePointsType" >
+    update user_update_points_type
+    set uupt_info = #{uuptInfo,jdbcType=VARCHAR},
+      uupt_type = #{uuptType,jdbcType=VARCHAR},
+      uupt_primary_point = #{uuptPrimaryPoint,jdbcType=INTEGER},
+      uupt_team_point = #{uuptTeamPoint,jdbcType=INTEGER}
+    where uupt_id = #{uuptId,jdbcType=VARCHAR}
+  </update>
+</mapper>

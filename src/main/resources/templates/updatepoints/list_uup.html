@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>查询页面</title>
+  <!-- Tell the browser to be responsive to screen width -->
+  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+ 
+  <include th:replace="/common/css :: commoncss"/>
+
+	<style type="text/css">
+	 	.content-wrapper {
+				margin-left: 0px;
+		}
+		.qstnTitle img{display: none;}
+		
+		@media only screen and (max-width: 768px) {
+			.box-header{
+				flex-direction: column;
+			}
+			.box-header .box-search{
+				margin: 10px auto;
+			}
+		}
+	</style>
+</head>
+<body class="hold-transition skin-blue sidebar-mini">
+<div class="wrapper">
+
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+      <!-- Content Header (Page header) -->
+      <section class="content-header">
+        <h1>
+         	用户查询
+        </h1>
+        <ol class="breadcrumb">
+        <li>
+			<a th:href="@{/dashboard}"><i class="glyphicon glyphicon-globe"></i>导航</a>
+		</li>
+          <li class="active"><a href="#">用户查询</a></li>
+        </ol>
+      </section>
+  
+      <!-- Main content -->
+     
+     	 <section class="content">
+        <div class="box">
+         <form name="infoForm" id="queryForm" method="post"  th:object="${page}"  th:action="@{/sysuser/query}" >
+        	<div class="box-header clearfix">
+				<div class="box-search">
+					<div class="input-group">
+						<span class="input-group-addon" style="background: #EEEEEE;">所属班级</span>
+						<select class="form-control" name="mcId"   th:field="*{mcId}"   th:onchange="selectTm(this.value)" >
+							<option value="">请选择</option>
+							<option  th:value = "${mc.mcId}"   th:each="mc,i:${mclist}"   th:text="${mc.mcCode }"  >所属班级</option>
+						</select>
+					</div>
+				</div>
+        		<div class="box-search">
+					<div class="input-group">
+						<span class="input-group-addon" style="background: #EEEEEE;">所属团队</span>
+						<select class="form-control" name="tmId"   th:field="*{tmId}"  id="tmSelect"  >
+							<option value="">请选择</option>
+							<option  th:value = "${tm.tmId}"   th:each="tm,i:${tmlist}"   th:text="${tm.tmName }"  >所属团队</option>
+						</select>
+					</div>
+				</div>
+				<div class="box-search">
+					<div class="input-group">
+						<span class="input-group-addon" style="background: #EEEEEE;">用户昵称</span>
+						<input type="text" class="form-control"   th:field="*{userName}"  name="userName" placeholder="请输入用户昵称">
+					</div>
+				</div>
+				<div class="box-search btn-group">
+					<button class="btn btn-info" name="queryInfo">查询</button>
+					<button type="button" class="btn btn-primary" name="clearInfo" onclick="javascript:clearEle()">清空</button>
+
+				</div>
+        	</div>
+        	</form>
+        	<!-- /.box-header -->
+        	<div class="box-body no-padding">
+        		<table class="table table-striped">
+        			<tr>
+        				<th>序号</th>
+        			
+        				<th>所属班级</th>     				
+        				<th>所属团队</th>     				
+        				<th>用户昵称</th>     				
+        				<th>用户账号</th>     				
+        				<th>用户电话</th>     				
+        				<th>当前积分</th>     				
+						<th>操作</th>
+        			</tr>
+        
+        			<tbody th:remove="all-but-first" >       			  	
+        			<tr  th:each="row,i:${pageInfo.list}" >
+	        			<td th:text="${i.index} + ${pageInfo.startRow}">1</td>
+	        			
+	       				<td th:text="${row.mcName}" >JavaSE</td>
+	       				<td th:text="${row.tmName}" >JavaSE</td>
+	       				<td th:text="${row.nickName}" >JavaSE</td>
+	       				<td th:text="${row.userName}" >JavaSE</td>
+	       				<td th:text="${row.userPhone}" >JavaSE</td>
+	       				<td th:text="${row.ucPoints}" >0</td>	       				
+						<td>
+							<button type="button" class="btn btn-primary btn-sm"  th:onclick="replypage([[${row.userId}]])"     onclick="javascript:editpage('1')"    >答题记录</button>
+							<button type="button" class="btn btn-danger btn-sm"  th:onclick="uuppage([[${row.userId}]])"     onclick="javascript:editpage('1')"    >调整分数</button>
+							
+						</td>
+       				</tr>	       			  		
+        		</tbody>
+        		
+        		</table>
+        	<br/>
+		        		<div th:replace="/common/js :: commonjs"></div>
+						<div th:include="common/pagination::pagination(uri='/updatepoints/query',page=${pageInfo})" align="center" ></div>
+					</div>
+				</div>
+				<!-- /.row -->
+			</section>
+			<!-- /.content -->
+		</div>
+	</div>
+	<!-- ./wrapper -->
+
+</body>
+	
+<script type="text/javascript">
+
+	function replypage(userId){
+		window.location.href = "/updatepoints/replypage?userId=" + userId;
+	}
+	
+	function uuppage(userId){
+		window.location.href = "/updatepoints/uuppage?userId=" + userId;
+	}
+
+
+	function selectTm(mcId){
+		if(mcId){
+			/**/
+			var url = "/usertm/selectTm";
+			$.post(url,{"mcId":mcId},function(resp){
+				//console.log(resp.length>0)
+				$("#tmSelect").empty();
+				$("<option value=''>请选择</option>").appendTo("#tmSelect");
+				if(resp.length > 0){				
+					$.each(resp, function(i, item){
+						$("<option value='" + item.tmId + "'>" + item.tmName + "</option>").appendTo("#tmSelect");
+					});
+				}
+			});
+		}else{
+			
+			var url = "/usertm/selectTm";
+			$.post(url,{"mcId":null},function(resp){
+				//console.log(resp)
+				$("#tmSelect").empty();
+				$("<option value=''>请选择</option>").appendTo("#tmSelect");
+				if(resp.length > 0){				
+					$.each(resp, function(i, item){
+						$("<option value='" + item.tmId + "'>" + item.tmName + "</option>").appendTo("#tmSelect");
+					});
+				}
+			});
+		}
+	}
+
+
+
+
+
+
+	
+	function clearEle() {
+
+		bootbox.confirm("确定要清空查询条件吗?", function(result) {
+			if(result) {
+				$("[name=infoForm] input").val("");
+				$("[name=infoForm] select").each(function(i, j) {
+					$(j).find("option:selected").prop("selected", false);
+					$(j).find("option").first().prop("selected", true);
+				});
+			} else {
+				console.log("no");
+			}
+		});
+	}
+
+</script>
+
+</html>
