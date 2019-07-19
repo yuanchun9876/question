@@ -18,5 +18,5 @@ public interface UserUpdatePointsTypeMapper {
 
     int updateByPrimaryKey(UserUpdatePointsType record);
 
-	List<UserUpdatePoints> queryAll();
+	List<UserUpdatePointsType> queryAll();
 }

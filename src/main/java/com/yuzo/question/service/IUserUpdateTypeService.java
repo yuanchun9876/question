@@ -7,7 +7,7 @@ import com.yuzo.question.entity.UserUpdatePointsType;
 
 public interface IUserUpdateTypeService {
 
-	List<UserUpdatePoints> query();
+	List<UserUpdatePointsType> query();
 
 	int dels(String[] ids);
 

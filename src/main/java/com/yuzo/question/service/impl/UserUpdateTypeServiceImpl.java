@@ -17,7 +17,7 @@ public class UserUpdateTypeServiceImpl implements IUserUpdateTypeService {
 	private UserUpdatePointsTypeMapper uuptMapper;
 
 	@Override
-	public List<UserUpdatePoints> query() {
+	public List<UserUpdatePointsType> query() {
 		// TODO Auto-generated method stub
 		return uuptMapper.queryAll();
 	}

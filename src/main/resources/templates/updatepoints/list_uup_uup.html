@@ -50,8 +50,9 @@
          <form name="infoForm" id="queryForm" method="post" >
         	<div class="box-header clearfix">
 				<div class="box-search btn-group">
-					<button class="btn btn-success"  type="button" name="queryInfo"  onclick="addPage()" >添加</button>
+					<button class="btn btn-success"  type="button" name="queryInfo"  th:onclick="addPage([[${user.userId}]])" >添加</button>
 					<button class="btn btn-warning"  type="button" name="delBtn"  onclick="dels()" >删除</button>
+					<button type="button" class="btn btn-default"  onclick="window.history.back()">返回</button>
 				</div>
         	</div>
         	</form>
@@ -66,7 +67,7 @@
         				<th>说明</th>
 						<th>操作</th>
         			</tr>
-        			<form name="delForm"  method="post"  action="#"  th:action="@{/updatetype/dels}"  >    
+        			<form name="delForm"  method="post"  action="#"  th:action="@{/updatepoints/dels}"  >    
         			<tbody th:remove="all-but-first" >       			  	
         			<tr  th:each="row,i:${uupList}" >
 	        			<td th:text="${i.count }">1</td>
@@ -112,13 +113,13 @@
 		}
 	}
 	  
-	function addPage(){
-		location.href = "/updatetype/addPage"; 
+	function addPage(userId){
+		location.href = "/updatepoints/addPage?userId=" + userId; 
 	}
 
 	function editpage(id){
 		//console.log(id);
-		location.href = "/updatetype/editPage?uuptId=" + id; 
+		location.href = "/updatepoints/editPage?uuptId=" + id; 
 	}
 	
 

@@ -20,4 +20,8 @@ public interface IUserUpdatePointsService {
 
 	List<UserUpdatePoints> queryUupByUserId(String userId);
 
+	List<UserUpdatePointsType> queryUupt();
+
+	int save(UserUpdatePoints uup);
+
 }

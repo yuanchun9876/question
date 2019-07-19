@@ -28,7 +28,7 @@ public class UserUpdateTypeController {
 	@RequestMapping("/query")
 	public String query(HttpSession session, Model model) {
 		
-		List<UserUpdatePoints> list = userUpdateTypeService.query();
+		List<UserUpdatePointsType> list = userUpdateTypeService.query();
 		System.out.println(list);
 		model.addAttribute("list", list);		
 		return "updatetype/list_uupt";

@@ -11,6 +11,7 @@
   <sql id="Base_Column_List" >
     uupt_id, uupt_info, uupt_type, uupt_primary_point, uupt_team_point
   </sql>
+  
   <select id="queryAll" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
    uupt_id, uupt_info,  uupt_primary_point, uupt_team_point

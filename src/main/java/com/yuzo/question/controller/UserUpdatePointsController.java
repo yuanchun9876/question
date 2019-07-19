@@ -100,16 +100,23 @@ public class UserUpdatePointsController {
 		return "updatepoints/list_uup_uup";
 	}
 	
+	
 	@RequestMapping("addPage")
-	public String addPage(HttpSession session, Model model) {
-		return "updatetype/add_uupt";
+	public String addPage(String userId,Model model) {
+		
+		SysUser user = userService.queryById(userId);
+		model.addAttribute("user", user);	
+		
+		List<UserUpdatePointsType> uuptList = userUpdatePointsService.queryUupt();
+		model.addAttribute("uuptList", uuptList);	
+		return "updatepoints/add_uup";
 	}
 	
 	@RequestMapping("addSave")
-	public String addSave( UserUpdatePointsType uupt){
+	public String addSave(UserUpdatePoints uup){
 
-		uupt.setUuptId(UUID.randomUUID().toString());
-		int count = userUpdatePointsService.save(uupt);
+		uup.setUupId(UUID.randomUUID().toString());
+		int count = userUpdatePointsService.save(uup);
 		
 		System.out.println("uupt:" + count);
 		
