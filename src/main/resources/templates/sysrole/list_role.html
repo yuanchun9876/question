@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>查询页面</title>
+  <!-- Tell the browser to be responsive to screen width -->
+  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+ 
+  <include th:replace="/common/css :: commoncss"/>
+
+	<style type="text/css">
+	 	.content-wrapper {
+				margin-left: 0px;
+		}
+		.qstnTitle img{display: none;}
+		
+		@media only screen and (max-width: 768px) {
+			.box-header{
+				flex-direction: column;
+			}
+			.box-header .box-search{
+				margin: 10px auto;
+			}
+		}
+	</style>
+</head>
+<body class="hold-transition skin-blue sidebar-mini">
+<div class="wrapper">
+
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+      <!-- Content Header (Page header) -->
+      <section class="content-header">
+        <h1>
+         	角色查询
+        </h1>
+        <ol class="breadcrumb">
+        <li>
+			<a th:href="@{/dashboard}"><i class="glyphicon glyphicon-globe"></i>导航</a>
+		</li>
+          <li class="active"><a href="#">角色查询</a></li>
+        </ol>
+      </section>
+  
+      <!-- Main content -->
+     
+     	 <section class="content">
+        <div class="box">
+         <form name="infoForm" id="queryForm" method="post" >
+        	<div class="box-header clearfix">
+				<div class="box-search btn-group">
+					<button class="btn btn-success"  type="button" name="queryInfo"  onclick="addPage()" >添加</button>
+					<button class="btn btn-warning"  type="button" name="delBtn"  onclick="dels()" >删除</button>
+				</div>
+        	</div>
+        	</form>
+        	<!-- /.box-header -->
+        	<div class="box-body no-padding">
+        		<table class="table table-striped">
+        			<tr>
+        				<th>序号</th>
+        				<th>全选</th>
+        				<th>角色名</th>     				
+        				<th>角色状态</th>
+        				<th>角色说明</th>
+						<th>操作</th>
+        			</tr>
+        			<form name="delForm"  method="post"  action="#"  th:action="@{/sysrole/dels}"  >    
+        			<tbody th:remove="all-but-first" >       			  	
+        			<tr  th:each="row,i:${list}" >
+	        			<td th:text="${i.count }">1</td>
+	        			<td ><input type="checkbox" name="ids"  value="1"    th:value="${row.roleId}"  ></td>
+	       				<td th:text="${row.roleName}" >JavaSE</td>
+	       				<td th:text="${row.roleState}">1</td>
+	       				<td th:text="${row.roleInfo}">1</td>
+	  
+						<td>
+							<button type="button" class="btn btn-primary btn-sm"  th:onclick="editpage([[${row.roleId}]])"     onclick="javascript:editpage('1')"    >修改</button>
+						</td>
+       				</tr>	       			  		
+        		</tbody>
+        		</form>
+        		</table>
+        	</div>
+<!--         	/.box-body -->
+			
+<!-- 		/. box-footer -->
+        </div>
+        <!-- /.row -->
+      </section>
+      <!-- /.content -->
+    </div>
+
+</div>
+<!-- ./wrapper -->
+<div th:replace="/common/js :: commonjs"></div>
+</body>
+	
+<script type="text/javascript">
+
+
+	function dels(){
+		var ids = $("[name=ids]:checked");
+		if(ids.length==0){
+			alert("请选择要删除记录!");
+			return;
+		}
+		if(window.confirm("确定要删除吗?")){
+			//console.log(document.delForm.action);
+			document.delForm.submit();
+		}
+	}
+	  
+	function addPage(){
+		location.href = "/sysrole/addPage"; 
+	}
+
+	function editpage(id){
+		//console.log(id);
+		location.href = "/sysrole/editPage?roleId=" + id; 
+	}
+	
+
+
+</script>
+
+</html>
