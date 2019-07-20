@@ -1,5 +1,6 @@
 package com.yuzo.question.service.impl;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -7,11 +8,15 @@ import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.yuzo.question.entity.SysRole;
 import com.yuzo.question.entity.SysUser;
+import com.yuzo.question.entity.SysUserRole;
 import com.yuzo.question.entity.UserClassHistory;
 import com.yuzo.question.entity.UserMyclass;
 import com.yuzo.question.entity.UserTeam;
+import com.yuzo.question.mapper.SysRoleMapper;
 import com.yuzo.question.mapper.SysUserMapper;
+import com.yuzo.question.mapper.SysUserRoleMapper;
 import com.yuzo.question.mapper.UserClassHistoryMapper;
 import com.yuzo.question.mapper.UserMyclassMapper;
 import com.yuzo.question.mapper.UserTeamMapper;
@@ -32,6 +37,12 @@ public class SysUserServiceImpl implements ISysUserService {
 
 	@Autowired
 	private UserClassHistoryMapper ucMapper;
+	
+	@Autowired
+	private SysRoleMapper roleMapper;
+	
+	@Autowired
+	private SysUserRoleMapper userRoleMapper;
 
 	@Override
 	public int dels(String[] ids) {
@@ -139,6 +150,47 @@ public class SysUserServiceImpl implements ISysUserService {
 	public List<SysUser> queryByMcId(String mcId) {
 		// TODO Auto-generated method stub
 		return mapper.queryByMcId(mcId);
+	}
+
+	@Override
+	public List<SysRole> queryRoleList() {
+		// TODO Auto-generated method stub
+		List<SysRole> roleList = new ArrayList<>();
+		
+		List<SysRole> list = roleMapper.queryAll();
+		List<SysUserRole> urList = userRoleMapper.queryAll();
+		
+		for (SysRole role : list) {
+			if("1".equals(role.getRoleState())) {
+				for (SysUserRole sysUserRole : urList) {
+					if(role.getRoleId().equals(sysUserRole.getRoleId())) {
+						role.setRoleSelected("checked");
+						break;
+					}
+				}
+				roleList.add(role);
+			}
+		}
+		
+		return roleList;
+	}
+
+	@Override
+	public int updateUserRole(String userId, String[] ids) {
+		// TODO Auto-generated method stub
+		// 先清空
+		int c = userRoleMapper.delsByUserId(userId);
+		
+		// 再添加
+		int count = 0;
+		for (int i = 0; i < ids.length; i++) {
+			SysUserRole ur = new SysUserRole();
+			ur.setUrId(UUID.randomUUID().toString());
+			ur.setRoleId(ids[i]);
+			ur.setUserId(userId);
+			count += userRoleMapper.insertSelective(ur);
+		}
+		return count;
 	}
 
 }

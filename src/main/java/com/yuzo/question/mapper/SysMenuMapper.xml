@@ -11,11 +11,58 @@
     <result column="menu_state" property="menuState" jdbcType="VARCHAR" />
     <result column="menu_info" property="menuInfo" jdbcType="VARCHAR" />
     <result column="menu_ico" property="menuIco" jdbcType="VARCHAR" />
+    <result column="pmenu_name" property="pmenuName" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
     menu_id, menu_url, menu_name, menu_islink, menu_sequ, menu_pare, menu_state, menu_info, 
     menu_ico
   </sql>
+  
+  <select id="queryPar" resultMap="BaseResultMap"  >
+    select 
+    <include refid="Base_Column_List" />
+    from sys_menu
+    where menu_islink = '0'
+    order by menu_sequ
+  </select>
+  
+
+  
+  <select id="queryChd" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+     c.menu_id, c.menu_url, c.menu_name, c.menu_islink, c.menu_sequ, c.menu_pare, c.menu_state, c.menu_info, c.menu_ico
+     ,p.menu_name pmenu_name
+    from sys_menu  c  left join sys_menu p  on c.menu_pare = p.menu_id
+    <where>
+    	and  c.menu_islink = '1'
+    	<if test="value != null  and  value != '' ">
+    	 	and c.menu_pare =  #{value}
+    	</if>
+    </where> 
+    order by c.menu_sequ
+  </select>
+  
+  <select id="selectByPids" resultMap="BaseResultMap"  >
+    select 
+     c.menu_id, c.menu_url, c.menu_name, c.menu_islink, c.menu_sequ, c.menu_pare, c.menu_state, c.menu_info, c.menu_ico
+     ,p.menu_name pmenu_name
+    from sys_menu  c  left join sys_menu p  on c.menu_pare = p.menu_id
+    <where>
+    	and  c.menu_islink = '1'
+    	<if test="array != null   ">
+    		<foreach collection="array" item="pid"  open="  and  c.menu_pare in ("  close=")" separator="," >#{pid}</foreach>
+    	</if>
+    </where> 
+    order by p.menu_sequ, c.menu_sequ
+  </select>
+  
+  
+  <select id="queryAll" resultMap="BaseResultMap"  >
+    select 
+    <include refid="Base_Column_List" />
+    from sys_menu
+  </select>
+  
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />

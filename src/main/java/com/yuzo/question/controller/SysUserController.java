@@ -1,6 +1,7 @@
 package com.yuzo.question.controller;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.yuzo.question.entity.SysRole;
 import com.yuzo.question.entity.SysUser;
 import com.yuzo.question.entity.UserMyclass;
 import com.yuzo.question.entity.UserTeam;
@@ -139,6 +141,27 @@ public class SysUserController {
 		int count = userService.updateUch(userId, mcId);
 		System.out.println(":" + count);
 		return "redirect:query";
+	}
+	@RequestMapping("/sysuser/editUserRole")
+	public String editUserMc(String userId, String[] ids) {		
+		
+		System.err.println(userId + ":ids:" + Arrays.toString(ids));
+		int count = userService.updateUserRole(userId, ids);
+		System.out.println(":" + count);
+		return "redirect:query";
+	}
+	
+	@RequestMapping("/sysuser/rolepage")
+	public String rolepage(String userId, Model model) {		
+		SysUser user = userService.queryById(userId);
+		System.out.println(user);
+		model.addAttribute("user", user);
+		
+		List<SysRole> rolelist = userService.queryRoleList();
+		System.out.println(rolelist);
+		model.addAttribute("rolelist", rolelist);	
+		
+		return "sysuser/edit_role_user";
 	}
 	
 	@RequestMapping("/sysuser/updatemc")

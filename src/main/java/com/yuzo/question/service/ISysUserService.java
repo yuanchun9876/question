@@ -2,6 +2,7 @@ package com.yuzo.question.service;
 
 import java.util.List;
 
+import com.yuzo.question.entity.SysRole;
 import com.yuzo.question.entity.SysUser;
 import com.yuzo.question.entity.UserMyclass;
 import com.yuzo.question.entity.UserTeam;
@@ -30,6 +31,10 @@ public interface ISysUserService {
 	List<SysUser> queryTmByUser(String userId);
 
 	List<SysUser> queryByMcId(String mcId);
+
+	List<SysRole> queryRoleList();
+
+	int updateUserRole(String userId, String[] ids);
 
 
 

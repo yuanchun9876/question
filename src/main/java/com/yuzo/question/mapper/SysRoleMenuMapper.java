@@ -14,4 +14,6 @@ public interface SysRoleMenuMapper {
     int updateByPrimaryKeySelective(SysRoleMenu record);
 
     int updateByPrimaryKey(SysRoleMenu record);
+
+	void delsByRoleId(String roleId);
 }

@@ -8,21 +8,23 @@ import com.yuzo.question.entity.SysRole;
 
 
 
-public interface ISysRoleService {
+public interface ISysMenuService {
 
 	int dels(String[] ids);
 
-	int update(SysRole role);
+	int update(SysMenu menu);
 
-	SysRole queryById(String roleId);
+	SysMenu queryById(String menuId);
 
-	int save(SysRole role);
+	int save(SysMenu menu);
 
-	List<SysRole> queryAll();
+	List<SysMenu> queryAll();
 
 	List<SysMenu> queryPar();
 
-	int editMenu(String roleId, String[] pids, String[] cids);
+	List<SysMenu> queryChd(String menuId);
+
+	List<SysMenu> selectByPids(String[] pmenuIds);
 
 
 

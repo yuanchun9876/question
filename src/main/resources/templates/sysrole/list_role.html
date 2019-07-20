@@ -77,6 +77,7 @@
 	  
 						<td>
 							<button type="button" class="btn btn-primary btn-sm"  th:onclick="editpage([[${row.roleId}]])"     onclick="javascript:editpage('1')"    >修改</button>
+							<button type="button" class="btn btn-primary btn-sm"  th:onclick="setmenupage([[${row.roleId}]])"     onclick="javascript:editpage('1')"    >设置菜单</button>
 						</td>
        				</tr>	       			  		
         		</tbody>
@@ -119,6 +120,10 @@
 	function editpage(id){
 		//console.log(id);
 		location.href = "/sysrole/editPage?roleId=" + id; 
+	}
+	function setmenupage(id){
+		//console.log(id);
+		location.href = "/sysrole/setmenupage?roleId=" + id; 
 	}
 	
 

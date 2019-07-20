@@ -1,5 +1,7 @@
 package com.yuzo.question.mapper;
 
+import java.util.List;
+
 import com.yuzo.question.entity.SysUserRole;
 
 public interface SysUserRoleMapper {
@@ -14,4 +16,8 @@ public interface SysUserRoleMapper {
     int updateByPrimaryKeySelective(SysUserRole record);
 
     int updateByPrimaryKey(SysUserRole record);
+
+	List<SysUserRole> queryAll();
+
+	int delsByUserId(String userId);
 }

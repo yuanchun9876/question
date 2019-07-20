@@ -8,8 +8,19 @@ public class SysRole {
     private String roleState;
 
     private String roleInfo;
+    
+    private String roleSelected;
+    
+    
+    
 
-    public String getRoleId() {
+    @Override
+	public String toString() {
+		return "SysRole [roleId=" + roleId + ", roleName=" + roleName + ", roleState=" + roleState + ", roleInfo="
+				+ roleInfo + ", roleSelected=" + roleSelected + "]";
+	}
+
+	public String getRoleId() {
         return roleId;
     }
 
@@ -40,4 +51,13 @@ public class SysRole {
     public void setRoleInfo(String roleInfo) {
         this.roleInfo = roleInfo == null ? null : roleInfo.trim();
     }
+
+	public String getRoleSelected() {
+		return roleSelected;
+	}
+
+	public void setRoleSelected(String roleSelected) {
+		this.roleSelected = roleSelected;
+	}
+    
 }

@@ -18,8 +18,21 @@ public class SysMenu {
     private String menuInfo;
 
     private String menuIco;
+    
+    private String pmenuName;
 
-    public String getMenuId() {
+    
+    
+  
+
+	@Override
+	public String toString() {
+		return "SysMenu [menuId=" + menuId + ", menuUrl=" + menuUrl + ", menuName=" + menuName + ", menuIslink="
+				+ menuIslink + ", menuSequ=" + menuSequ + ", menuPare=" + menuPare + ", menuState=" + menuState
+				+ ", menuInfo=" + menuInfo + ", menuIco=" + menuIco + ", pmenuName=" + pmenuName + "]";
+	}
+
+	public String getMenuId() {
         return menuId;
     }
 
@@ -90,4 +103,16 @@ public class SysMenu {
     public void setMenuIco(String menuIco) {
         this.menuIco = menuIco == null ? null : menuIco.trim();
     }
+
+
+	public String getPmenuName() {
+		return pmenuName;
+	}
+
+
+	public void setPmenuName(String pmenuName) {
+		this.pmenuName = pmenuName;
+	}
+    
+    
 }

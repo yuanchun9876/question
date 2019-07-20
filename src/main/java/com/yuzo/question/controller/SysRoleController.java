@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.yuzo.question.entity.SubjUnit;
 import com.yuzo.question.entity.SubjectCourse;
+import com.yuzo.question.entity.SysMenu;
 import com.yuzo.question.entity.SysRole;
 import com.yuzo.question.entity.Teacher;
 import com.yuzo.question.service.ISubjUnitService;
@@ -68,10 +69,32 @@ public class SysRoleController {
 		return "sysrole/edit_role";
 	}
 	
+	@RequestMapping("/setmenupage")
+	public String setmenupage(String roleId, Model model) {
+		
+		SysRole role = sysRoleService.queryById(roleId);
+		model.addAttribute("role", role);	
+		
+		List<SysMenu> parList = sysRoleService.queryPar();		
+		model.addAttribute("parList", parList);
+		
+		return "sysrole/edit_menu_role";
+	}
+	
 	@RequestMapping("/editSave")
 	public String editSave(SysRole role) {		
 		
 		int count = sysRoleService.update(role);
+		System.out.println("role:" + count);
+		return "redirect:query";
+	}
+	
+	@RequestMapping("/editMenu")
+	public String editMenu(String roleId, String[] pids, String[] cids) {		
+		System.out.println(roleId);
+		System.out.println(Arrays.toString(pids));
+		System.out.println(Arrays.toString(cids));
+		int count = sysRoleService.editMenu(roleId, pids, cids);
 		System.out.println("role:" + count);
 		return "redirect:query";
 	}
