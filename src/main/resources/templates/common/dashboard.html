@@ -47,7 +47,7 @@
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
-      <h1>达摩老师,您好!</h1>
+      <h1 th:text="${session.user.nickName + ',您好!'}">达摩老师,您好!</h1>
       <ol class="breadcrumb">
         <li><a href="#"><i class="glyphicon glyphicon-globe"></i> 导航</a></li>
         <li class="active">导航页</li>

@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<title>修改页面</title>
+		<!-- Tell the browser to be responsive to screen width -->
+		<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+  		
+  		<include th:replace="/common/css :: commoncss"/>
+				
+		<style type="text/css">
+			
+			.content-wrapper {
+				margin-left: 0px;
+			}
+		</style>
+	</head>
+
+	<body class="hold-transition skin-blue sidebar-mini">
+		<div class="wrapper">
+
+		
+
+			<!-- Content Wrapper. Contains page content -->
+			<div class="content-wrapper">
+				<!-- Content Header (Page header) -->
+				<section class="content-header">
+					<h1>
+          				修改密码
+			        </h1>
+			        <ol class="breadcrumb">
+			        	<li>
+							<a th:href="@{/dashboard}"><i class="glyphicon glyphicon-globe"></i>导航</a>
+						</li>
+			          <li class="active"><a href="#">修改密码</a></li>
+			        </ol>
+				</section>
+
+				<!-- Main content -->
+				<section class="content">
+					<div class="row">
+						<form class="form form-horizontal" method="post"   th:action="@{/sysuser/editPassSave}"  th:object="${user}" >
+							<input type="hidden" id="userId"  th:value="*{userId}"  >
+							<!-- left column -->
+							<div class="col-md-8 col-md-offset-2">
+								<!-- general form elements -->
+								<div class="box box-primary">
+									<div class="box-header with-border">
+										<h3 class="box-title">基本信息</h3>
+										<div class="box-search">
+											<button type="button" class="btn btn-default pull-right" onclick="history.back()">返回</button>
+										</div>
+									</div>
+									<!-- /.box-header -->
+									<!-- form start -->
+									<div class="box-body">
+										<div class="form-group">
+											<label for="name" class="col-sm-2 control-label">用户原密码</label>
+											<div class="col-sm-8">
+												<input type="password" class="form-control" id="oldPass"  onblur="checkOldPass(this.value)"   placeholder="请输入用户原密码" required="required">
+											</div>
+											<div class="col-sm-2">
+												<span id="msg"></span>
+											</div>
+										</div>
+										<div class="form-group">
+											<label for="name" class="col-sm-2 control-label">用户新密码</label>
+											<div class="col-sm-8">
+												<input type="password" class="form-control" name="userPass" id="newPass"   onblur="checkNewPass()"     placeholder="请输入用户新密码" required="required">
+											</div>
+											<div class="col-sm-2">
+												<span id="newmsg"></span>
+											</div>
+										</div>
+										<div class="form-group">
+											<label for="name" class="col-sm-2 control-label">确认新密码</label>
+											<div class="col-sm-8">
+												<input type="password" class="form-control" id="checkPass"   onblur="checkNewPass()"  placeholder="请确认新密码" required="required">
+											</div>
+											<div class="col-sm-2">
+												<span id="chkmsg"></span>
+											</div>
+										</div>
+									
+									</div>
+									<!-- /.box-body -->
+									<div class="box-footer">
+										<button type="button" class="btn btn-danger" onclick="cleanUp(this)">清空</button>
+										<button type="button" class="btn btn-info pull-right" onclick="doSub()">提交</button>
+									</div>
+									<!-- /.box-footer -->
+								</div>
+								<!-- /.box -->
+								<!-- /.modal -->
+							</div>
+							<!--/.col (right) -->
+						</form>
+					</div>
+					<!-- /.row -->
+				</section>
+				<!-- /.content -->
+			</div>
+			<!-- /.content-wrapper -->
+		
+		</div>
+		
+		<div th:replace="/common/js :: commonjs"></div>
+	</body>
+
+
+
+	<script type="text/javascript">
+	
+		var flag1 = false;
+		var flag2 = false;
+		
+		$("#oldPass").focus(function(){
+			$("#msg").text("");
+		});
+	
+		function checkOldPass(oldPass){
+			$.post("/sysuser/checkpass", {"oldPass":oldPass}, function(resp){
+				if("no"==resp){
+					$("#msg").css("color","red").text("密码不正确");
+					flag1 = false;
+				}else{
+					flag1 = true;
+				}
+			});
+		}
+	
+		function checkNewPass(){
+			var newPass = $("#newPass").val();
+				
+			var checkPass = $("#checkPass").val();
+			
+			if(newPass == ""){
+				$("#newmsg").css("color","red").text("请输入新密码");
+				flag2 = false;
+				return;
+			}else{
+				$("#newmsg").text("");
+			}
+			
+			if(checkPass == ""){
+				$("#chkmsg").css("color","red").text("请确认新密码");
+				flag2 = false;
+				return;
+			}else{
+				$("#chkmsg").text("");
+			}
+			
+			if(checkPass != newPass){
+				$("#chkmsg").css("color","red").text("两次输入不一致");
+				flag2 = false;
+				return;
+			}else{
+				$("#newmsg").text("");
+				$("#chkmsg").text("");
+			}
+			flag2 = true;
+		}
+		
+		
+		function doSub(){
+			if(flag1 == false   ||  flag2 == false ){
+				bootbox.alert("请正确填写信息");
+				return;
+			}else{
+				var url = "/sysuser/editPassSave";
+				var userId = $("#userId").val();
+				var newPass = $("#newPass").val();
+				var data = {"userId":userId, "userPass":newPass}
+				// console.log(data);
+				$.ajax({
+					url: url,
+					method: 'POST',
+					data: data,
+					cache: false,
+					success: function(data) {
+						if("true" == data){
+							top.location.href = "/loginOut";
+						}
+					},
+					error: function (data) {
+						
+					}
+				})	
+			}
+		}
+		
+		
+		
+		//清空
+		function cleanUp(btn) {
+			parDiv = $(btn).parent().parent();
+			parDiv.find("input").val("");
+			parDiv.find("textarea").html("");
+			parDiv.find("select").each(function(i, j) {
+				$(j).find("option:selected").prop("selected", false);
+				$(j).find("option").first().prop("selected", true);
+			});
+		}
+	</script>
+
+</html>

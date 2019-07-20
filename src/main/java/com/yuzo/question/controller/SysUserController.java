@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.BeanUtils;
@@ -204,6 +205,87 @@ public class SysUserController {
 		model.addAttribute("mclist", mclist);	
 		
 		return "sysuser/edit_user_tm";
+	}
+	
+	
+	@RequestMapping("/sysuser/updatePass")
+	public String updatePass(HttpServletRequest request,  Model model) {
+		
+		SysUser user = (SysUser) request.getSession().getAttribute("user");
+		
+		model.addAttribute("user", user);
+		return "sysuser/edit_pass_user";
+	}
+
+	
+	@RequestMapping("/sysuser/checkpass")
+	@ResponseBody
+	public String checkpass(String oldPass, HttpServletRequest request) {
+		
+		SysUser user = (SysUser) request.getSession().getAttribute("user");
+		if (user.getUserPass().equals(oldPass)) {
+			return "yes";
+		} else {
+			return "no";
+		}
+	}
+	
+	@RequestMapping("/sysuser/editPassSave")
+	@ResponseBody
+	public String editPassSave(SysUser user, HttpServletRequest request) {
+		
+		System.out.println(user);
+		int count = userService.update(user);
+		if (count > 0) {
+			return "true";
+		} else {
+			return "false";
+		}
+		
+	}
+	
+	@RequestMapping("/sysuser/editFaceSave")
+	@ResponseBody
+	public String editFaceSave(SysUser user, HttpServletRequest request) {
+		
+		System.out.println(user);
+		int count = userService.update(user);
+		if (count > 0) {
+			return "true";
+		} else {
+			return "false";
+		}
+		
+	}
+	@RequestMapping("/sysuser/editPhoneSave")
+	@ResponseBody
+	public String editPhoneSave(SysUser user, HttpServletRequest request) {
+		
+		System.out.println(user);
+		int count = userService.update(user);
+		if (count > 0) {
+			return "true";
+		} else {
+			return "false";
+		}
+		
+	}
+	
+	@RequestMapping("/sysuser/updateFace")
+	public String updateFace(HttpServletRequest request,  Model model) {
+		
+		SysUser user = (SysUser) request.getSession().getAttribute("user");
+		
+		model.addAttribute("user", user);
+		return "sysuser/edit_face_user";
+	}
+	@RequestMapping("/sysuser/updatePhone")
+	public String updatePhone(HttpServletRequest request,  Model model) {
+		
+		SysUser user = (SysUser) request.getSession().getAttribute("user");
+		
+		model.addAttribute("user", user);
+		return "sysuser/edit_phone_user";
 	}
 	
 }
