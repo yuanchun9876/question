@@ -93,7 +93,7 @@
 	                  <a href="#" class="btn btn-default btn-flat">个人信息</a>
 	                </div>
 	                <div class="pull-right">
-	                  <a href="<%=request.getContextPath() %>/login.jsp" class="btn btn-default btn-flat">退出</a>
+	                  <a th:href="@{/loginOut}" class="btn btn-default btn-flat">退出</a>
 	                </div>
 	              </li>
 	            </ul>
@@ -112,7 +112,7 @@
 	          <img th:src="@{/images/face/damo.jpg}" class="img-circle" alt="User Image">
 	        </div>
 	        <div class="pull-left info">
-	          <p>达摩</p>
+	          <p th:text="${session.user.nickName}" >达摩</p>
 	          <a href="#"><i class="glyphicon glyphicon-link text-success"></i> 在线</a>
 	        </div>
 	      </div>
@@ -128,144 +128,25 @@
 	      </form>
 	      <!-- /.search form -->
 	      <!-- sidebar menu: : style can be found in sidebar.less -->
-	      <ul class="sidebar-menu" data-widget="tree">
-	      			<li class="treeview" >
-						<a href="#">
-							<i class="glyphicon glyphicon-paperclip"></i> 
-							<span >权限管理</span>
-							<span  class="pull-right-container">
-								<i class="glyphicon glyphicon-chevron-left pull-right"></i>
-							</span>	
-						</a>
-						<ul class="treeview-menu">
-				            <li >
-				            	<a  th:href="@{/sysuser/query}"  target="ifr_content"  >
-				            		<i class="glyphicon glyphicon-record"></i>
-				            		<span >用户维护</span>
-				            	</a>
-				            </li>
-				            <li >
-				            	<a  th:href="@{/sysrole/query}"  target="ifr_content" >
-				            		<i class="glyphicon glyphicon-record"></i>
-				            		<span >角色维护</span>
-				            	</a>
-				            </li>
-				            <li >
-				            	<a th:href="@{/dashboard}" target="ifr_content" >
-				            		<i class="glyphicon glyphicon-record"></i>
-				            		<span >权限维护</span>
-				            	</a>
-				            </li>
-				             <li >
-				            	<a th:href="@{/sysmenu/query}" target="ifr_content" >
-				            		<i class="glyphicon glyphicon-record"></i>
-				            		<span >菜单管理</span>
-				            	</a>
-				            </li>
-				        </ul>
-					</li>
-					
-	       			 <li class="treeview" >
-						<a href="#">
-							<i class="glyphicon glyphicon-tasks"></i> 
-							<span >团队设置</span>
-							<span  class="pull-right-container">
-								<i class="glyphicon glyphicon-chevron-left pull-right"></i>
-							</span>	
-						</a>
-						<ul class="treeview-menu">
-							<li >
-				            	<a  th:href="@{/usermc/query}" target="ifr_content"  >
-				            		<i class="glyphicon glyphicon-record"></i>
-				            		<span >班级维护</span>
-				            	</a>
-				            </li>
-				            <li >
-				            	<a th:href="@{/usertm/query}"   target="ifr_content"  >
-				            		<i class="glyphicon glyphicon-record"></i>
-				            		<span >团队维护</span>
-				            	</a>
-				            </li>
-				            <li >
-				            	<a th:href="@{/userreply/openSetPage}"   target="ifr_content"  >
-				            		<i class="glyphicon glyphicon-record"></i>
-				            		<span >团队考核</span>
-				            	</a>
-				            </li>
-				            <li >
-				            	<a th:href="@{/updatetype/query}"   target="ifr_content"  >
-				            		<i class="glyphicon glyphicon-record"></i>
-				            		<span >调分类型</span>
-				            	</a>
-				            </li>
-				             <li >
-				            	<a th:href="@{/updatepoints/query}"   target="ifr_content"  >
-				            		<i class="glyphicon glyphicon-record"></i>
-				            		<span >用户调整</span>
-				            	</a>
-				            </li>
-				        </ul>
-				      </li>
-
-					<li class="treeview" >
-						<a href="#">
-							<i class="glyphicon glyphicon-paperclip"></i> 
-							<span >试题管理</span>
-							<span  class="pull-right-container">
-								<i class="glyphicon glyphicon-chevron-left pull-right"></i>
-							</span>	
-						</a>
-						<ul class="treeview-menu">
-				            <li >
-				            	<a  th:href="@{/qstn/query}"  target="ifr_content"  >
-				            		<i class="glyphicon glyphicon-record"></i>
-				            		<span >试题列表</span>
-				            	</a>
-				            </li>
-				            <li >
-				            	<a th:href="@{/qstn/addPage}" target="ifr_content" >
-				            		<i class="glyphicon glyphicon-record"></i>
-				            		<span >新增试题</span>
-				            	</a>
-				            </li>
-				            <li >
-				            	<a th:href="@{/testplan/query}" target="ifr_content" >
-				            		<i class="glyphicon glyphicon-record"></i>
-				            		<span >出题</span>
-				            	</a>
-				            </li>
-				        </ul>
-					</li>
-					<li class="treeview" >
-						<a href="#">
-							<i class="glyphicon glyphicon-stats"></i> 
-							<span >知识体系</span>
-							
-							<span  class="pull-right-container">
-								<i class="glyphicon glyphicon-chevron-left pull-right"></i>
-							</span>	
-						</a>
-						<ul class="treeview-menu">
-				            <li >
-				            	<a href="/subj/query.action"   th:href="@{/subj/query}"  target="ifr_content" >
-				            		<i class="glyphicon glyphicon-record"></i>
-				            		<span >科目单元</span>
-				            	</a>
-				            </li>
-				            <li >
-				            	<a href="/subjUnit/query.action"  th:href="@{/subjUnit/query}" target="ifr_content" >
-				            		<i class="glyphicon glyphicon-record"></i>
-				            		<span >知识章</span>
-				            	</a>
-				            </li>
-				            <li >
-				            	<a href="/subjSctn/query.action" th:href="@{/subjSctn/query}"  target="ifr_content" >
-				            		<i class="glyphicon glyphicon-record"></i>
-				            		<span >知识节</span>
-				            	</a>
-				            </li>
-				        </ul>
-					</li>
+	      	<ul class="sidebar-menu" data-widget="tree">
+				<li class="treeview" th:each="cmenu,i:${cmenuList}"  >
+					<a href="#">
+						<i class="glyphicon glyphicon-stats"></i> 
+						<span th:text="${cmenu.menuName}" >知识体系</span>
+						
+						<span  class="pull-right-container">
+							<i class="glyphicon glyphicon-chevron-left pull-right"></i>
+						</span>	
+					</a>
+					<ul class="treeview-menu">
+			            <li  th:each="menu:${cmenu.chdList}"  >
+			            	<a  th:href="@{${menu.menuUrl}}"  target="ifr_content" >
+			            		<i class="glyphicon glyphicon-record"></i>
+			            		<span  th:text="${menu.menuName}" >科目单元</span>
+			            	</a>
+			            </li>			          
+			        </ul>
+				</li>
 	      	</ul>
 	    </section>
   	</aside>

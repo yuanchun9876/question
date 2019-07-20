@@ -1,5 +1,8 @@
 package com.yuzo.question.entity;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class SysMenu {
     private String menuId;
 
@@ -22,14 +25,18 @@ public class SysMenu {
     private String pmenuName;
 
     
+    private List<SysMenu> chdList = new ArrayList<>();;
     
   
+
+
 
 	@Override
 	public String toString() {
 		return "SysMenu [menuId=" + menuId + ", menuUrl=" + menuUrl + ", menuName=" + menuName + ", menuIslink="
 				+ menuIslink + ", menuSequ=" + menuSequ + ", menuPare=" + menuPare + ", menuState=" + menuState
-				+ ", menuInfo=" + menuInfo + ", menuIco=" + menuIco + ", pmenuName=" + pmenuName + "]";
+				+ ", menuInfo=" + menuInfo + ", menuIco=" + menuIco + ", pmenuName=" + pmenuName + ", chdList="
+				+ chdList + "]";
 	}
 
 	public String getMenuId() {
@@ -112,6 +119,14 @@ public class SysMenu {
 
 	public void setPmenuName(String pmenuName) {
 		this.pmenuName = pmenuName;
+	}
+
+	public List<SysMenu> getChdList() {
+		return chdList;
+	}
+
+	public void setChdList(List<SysMenu> chdList) {
+		this.chdList = chdList;
 	}
     
     

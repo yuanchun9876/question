@@ -26,6 +26,26 @@
     order by menu_sequ
   </select>
   
+  <select id="queryParMenu" resultMap="BaseResultMap"   parameterType="java.lang.String" >
+   select distinct
+    p.menu_id, p.menu_url, p.menu_name, p.menu_islink, p.menu_sequ, p.menu_pare, p.menu_state, p.menu_info, p.menu_ico
+    from sys_menu p  
+    		left join sys_role_menu  rm   on p.menu_id = rm.menu_id 
+    		left join sys_user_role  ur   on rm.role_id = ur.role_id
+    where p.menu_islink = '0' and ur.user_id = #{value}
+    order by p.menu_sequ
+  </select>
+  
+  <select id="queryChdMenu" resultMap="BaseResultMap"   >
+   select distinct
+    p.menu_id, p.menu_url, p.menu_name, p.menu_islink, p.menu_sequ, p.menu_pare, p.menu_state, p.menu_info, p.menu_ico
+    from sys_menu p  
+    		left join sys_role_menu  rm   on p.menu_id = rm.menu_id 
+    		left join sys_user_role  ur   on rm.role_id = ur.role_id
+    where p.menu_islink = '1' and ur.user_id = #{userId}  and p.menu_pare = #{menuId}
+    order by p.menu_sequ
+  </select>
+  
 
   
   <select id="queryChd" resultMap="BaseResultMap" parameterType="java.lang.String" >
