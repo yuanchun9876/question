@@ -3,6 +3,7 @@ package com.yuzo.question.mapper;
 import java.util.List;
 
 import com.yuzo.question.entity.SubjUnit;
+import com.yuzo.question.page.SubjUnitPage;
 
 
 
@@ -26,4 +27,6 @@ public interface SubjUnitMapper {
 	List<SubjUnit> queryByTchId(String tchId);
 
 	List<SubjUnit> queryUnitsBySubjs(String[] subjIds);
+
+	List<SubjUnit> queryPage(SubjUnitPage page);
 }

@@ -28,10 +28,10 @@ pagehelper:
   params: count=countSql     
 
     
-  http:
-    encoding.charset: UTF-8  
-    encoding.enable: true  
-    encoding.force: true
+http:
+  encoding.charset: UTF-8  
+  encoding.enable: true  
+  encoding.force: true
 
 #设置上传文件的大小和单次请求文件总数
 multipart:

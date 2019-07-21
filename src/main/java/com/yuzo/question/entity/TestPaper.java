@@ -1,18 +1,18 @@
 package com.yuzo.question.entity;
 
-public class TestPater {
-    private String tpPtId;
+public class TestPaper {
+    private String tpPpId;
 
     private String tpId;
 
     private String qstnId;
 
-    public String getTpPtId() {
-        return tpPtId;
+    public String getTpPpId() {
+        return tpPpId;
     }
 
-    public void setTpPtId(String tpPtId) {
-        this.tpPtId = tpPtId == null ? null : tpPtId.trim();
+    public void setTpPpId(String tpPpId) {
+        this.tpPpId = tpPpId == null ? null : tpPpId.trim();
     }
 
     public String getTpId() {

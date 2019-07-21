@@ -57,7 +57,7 @@ public class SubjSectionController {
 		//	
 		PageHelper.startPage(page.getPageNum(), page.getPageSize());		
 		List<SubjSection> list = subjSctnService.query(page);	
-		
+		System.out.println(list);
 		PageInfo<SubjSection> pageInfo = new PageInfo<SubjSection>(list);
 		//System.out.println(list.size());
         model.addAttribute("pageInfo",pageInfo);

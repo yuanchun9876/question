@@ -1,18 +1,25 @@
 package com.yuzo.question.service.impl;
 
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.yuzo.question.entity.Answer;
 import com.yuzo.question.entity.QstnFromType;
+import com.yuzo.question.entity.Question;
 import com.yuzo.question.entity.QuestionType;
 import com.yuzo.question.entity.SubjSection;
 import com.yuzo.question.entity.SubjUnit;
 import com.yuzo.question.entity.SubjectCourse;
+import com.yuzo.question.entity.SysUser;
 import com.yuzo.question.entity.TestPlan;
 import com.yuzo.question.entity.TestPlanDetailed;
+import com.yuzo.question.entity.UserAnswerList;
+import com.yuzo.question.entity.UserTestList;
+import com.yuzo.question.mapper.AnswerMapper;
 import com.yuzo.question.mapper.QstnFromTypeMapper;
 import com.yuzo.question.mapper.QuestionMapper;
 import com.yuzo.question.mapper.QuestionTypeMapper;
@@ -21,6 +28,8 @@ import com.yuzo.question.mapper.SubjUnitMapper;
 import com.yuzo.question.mapper.SubjectCourseMapper;
 import com.yuzo.question.mapper.TestPlanDetailedMapper;
 import com.yuzo.question.mapper.TestPlanMapper;
+import com.yuzo.question.mapper.UserAnswerListMapper;
+import com.yuzo.question.mapper.UserTestListMapper;
 import com.yuzo.question.page.QuestionPage;
 import com.yuzo.question.service.ITestPlanService;
 
@@ -50,6 +59,15 @@ public class TestPlanServiceImpl implements ITestPlanService {
 	
 	@Autowired
 	private SubjectCourseMapper subjMapper;
+	
+	@Autowired
+	private UserAnswerListMapper ualMapper;
+	
+	@Autowired
+	private UserTestListMapper utlMapper;
+	
+	@Autowired
+	private AnswerMapper ansMapper;
 	
 
 	@Override
@@ -146,7 +164,9 @@ public class TestPlanServiceImpl implements ITestPlanService {
 		// TODO Auto-generated method stub
 		int count = 0;
 		for (int i = 0; i < ids.length; i++) {
+			planDtdMapper.delsByPlan(ids[i]);
 			count += planMapper.deleteByPrimaryKey(ids[i]);
+			
 		}
 		return count;
 	}
@@ -210,13 +230,28 @@ public class TestPlanServiceImpl implements ITestPlanService {
 				planDtd.setTpDtdId(UUID.randomUUID().toString());
 				planDtd.setTpId(tpId);
 				planDtd.setSubjUnitId(unitIds[i]);
-				if (unitNums[i]==null) {
+				if (unitNums[i] == null) {
 					planDtd.setUnitNum(100);
 				} else {
 					planDtd.setUnitNum(unitNums[i]);
 				}
 				planDtd.setTpDtdType("4");
 				count += planDtdMapper.insertSelective(planDtd);
+			}
+		}else {
+			for (int i = 0; i < subjIds.length; i++) {
+				List<SubjUnit> unitList = unitMapper.queryBySubj(subjIds[i]);
+				for (SubjUnit subjUnit : unitList) {
+					TestPlanDetailed planDtd = new TestPlanDetailed();
+					planDtd.setTpDtdId(UUID.randomUUID().toString());
+					planDtd.setTpId(tpId);
+					planDtd.setSubjUnitId(subjUnit.getSubjUnitId());
+					
+					planDtd.setUnitNum(100); // ***
+					
+					planDtd.setTpDtdType("4");
+					count += planDtdMapper.insertSelective(planDtd);
+				}
 			}
 		}
 		
@@ -235,9 +270,159 @@ public class TestPlanServiceImpl implements ITestPlanService {
 				planDtd.setTpDtdType("5");
 				count += planDtdMapper.insertSelective(planDtd);
 			}
+		}else {
+			if(unitIds!=null) {
+			
+				for (int i = 0; i < unitIds.length; i++) {
+					List<SubjSection> sctnList = sctnMapper.queryByUnit(unitIds[i]);
+					for (SubjSection subjSection : sctnList) {
+						TestPlanDetailed planDtd = new TestPlanDetailed();
+						planDtd.setTpDtdId(UUID.randomUUID().toString());
+						planDtd.setTpId(tpId);
+						planDtd.setSubjSctnId(subjSection.getSubjSctnId());
+						
+							planDtd.setSctnNum(100);//***
+						
+						planDtd.setTpDtdType("5");
+						count += planDtdMapper.insertSelective(planDtd);
+					}
+				}
+			}else {
+				for (int i = 0; i < subjIds.length; i++) {
+					List<SubjUnit> unitList = unitMapper.queryBySubj(subjIds[i]);
+					for (SubjUnit subjUnit : unitList) {
+						List<SubjSection> sctnList = sctnMapper.queryByUnit(subjUnit.getSubjUnitId());
+						for (SubjSection subjSection : sctnList) {
+							TestPlanDetailed planDtd = new TestPlanDetailed();
+							planDtd.setTpDtdId(UUID.randomUUID().toString());
+							planDtd.setTpId(tpId);
+							planDtd.setSubjSctnId(subjSection.getSubjSctnId());
+							
+							planDtd.setSctnNum(100);//***
+							
+							planDtd.setTpDtdType("5");
+							count += planDtdMapper.insertSelective(planDtd);
+						}
+					}
+				}
+			}
 		}
 		return count;
 	}
+
+	@Override
+	public List<TestPlanDetailed> queryQstnType(String tpId) {
+		// TODO Auto-generated method stub
+		
+		return planDtdMapper.queryWhere(tpId, "1");
+	}
+
+	@Override
+	public List<TestPlanDetailed> queryQstnFrom(String tpId) {
+		// TODO Auto-generated method stub
+		
+		return planDtdMapper.queryWhere(tpId, "2");
+	}
+
+	@Override
+	public List<TestPlanDetailed> querySctn(String tpId) {
+		// TODO Auto-generated method stub
+		
+		return planDtdMapper.queryWhere(tpId, "5");
+	}
+
+	@Override
+	public List<Question> queryQuesByParams(String qstnTypeId, String qstnFromTypeId, String subjSctnId) {
+		// TODO Auto-generated method stub
+		return qstnMapper.queryQuesByParams(qstnTypeId, qstnFromTypeId, subjSctnId);
+	}
+
+	@Override
+	public int saveAnswer(SysUser user, String tpId, String[] qstns0, String[] ans0, String[] qstns4, String[] ans4) {
+		// TODO Auto-generated method stub
+		List<TestPlanDetailed> list = this.queryQstnType(tpId);
+		int points0 = 0;
+		int points1 = 0;
+		int points2 = 0;
+		int points3 = 0;
+		int points4 = 0;
+		for (TestPlanDetailed testPlanDetailed : list) {
+			if("0".equals(testPlanDetailed.getQstnTypeId())) {
+				points0 = testPlanDetailed.getTypePoints();
+			}
+			if("4".equals(testPlanDetailed.getQstnTypeId())) {
+				points4 = testPlanDetailed.getTypePoints();
+			}
+		}
+		
+		
+		int total = 0;
+		
+		UserTestList utl = new UserTestList();
+		String utsId = UUID.randomUUID().toString();
+		utl.setUtsId(utsId);
+		utl.setTpId(tpId);
+		utl.setUserId(user.getUserId());
+		utl.setUtsTime(new Date());
+		utlMapper.insertSelective(utl);
 	
+		for (int i = 0; i < qstns4.length; i++) {
+			UserAnswerList ual = new UserAnswerList();
+			ual.setUansId(UUID.randomUUID().toString());
+			ual.setQstnId(qstns4[i]);
+			
+			Question qstn = qstnMapper.selectByPrimaryKey(qstns4[i]);			
+			ual.setSubjSctnId(qstn.getSubjSctnId());
+			ual.setUansContent(ans4[i]);
+			ual.setUtsId(utsId);
+			
+			double result = this.checkAnswer4(qstns4[i], ans4[i]);
+			int result4 =  (int) Math.round(points4 * result);
+			
+			total += result4;
+			
+			ual.setUansResult(result4+"");
+			
+			ualMapper.insertSelective(ual);
+		}
+		
+		
+		// 合计分数
+		
+		utl.setUtsTotal(total);
+		utlMapper.updateByPrimaryKeySelective(utl);
+		
+		return 0;
+	}
+
+	private double checkAnswer4( String qstnId, String answer) {
+	
+		List<Answer> ansList = ansMapper.queryByQstnId(qstnId);
+		int all = ansList.size()-1;
+		int total = 0;
+		for (Answer ans : ansList) {		
+			if(!ans.getAnsIsright().equals("0")) {
+				String ansStr = this.getStr(ans.getAnsContent());
+				total += answer.contains(ansStr)?1:0;
+			}
+		}
+		
+		return total/1.0/all;
+	}
+
+	private String getStr(String str) {
+		// <h1><span style="">3.S</span></h1><p><br></p><hr><h1>tring的<b>last<span style="color: rgb(227, 55, 55);">Ind</span>exO</b>f("x"), charAt(x) 是<u>什么</u>意思,<i>返回什么</i><strike>样值&nbsp;</strike> &nbsp;2</h1><pre><code class="lang-java">charAt(x)<br></code></pre><p style="margin-left: 40px;">4.有哪些<b>可见性</b>,可见范围是<a href="http://www.baidu.com" target="_blank">什么&nbsp; &nbsp;</a></p><table><colgroup><col width="49.883720930232556%"><col width="50.116279069767444%"></colgroup><thead><tr><th>1</th><th>角色</th></tr></thead><tbody><tr><td>2</td><td>村</td></tr></tbody></table><p><span style="">5.什么是反射</span></p><p><span style=""><img alt="avatar5.png" src="/upload/qstn_title/1563711832284avatar5.png" width="215" height="215"><br></span></p><p><span style="">,可以作什么用</span></p>
+		// <p><span style="">为什么Mybatis叫半映射?</span><br></p>
+		// <p>为什么没有信息</p>
+		if(str.startsWith("<p><span style=\"\">")) {
+			return str.substring(18, str.lastIndexOf("</span><br></p>")).trim();
+		}else {
+			return str.substring(3, str.lastIndexOf("</p>")).trim();
+		}
+		
+		
+	}
+	
+
 	
 }

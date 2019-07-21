@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yuzo.question.mapper.UserAnswerListMapper" >
+  <resultMap id="BaseResultMap" type="com.yuzo.question.entity.UserAnswerList" >
+    <id column="uans_id" property="uansId" jdbcType="VARCHAR" />
+    <result column="uts_id" property="utsId" jdbcType="VARCHAR" />
+    <result column="qstn_id" property="qstnId" jdbcType="VARCHAR" />
+    <result column="subj_sctn_id" property="subjSctnId" jdbcType="VARCHAR" />
+    <result column="uans_content" property="uansContent" jdbcType="VARCHAR" />
+    <result column="uans_result" property="uansResult" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    uans_id, uts_id, qstn_id, subj_sctn_id, uans_content, uans_result
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from user_answer_list
+    where uans_id = #{uansId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from user_answer_list
+    where uans_id = #{uansId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.yuzo.question.entity.UserAnswerList" >
+    insert into user_answer_list (uans_id, uts_id, qstn_id, 
+      subj_sctn_id, uans_content, uans_result
+      )
+    values (#{uansId,jdbcType=VARCHAR}, #{utsId,jdbcType=VARCHAR}, #{qstnId,jdbcType=VARCHAR}, 
+      #{subjSctnId,jdbcType=VARCHAR}, #{uansContent,jdbcType=VARCHAR}, #{uansResult,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.yuzo.question.entity.UserAnswerList" >
+    insert into user_answer_list
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="uansId != null" >
+        uans_id,
+      </if>
+      <if test="utsId != null" >
+        uts_id,
+      </if>
+      <if test="qstnId != null" >
+        qstn_id,
+      </if>
+      <if test="subjSctnId != null" >
+        subj_sctn_id,
+      </if>
+      <if test="uansContent != null" >
+        uans_content,
+      </if>
+      <if test="uansResult != null" >
+        uans_result,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="uansId != null" >
+        #{uansId,jdbcType=VARCHAR},
+      </if>
+      <if test="utsId != null" >
+        #{utsId,jdbcType=VARCHAR},
+      </if>
+      <if test="qstnId != null" >
+        #{qstnId,jdbcType=VARCHAR},
+      </if>
+      <if test="subjSctnId != null" >
+        #{subjSctnId,jdbcType=VARCHAR},
+      </if>
+      <if test="uansContent != null" >
+        #{uansContent,jdbcType=VARCHAR},
+      </if>
+      <if test="uansResult != null" >
+        #{uansResult,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.yuzo.question.entity.UserAnswerList" >
+    update user_answer_list
+    <set >
+      <if test="utsId != null" >
+        uts_id = #{utsId,jdbcType=VARCHAR},
+      </if>
+      <if test="qstnId != null" >
+        qstn_id = #{qstnId,jdbcType=VARCHAR},
+      </if>
+      <if test="subjSctnId != null" >
+        subj_sctn_id = #{subjSctnId,jdbcType=VARCHAR},
+      </if>
+      <if test="uansContent != null" >
+        uans_content = #{uansContent,jdbcType=VARCHAR},
+      </if>
+      <if test="uansResult != null" >
+        uans_result = #{uansResult,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where uans_id = #{uansId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.yuzo.question.entity.UserAnswerList" >
+    update user_answer_list
+    set uts_id = #{utsId,jdbcType=VARCHAR},
+      qstn_id = #{qstnId,jdbcType=VARCHAR},
+      subj_sctn_id = #{subjSctnId,jdbcType=VARCHAR},
+      uans_content = #{uansContent,jdbcType=VARCHAR},
+      uans_result = #{uansResult,jdbcType=VARCHAR}
+    where uans_id = #{uansId,jdbcType=VARCHAR}
+  </update>
+</mapper>

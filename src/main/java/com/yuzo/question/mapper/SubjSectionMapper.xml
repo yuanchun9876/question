@@ -12,6 +12,7 @@
     <result column="SUBJ_SCTN_VIDEO_URL" property="subjSctnVideoUrl" jdbcType="VARCHAR" />
     <result column="SUBJ_SCTN_PIC_TEXT" property="subjSctnPicText" jdbcType="VARCHAR" />
     <result column="SUBJ_SCTN_VIDEO_LEN" property="subjSctnVideoLen" jdbcType="INTEGER" />
+    <result column="SUBJ_UNIT_TITLE" property="subjUnitTitle" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
     SUBJ_SCTN_ID, SUBJ_UNIT_ID, SUBJ_SCTN_TITLE, SUBJ_SCTN_NUM, SUBJ_SCTN_CODE, SUBJ_SCTN_INFO, 
@@ -41,7 +42,7 @@
   <select id="queryAll" resultMap="BaseResultMap" parameterType="com.yuzo.question.page.SubjSectionPage" >
     select 
     SUBJ_SCTN_ID, sctn.SUBJ_UNIT_ID, SUBJ_SCTN_TITLE, SUBJ_SCTN_NUM, SUBJ_SCTN_CODE, SUBJ_SCTN_INFO, 
-    SUBJ_SCTN_LOGO_URL, SUBJ_SCTN_VIDEO_URL, SUBJ_SCTN_PIC_TEXT, SUBJ_SCTN_VIDEO_LEN
+    SUBJ_SCTN_LOGO_URL, SUBJ_SCTN_VIDEO_URL, SUBJ_SCTN_PIC_TEXT, SUBJ_SCTN_VIDEO_LEN , unit.SUBJ_UNIT_TITLE 
     from subj_section sctn left join subj_unit unit   on  sctn.SUBJ_UNIT_ID = unit.SUBJ_UNIT_ID
     <where>
     	<if test="subjId != null   and  subjId  != ''  ">

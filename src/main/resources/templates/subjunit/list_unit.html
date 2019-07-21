@@ -46,9 +46,20 @@
      
      	 <section class="content">
         <div class="box">
-         <form name="infoForm" id="queryForm" method="post" >
+         <form name="infoForm" id="queryForm" method="post"   th:object="${page}"   th:action="@{/subjUnit/query}"  >
         	<div class="box-header clearfix">
+        		<div class="box-search">
+					<div class="input-group">
+						<span class="input-group-addon" style="background: #EEEEEE;">科目单元</span>
+						<select class="form-control" name="subjId"    th:field="*{subjId}"  >
+							<option value="">请选择</option>
+							<option  th:value = "${subj.subjId }"   th:each="subj,i:${subjList}"   th:text="${subj.subjTitle }"  >科目单元</option>
+						</select>
+					</div>
+				</div>
 				<div class="box-search btn-group">
+					<button class="btn btn-info" name="queryInfo">查询</button>
+					<button type="button" class="btn btn-primary" name="clearInfo" onclick="javascript:clearEle()">清空</button>
 					<button class="btn btn-success"  type="button" name="queryInfo"  onclick="addPage()" >添加</button>
 					<button class="btn btn-warning"  type="button" name="queryInfo"  onclick="dels()">删除</button>
 				</div>
@@ -70,9 +81,9 @@
         			<form name="delForm"  method="post"  action="/subjUnit/dels.action"  th:action="@{/subjUnit/dels}" >
         		
         			<tbody th:remove="all-but-first" >       			  	
-        			<tr  th:each="row,i:${list}" >
-        			  <td  th:text="${i.count }" >1</td>
-        			  <td ><input type="checkbox" name="ids" value="1"    th:value="${row.subjUnitId}"  ></td>
+        			<tr  th:each="row,i:${pageInfo.list}" >
+        			  	<td  th:text="${i.index} + ${pageInfo.startRow}" >1</td>
+        			  	<td ><input type="checkbox" name="ids" value="1"    th:value="${row.subjUnitId}"  ></td>
         				<td  th:text="${row.subjUnitTitle}"  >${unit.subjUnitTitle }</td>
         				<td  th:text="${row.subjTitle}" >${unit.subjTitle }</td>
         				<td  th:text="${row.subjUnitNum}" >${unit.subjUnitNum }</td>
@@ -85,21 +96,20 @@
         			</tbody>
         			</form>
         		</table>
+        	<br/>
+        		<div th:replace="/common/js :: commonjs"></div>
+				<div th:include="common/pagination::pagination(uri='/subjUnit/query',page=${pageInfo})" align="center" ></div>
+				
         	</div>
-<!--         	/.box-body -->
-			
-<!-- 		/. box-footer -->
+<!--         	/.box-body -->			
         </div>
-        <!-- /.row -->
+        <!-- /.box -->
       </section>
       <!-- /.content -->
     </div>
 
 </div>
 <!-- ./wrapper -->
-
-<div th:replace="/common/js :: commonjs"></div>
-
 </body>
 
 

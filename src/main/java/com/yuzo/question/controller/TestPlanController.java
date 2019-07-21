@@ -1,10 +1,13 @@
 package com.yuzo.question.controller;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
@@ -13,12 +16,16 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+
 import com.yuzo.question.entity.QstnFromType;
+import com.yuzo.question.entity.Question;
 import com.yuzo.question.entity.QuestionType;
 import com.yuzo.question.entity.SubjSection;
 import com.yuzo.question.entity.SubjUnit;
 import com.yuzo.question.entity.SubjectCourse;
+import com.yuzo.question.entity.SysUser;
 import com.yuzo.question.entity.TestPlan;
+import com.yuzo.question.entity.TestPlanDetailed;
 import com.yuzo.question.service.ITestPlanService;
 
 @Controller
@@ -70,9 +77,112 @@ public class TestPlanController {
 		return "redirect:query";
 	}
 	
+	@RequestMapping("/openpaper")
+	public String openpaper(String tpId, Model model) {
+		
+		model.addAttribute("tpId", tpId);
+		
+		TestPlan plan = testPlanService.queryById(tpId);
+		if("0".equals(plan.getTpType())) {
+			
+			// 类型
+			List<TestPlanDetailed> typeList = testPlanService.queryQstnType(tpId);
+			
+			// 出处
+			List<TestPlanDetailed> fromList = testPlanService.queryQstnFrom(tpId);
+			
+			// 知识节
+			List<TestPlanDetailed> sctnList = testPlanService.querySctn(tpId);
+			
+			for (TestPlanDetailed tpdType : typeList) {
+				
+				// 单选
+				if("0".equals(tpdType.getQstnTypeId())) {
+					List<Question> qstnList0 = new ArrayList<>();
+					
+					for (TestPlanDetailed tpdFrom : fromList) {
+						for (TestPlanDetailed tpdSctn : sctnList) {
+							
+							List<Question>  ll = testPlanService.queryQuesByParams(tpdType.getQstnTypeId(), tpdFrom.getQstnFromTypeId(), tpdSctn.getSubjSctnId() );
+							qstnList0.addAll(ll);
+						}		
+					}
+					System.err.println("qstnList0:" + qstnList0);
+					int qstnTotal0 = tpdType.getTypeNum();				
+					Collections.shuffle(qstnList0);	
+					
+					model.addAttribute("qstnList0", qstnList0.subList(0, qstnTotal0));
+				}
+				// 多选
+				if("1".equals(tpdType.getQstnTypeId())) {
+					List<Question> qstnList1 = new ArrayList<>();
+					
+					for (TestPlanDetailed tpdFrom : fromList) {
+						for (TestPlanDetailed tpdSctn : sctnList) {
+							
+							List<Question>  ll = testPlanService.queryQuesByParams(tpdType.getQstnTypeId(), tpdFrom.getQstnFromTypeId(), tpdSctn.getSubjSctnId() );
+							qstnList1.addAll(ll);
+						}		
+					}
+					System.err.println("qstnList1:" + qstnList1);
+					model.addAttribute("qstnList1", qstnList1);
+				}
+				// 填空
+				if("2".equals(tpdType.getQstnTypeId())) {
+					List<Question> qstnList2 = new ArrayList<>();
+					
+					for (TestPlanDetailed tpdFrom : fromList) {
+						for (TestPlanDetailed tpdSctn : sctnList) {
+							
+							List<Question>  ll = testPlanService.queryQuesByParams(tpdType.getQstnTypeId(), tpdFrom.getQstnFromTypeId(), tpdSctn.getSubjSctnId() );
+							qstnList2.addAll(ll);
+						}		
+					}
+					System.err.println("qstnList2:" + qstnList2);
+					model.addAttribute("qstnList2", qstnList2);
+				}
+				// 判断
+				if("3".equals(tpdType.getQstnTypeId())) {
+					List<Question> qstnList3 = new ArrayList<>();
+					
+					for (TestPlanDetailed tpdFrom : fromList) {
+						for (TestPlanDetailed tpdSctn : sctnList) {
+							
+							List<Question>  ll = testPlanService.queryQuesByParams(tpdType.getQstnTypeId(), tpdFrom.getQstnFromTypeId(), tpdSctn.getSubjSctnId() );
+							qstnList3.addAll(ll);
+						}		
+					}
+					System.err.println("qstnList3:" + qstnList3);
+					model.addAttribute("qstnList3", qstnList3);
+				}
+				// 简答
+				if("4".equals(tpdType.getQstnTypeId())) {
+					List<Question> qstnList4 = new ArrayList<>();
+					
+					for (TestPlanDetailed tpdFrom : fromList) {
+						for (TestPlanDetailed tpdSctn : sctnList) {
+							
+							List<Question>  ll = testPlanService.queryQuesByParams(tpdType.getQstnTypeId(), tpdFrom.getQstnFromTypeId(), tpdSctn.getSubjSctnId() );
+							qstnList4.addAll(ll);
+						}		
+					}
+					System.err.println("qstnList4:" + qstnList4);
+					
+					int qstnTotal4 = tpdType.getTypeNum();
+					
+					Collections.shuffle(qstnList4);		
+					
+					model.addAttribute("qstnList4", qstnList4.subList(0, qstnTotal4));
+				}
+			}
+		}
+		
+		return "testplan/open_paper_plan";
+	}
+	
 	@RequestMapping("addPage")
 	public String addPage(HttpSession session, Model model) {
-	
+		
 		return "testplan/add_plan";
 	}
 	
@@ -97,6 +207,19 @@ public class TestPlanController {
 
 		return "testplan/edit_plan";
 	}
+	
+	@RequestMapping("/answerSave")
+	public String answerSave(String tpId, String[] qstns0,String[] ans0,String[] qstns4,String[] ans4, HttpServletRequest request, Model model) {
+
+		SysUser user = (SysUser) request.getSession().getAttribute("user");
+		
+		testPlanService.saveAnswer(user, tpId, qstns0, ans0, qstns4, ans4);
+		
+		return "redirect:query";
+	}
+	
+	
+	
 	
 	@RequestMapping("/setPage")
 	public String setPage(String tpId, Model model) {

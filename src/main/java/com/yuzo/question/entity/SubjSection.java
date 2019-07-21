@@ -24,7 +24,7 @@ public class SubjSection {
     
     private Integer sctnCount;
     
-    
+    private String subjUnitTitle;
     
     
 
@@ -115,4 +115,14 @@ public class SubjSection {
     public void setSubjSctnVideoLen(Integer subjSctnVideoLen) {
         this.subjSctnVideoLen = subjSctnVideoLen;
     }
+
+	public String getSubjUnitTitle() {
+		return subjUnitTitle;
+	}
+
+	public void setSubjUnitTitle(String subjUnitTitle) {
+		this.subjUnitTitle = subjUnitTitle;
+	}
+    
+    
 }

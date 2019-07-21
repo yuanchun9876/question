@@ -84,6 +84,7 @@
 						<td>
 							<button type="button" class="btn btn-primary btn-sm"  th:onclick="editpage([[${row.tpId}]])"  onclick="javascript:editpage('1')">修改</button>
 							<button type="button" class="btn btn-primary btn-sm"  th:onclick="setpage([[${row.tpId}]])"  onclick="javascript:editpage('1')">设置明细</button>
+							<button type="button" class="btn btn-danger btn-sm"  th:onclick="openpaper([[${row.tpId}]])"  onclick="javascript:editpage('1')">打开试卷</button>
 						</td>
         			</tr>
         			</tbody>
@@ -117,6 +118,10 @@
 
 	function editpage(id){
 		location.href = "/testplan/editPage?tpId=" + id; 
+	}
+	
+	function openpaper(id){
+		location.href = "/testplan/openpaper?tpId=" + id; 
 	}
 	
 	function setpage(id){

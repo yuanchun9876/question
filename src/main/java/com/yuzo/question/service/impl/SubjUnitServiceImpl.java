@@ -9,6 +9,7 @@ import com.yuzo.question.entity.SubjUnit;
 import com.yuzo.question.entity.SubjectCourse;
 import com.yuzo.question.mapper.SubjUnitMapper;
 import com.yuzo.question.mapper.SubjectCourseMapper;
+import com.yuzo.question.page.SubjUnitPage;
 import com.yuzo.question.service.ISubjUnitService;
 
 
@@ -85,5 +86,12 @@ public class SubjUnitServiceImpl implements ISubjUnitService{
 	public List<SubjUnit> queryUnitsBySubjs(String[] subjIds) {
 		// TODO Auto-generated method stub
 		return unitMapper.queryUnitsBySubjs(subjIds);
+	}
+
+
+	@Override
+	public List<SubjUnit> queryPage(SubjUnitPage page) {
+		// TODO Auto-generated method stub
+		return unitMapper.queryPage(page);
 	}
 }

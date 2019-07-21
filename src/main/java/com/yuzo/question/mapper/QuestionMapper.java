@@ -2,7 +2,7 @@ package com.yuzo.question.mapper;
 
 import java.util.List;
 
-
+import org.apache.ibatis.annotations.Param;
 
 import com.yuzo.question.entity.Question;
 import com.yuzo.question.page.QuestionPage;
@@ -28,4 +28,6 @@ public interface QuestionMapper {
 	int queryCountByXxx(QuestionPage page);
 
 	List<Question> queryQstnByTpId(String tpId);
+
+	List<Question> queryQuesByParams(@Param("qstnTypeId")String qstnTypeId, @Param("qstnFromTypeId")String qstnFromTypeId, @Param("subjSctnId")String subjSctnId);
 }

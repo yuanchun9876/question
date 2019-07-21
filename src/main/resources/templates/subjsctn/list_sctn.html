@@ -83,8 +83,8 @@
         				<th>全选</th>
         				<th>知识节名称</th>
         				<th>知识节序号</th>
-        				<th>知识节代号</th>
-						<th>总时长</th>
+        				<th>所属知识章</th>
+						
 						<th>操作</th>
         			</tr>
         			</thead>
@@ -95,8 +95,8 @@
         			  <td ><input type="checkbox" name="ids" value="1"    th:value="${row.subjSctnId}"  ></td>
         				<td   th:text="${row.subjSctnTitle}">${scth.subjSctnTitle }</td>
         				<td   th:text="${row.subjSctnNum}">${scth.subjSctnNum }</td>
-        				<td   th:text="${row.subjSctnCode}">${scth.subjSctnCode }</td>
-        				<td   th:text="${row.subjSctnVideoLen}">${scth.subjSctnVideoLen }</td>
+        				<td   th:text="${row.subjUnitTitle}">${scth.subjUnitTitle }</td>
+        				
 						<td>
 							<button type="button" class="btn btn-primary btn-sm"  th:onclick="editpage([[${row.subjSctnId}]])"   onclick="javascript:editpage('1')">修改</button>
 						</td>

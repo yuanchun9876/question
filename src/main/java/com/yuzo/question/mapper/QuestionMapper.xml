@@ -24,6 +24,21 @@
   </sql>
   
   
+  <select id="queryQuesByParams" resultMap="BaseResultMap" parameterType="string" >
+	 	select QSTN_ID, QSTN_TITLE, QSTN_INPUT_TIME, qstn.QSTN_TYPE_ID, qstn.QSTN_FROM_TYPE_ID, QSTN_PICTEXT, QSTN_NUM, qstn.SUBJ_SCTN_ID
+		,qttype.QSTN_TYPE_NAME , qtfrom.QSTN_FROM_TYPE_CODE  , sctn.SUBJ_SCTN_TITLE 
+		,unit.SUBJ_UNIT_TITLE, subj.SUBJ_TITLE
+		FROM question qstn
+			left JOIN question_type qttype  on qttype.QSTN_TYPE_ID = qstn.QSTN_TYPE_ID
+			LEFT JOIN qstn_from_type  qtfrom on qtfrom.QSTN_FROM_TYPE_ID = qstn.QSTN_FROM_TYPE_ID
+			LEFT JOIN subj_section sctn on sctn.SUBJ_SCTN_ID = qstn.SUBJ_SCTN_ID
+			LEFT JOIN subj_unit unit on sctn.SUBJ_UNIT_ID = unit.SUBJ_UNIT_ID
+			LEFT JOIN subject_course subj on subj.SUBJ_ID = unit.SUBJ_ID
+		where
+		   qstn.QSTN_TYPE_ID = #{qstnTypeId}  and  qstn.QSTN_FROM_TYPE_ID = #{qstnFromTypeId}  and qstn.SUBJ_SCTN_ID = #{subjSctnId}
+  </select>
+  
+  
   <select id="queryQstnByTpId" resultMap="BaseResultMap" parameterType="string" >
 	  select * from question  qstn  where   qstn.SUBJ_SCTN_ID in (
 		select tpd.SUBJ_SCTN_ID 

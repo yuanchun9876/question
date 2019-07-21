@@ -32,6 +32,21 @@
 	</select>
 	
 	
+	  <!-- querypage  分页 -->
+    <select id="queryPage" resultMap="BaseResultMap" parameterType="com.yuzo.question.page.SubjUnitPage"  >
+	    select SUBJ_UNIT_ID, su.SUBJ_ID, su.TCH_ID, SUBJ_UNIT_TITLE, SUBJ_UNIT_NUM, SUBJ_UNIT_CODE, SUBJ_UNIT_INFO, SUBJ_UNIT_LOGO_URL
+	    , tch.TCH_NAME
+	    , sc.SUBJ_TITLE
+	    from subj_unit  su left join teacher tch  on su.TCH_ID = tch.TCH_ID
+	    left join subject_course sc  on su.SUBJ_ID = sc.SUBJ_ID
+	    <where>
+	    	<if test="subjId != null  and subjId != '' ">
+	    		and su.SUBJ_ID = #{subjId}
+	    	</if>
+	    </where>
+	    order by sc.SUBJ_NUM, SUBJ_UNIT_NUM
+	</select>
+	
 	  <!-- queryAll  全查 -->
     <select id="queryAll" resultMap="BaseResultMap"  >
 	    select SUBJ_UNIT_ID, su.SUBJ_ID, su.TCH_ID, SUBJ_UNIT_TITLE, SUBJ_UNIT_NUM, SUBJ_UNIT_CODE, SUBJ_UNIT_INFO, SUBJ_UNIT_LOGO_URL
