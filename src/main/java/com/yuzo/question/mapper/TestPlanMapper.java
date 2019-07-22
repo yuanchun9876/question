@@ -2,6 +2,7 @@ package com.yuzo.question.mapper;
 
 import java.util.List;
 
+import com.yuzo.question.entity.SysUser;
 import com.yuzo.question.entity.TestPlan;
 
 public interface TestPlanMapper {
@@ -18,4 +19,6 @@ public interface TestPlanMapper {
     int updateByPrimaryKey(TestPlan record);
 
 	List<TestPlan> queryAll();
+
+	List<TestPlan> queryByUserClass(String mcId);
 }

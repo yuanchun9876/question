@@ -18,6 +18,8 @@ import com.yuzo.question.entity.SysUser;
 import com.yuzo.question.entity.TestPlan;
 import com.yuzo.question.entity.TestPlanDetailed;
 import com.yuzo.question.entity.UserAnswerList;
+import com.yuzo.question.entity.UserMyclass;
+import com.yuzo.question.entity.UserTeam;
 import com.yuzo.question.entity.UserTestList;
 import com.yuzo.question.mapper.AnswerMapper;
 import com.yuzo.question.mapper.QstnFromTypeMapper;
@@ -29,6 +31,8 @@ import com.yuzo.question.mapper.SubjectCourseMapper;
 import com.yuzo.question.mapper.TestPlanDetailedMapper;
 import com.yuzo.question.mapper.TestPlanMapper;
 import com.yuzo.question.mapper.UserAnswerListMapper;
+import com.yuzo.question.mapper.UserMyclassMapper;
+import com.yuzo.question.mapper.UserTeamMapper;
 import com.yuzo.question.mapper.UserTestListMapper;
 import com.yuzo.question.page.QuestionPage;
 import com.yuzo.question.service.ITestPlanService;
@@ -69,6 +73,11 @@ public class TestPlanServiceImpl implements ITestPlanService {
 	@Autowired
 	private AnswerMapper ansMapper;
 	
+	@Autowired
+	private UserMyclassMapper userMyclassMapper;
+	
+	@Autowired
+	private UserTeamMapper  tmMapper;
 
 	@Override
 	public List<QstnFromType> queryQstnFrom() {
@@ -427,6 +436,19 @@ public class TestPlanServiceImpl implements ITestPlanService {
 		}
 		
 		
+	}
+
+	@Override
+	public List<UserMyclass> queryMc() {
+		// TODO Auto-generated method stub
+		return userMyclassMapper.queryAll();
+	}
+
+	@Override
+	public List<TestPlan> queryByUserClass(SysUser user) {
+		// TODO Auto-generated method stub
+		UserTeam tm = tmMapper.selectByPrimaryKey(user.getTmId());
+		return planMapper.queryByUserClass(tm.getMcId());
 	}
 	
 

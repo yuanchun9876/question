@@ -46,20 +46,13 @@
      
      	 <section class="content">
         <div class="box">
-         <form name="infoForm" id="queryForm" method="post" >
-        	<div class="box-header clearfix">
-				<div class="box-search btn-group">
-					<button class="btn btn-success"  type="button" name="queryInfo"  onclick="addPage()" >添加</button>
-					<button class="btn btn-warning"  type="button" name="queryInfo"  onclick="dels()">删除</button>
-				</div>
-        	</div>
-        	</form>
+       
         	<!-- /.box-header -->
         	<div class="box-body no-padding">
         		<table class="table table-striped">
         			<tr>
         				<th>序号</th>
-        				<th>全选</th>
+        			
         				<th>方案名称</th>     				
         				<th>开始时间</th>
         				<th>结束时间</th>
@@ -67,12 +60,12 @@
         				
 						<th>操作</th>
         			</tr>
-        			<form name="delForm"  method="post"  action="/testplan/dels.action"  th:action="@{/testplan/dels}" >
+        		
         		
         			<tbody th:remove="all-but-first" >       			  	
-        			<tr  th:each="row,i:${list}" >
+        			<tr  th:each="row,i:${planlist}" >
         			  <td  th:text="${i.count }" >1</td>
-        			  <td ><input type="checkbox" name="ids" value="1"    th:value="${row.tpId}"  ></td>
+        			  
         				<td  th:text="${row.tpTitle}"  >${unit.subjUnitTitle }</td>
         				<td  th:text="${#dates.format(row.tpBeginDate, 'yyyy-MM-dd')}" >${unit.subjTitle }</td>
         				<td  th:text="${#dates.format(row.tpEndDate, 'yyyy-MM-dd')}" >${unit.subjUnitNum }</td>
@@ -82,14 +75,13 @@
 						</td>
         				
 						<td>
-							<button type="button" class="btn btn-primary btn-sm"  th:onclick="editpage([[${row.tpId}]])"  onclick="javascript:editpage('1')">修改</button>
-							<button type="button" class="btn btn-info btn-sm"  th:onclick="setpage([[${row.tpId}]])"  onclick="javascript:editpage('1')">设置明细</button>
+						
 							<button type="button" class="btn btn-danger btn-sm"  th:onclick="openpaper([[${row.tpId}]])"  onclick="javascript:editpage('1')">打开试卷</button>
-							<button type="button" class="btn btn-success btn-sm"  th:onclick="targetClass([[${row.tpId}]])"  onclick="javascript:editpage('1')">关联班级</button>
+						
 						</td>
         			</tr>
         			</tbody>
-        			</form>
+        		
         		</table>
         	</div>
 <!--         	/.box-body -->
@@ -113,36 +105,13 @@
 
 
 	  
-	function addPage(){
-		location.href = "/testplan/addPage"; 
-	}
 
-	function editpage(id){
-		location.href = "/testplan/editPage?tpId=" + id; 
-	}
-	function targetClass(id){
-		location.href = "/testplan/targetClass?tpId=" + id; 
-	}
 	
 	function openpaper(id){
 		location.href = "/testplan/openpaper?tpId=" + id; 
 	}
 	
-	function setpage(id){
-		location.href = "/testplan/setPage?tpId=" + id; 
-	}
-	
-	function dels(){
-		var ids = $("[name=ids]:checked");
-		if(ids.length==0){
-			alert("请选择要删除记录!");
-			return;
-		}
-		
-		if(window.confirm("确定要删除吗?")){
-			document.delForm.submit();
-		}
-	}
+
 
 </script>
 

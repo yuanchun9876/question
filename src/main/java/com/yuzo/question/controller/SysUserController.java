@@ -146,9 +146,9 @@ public class SysUserController {
 	@RequestMapping("/sysuser/editUserRole")
 	public String editUserMc(String userId, String[] ids) {		
 		
-		System.err.println(userId + ":ids:" + Arrays.toString(ids));
+	
 		int count = userService.updateUserRole(userId, ids);
-		System.out.println(":" + count);
+		//System.out.println(":" + count);
 		return "redirect:query";
 	}
 	

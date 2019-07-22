@@ -26,6 +26,7 @@ import com.yuzo.question.entity.SubjectCourse;
 import com.yuzo.question.entity.SysUser;
 import com.yuzo.question.entity.TestPlan;
 import com.yuzo.question.entity.TestPlanDetailed;
+import com.yuzo.question.entity.UserMyclass;
 import com.yuzo.question.service.ITestPlanService;
 
 @Controller
@@ -107,7 +108,7 @@ public class TestPlanController {
 							qstnList0.addAll(ll);
 						}		
 					}
-					System.err.println("qstnList0:" + qstnList0);
+					System.out.println("qstnList0:" + qstnList0);
 					int qstnTotal0 = tpdType.getTypeNum()-1;				
 					Collections.shuffle(qstnList0);	
 					
@@ -124,7 +125,7 @@ public class TestPlanController {
 							qstnList1.addAll(ll);
 						}		
 					}
-					System.err.println("qstnList1:" + qstnList1);
+					System.out.println("qstnList1:" + qstnList1);
 					model.addAttribute("qstnList1", qstnList1);
 				}
 				// 填空
@@ -138,7 +139,7 @@ public class TestPlanController {
 							qstnList2.addAll(ll);
 						}		
 					}
-					System.err.println("qstnList2:" + qstnList2);
+					System.out.println("qstnList2:" + qstnList2);
 					model.addAttribute("qstnList2", qstnList2);
 				}
 				// 判断
@@ -152,7 +153,7 @@ public class TestPlanController {
 							qstnList3.addAll(ll);
 						}		
 					}
-					System.err.println("qstnList3:" + qstnList3);
+					System.out.println("qstnList3:" + qstnList3);
 					model.addAttribute("qstnList3", qstnList3);
 				}
 				// 简答
@@ -166,11 +167,11 @@ public class TestPlanController {
 							qstnList4.addAll(ll);
 						}		
 					}
-					System.err.println("qstnList4:" + qstnList4.size());
+					System.out.println("qstnList4:" + qstnList4.size());
 					
 					int qstnTotal4 = tpdType.getTypeNum()>qstnList4.size()?qstnList4.size():tpdType.getTypeNum();
 					
-					System.err.println(qstnTotal4);
+					System.out.println(qstnTotal4);
 					
 					Collections.shuffle(qstnList4);		
 					
@@ -208,6 +209,16 @@ public class TestPlanController {
 		model.addAttribute("plan", plan);	
 
 		return "testplan/edit_plan";
+	}
+	@RequestMapping("/targetClass")
+	public String targetClass(String tpId, Model model) {
+		
+		TestPlan plan = testPlanService.queryById(tpId);
+		model.addAttribute("plan", plan);	
+		List<UserMyclass> mclist = testPlanService.queryMc();
+		model.addAttribute("mclist", mclist);	
+		
+		return "testplan/set_plan_target";
 	}
 	
 	@RequestMapping("/answerSave")
@@ -259,5 +270,18 @@ public class TestPlanController {
 		int count = testPlanService.dels(ids);
 		System.out.println(":" + count);
 		return "redirect:query";
+	}
+	
+	//----------------------------------------------------------
+	
+	@RequestMapping("/userplanlist")
+	public String userplanlist(HttpSession session, Model model) {
+		
+		SysUser user = (SysUser) session.getAttribute("user");
+	
+		List<TestPlan> planlist = testPlanService.queryByUserClass(user);
+		model.addAttribute("planlist", planlist);	
+	
+		return "testplan/list_plan_userclass";
 	}
 }

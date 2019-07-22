@@ -25,6 +25,14 @@
   </select>
   
   
+  <select id="queryByUserClass" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from test_plan
+    where TP_TARGET = #{value}
+  </select>
+  
+  
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />

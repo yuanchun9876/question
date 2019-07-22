@@ -5,6 +5,7 @@ import java.io.FileNotFoundException;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.apache.tomcat.util.bcel.Const;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +31,7 @@ public class LoginController {
 	}
 	
 	@RequestMapping("/main")
-	public String mainPage(SysUser user , HttpServletRequest request, Model model) throws FileNotFoundException{
+	public String mainPage(SysUser user , HttpServletRequest request, HttpSession session , Model model) throws FileNotFoundException{
 		String path = request.getRealPath("");
 	
 		File filePath=new File(ResourceUtils.getURL("classpath:").getPath());
@@ -58,8 +59,8 @@ public class LoginController {
 				List<SysMenu> cmenuList = loginService.queryChdMenu(userList.get(0).getUserId());
 				System.out.println("cmenuList:" + cmenuList);
 				model.addAttribute("cmenuList", cmenuList);
-				
-				request.getSession().setAttribute("user", userList.get(0));
+				System.err.println(userList.get(0).getNickName() + ":login");
+				session.setAttribute("user", userList.get(0));
 				
 				return "/common/main";
 			} else {

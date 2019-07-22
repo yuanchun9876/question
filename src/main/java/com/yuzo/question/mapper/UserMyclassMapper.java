@@ -18,4 +18,6 @@ public interface UserMyclassMapper {
     int updateByPrimaryKey(UserMyclass record);
 
 	List<UserMyclass> queryAll();
+
+	
 }

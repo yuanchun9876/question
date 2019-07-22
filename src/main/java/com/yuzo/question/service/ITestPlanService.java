@@ -12,6 +12,7 @@ import com.yuzo.question.entity.SubjectCourse;
 import com.yuzo.question.entity.SysUser;
 import com.yuzo.question.entity.TestPlan;
 import com.yuzo.question.entity.TestPlanDetailed;
+import com.yuzo.question.entity.UserMyclass;
 
 public interface ITestPlanService {
 
@@ -48,4 +49,8 @@ public interface ITestPlanService {
 	List<Question> queryQuesByParams(String qstnTypeId, String qstnFromTypeId, String subjSctnId);
 
 	int saveAnswer(SysUser user, String tpId, String[] qstns0, String[] ans0, String[] qstns4, String[] ans4);
+
+	List<UserMyclass> queryMc();
+
+	List<TestPlan> queryByUserClass(SysUser user);
 }
