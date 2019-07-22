@@ -72,6 +72,8 @@ public class SysUserServiceImpl implements ISysUserService {
 		String userId = UUID.randomUUID().toString();		
 		user.setUserId(userId);
 		user.setUserPass("123456");
+		user.setUserInfo("/images/face/user1.png");
+		
 		int count = mapper.insertSelective(user);
 		
 		if(mcId!=null  &&  !"".equals(mcId)) {

@@ -164,7 +164,7 @@
 						var tds = "<td>" + (i+1) + "</td>";
 							tds += "<td><input type='checkbox'  checked='checked'  name='unitIds' value='" + item.subjUnitId + "'  onclick='selectUnit()'  ><td>";
 							tds += "<td>" + item.subjUnitNum + "." + item.subjUnitTitle + "</td>";
-							tds += "<td><input name='unitNums' type='number' max='100' min='0'  ></td>";
+						//	tds += "<td><input name='unitNums' type='number' max='100' min='0'  ></td>";
 						$("<tr>" + tds + "</tr>").appendTo("#unitTbody");
 					});	
 			   },
@@ -195,7 +195,7 @@
 						var tds = "<td>" + (i+1) + "</td>";
 						tds += "<td><input type='checkbox'  checked='checked' name='sctnIds' value='" + item.subjSctnId + "' ><td>";
 						tds += "<td>" + item.subjSctnNum + "." + item.subjSctnTitle + "</td>";
-						tds += "<td><input  name='sctnNums' type='number' max='100' min='0' ></td>";
+						//tds += "<td><input  name='sctnNums' type='number' max='100' min='0' ></td>";
 					$("<tr>" + tds + "</tr>").appendTo("#sctnTbody");
 					});
 			   },

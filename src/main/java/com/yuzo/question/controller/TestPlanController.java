@@ -108,7 +108,7 @@ public class TestPlanController {
 						}		
 					}
 					System.err.println("qstnList0:" + qstnList0);
-					int qstnTotal0 = tpdType.getTypeNum();				
+					int qstnTotal0 = tpdType.getTypeNum()-1;				
 					Collections.shuffle(qstnList0);	
 					
 					model.addAttribute("qstnList0", qstnList0.subList(0, qstnTotal0));
@@ -166,9 +166,11 @@ public class TestPlanController {
 							qstnList4.addAll(ll);
 						}		
 					}
-					System.err.println("qstnList4:" + qstnList4);
+					System.err.println("qstnList4:" + qstnList4.size());
 					
-					int qstnTotal4 = tpdType.getTypeNum();
+					int qstnTotal4 = tpdType.getTypeNum()>qstnList4.size()?qstnList4.size():tpdType.getTypeNum();
+					
+					System.err.println(qstnTotal4);
 					
 					Collections.shuffle(qstnList4);		
 					

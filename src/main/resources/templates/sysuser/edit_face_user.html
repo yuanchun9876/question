@@ -44,7 +44,7 @@
 						<form class="form form-horizontal" method="post"   th:action="@{/sysuser/editPassSave}"  th:object="${user}" >
 							<input type="hidden" id="userId"  th:value="*{userId}"  >
 							<!-- left column -->
-							<div class="col-md-8 col-md-offset-2">
+							<div class="col-md-10 col-md-offset-1">
 								<!-- general form elements -->
 								<div class="box box-primary">
 									<div class="box-header with-border">
@@ -66,6 +66,17 @@
 												<input type="radio"  name ="userFace"  value="/images/face/damo.jpg" > &nbsp;&nbsp;&nbsp;&nbsp;
 												<img th:src="@{/images/face/guanyu.jpg}"   width="150" >
 												<input type="radio" name ="userFace"  value="/images/face/guanyu.jpg" > &nbsp;&nbsp;&nbsp;&nbsp;
+												
+											</div>
+											<div class="col-sm-12"  >
+												<img th:src="@{/images/face/user1.png}"   width="150" >
+												<input type="radio"  name ="userFace"   value="/images/face/user1.png" > &nbsp;&nbsp;&nbsp;&nbsp;
+												<img th:src="@{/images/face/user2.jpg}"   width="150" >
+												<input type="radio"  name ="userFace"  value="/images/face/user2.jpg" > &nbsp;&nbsp;&nbsp;&nbsp;
+												<img th:src="@{/images/face/user3.jpg}"   width="150" >
+												<input type="radio"  name ="userFace"  value="/images/face/user3.jpg" > &nbsp;&nbsp;&nbsp;&nbsp;
+												<img th:src="@{/images/face/user5.jpg}"   width="150" >
+												<input type="radio" name ="userFace"  value="/images/face/user5.jpg" > &nbsp;&nbsp;&nbsp;&nbsp;
 												
 											</div>
 										</div>

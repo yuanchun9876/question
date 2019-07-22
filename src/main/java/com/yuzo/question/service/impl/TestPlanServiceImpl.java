@@ -156,6 +156,7 @@ public class TestPlanServiceImpl implements ITestPlanService {
 	@Override
 	public int update(TestPlan plan) {
 		// TODO Auto-generated method stub
+		
 		return planMapper.updateByPrimaryKeySelective(plan);
 	}
 
@@ -175,21 +176,26 @@ public class TestPlanServiceImpl implements ITestPlanService {
 	public int saveSet(String tpId, String[] typeIds, Integer[] typeNums, Integer[] typePns, String[] fromIds,
 			Integer[] fromNums, String[] subjIds, Integer[] subjNums, String[] unitIds, Integer[] unitNums,
 			String[] sctnIds, Integer[] sctnNums) {
+		// 先删除原来的记录 再 保存新的记录
+		
+		planDtdMapper.delsByPlan(tpId);
+		
 		int count = 0;
+		
 		for (int i = 0; i < typeIds.length; i++) {
 			TestPlanDetailed planDtd = new TestPlanDetailed();
 			planDtd.setTpDtdId(UUID.randomUUID().toString());
 			planDtd.setTpId(tpId);
 			planDtd.setQstnTypeId(typeIds[i]);
-			if (typeNums[i]==null) {
+			if (typeNums[Integer.parseInt(typeIds[i])]==null) {
 				planDtd.setTypeNum(100);
 			} else {
-				planDtd.setTypeNum(typeNums[i]);
+				planDtd.setTypeNum(typeNums[Integer.parseInt(typeIds[i])]);
 			}
-			if (typePns[i]==null) {
+			if (typePns[Integer.parseInt(typeIds[i])]==null) {
 				planDtd.setTypePoints(5);
 			} else {
-				planDtd.setTypePoints(typePns[i]);
+				planDtd.setTypePoints(typePns[Integer.parseInt(typeIds[i])]);
 			}
 			planDtd.setTpDtdType("1");
 			count += planDtdMapper.insertSelective(planDtd);
@@ -200,11 +206,11 @@ public class TestPlanServiceImpl implements ITestPlanService {
 			planDtd.setTpDtdId(UUID.randomUUID().toString());
 			planDtd.setTpId(tpId);
 			planDtd.setQstnFromTypeId(fromIds[i]);
-			if (fromNums[i]==null) {
-				planDtd.setFromNum(100);
-			} else {
-				planDtd.setFromNum(fromNums[i]);
-			}
+//			if (fromNums[i]==null) {
+//				planDtd.setFromNum(100);
+//			} else {
+//				planDtd.setFromNum(fromNums[i]);
+//			}
 			planDtd.setTpDtdType("2");
 			count += planDtdMapper.insertSelective(planDtd);
 		}
@@ -214,11 +220,11 @@ public class TestPlanServiceImpl implements ITestPlanService {
 			planDtd.setTpDtdId(UUID.randomUUID().toString());
 			planDtd.setTpId(tpId);
 			planDtd.setSubjId(subjIds[i]);
-			if (subjNums[i]==null) {
-				planDtd.setSubjNum(100);
-			} else {
-				planDtd.setSubjNum(subjNums[i]);
-			}
+//			if (subjNums[i]==null) {
+//				planDtd.setSubjNum(100);
+//			} else {
+//				planDtd.setSubjNum(subjNums[i]);
+//			}
 			planDtd.setTpDtdType("3");
 			count += planDtdMapper.insertSelective(planDtd);
 		}
@@ -230,11 +236,11 @@ public class TestPlanServiceImpl implements ITestPlanService {
 				planDtd.setTpDtdId(UUID.randomUUID().toString());
 				planDtd.setTpId(tpId);
 				planDtd.setSubjUnitId(unitIds[i]);
-				if (unitNums[i] == null) {
-					planDtd.setUnitNum(100);
-				} else {
-					planDtd.setUnitNum(unitNums[i]);
-				}
+//				if (unitNums[i] == null) {
+//					planDtd.setUnitNum(100);
+//				} else {
+//					planDtd.setUnitNum(unitNums[i]);
+//				}
 				planDtd.setTpDtdType("4");
 				count += planDtdMapper.insertSelective(planDtd);
 			}
@@ -247,7 +253,7 @@ public class TestPlanServiceImpl implements ITestPlanService {
 					planDtd.setTpId(tpId);
 					planDtd.setSubjUnitId(subjUnit.getSubjUnitId());
 					
-					planDtd.setUnitNum(100); // ***
+//					planDtd.setUnitNum(100); // ***
 					
 					planDtd.setTpDtdType("4");
 					count += planDtdMapper.insertSelective(planDtd);
@@ -262,11 +268,11 @@ public class TestPlanServiceImpl implements ITestPlanService {
 				planDtd.setTpDtdId(UUID.randomUUID().toString());
 				planDtd.setTpId(tpId);
 				planDtd.setSubjSctnId(sctnIds[i]);
-				if (sctnNums[i]==null) {
-					planDtd.setSctnNum(100);
-				} else {
-					planDtd.setSctnNum(sctnNums[i]);
-				}
+//				if (sctnNums[i]==null) {
+//					planDtd.setSctnNum(100);
+//				} else {
+//					planDtd.setSctnNum(sctnNums[i]);
+//				}
 				planDtd.setTpDtdType("5");
 				count += planDtdMapper.insertSelective(planDtd);
 			}
@@ -281,7 +287,7 @@ public class TestPlanServiceImpl implements ITestPlanService {
 						planDtd.setTpId(tpId);
 						planDtd.setSubjSctnId(subjSection.getSubjSctnId());
 						
-							planDtd.setSctnNum(100);//***
+//							planDtd.setSctnNum(100);//***
 						
 						planDtd.setTpDtdType("5");
 						count += planDtdMapper.insertSelective(planDtd);
@@ -298,7 +304,7 @@ public class TestPlanServiceImpl implements ITestPlanService {
 							planDtd.setTpId(tpId);
 							planDtd.setSubjSctnId(subjSection.getSubjSctnId());
 							
-							planDtd.setSctnNum(100);//***
+//							planDtd.setSctnNum(100);//***
 							
 							planDtd.setTpDtdType("5");
 							count += planDtdMapper.insertSelective(planDtd);
