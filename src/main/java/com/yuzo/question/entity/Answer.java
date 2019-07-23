@@ -8,6 +8,9 @@ public class Answer {
     private String ansContent;
 
     private String ansIsright;
+    
+    private Integer ansNum;
+    
 
     public String getAnsId() {
         return ansId;
@@ -40,4 +43,14 @@ public class Answer {
     public void setAnsIsright(String ansIsright) {
         this.ansIsright = ansIsright == null ? null : ansIsright.trim();
     }
+
+	public Integer getAnsNum() {
+		return ansNum;
+	}
+
+	public void setAnsNum(Integer ansNum) {
+		this.ansNum = ansNum;
+	}
+    
+    
 }

@@ -69,6 +69,7 @@
 									<th width="5%">全选</th>
 									<th >答案内容</th>
 									<th width="10%">答案状态</th>
+									<th width="10%">答案序号</th>
 									<th width="20%">操作</th>
 								</tr>
 								<form name="delForm"  method="post"  action="#"  th:action="@{/ans/dels}"  >    
@@ -78,6 +79,7 @@
 			        			  <td ><input type="checkbox" name="ids" value="1"    th:value="${row.ansId}"  ></td>
 								  <td class="qstnTitle"  th:text="${row.ansContent}" >${qstn.qstnTitle }</td>
 								  <td  th:text="${row.ansIsright}" >${qstn.qstnTypeId }</td>
+								  <td  th:text="${row.ansNum}" >${qstn.qstnTypeId }</td>
 								  <td>
 									<button type="button" class="btn btn-primary btn-sm"  th:onclick="editpage([[${row.ansId}]])"  onclick="javascript:editpage('1')">修改</button>
 								 </td>

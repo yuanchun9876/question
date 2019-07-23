@@ -6,9 +6,10 @@
     <result column="QSTN_ID" property="qstnId" jdbcType="VARCHAR" />
     <result column="ANS_CONTENT" property="ansContent" jdbcType="VARCHAR" />
     <result column="ANS_ISRIGHT" property="ansIsright" jdbcType="VARCHAR" />
+    <result column="ANS_NUM" property="ansNum" jdbcType="INTEGER" />
   </resultMap>
   <sql id="Base_Column_List" >
-    ANS_ID, QSTN_ID, ANS_CONTENT, ANS_ISRIGHT
+    ANS_ID, QSTN_ID, ANS_CONTENT, ANS_ISRIGHT, ANS_NUM
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
@@ -22,9 +23,9 @@
   </delete>
   <insert id="insert" parameterType="com.yuzo.question.entity.Answer" >
     insert into answer (ANS_ID, QSTN_ID, ANS_CONTENT, 
-      ANS_ISRIGHT)
+      ANS_ISRIGHT, ANS_NUM)
     values (#{ansId,jdbcType=VARCHAR}, #{qstnId,jdbcType=VARCHAR}, #{ansContent,jdbcType=VARCHAR}, 
-      #{ansIsright,jdbcType=VARCHAR})
+      #{ansIsright,jdbcType=VARCHAR} , #{ansNum})
   </insert>
   <insert id="insertSelective" parameterType="com.yuzo.question.entity.Answer" >
     insert into answer
@@ -41,6 +42,9 @@
       <if test="ansIsright != null" >
         ANS_ISRIGHT,
       </if>
+      <if test="ansNum != null" >
+        ANS_NUM,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="ansId != null" >
@@ -54,6 +58,9 @@
       </if>
       <if test="ansIsright != null" >
         #{ansIsright,jdbcType=VARCHAR},
+      </if>
+       <if test="ansNum != null" >
+       #{ansNum},
       </if>
     </trim>
   </insert>
@@ -69,6 +76,9 @@
       <if test="ansIsright != null" >
         ANS_ISRIGHT = #{ansIsright,jdbcType=VARCHAR},
       </if>
+        <if test="ansNum != null" >
+        ANS_NUM = #{ansNum},
+      </if>
     </set>
     where ANS_ID = #{ansId,jdbcType=VARCHAR}
   </update>
@@ -76,7 +86,8 @@
     update answer
     set QSTN_ID = #{qstnId,jdbcType=VARCHAR},
       ANS_CONTENT = #{ansContent,jdbcType=VARCHAR},
-      ANS_ISRIGHT = #{ansIsright,jdbcType=VARCHAR}
+      ANS_ISRIGHT = #{ansIsright,jdbcType=VARCHAR},
+      ANS_NUM = #{ansNum}
     where ANS_ID = #{ansId,jdbcType=VARCHAR}
   </update>
 </mapper>
