@@ -1,5 +1,9 @@
 package com.yuzo.question.mapper;
 
+import java.util.List;
+
+import org.apache.ibatis.annotations.Param;
+
 import com.yuzo.question.entity.UserTestList;
 
 public interface UserTestListMapper {
@@ -14,4 +18,6 @@ public interface UserTestListMapper {
     int updateByPrimaryKeySelective(UserTestList record);
 
     int updateByPrimaryKey(UserTestList record);
+
+	List<UserTestList> queryByUserAndTp(@Param("userId")String userId, @Param("tpId")String tpId);
 }

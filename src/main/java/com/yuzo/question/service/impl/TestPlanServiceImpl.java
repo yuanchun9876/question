@@ -78,6 +78,8 @@ public class TestPlanServiceImpl implements ITestPlanService {
 	
 	@Autowired
 	private UserTeamMapper  tmMapper;
+	
+	
 
 	@Override
 	public List<QstnFromType> queryQstnFrom() {
@@ -449,6 +451,19 @@ public class TestPlanServiceImpl implements ITestPlanService {
 		// TODO Auto-generated method stub
 		UserTeam tm = tmMapper.selectByPrimaryKey(user.getTmId());
 		return planMapper.queryByUserClass(tm.getMcId());
+	}
+
+	@Override
+	public List<UserTestList> queryByUserAndTp(String userId, String tpId) {
+		// TODO Auto-generated method stub
+		return utlMapper.queryByUserAndTp(userId, tpId);
+	}
+
+	@Override
+	public List<UserAnswerList> queryUalBy(String utsId, String type) {
+		// TODO Auto-generated method stub
+		
+		return ualMapper.queryUalBy(utsId, type);
 	}
 	
 

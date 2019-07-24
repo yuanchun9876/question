@@ -12,6 +12,18 @@
   <sql id="Base_Column_List" >
     uans_id, uts_id, qstn_id, subj_sctn_id, uans_content, uans_result
   </sql>
+  
+  <select id="queryUalBy" resultMap="BaseResultMap"  >
+    select 
+     uans_id, ual.uts_id, ual.qstn_id, subj_sctn_id, uans_content, uans_result
+     
+    from user_answer_list ual 
+    	left join question qstn  on ual.qstn_id = qstn.QSTN_ID
+    	left join question_type qtype on qstn.QSTN_TYPE_ID = qtype.QSTN_TYPE_ID
+   
+    where uts_id = #{utsId}  and qtype.QSTN_TYPE_ID = #{type}
+  </select>
+  
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />

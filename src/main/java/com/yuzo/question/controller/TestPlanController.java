@@ -26,7 +26,9 @@ import com.yuzo.question.entity.SubjectCourse;
 import com.yuzo.question.entity.SysUser;
 import com.yuzo.question.entity.TestPlan;
 import com.yuzo.question.entity.TestPlanDetailed;
+import com.yuzo.question.entity.UserAnswerList;
 import com.yuzo.question.entity.UserMyclass;
+import com.yuzo.question.entity.UserTestList;
 import com.yuzo.question.service.ITestPlanService;
 
 @Controller
@@ -79,108 +81,145 @@ public class TestPlanController {
 	}
 	
 	@RequestMapping("/openpaper")
-	public String openpaper(String tpId, Model model) {
+	public String openpaper(String tpId, HttpSession session, Model model) {
 		
-		model.addAttribute("tpId", tpId);
+		SysUser user = (SysUser) session.getAttribute("user");
 		
-		TestPlan plan = testPlanService.queryById(tpId);
-		if("0".equals(plan.getTpType())) {
+		// 判断是否已经答完题
+		List<UserTestList> utlist = testPlanService.queryByUserAndTp(user.getUserId(), tpId);
+		
+		if (utlist!=null && utlist.size()>0) {
+			TestPlan tp = testPlanService.queryById(tpId);
+			UserTestList utl = utlist.get(0);
+			model.addAttribute("utl", utl);
 			
-			// 类型
-			List<TestPlanDetailed> typeList = testPlanService.queryQstnType(tpId);
+			List<UserAnswerList> ualList0 = testPlanService.queryUalBy(utl.getUtsId(), "0");
+			if(ualList0!=null && ualList0.size()>0) {
+				model.addAttribute("ualList0", ualList0);
+			}
+
+			List<UserAnswerList> ualList1 = testPlanService.queryUalBy(utl.getUtsId(), "1");
+			if(ualList0!=null && ualList1.size()>0) {
+				model.addAttribute("ualList1", ualList1);
+			}
+			List<UserAnswerList> ualList2 = testPlanService.queryUalBy(utl.getUtsId(), "2");
+			if(ualList0!=null && ualList2.size()>0) {
+				model.addAttribute("ualList2", ualList2);
+			}
+			List<UserAnswerList> ualList3 = testPlanService.queryUalBy(utl.getUtsId(), "3");
+			if(ualList0!=null && ualList3.size()>0) {
+				model.addAttribute("ualList3", ualList3);
+			}
+			List<UserAnswerList> ualList4 = testPlanService.queryUalBy(utl.getUtsId(), "4");
+			if(ualList0!=null && ualList4.size()>0) {
+				model.addAttribute("ualList4", ualList4);
+			}
+						
+			return "show_paper_plan";
+		} else {
+			model.addAttribute("tpId", tpId);
 			
-			// 出处
-			List<TestPlanDetailed> fromList = testPlanService.queryQstnFrom(tpId);
-			
-			// 知识节
-			List<TestPlanDetailed> sctnList = testPlanService.querySctn(tpId);
-			
-			for (TestPlanDetailed tpdType : typeList) {
+			TestPlan plan = testPlanService.queryById(tpId);
+			if("0".equals(plan.getTpType())) {
 				
-				// 单选
-				if("0".equals(tpdType.getQstnTypeId())) {
-					List<Question> qstnList0 = new ArrayList<>();
+				// 类型
+				List<TestPlanDetailed> typeList = testPlanService.queryQstnType(tpId);
+				
+				// 出处
+				List<TestPlanDetailed> fromList = testPlanService.queryQstnFrom(tpId);
+				
+				// 知识节
+				List<TestPlanDetailed> sctnList = testPlanService.querySctn(tpId);
+				
+				for (TestPlanDetailed tpdType : typeList) {
 					
-					for (TestPlanDetailed tpdFrom : fromList) {
-						for (TestPlanDetailed tpdSctn : sctnList) {
-							
-							List<Question>  ll = testPlanService.queryQuesByParams(tpdType.getQstnTypeId(), tpdFrom.getQstnFromTypeId(), tpdSctn.getSubjSctnId() );
-							qstnList0.addAll(ll);
-						}		
+					// 单选
+					if("0".equals(tpdType.getQstnTypeId())) {
+						List<Question> qstnList0 = new ArrayList<>();
+						
+						for (TestPlanDetailed tpdFrom : fromList) {
+							for (TestPlanDetailed tpdSctn : sctnList) {
+								
+								List<Question>  ll = testPlanService.queryQuesByParams(tpdType.getQstnTypeId(), tpdFrom.getQstnFromTypeId(), tpdSctn.getSubjSctnId() );
+								qstnList0.addAll(ll);
+							}		
+						}
+						System.out.println("qstnList0:" + qstnList0);
+						int qstnTotal0 = tpdType.getTypeNum()-1;				
+						Collections.shuffle(qstnList0);	
+						
+						model.addAttribute("qstnList0", qstnList0.subList(0, qstnTotal0));
 					}
-					System.out.println("qstnList0:" + qstnList0);
-					int qstnTotal0 = tpdType.getTypeNum()-1;				
-					Collections.shuffle(qstnList0);	
-					
-					model.addAttribute("qstnList0", qstnList0.subList(0, qstnTotal0));
-				}
-				// 多选
-				if("1".equals(tpdType.getQstnTypeId())) {
-					List<Question> qstnList1 = new ArrayList<>();
-					
-					for (TestPlanDetailed tpdFrom : fromList) {
-						for (TestPlanDetailed tpdSctn : sctnList) {
-							
-							List<Question>  ll = testPlanService.queryQuesByParams(tpdType.getQstnTypeId(), tpdFrom.getQstnFromTypeId(), tpdSctn.getSubjSctnId() );
-							qstnList1.addAll(ll);
-						}		
+					// 多选
+					if("1".equals(tpdType.getQstnTypeId())) {
+						List<Question> qstnList1 = new ArrayList<>();
+						
+						for (TestPlanDetailed tpdFrom : fromList) {
+							for (TestPlanDetailed tpdSctn : sctnList) {
+								
+								List<Question>  ll = testPlanService.queryQuesByParams(tpdType.getQstnTypeId(), tpdFrom.getQstnFromTypeId(), tpdSctn.getSubjSctnId() );
+								qstnList1.addAll(ll);
+							}		
+						}
+						System.out.println("qstnList1:" + qstnList1);
+						model.addAttribute("qstnList1", qstnList1);
 					}
-					System.out.println("qstnList1:" + qstnList1);
-					model.addAttribute("qstnList1", qstnList1);
-				}
-				// 填空
-				if("2".equals(tpdType.getQstnTypeId())) {
-					List<Question> qstnList2 = new ArrayList<>();
-					
-					for (TestPlanDetailed tpdFrom : fromList) {
-						for (TestPlanDetailed tpdSctn : sctnList) {
-							
-							List<Question>  ll = testPlanService.queryQuesByParams(tpdType.getQstnTypeId(), tpdFrom.getQstnFromTypeId(), tpdSctn.getSubjSctnId() );
-							qstnList2.addAll(ll);
-						}		
+					// 填空
+					if("2".equals(tpdType.getQstnTypeId())) {
+						List<Question> qstnList2 = new ArrayList<>();
+						
+						for (TestPlanDetailed tpdFrom : fromList) {
+							for (TestPlanDetailed tpdSctn : sctnList) {
+								
+								List<Question>  ll = testPlanService.queryQuesByParams(tpdType.getQstnTypeId(), tpdFrom.getQstnFromTypeId(), tpdSctn.getSubjSctnId() );
+								qstnList2.addAll(ll);
+							}		
+						}
+						System.out.println("qstnList2:" + qstnList2);
+						model.addAttribute("qstnList2", qstnList2);
 					}
-					System.out.println("qstnList2:" + qstnList2);
-					model.addAttribute("qstnList2", qstnList2);
-				}
-				// 判断
-				if("3".equals(tpdType.getQstnTypeId())) {
-					List<Question> qstnList3 = new ArrayList<>();
-					
-					for (TestPlanDetailed tpdFrom : fromList) {
-						for (TestPlanDetailed tpdSctn : sctnList) {
-							
-							List<Question>  ll = testPlanService.queryQuesByParams(tpdType.getQstnTypeId(), tpdFrom.getQstnFromTypeId(), tpdSctn.getSubjSctnId() );
-							qstnList3.addAll(ll);
-						}		
+					// 判断
+					if("3".equals(tpdType.getQstnTypeId())) {
+						List<Question> qstnList3 = new ArrayList<>();
+						
+						for (TestPlanDetailed tpdFrom : fromList) {
+							for (TestPlanDetailed tpdSctn : sctnList) {
+								
+								List<Question>  ll = testPlanService.queryQuesByParams(tpdType.getQstnTypeId(), tpdFrom.getQstnFromTypeId(), tpdSctn.getSubjSctnId() );
+								qstnList3.addAll(ll);
+							}		
+						}
+						System.out.println("qstnList3:" + qstnList3);
+						model.addAttribute("qstnList3", qstnList3);
 					}
-					System.out.println("qstnList3:" + qstnList3);
-					model.addAttribute("qstnList3", qstnList3);
-				}
-				// 简答
-				if("4".equals(tpdType.getQstnTypeId())) {
-					List<Question> qstnList4 = new ArrayList<>();
-					
-					for (TestPlanDetailed tpdFrom : fromList) {
-						for (TestPlanDetailed tpdSctn : sctnList) {
-							
-							List<Question>  ll = testPlanService.queryQuesByParams(tpdType.getQstnTypeId(), tpdFrom.getQstnFromTypeId(), tpdSctn.getSubjSctnId() );
-							qstnList4.addAll(ll);
-						}		
+					// 简答
+					if("4".equals(tpdType.getQstnTypeId())) {
+						List<Question> qstnList4 = new ArrayList<>();
+						
+						for (TestPlanDetailed tpdFrom : fromList) {
+							for (TestPlanDetailed tpdSctn : sctnList) {
+								
+								List<Question>  ll = testPlanService.queryQuesByParams(tpdType.getQstnTypeId(), tpdFrom.getQstnFromTypeId(), tpdSctn.getSubjSctnId() );
+								qstnList4.addAll(ll);
+							}		
+						}
+						System.out.println("qstnList4:" + qstnList4.size());
+						
+						int qstnTotal4 = tpdType.getTypeNum()>qstnList4.size()?qstnList4.size():tpdType.getTypeNum();
+						
+						System.out.println(qstnTotal4);
+						
+						Collections.shuffle(qstnList4);		
+						
+						model.addAttribute("qstnList4", qstnList4.subList(0, qstnTotal4));
 					}
-					System.out.println("qstnList4:" + qstnList4.size());
-					
-					int qstnTotal4 = tpdType.getTypeNum()>qstnList4.size()?qstnList4.size():tpdType.getTypeNum();
-					
-					System.out.println(qstnTotal4);
-					
-					Collections.shuffle(qstnList4);		
-					
-					model.addAttribute("qstnList4", qstnList4.subList(0, qstnTotal4));
 				}
 			}
+			
+			return "testplan/open_paper_plan";
 		}
 		
-		return "testplan/open_paper_plan";
+	
 	}
 	
 	@RequestMapping("addPage")

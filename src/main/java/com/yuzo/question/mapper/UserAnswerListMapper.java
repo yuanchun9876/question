@@ -1,5 +1,9 @@
 package com.yuzo.question.mapper;
 
+import java.util.List;
+
+import org.apache.ibatis.annotations.Param;
+
 import com.yuzo.question.entity.UserAnswerList;
 
 public interface UserAnswerListMapper {
@@ -14,4 +18,6 @@ public interface UserAnswerListMapper {
     int updateByPrimaryKeySelective(UserAnswerList record);
 
     int updateByPrimaryKey(UserAnswerList record);
+
+	List<UserAnswerList> queryUalBy(@Param("utsId")String utsId,  @Param("type")String type);
 }

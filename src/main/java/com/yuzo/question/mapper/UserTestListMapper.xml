@@ -11,6 +11,14 @@
   <sql id="Base_Column_List" >
     uts_id, tp_id, user_id, uts_time, uts_total
   </sql>
+  
+  <select id="queryByUserAndTp" resultMap="BaseResultMap" >
+    select 
+    <include refid="Base_Column_List" />
+    from user_test_list
+    where user_id = #{userId} and tp_id = #{tpId}
+  </select>
+  
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />

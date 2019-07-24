@@ -12,7 +12,9 @@ import com.yuzo.question.entity.SubjectCourse;
 import com.yuzo.question.entity.SysUser;
 import com.yuzo.question.entity.TestPlan;
 import com.yuzo.question.entity.TestPlanDetailed;
+import com.yuzo.question.entity.UserAnswerList;
 import com.yuzo.question.entity.UserMyclass;
+import com.yuzo.question.entity.UserTestList;
 
 public interface ITestPlanService {
 
@@ -53,4 +55,8 @@ public interface ITestPlanService {
 	List<UserMyclass> queryMc();
 
 	List<TestPlan> queryByUserClass(SysUser user);
+
+	List<UserTestList> queryByUserAndTp(String userId, String tpId);
+
+	List<UserAnswerList> queryUalBy(String utsId, String type);
 }
