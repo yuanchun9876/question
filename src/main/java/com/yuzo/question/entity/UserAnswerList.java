@@ -12,6 +12,9 @@ public class UserAnswerList {
     private String uansContent;
 
     private String uansResult;
+    
+    private String qstnTitle;
+    
 
     public String getUansId() {
         return uansId;
@@ -60,4 +63,13 @@ public class UserAnswerList {
     public void setUansResult(String uansResult) {
         this.uansResult = uansResult == null ? null : uansResult.trim();
     }
+
+	public String getQstnTitle() {
+		return qstnTitle;
+	}
+
+	public void setQstnTitle(String qstnTitle) {
+		this.qstnTitle = qstnTitle;
+	}
+    
 }

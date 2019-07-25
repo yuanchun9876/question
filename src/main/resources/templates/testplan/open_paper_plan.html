@@ -104,7 +104,7 @@
 									<div class="box-body"  th:each="qstn,i:${qstnList4}" >
 										<input  type="hidden"  name="qstns4" th:value="${qstn.qstnId}">
 										<div class="form-group" >
-											<label for="name" class="col-sm-1 control-label" th:text="${'第' + i.count + '题:'}" >方案名称</label>
+											<label for="name" class="col-sm-1 control-label" th:text="${'第' + i.count + '题:'}" >试题名称</label>
 											<div class="col-sm-11" th:utext="${qstn.qstnTitle}">
 												
 											</div>

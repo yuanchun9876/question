@@ -99,23 +99,24 @@ public class TestPlanController {
 			}
 
 			List<UserAnswerList> ualList1 = testPlanService.queryUalBy(utl.getUtsId(), "1");
-			if(ualList0!=null && ualList1.size()>0) {
+			if(ualList1!=null && ualList1.size()>0) {
 				model.addAttribute("ualList1", ualList1);
 			}
 			List<UserAnswerList> ualList2 = testPlanService.queryUalBy(utl.getUtsId(), "2");
-			if(ualList0!=null && ualList2.size()>0) {
+			if(ualList2!=null && ualList2.size()>0) {
 				model.addAttribute("ualList2", ualList2);
 			}
 			List<UserAnswerList> ualList3 = testPlanService.queryUalBy(utl.getUtsId(), "3");
-			if(ualList0!=null && ualList3.size()>0) {
+			if(ualList3!=null && ualList3.size()>0) {
 				model.addAttribute("ualList3", ualList3);
 			}
 			List<UserAnswerList> ualList4 = testPlanService.queryUalBy(utl.getUtsId(), "4");
-			if(ualList0!=null && ualList4.size()>0) {
+			if(ualList4!=null && ualList4.size()>0) {
 				model.addAttribute("ualList4", ualList4);
 			}
 						
 			return "show_paper_plan";
+			
 		} else {
 			model.addAttribute("tpId", tpId);
 			
