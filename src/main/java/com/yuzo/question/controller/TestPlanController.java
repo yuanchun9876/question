@@ -112,10 +112,11 @@ public class TestPlanController {
 			}
 			List<UserAnswerList> ualList4 = testPlanService.queryUalBy(utl.getUtsId(), "4");
 			if(ualList4!=null && ualList4.size()>0) {
+				System.out.println("ualList4:" + ualList4);
 				model.addAttribute("ualList4", ualList4);
 			}
 						
-			return "show_paper_plan";
+			return "testplan/show_paper_plan";
 			
 		} else {
 			model.addAttribute("tpId", tpId);

@@ -16,7 +16,7 @@
   
   <select id="queryUalBy" resultMap="BaseResultMap"  >
     select 
-     uans_id, ual.uts_id, ual.qstn_id, subj_sctn_id, uans_content, uans_result 
+     uans_id, ual.uts_id, ual.qstn_id, ual.subj_sctn_id, uans_content, uans_result 
      ,  qstn.QSTN_TITLE  
     from user_answer_list ual 
     	left join question qstn  on ual.qstn_id = qstn.QSTN_ID

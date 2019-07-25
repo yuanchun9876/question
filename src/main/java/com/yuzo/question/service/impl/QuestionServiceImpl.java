@@ -177,4 +177,10 @@ public class QuestionServiceImpl implements IQuestionService{
 		}
 		return count;
 	}
+
+	@Override
+	public List<Answer> queryAnswer4(String qstnId) {
+		// TODO Auto-generated method stub
+		return ansMapper.queryByQstnId4(qstnId);
+	}
 }

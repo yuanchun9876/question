@@ -20,6 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.yuzo.question.entity.Answer;
 import com.yuzo.question.entity.QstnFromType;
 import com.yuzo.question.entity.Question;
 import com.yuzo.question.entity.QuestionType;
@@ -133,6 +134,22 @@ public class QuestionController {
 		model.addAttribute("subjId", subjId );
 		
 		return "qstn/edit_qstn";
+	}
+	@RequestMapping("showAnswer")
+	public String showAnswer(String qstnId,String type ,Model model){
+		
+		Question qstn = qstnService.queryById(qstnId);
+		model.addAttribute("qstn", qstn);
+		
+		if("4".equals(type)) {
+			List<Answer> ansList4 = qstnService.queryAnswer4(qstnId);
+			model.addAttribute("ansList4", ansList4);
+			return "qstn/show_ans4";
+		}
+		
+				
+		
+		return "qstn/qstn/show_ans4";
 	}
 	
 

@@ -15,8 +15,17 @@ public class UserAnswerList {
     
     private String qstnTitle;
     
+    
+    
 
-    public String getUansId() {
+    @Override
+	public String toString() {
+		return "UserAnswerList [uansId=" + uansId + ", utsId=" + utsId + ", qstnId=" + qstnId + ", subjSctnId="
+				+ subjSctnId + ", uansContent=" + uansContent + ", uansResult=" + uansResult + ", qstnTitle="
+				+ qstnTitle + "]";
+	}
+
+	public String getUansId() {
         return uansId;
     }
 

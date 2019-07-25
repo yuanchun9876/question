@@ -25,4 +25,8 @@ public interface AnswerMapper {
     @Select("select ANS_ID, QSTN_ID, ANS_CONTENT, ANS_ISRIGHT  from  answer  where   QSTN_ID  = #{qstnId}")
     @ResultMap("BaseResultMap")
 	List<Answer> queryByQstnId(String qstnId);
+    
+    @Select("select ANS_ID, QSTN_ID, ANS_CONTENT, ANS_ISRIGHT  from  answer  where   QSTN_ID  = #{qstnId}  and  ANS_ISRIGHT='0' ")
+    @ResultMap("BaseResultMap")
+	List<Answer> queryByQstnId4(String qstnId);
 }

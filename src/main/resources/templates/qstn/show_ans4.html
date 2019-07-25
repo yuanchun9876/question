@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<title>修改页面</title>
+		<!-- Tell the browser to be responsive to screen width -->
+		<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+	   <include th:replace="/common/css :: commoncss"/>
+		<link rel="stylesheet"  type="text/css"  th:href="@{/simditor/styles/simditor.css}">
+		<style type="text/css">
+			
+			.content-wrapper {
+				margin-left: 0px;
+			}
+		</style>
+	</head>
+
+	<body class="hold-transition skin-blue sidebar-mini">
+		<div class="wrapper">
+
+			<!-- Content Wrapper. Contains page content -->
+			<div class="content-wrapper">
+				<!-- Content Header (Page header) -->
+
+
+				<!-- Main content -->
+				<section class="content">
+					<div class="row">
+					
+							<!-- left column -->
+							<div class="col-md-10 col-md-offset-1">
+								<!-- general form elements -->
+								<div class="box box-primary">
+									<div class="box-header with-border">
+										<h3 class="box-title" th:utext="${qstn.qstnTitle}">基本信息</h3>
+									</div>
+									<!-- /.box-header -->
+									<!-- form start -->
+									<div class="box-body">
+										
+
+										<div class="form-group" th:each="ans,i:${ansList4}" >
+											
+											<div class="col-sm-12 text-left" th:utext="${ans.ansContent}" >
+										      
+											</div>
+										
+										</div>
+									</div>
+									<!-- /.box-body -->
+									<div class="box-footer">
+									
+									</div>
+									<!-- /.box-footer -->
+								</div>
+								<!-- /.box -->
+								<!-- /.modal -->
+							</div>
+							<!--/.col (right) -->
+						
+					</div>
+					<!-- /.row -->
+				</section>
+				<!-- /.content -->
+			</div>
+			<!-- /.content-wrapper -->
+
+		</div>
+
+		<div th:replace="/common/js :: commonjs"></div>
+	</body>
+	
+
+	
+	<script type="text/javascript" th:src="@{/simditor/scripts/module.js}"></script>
+	<script type="text/javascript" th:src="@{/simditor/scripts/module.js}"></script>
+	<script type="text/javascript" th:src="@{/simditor/scripts/hotkeys.js}"></script>
+	<script type="text/javascript" th:src="@{/simditor/scripts/uploader.js}"></script>
+	<script type="text/javascript" th:src="@{/simditor/scripts/simditor.js}"></script>
+
+	<script type="text/javascript">
+		
+	
+
+	
+
+  	
+  	
+ 
+	</script>
+
+</html>

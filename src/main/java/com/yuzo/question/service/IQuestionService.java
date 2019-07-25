@@ -50,4 +50,6 @@ public interface IQuestionService {
 
 	int dels(String[] ids);
 
+	List<Answer> queryAnswer4(String qstnId);
+
 }
