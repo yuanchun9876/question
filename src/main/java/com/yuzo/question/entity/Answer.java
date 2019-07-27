@@ -12,7 +12,15 @@ public class Answer {
     private Integer ansNum;
     
 
-    public String getAnsId() {
+    
+    
+    @Override
+	public String toString() {
+		return "Answer [ansId=" + ansId + ", qstnId=" + qstnId + ", ansContent=" + ansContent + ", ansIsright="
+				+ ansIsright + ", ansNum=" + ansNum + "]";
+	}
+
+	public String getAnsId() {
         return ansId;
     }
 

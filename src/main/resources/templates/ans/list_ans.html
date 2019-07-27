@@ -53,6 +53,7 @@
 						<form name="infoForm" id="queryForm" method="post">
 							<div class="box-header clearfix">
 								<div class="box-search btn-group">
+									<button type="button" class="btn btn-default" name="backBtn"  th:onclick="history.go(-1);">返回</button>
 									<button type="button" class="btn btn-success" name="addInfo"   th:onclick="addPage([[${qstn.qstnId}]])"  onclick="javascript:addPage()">添加</button>
 									<button type="button" class="btn btn-warning" name="delBtn"  th:onclick="dels()">删除</button>
 								</div>
@@ -78,7 +79,7 @@
 			        			  <td  th:text="${i.count }" >1</td>
 			        			  <td ><input type="checkbox" name="ids" value="1"    th:value="${row.ansId}"  ></td>
 								  <td class="qstnTitle"  th:text="${row.ansContent}" >${qstn.qstnTitle }</td>
-								  <td  th:text="${row.ansIsright}" >${qstn.qstnTypeId }</td>
+								  <td  th:text="${row.ansIsright eq '1'?'正确':'错误'}" >${qstn.qstnTypeId }</td>
 								  <td  th:text="${row.ansNum}" >${qstn.qstnTypeId }</td>
 								  <td>
 									<button type="button" class="btn btn-primary btn-sm"  th:onclick="editpage([[${row.ansId}]])"  onclick="javascript:editpage('1')">修改</button>

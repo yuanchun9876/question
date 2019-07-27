@@ -31,6 +31,7 @@ public class AnswerController {
 		Question qstn = ansService.queryQstnById(id);
 		model.addAttribute("qstn", qstn);		
 		List<Answer> ansList = ansService.queryByQstnId(id);
+		System.out.println(ansList);
 		model.addAttribute("list", ansList);	
 		
 		return "ans/list_ans";

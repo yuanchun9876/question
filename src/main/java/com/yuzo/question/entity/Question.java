@@ -1,6 +1,7 @@
 package com.yuzo.question.entity;
 
 import java.util.Date;
+import java.util.List;
 
 public class Question {
     private String qstnId;
@@ -34,10 +35,33 @@ public class Question {
     
     private Integer qstnCount;
     
+    // 答案列表
+    private List<Answer>  ansList;
+    
+    
+    
     
     
 
-    public Integer getQstnCount() {
+    @Override
+	public String toString() {
+		return "Question [qstnId=" + qstnId + ", subjSctnId=" + subjSctnId + ", qstnTypeId=" + qstnTypeId
+				+ ", qstnFromTypeId=" + qstnFromTypeId + ", qstnTitle=" + qstnTitle + ", qstnInputTime=" + qstnInputTime
+				+ ", qstnPictext=" + qstnPictext + ", qstnNum=" + qstnNum + ", subjSctnTitle=" + subjSctnTitle
+				+ ", qstnTypeName=" + qstnTypeName + ", qstnFromTypeCode=" + qstnFromTypeCode + ", subjUnitTitle="
+				+ subjUnitTitle + ", subjTitle=" + subjTitle + ", qstnCount=" + qstnCount + ", ansList=" + ansList
+				+ "]";
+	}
+
+	public List<Answer> getAnsList() {
+		return ansList;
+	}
+
+	public void setAnsList(List<Answer> ansList) {
+		this.ansList = ansList;
+	}
+
+	public Integer getQstnCount() {
 		return qstnCount;
 	}
 

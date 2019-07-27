@@ -22,11 +22,11 @@ public interface AnswerMapper {
 
     int updateByPrimaryKey(Answer record);
     
-    @Select("select ANS_ID, QSTN_ID, ANS_CONTENT, ANS_ISRIGHT  from  answer  where   QSTN_ID  = #{qstnId}")
+    @Select("select  ANS_ID, QSTN_ID, ANS_CONTENT, ANS_ISRIGHT, ANS_NUM  from  answer  where   QSTN_ID  = #{qstnId}  order by ANS_NUM")
     @ResultMap("BaseResultMap")
 	List<Answer> queryByQstnId(String qstnId);
     
-    @Select("select ANS_ID, QSTN_ID, ANS_CONTENT, ANS_ISRIGHT  from  answer  where   QSTN_ID  = #{qstnId}  and  ANS_ISRIGHT='0' ")
+    @Select("select  ANS_ID, QSTN_ID, ANS_CONTENT, ANS_ISRIGHT, ANS_NUM  from  answer  where   QSTN_ID  = #{qstnId}  and  ANS_ISRIGHT='0' ")
     @ResultMap("BaseResultMap")
 	List<Answer> queryByQstnId4(String qstnId);
 }

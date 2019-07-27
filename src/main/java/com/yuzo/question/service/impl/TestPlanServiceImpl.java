@@ -1,5 +1,6 @@
 package com.yuzo.question.service.impl;
 
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -355,7 +356,7 @@ public class TestPlanServiceImpl implements ITestPlanService {
 	}
 
 	@Override
-	public int saveAnswer(SysUser user, String tpId, String[] qstns0, String[] ans0, String[] qstns4, String[] ans4) {
+	public int saveAnswer(SysUser user, String tpId, String[] qstns0, String[] ans0, String[] qstns2,String[] ans2, String[] qstns4, String[] ans4) {
 		// TODO Auto-generated method stub
 		List<TestPlanDetailed> list = this.queryQstnType(tpId);
 		int points0 = 0;
@@ -366,6 +367,9 @@ public class TestPlanServiceImpl implements ITestPlanService {
 		for (TestPlanDetailed testPlanDetailed : list) {
 			if("0".equals(testPlanDetailed.getQstnTypeId())) {
 				points0 = testPlanDetailed.getTypePoints();
+			}
+			if("2".equals(testPlanDetailed.getQstnTypeId())) {
+				points2 = testPlanDetailed.getTypePoints();
 			}
 			if("4".equals(testPlanDetailed.getQstnTypeId())) {
 				points4 = testPlanDetailed.getTypePoints();
@@ -383,25 +387,79 @@ public class TestPlanServiceImpl implements ITestPlanService {
 		utl.setUtsTime(new Date());
 		utlMapper.insertSelective(utl);
 	
-		for (int i = 0; i < qstns4.length; i++) {
-			UserAnswerList ual = new UserAnswerList();
-			ual.setUansId(UUID.randomUUID().toString());
-			ual.setQstnId(qstns4[i]);
-			
-			Question qstn = qstnMapper.selectByPrimaryKey(qstns4[i]);			
-			ual.setSubjSctnId(qstn.getSubjSctnId());
-			ual.setUansContent(ans4[i]);
-			ual.setUtsId(utsId);
-			
-			double result = this.checkAnswer4(qstns4[i], ans4[i]);
-			int result4 =  (int) Math.round(points4 * result);
-			
-			total += result4;
-			
-			ual.setUansResult(result4+"");
-			
-			ualMapper.insertSelective(ual);
+		// 记录 0.单选题
+		if(qstns0!=null  &&  qstns0.length>0) {
+			for (int i = 0; i < qstns0.length; i++) {
+				UserAnswerList ual = new UserAnswerList();
+				ual.setUansId(UUID.randomUUID().toString());
+				ual.setQstnId(qstns0[i]);
+				
+				Question qstn = qstnMapper.selectByPrimaryKey(qstns0[i]);			
+				ual.setSubjSctnId(qstn.getSubjSctnId());
+				ual.setUansContent(ans0[i]);
+				ual.setUtsId(utsId);
+				
+				double result = this.checkAnswer0(qstns0[i], ans0[i]);
+				int result0 =  (int) Math.round(points0 * result);
+				
+				total += result0;
+				
+				ual.setUansResult(result0 + "");
+				
+				ualMapper.insertSelective(ual);
+			}
 		}
+	
+		
+		
+		// 记录 2.填空题
+		if(qstns2!=null  &&  qstns2.length>0) {
+			for (int i = 0; i < qstns2.length; i++) {
+				UserAnswerList ual = new UserAnswerList();
+				ual.setUansId(UUID.randomUUID().toString());
+				ual.setQstnId(qstns2[i]);
+				
+				Question qstn = qstnMapper.selectByPrimaryKey(qstns2[i]);			
+				ual.setSubjSctnId(qstn.getSubjSctnId());
+				ual.setUansContent(ans2[i]);
+				ual.setUtsId(utsId);
+				
+				double result = this.checkAnswer2(qstns2[i], ans2[i]);
+				int result2 =  (int) Math.round(points2 * result);
+				
+				total += result2;
+				
+				ual.setUansResult(result2+"");
+				
+				ualMapper.insertSelective(ual);
+			}
+		}
+
+		
+		
+		// 记录 4.简答题
+		if(qstns4!=null  &&  qstns4.length>0) {
+			for (int i = 0; i < qstns4.length; i++) {
+				UserAnswerList ual = new UserAnswerList();
+				ual.setUansId(UUID.randomUUID().toString());
+				ual.setQstnId(qstns4[i]);
+				
+				Question qstn = qstnMapper.selectByPrimaryKey(qstns4[i]);			
+				ual.setSubjSctnId(qstn.getSubjSctnId());
+				ual.setUansContent(ans4[i]);
+				ual.setUtsId(utsId);
+				
+				double result = this.checkAnswer4(qstns4[i], ans4[i]);
+				int result4 =  (int) Math.round(points4 * result);
+				
+				total += result4;
+				
+				ual.setUansResult(result4+"");
+				
+				ualMapper.insertSelective(ual);
+			}
+		}
+
 		
 		
 		// 合计分数
@@ -410,6 +468,34 @@ public class TestPlanServiceImpl implements ITestPlanService {
 		utlMapper.updateByPrimaryKeySelective(utl);
 		
 		return 0;
+	}
+
+	private double checkAnswer2(String qstnId, String answer) {
+		// TODO Auto-generated method stub
+		List<Answer> ansList = ansMapper.queryByQstnId(qstnId);
+		
+		int total = 0;
+		for (Answer ans : ansList) {		
+			if(this.getStr(ans.getAnsContent()).trim().equals(answer.trim())) {
+				total = 1;				
+			}
+		}		
+		return total/1.0;
+	}
+
+	private double checkAnswer0(String qstnId, String answer) {
+		// TODO Auto-generated method stub
+		List<Answer> ansList = ansMapper.queryByQstnId(qstnId);
+		
+		double result = 0.0;
+		
+		for (Answer ans : ansList) {		
+			if(ans.getAnsId().equals(answer)  &&  "1".equals(ans.getAnsIsright())) {
+				result = 1.0;
+				break;
+			}
+		}
+		return result;
 	}
 
 	private double checkAnswer4( String qstnId, String answer) {
@@ -464,6 +550,45 @@ public class TestPlanServiceImpl implements ITestPlanService {
 		// TODO Auto-generated method stub
 		
 		return ualMapper.queryUalBy(utsId, type);
+	}
+
+	@Override
+	public List<Question> addAnswerByQstn(List<Question> subList) {
+		// TODO Auto-generated method stub
+		for (Question question : subList) {
+			List<Answer> ansList = ansMapper.queryByQstnId(question.getQstnId());
+			Collections.shuffle(ansList);	
+			question.setAnsList(ansList);
+		}
+		return subList;
+	}
+
+	@Override
+	public List<UserAnswerList> addAnswerByQstnForUal0(List<UserAnswerList> ualList0) {
+		// TODO Auto-generated method stub
+		for (UserAnswerList userAnswerList : ualList0) {
+			List<Answer> ansList = ansMapper.queryByQstnId(userAnswerList.getQstnId());
+			userAnswerList.setAnsList(ansList);
+			if (userAnswerList.getUansContent()!=null  &&  !"".equals(userAnswerList.getUansContent())) {
+				Answer ans = ansMapper.selectByPrimaryKey(userAnswerList.getUansContent());
+				userAnswerList.setAnsContent(ans.getAnsContent());
+			} else {
+				userAnswerList.setAnsContent("");
+			}
+			
+		}
+		return ualList0;
+	}
+
+	@Override
+	public List<UserAnswerList> addAnswerByQstnForUal2(List<UserAnswerList> ualList2) {
+		// TODO Auto-generated method stub
+		for (UserAnswerList userAnswerList : ualList2) {
+			List<Answer> ansList = ansMapper.queryByQstnId(userAnswerList.getQstnId());
+			userAnswerList.setAnsList(ansList);
+			
+		}
+		return ualList2;
 	}
 	
 

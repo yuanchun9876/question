@@ -65,15 +65,15 @@
 											<label for="name" class="col-sm-2 control-label">答案状态:</label>
 											<div class="col-sm-4 radio text-left">
 										        <label>
-										          <input type="radio"  name="ansIsright" value="1"  checked >正确
+										          <input type="radio"  name="ansIsright" value="1"  th:field="*{ansIsright}" >正确
 										        </label>
 										        <label>
-										          <input type="radio"  name="ansIsright" value="0">错误
+										          <input type="radio"  name="ansIsright" value="0"  th:field="*{ansIsright}">错误
 										        </label>
 											</div>
 											<label for="name" class="col-sm-2 control-label">答案序号:</label>
 											<div class="col-sm-4 radio text-left">
-										       	<input type="number" min="1" class="form-control" name="ansNum"  placeholder="请您输入答案序号" >
+										       	<input type="number" min="1" class="form-control" name="ansNum" th:field="*{ansNum}"  placeholder="请您输入答案序号" >
 											</div>
 										</div>
 									</div>

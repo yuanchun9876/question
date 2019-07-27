@@ -24,7 +24,7 @@
 			<div class="content-wrapper">
 				<!-- Content Header (Page header) -->
 				<section class="content-header">
-					<h1>
+					<h1  th:text="${'试卷页面    总得分:'  +  utl.utsTotal }">
           				试卷页面
 			        </h1>
 			       <ol class="breadcrumb">
@@ -44,7 +44,90 @@
 							<div class="col-md-10 col-md-offset-1">
 							
 								<!-- general form elements -->
-
+								<div class="box box-primary"  th:if="${ualList0 != null}" >
+								
+									<div class="box-header with-border">
+										<h3 class="box-title">单项选择</h3>
+									
+									</div>
+									<!-- /.box-header -->
+									<div class="box-body"   th:each="ua,i:${ualList0}" >
+										<div class="form-group" >
+											<label for="name" class="col-sm-1 control-label" th:text="${'第' + i.count + '题:'}" >试题名称</label>
+											<div class="col-sm-11" th:utext="${ua.qstnTitle}">
+												
+											</div>
+										</div>
+										<div class="form-group" >
+											<label for="name" class="col-sm-1 control-label"  >被选答案</label>
+											<div class="col-sm-11"  >
+												<div th:each="ans,i:${ua.ansList}">
+													<span th:utext="${ans.ansContent}" ></span>&nbsp;<span th:text="${'(' + (ans.ansIsright eq '0'?'错误':'正确') + ')'}" ></span>
+												</div>
+											</div>
+										</div>
+										<div class="form-group" >
+											<label for="name" class="col-sm-1 control-label"  >您的回答</label>
+											<div class="col-sm-11" th:utext="${ua.uansContent}" >
+												
+											</div>
+										</div>
+										<div class="form-group" >
+											<label for="name" class="col-sm-1 control-label"  >答题结果</label>
+											<div class="col-sm-11"  >
+												<span th:text="${'得  ' + ua.uansResult + ' 分'}"></span>
+												
+												<button type="button" class="btn btn-primary">相关知识</button>
+											</div>
+										</div>
+										
+									</div>
+								
+									<!-- /.box-body -->
+									
+								</div>
+								<div class="box box-primary"  th:if="${ualList2 != null}" >
+								
+									<div class="box-header with-border">
+										<h3 class="box-title">填空</h3>
+									
+									</div>
+									<!-- /.box-header -->
+									<div class="box-body"   th:each="ua,i:${ualList2}" >
+										<div class="form-group" >
+											<label for="name" class="col-sm-1 control-label" th:text="${'第' + i.count + '题:'}" >试题名称</label>
+											<div class="col-sm-11" th:utext="${ua.qstnTitle}">
+												
+											</div>
+										</div>
+										<div class="form-group" >
+											<label for="name" class="col-sm-1 control-label"  >被选答案</label>
+											<div class="col-sm-11"  >
+												<div th:each="ans,i:${ua.ansList}">
+													<span th:utext="${ans.ansContent}" ></span>&nbsp;<span th:text="${'(' + (ans.ansIsright eq '0'?'错误':'正确') + ')'}" ></span>
+												</div>
+											</div>
+										</div>
+										<div class="form-group" >
+											<label for="name" class="col-sm-1 control-label"  >您的回答</label>
+											<div class="col-sm-11" th:utext="${ua.uansContent}" >
+												
+											</div>
+										</div>
+										<div class="form-group" >
+											<label for="name" class="col-sm-1 control-label"  >答题结果</label>
+											<div class="col-sm-11"  >
+												<span th:text="${'得  ' + ua.uansResult + ' 分'}"></span>
+												
+												<button type="button" class="btn btn-primary">相关知识</button>
+											</div>
+										</div>
+										
+									</div>
+								
+									<!-- /.box-body -->
+									
+								</div>
 								
 								
 								<div class="box box-primary" th:if="${ualList4 != null}" >
@@ -113,8 +196,7 @@
 				  // dialog的内容
 				  message: "<iframe src='/qstn/showAnswer?qstnId=" + qstnId + "&type=" + type + "' style='width:100%;height:369px;border:0 solid;'></iframe>",
 				   
-				
-				   
+ 
 				  // 是否显示此dialog，默认true
 				  show: true,
 

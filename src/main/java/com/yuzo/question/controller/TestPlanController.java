@@ -93,8 +93,10 @@ public class TestPlanController {
 			UserTestList utl = utlist.get(0);
 			model.addAttribute("utl", utl);
 			
-			List<UserAnswerList> ualList0 = testPlanService.queryUalBy(utl.getUtsId(), "0");
+			List<UserAnswerList> ualList0 = testPlanService.queryUalBy(utl.getUtsId(), "0");			
 			if(ualList0!=null && ualList0.size()>0) {
+				System.out.println("ualList0:" + ualList0);
+				ualList0 = testPlanService.addAnswerByQstnForUal0(ualList0);
 				model.addAttribute("ualList0", ualList0);
 			}
 
@@ -104,6 +106,7 @@ public class TestPlanController {
 			}
 			List<UserAnswerList> ualList2 = testPlanService.queryUalBy(utl.getUtsId(), "2");
 			if(ualList2!=null && ualList2.size()>0) {
+				ualList2 = testPlanService.addAnswerByQstnForUal2(ualList2);
 				model.addAttribute("ualList2", ualList2);
 			}
 			List<UserAnswerList> ualList3 = testPlanService.queryUalBy(utl.getUtsId(), "3");
@@ -146,11 +149,13 @@ public class TestPlanController {
 								qstnList0.addAll(ll);
 							}		
 						}
-						System.out.println("qstnList0:" + qstnList0);
-						int qstnTotal0 = tpdType.getTypeNum()-1;				
-						Collections.shuffle(qstnList0);	
 						
-						model.addAttribute("qstnList0", qstnList0.subList(0, qstnTotal0));
+						Collections.shuffle(qstnList0);	
+						int qstnTotal0 = tpdType.getTypeNum()>qstnList0.size()?qstnList0.size():tpdType.getTypeNum();
+						List<Question> ql0 = testPlanService.addAnswerByQstn(qstnList0.subList(0, qstnTotal0));
+						System.out.println("ql0:" + ql0);
+						
+						model.addAttribute("qstnList0", ql0.subList(0, qstnTotal0));
 					}
 					// 多选
 					if("1".equals(tpdType.getQstnTypeId())) {
@@ -177,8 +182,12 @@ public class TestPlanController {
 								qstnList2.addAll(ll);
 							}		
 						}
+						
+						int qstnTotal2 = tpdType.getTypeNum()>qstnList2.size()?qstnList2.size():tpdType.getTypeNum();						
+						Collections.shuffle(qstnList2);		
 						System.out.println("qstnList2:" + qstnList2);
-						model.addAttribute("qstnList2", qstnList2);
+						
+						model.addAttribute("qstnList2", qstnList2.subList(0, qstnTotal2));
 					}
 					// 判断
 					if("3".equals(tpdType.getQstnTypeId())) {
@@ -205,11 +214,11 @@ public class TestPlanController {
 								qstnList4.addAll(ll);
 							}		
 						}
-						System.out.println("qstnList4:" + qstnList4.size());
+						//System.out.println("qstnList4:" + qstnList4.size());
 						
 						int qstnTotal4 = tpdType.getTypeNum()>qstnList4.size()?qstnList4.size():tpdType.getTypeNum();
 						
-						System.out.println(qstnTotal4);
+						//System.out.println(qstnTotal4);
 						
 						Collections.shuffle(qstnList4);		
 						
@@ -263,13 +272,16 @@ public class TestPlanController {
 	}
 	
 	@RequestMapping("/answerSave")
-	public String answerSave(String tpId, String[] qstns0,String[] ans0,String[] qstns4,String[] ans4, HttpServletRequest request, Model model) {
-
+	public String answerSave(String tpId, String[] qstns0,String[] ans0, String[] qstns2,String[] ans2, String[] qstns4,String[] ans4, HttpServletRequest request, Model model) {
+		
+//		System.out.println(Arrays.toString(qstns0));
+//		System.out.println(Arrays.toString(ans0));
+		
 		SysUser user = (SysUser) request.getSession().getAttribute("user");
 		
-		testPlanService.saveAnswer(user, tpId, qstns0, ans0, qstns4, ans4);
+		testPlanService.saveAnswer(user, tpId, qstns0, ans0, qstns2, ans2, qstns4, ans4);
 		
-		return "redirect:query";
+		return "redirect:userplanlist";
 	}
 	
 	

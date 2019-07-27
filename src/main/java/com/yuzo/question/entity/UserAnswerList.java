@@ -1,5 +1,7 @@
 package com.yuzo.question.entity;
 
+import java.util.List;
+
 public class UserAnswerList {
     private String uansId;
 
@@ -15,6 +17,9 @@ public class UserAnswerList {
     
     private String qstnTitle;
     
+    private List<Answer> ansList;
+    
+    private String ansContent;
     
     
 
@@ -80,5 +85,23 @@ public class UserAnswerList {
 	public void setQstnTitle(String qstnTitle) {
 		this.qstnTitle = qstnTitle;
 	}
+
+	public List<Answer> getAnsList() {
+		return ansList;
+	}
+
+	public void setAnsList(List<Answer> ansList) {
+		this.ansList = ansList;
+	}
+
+	public String getAnsContent() {
+		return ansContent;
+	}
+
+	public void setAnsContent(String ansContent) {
+		this.ansContent = ansContent;
+	}
+	
+	
     
 }

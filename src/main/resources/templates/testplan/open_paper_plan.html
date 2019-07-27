@@ -14,6 +14,9 @@
 			.content-wrapper {
 				margin-left: 0px;
 			}
+			.iradio_square-blue{
+				float:left;
+			}
 		</style>
 	</head>
 
@@ -38,7 +41,7 @@
 				<!-- Main content -->
 				<section class="content">
 					<div class="row">
-						<form class="form form-horizontal" method="post"     th:action="@{/testplan/answerSave}"  >
+						<form class="form form-horizontal" method="post"     th:action="@{/testplan/answerSave}"  onsubmit="return(doSub())"  >
 							<input  type="hidden"  name="tpId"  th:value="${tpId}" >
 							<!-- left column -->
 							<div class="col-md-10 col-md-offset-1">
@@ -51,39 +54,50 @@
 									
 									</div>
 									<!-- /.box-header -->
-									<!-- form start -->
-									<div class="box-body">
-										<div class="form-group">
-											<label for="name" class="col-sm-2 control-label">方案名称</label>
-											<div class="col-sm-10">
-												<input type="text" class="form-control" name="tpTitle"  placeholder="请输入方案名称" required="required">
+										<div class="box-body"  th:each="qstn,i:${qstnList0}" >
+										<input  type="hidden"   name="qstns0" th:value="${qstn.qstnId}">
+										<div class="form-group" >
+											<label for="name" class="col-sm-1 control-label" th:text="${'第' + i.count + '题:'}" >试题名称</label>
+											<div class="col-sm-11" th:utext="${qstn.qstnTitle}">	
 											</div>
 										</div>
-										<div class="form-group">
-											<label for="name" class="col-sm-2 control-label">开始时间</label>
-											<div class="col-sm-4">
-												<input type="date" class="form-control" name="tpBeginDate"  placeholder="请输入开始时间" required="required">
-											</div>
-											<label for="name" class="col-sm-2 control-label">结束时间</label>
-											<div class="col-sm-4">
-												<input type="date" class="form-control" name="tpEndDate"  placeholder="请输入结束时间" required="required">
-											</div>
-										</div>
-										<div class="form-group">
-											<label for="name" class="col-sm-2 control-label">出题方式</label>
-											<div class="col-sm-10 radio text-left">
-												<label>
-										          <input type="radio"  value="0" name="tpType"  checked >随机出题
-										        </label>
-										         <label>
-										          <input type="radio"  value="1" name="tpType" >固定出题
-										        </label>
+										<div class="form-group" >
+											<label for="name" class="col-sm-1 control-label"  >选择</label>
+											<div class="col-sm-11 radio text-left" >
+												<div  th:each="ans,i:${qstn.ansList}">
+												<label  >
+										          <input type="radio"  th:value="${ans.ansId}" th:name="${qstn.qstnId + 'ans'}"    ><span  th:utext="${ans.ansContent}"     ></span>			
+										        </label>	
+										        </div>						
 											</div>
 										</div>
-										<div class="form-group">
-											<label for="name" class="col-sm-2 control-label">方案说明</label>
-											<div class="col-sm-10">
-												<textarea class="form-control" name="tpInfo"  placeholder="请输入方案说明" required="required"></textarea>
+									</div>
+								
+									<!-- /.box-body -->
+									<div  id="ans0div" ></div>
+								</div>
+								
+								
+								<div class="box box-primary" th:if="${qstnList2 != null}" >
+								
+									<div class="box-header with-border">
+										<h3 class="box-title">填空题</h3>
+									
+									</div>
+									<!-- /.box-header -->
+						
+									<div class="box-body"  th:each="qstn,i:${qstnList2}" >
+										<input  type="hidden"  name="qstns2" th:value="${qstn.qstnId}">
+										<div class="form-group" >
+											<label for="name" class="col-sm-1 control-label" th:text="${'第' + i.count + '题:'}" >试题名称</label>
+											<div class="col-sm-11" th:utext="${qstn.qstnTitle}">
+												
+											</div>
+										</div>
+										<div class="form-group" >
+											<label for="name" class="col-sm-1 control-label"  >回答</label>
+											<div class="col-sm-11" >
+												<input   class="form-control"  name="ans2" >
 											</div>
 										</div>
 									</div>
@@ -92,7 +106,6 @@
 								
 								</div>
 								
-								
 								<div class="box box-primary" th:if="${qstnList4 != null}" >
 								
 									<div class="box-header with-border">
@@ -100,7 +113,7 @@
 									
 									</div>
 									<!-- /.box-header -->
-									<!-- form start -->
+						
 									<div class="box-body"  th:each="qstn,i:${qstnList4}" >
 										<input  type="hidden"  name="qstns4" th:value="${qstn.qstnId}">
 										<div class="form-group" >
@@ -145,7 +158,18 @@
 	</body>
 	
 	<script type="text/javascript">
-
+		
+		function doSub(){
+			// ans0div
+			$("[name=qstns0]").each(function(){
+				var name= $(this).val() + 'ans';
+				var ans = $("[name=" + name + "]:checked").val();
+				$("<input type='hidden'  name='ans0'  value='" + (ans==null?'':ans) + "' >").appendTo("#ans0div");
+			});
+			
+			return true;
+		}
+	
 		
 	
 	 	$(function () {

@@ -50,7 +50,7 @@ public interface ITestPlanService {
 
 	List<Question> queryQuesByParams(String qstnTypeId, String qstnFromTypeId, String subjSctnId);
 
-	int saveAnswer(SysUser user, String tpId, String[] qstns0, String[] ans0, String[] qstns4, String[] ans4);
+	int saveAnswer(SysUser user, String tpId, String[] qstns0, String[] ans0, String[] qstns2,String[] ans2, String[] qstns4, String[] ans4);
 
 	List<UserMyclass> queryMc();
 
@@ -59,4 +59,10 @@ public interface ITestPlanService {
 	List<UserTestList> queryByUserAndTp(String userId, String tpId);
 
 	List<UserAnswerList> queryUalBy(String utsId, String type);
+
+	List<Question> addAnswerByQstn(List<Question> subList);
+
+	List<UserAnswerList> addAnswerByQstnForUal0(List<UserAnswerList> ualList0);
+
+	List<UserAnswerList> addAnswerByQstnForUal2(List<UserAnswerList> ualList2);
 }
