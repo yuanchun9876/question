@@ -83,7 +83,13 @@ public class LoginController {
 	}
 	@RequestMapping("/loginOut")
 	public String loginOut(HttpServletRequest request){
-		request.getSession().invalidate();
-		return "/login";
+		request.getSession().invalidate();    
+		return "/login";  
+	}
+	
+	@RequestMapping("/perLoginOut")
+	public String perLoginOut(HttpServletRequest request){
+		//request.getSession().invalidate();
+		return "/loginOut";
 	}
 }

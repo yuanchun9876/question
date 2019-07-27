@@ -9,14 +9,14 @@ public class SessionInterceptor implements HandlerInterceptor {
 	
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object o) throws  Exception{
         
-        if (request.getRequestURI().equals("/") ||request.getRequestURI().equals("/loginOut") || request.getRequestURI().equals("/main")||request.getRequestURI().equals("/error")){
+        if (request.getRequestURI().equals("/") ||request.getRequestURI().equals("/loginOut")||request.getRequestURI().equals("/perLoginOut") || request.getRequestURI().equals("/main")||request.getRequestURI().equals("/error")){
             return true;
         }
          Object obj = request.getSession().getAttribute("user");
          if (obj == null){
         	 System.out.println("->" + request.getRequestURI());
-             response.sendRedirect("/loginOut");
-             return  false;
+             response.sendRedirect("/perLoginOut");
+             return  false;   
          }
          return true;
     }
