@@ -65,4 +65,6 @@ public interface ITestPlanService {
 	List<UserAnswerList> addAnswerByQstnForUal0(List<UserAnswerList> ualList0);
 
 	List<UserAnswerList> addAnswerByQstnForUal2(List<UserAnswerList> ualList2);
+
+	Map<String, Object> queryAnswer(String mcId, String tpId);
 }

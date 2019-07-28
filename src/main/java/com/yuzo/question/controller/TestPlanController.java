@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
@@ -15,7 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.yuzo.question.entity.QstnFromType;
 import com.yuzo.question.entity.Question;
@@ -260,6 +262,30 @@ public class TestPlanController {
 
 		return "testplan/edit_plan";
 	}
+	
+	@RequestMapping("/classCharts")
+	public String classCharts(String tpId, Model model) {
+		
+		TestPlan plan = testPlanService.queryById(tpId);		
+		model.addAttribute("plan", plan);	
+		List<UserMyclass> mclist = testPlanService.queryMc();
+		model.addAttribute("mclist", mclist);	
+		
+		return "testplan/query_charts_plan";
+	}
+	
+	
+	@RequestMapping("/queryCharts")
+	@ResponseBody
+	public Map<String, Object> queryCharts(String mcId, String tpId) {
+		
+		Map<String, Object> map = testPlanService.queryAnswer(mcId, tpId);
+		
+		return map;
+	}
+	
+	
+	
 	@RequestMapping("/targetClass")
 	public String targetClass(String tpId, Model model) {
 		

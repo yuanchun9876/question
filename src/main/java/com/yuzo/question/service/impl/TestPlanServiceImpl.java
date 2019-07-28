@@ -2,7 +2,9 @@ package com.yuzo.question.service.impl;
 
 import java.util.Collections;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +31,7 @@ import com.yuzo.question.mapper.QuestionTypeMapper;
 import com.yuzo.question.mapper.SubjSectionMapper;
 import com.yuzo.question.mapper.SubjUnitMapper;
 import com.yuzo.question.mapper.SubjectCourseMapper;
+import com.yuzo.question.mapper.SysUserMapper;
 import com.yuzo.question.mapper.TestPlanDetailedMapper;
 import com.yuzo.question.mapper.TestPlanMapper;
 import com.yuzo.question.mapper.UserAnswerListMapper;
@@ -80,7 +83,8 @@ public class TestPlanServiceImpl implements ITestPlanService {
 	@Autowired
 	private UserTeamMapper  tmMapper;
 	
-	
+	@Autowired
+	private SysUserMapper userMapper;
 
 	@Override
 	public List<QstnFromType> queryQstnFrom() {
@@ -589,6 +593,40 @@ public class TestPlanServiceImpl implements ITestPlanService {
 			
 		}
 		return ualList2;
+	}
+
+	@Override
+	public Map<String, Object> queryAnswer(String mcId, String tpId) {
+		// TODO Auto-generated method stub
+		UserMyclass userClass = userMyclassMapper.selectByPrimaryKey(mcId);
+		TestPlan plan = planMapper.selectByPrimaryKey(tpId);
+		
+		Map<String, Object>  map = new HashMap<>();		
+		// title 
+		// namelist
+		// testlist
+		map.put("title", userClass.getMcCode() + plan.getTpTitle() + "成绩统计");
+		
+		
+		List<SysUser> userList = userMapper.queryByMcId(mcId);
+		String[] names = new String[userList.size()];
+		
+		Integer[] tests = new Integer[userList.size()];
+		
+		for (int i = 0; i < userList.size(); i++) {
+			SysUser user = userList.get(i);
+			names[i] = user.getNickName();
+			List<UserTestList> utlList = utlMapper.queryByUserAndTp(user.getUserId(), tpId);
+			if (utlList!=null && utlList.size()>0) {
+				tests[i] = utlList.get(0).getUtsTotal();
+			} else {
+				tests[i] = 0;
+			}
+		}
+		map.put("namelist",names);
+		map.put("testlist",tests);
+		
+		return map;
 	}
 	
 
