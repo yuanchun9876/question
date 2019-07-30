@@ -39,7 +39,7 @@
 				<section class="content">
 					<div class="row">
 						<form class="form form-horizontal" method="post"  th:object="${plan}"    th:action="@{/testplan/editSave}"  >
-							<input type="text" id="tpId"  th:value="*{tpId}"  >
+							<input type="hidden" id="tpId"  th:value="*{tpId}"  >
 							<!-- left column -->
 							<div class="col-md-12 col-md-offset-0">
 								<!-- general form elements -->
