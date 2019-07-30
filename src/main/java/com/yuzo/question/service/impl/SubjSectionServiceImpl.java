@@ -1,6 +1,9 @@
 package com.yuzo.question.service.impl;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -103,5 +106,43 @@ public class SubjSectionServiceImpl implements ISubjSectionService{
 	public List<SubjSection> querySctnsByUnits(String[] unitIds) {
 		// TODO Auto-generated method stub
 		return sctnMapper.querySctnsByUnits(unitIds);
+	}
+
+	@Override
+	public List<Map<String, Object>> queryTree() {
+		// TODO Auto-generated method stub
+
+		List<Map<String, Object>> list = new ArrayList<>();
+		
+		List<SubjectCourse> subjList = subjMapper.queryAll();		
+		for (SubjectCourse subj : subjList) {
+			Map<String, Object> subjMap = new HashMap<>();
+			subjMap.put("name", subj.getSubjTitle());
+			
+			List<SubjUnit> unitList = unitMapper.queryBySubj(subj.getSubjId());
+			if(unitList!=null && unitList.size()>0) {
+				List<Map<String, Object>> subjChdList = new ArrayList<>();
+				for (SubjUnit unit : unitList) {
+					Map<String, Object> unitMap = new HashMap<>();
+					unitMap.put("name",unit.getSubjUnitTitle());
+					
+					List<SubjSection> sctnList = sctnMapper.queryByUnit(unit.getSubjUnitId());
+					if(sctnList!=null && sctnList.size()>0) {
+						List<Map<String, Object>> unitChdList = new ArrayList<>();
+						for (SubjSection sctn : sctnList) {
+							Map<String, Object> sctnMap = new HashMap<>();
+							sctnMap.put("name", sctn.getSubjSctnTitle());
+							unitChdList.add(sctnMap);
+						}
+						unitMap.put("children", unitChdList);
+					}
+					subjChdList.add(unitMap);
+				}
+				subjMap.put("children", subjChdList);
+			}
+			list.add(subjMap);
+		}
+		
+		return list ;
 	}
 }

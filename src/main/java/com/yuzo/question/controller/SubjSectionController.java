@@ -3,6 +3,7 @@ package com.yuzo.question.controller;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import javax.servlet.ServletContext;
@@ -89,6 +90,23 @@ public class SubjSectionController {
 		List<SubjSection> list = subjSctnService.querySctnsByUnits(unitIds);
 		
 		return list;
+	}
+	
+	@RequestMapping("/subjTree")
+	@ResponseBody
+	public List<Map<String, Object>> subjTree() {
+				
+		List<Map<String, Object>> list = subjSctnService.queryTree();
+		
+		return list ;
+	}
+	
+	@RequestMapping("/subjTreePage")
+	public String subjTreePage() {
+		
+		
+		
+		return "subjsctn/tree_sctn";
 	}
 	
 	

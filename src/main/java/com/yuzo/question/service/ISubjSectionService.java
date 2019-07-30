@@ -1,6 +1,7 @@
 package com.yuzo.question.service;
 
 import java.util.List;
+import java.util.Map;
 
 import com.yuzo.question.entity.SubjSection;
 import com.yuzo.question.entity.SubjUnit;
@@ -34,5 +35,7 @@ public interface ISubjSectionService {
 	List<SubjSection> query(SubjSectionPage page);
 
 	List<SubjSection> querySctnsByUnits(String[] unitIds);
+
+	List<Map<String, Object>> queryTree();
 
 }
