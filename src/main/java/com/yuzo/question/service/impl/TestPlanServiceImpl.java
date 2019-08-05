@@ -480,7 +480,7 @@ public class TestPlanServiceImpl implements ITestPlanService {
 		
 		int total = 0;
 		for (Answer ans : ansList) {		
-			if(this.getStr(ans.getAnsContent()).trim().equals(answer.trim())) {
+			if(this.getStr(ans.getAnsContent()).trim().toLowerCase().equals(answer.trim().toLowerCase())) {
 				total = 1;				
 			}
 		}		
