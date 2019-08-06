@@ -125,6 +125,7 @@ public class TestPlanController {
 			
 		} else {
 			model.addAttribute("tpId", tpId);
+			session.setMaxInactiveInterval(5*60*60);
 			
 			TestPlan plan = testPlanService.queryById(tpId);
 			if("0".equals(plan.getTpType())) {
@@ -302,6 +303,8 @@ public class TestPlanController {
 		
 //		System.out.println(Arrays.toString(qstns0));
 //		System.out.println(Arrays.toString(ans0));
+		
+		request.getSession().setMaxInactiveInterval(1800);
 		
 		SysUser user = (SysUser) request.getSession().getAttribute("user");
 		
