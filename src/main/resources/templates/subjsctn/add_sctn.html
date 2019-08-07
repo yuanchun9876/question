@@ -78,8 +78,14 @@
 										</div>
 										<div class="form-group">
 											<label for="cardid" class="col-sm-2 control-label">知识节序号</label>
-											<div class="col-sm-10">
-												<input type="text" class="form-control" name='subjSctnNum' placeholder="请您输入身份证号"  required="required">
+											<div class="col-sm-3">
+												<input type="text" class="form-control" name='subjSctnNum' placeholder="请您输入知识节序号"  required="required">
+											</div>
+											<label for="cardid" class="col-sm-2 control-label">知识节代号</label>
+											<div class="col-sm-3">
+												<input type="text" class="form-control" name='subjSctnCode'  onblur="singleSctnCode(this)" placeholder="请您输入知识节代号"  required="required">
+											</div>
+											<div class="col-sm-2" id="msg" >
 											</div>
 										</div>
 									</div>
@@ -108,7 +114,21 @@
 	</body>
 	
 	<script type="text/javascript">
+	function singleSctnCode(sctnCode){
 		
+		$.post("/subjSctn/singleSctnCode",{"sctnCode":sctnCode.value},function(resp){
+			if(resp == "no"){
+				$("#msg").html("<font color='red'>已使用</font>");
+				sctnCode.setCustomValidity("已使用");  
+			}else{
+				$("#msg").html("<font color='green'>可以用</font>");
+				sctnCode.setCustomValidity("");  
+			}
+		})
+	
+}
+	
+	
 		function ajaxUnit(subjId){
 			var url = "/subjUnit/selectSubj";
 			$.post(url, {"subjId": subjId}, function(resp){

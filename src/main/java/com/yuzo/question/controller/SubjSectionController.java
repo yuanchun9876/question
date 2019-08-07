@@ -75,6 +75,18 @@ public class SubjSectionController {
 	}
 	
 	
+	@RequestMapping("/singleSctnCode")
+	@ResponseBody
+	public String singleSctnCode(String sctnCode) {
+		
+		List<SubjSection> sctnList = subjSctnService.queryByCode(sctnCode);
+		if (sctnList!=null && sctnList.size()>0) {
+			return "no";
+		} else {
+			return "yes";
+		}
+	}
+	
 	@RequestMapping("/selectUnit")
 	@ResponseBody
 	public List<SubjSection> selectUnit(String unitId) {

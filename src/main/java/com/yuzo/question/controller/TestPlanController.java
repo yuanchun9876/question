@@ -50,6 +50,13 @@ public class TestPlanController {
 		return "testplan/list_plan";
 	}
 	
+	@RequestMapping("xintiao")
+	@ResponseBody
+	public String xintiao() {
+			
+		return "xintiao";
+	}
+	
 	
 
 	@RequestMapping("setSave")

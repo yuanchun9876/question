@@ -69,12 +69,21 @@
 									</select>
 								</div>
 							</div>
+							<div class="box-search">
+								<div class="input-group">
+									<span class="input-group-addon" style="background: #EEEEEE;">试题代号</span>
+									<input type="text" class="form-control" name='qstnCode'  th:field="*{qstnCode}" placeholder="试题代号"  >
+								</div>
+							</div>
 						
 							<div class="box-search btn-group">
 								<button class="btn btn-info" name="queryInfo">查询</button>
+							
 								<button type="button" class="btn btn-primary" name="clearInfo" onclick="javascript:clearEle()">清空</button>
 								<button type="button" class="btn btn-success" name="addInfo" onclick="javascript:addPage()">添加</button>
 								<button type="button" class="btn btn-warning" name="delbtn" onclick="javascript:dels()">删除</button>
+								
+								<button type="button" class="btn btn-info" name="codeInfo"    >代号</button>
 							</div>
 						</div>
 						<div class="box-header clearfix">
@@ -122,6 +131,7 @@
 								<th width="10%">来源类型</th>
 								<th width="15%">所属知识</th>
 								<th width="5%">序号</th>
+								<th width="10%">代号</th>
 								<th width="10%">上传时间</th>
 								<th width="20%">操作</th>
 							</tr>
@@ -135,6 +145,7 @@
 							  <td  th:text="${row.qstnFromTypeCode}" >${qstn.qstnFromTypeId }</td>
 							  <td  th:text="${row.subjSctnTitle}"  >${qstn.subjSctnId }</td>
 							  <td  th:text="${row.qstnNum}"  >${qstn.subjSctnId }</td>
+							  <td  th:text="${row.qstnCode}"  >${qstn.subjSctnId }</td>
 							  <td  th:text="${#dates.format(row.qstnInputTime, 'yyyy-MM-dd')}" ></td>
 							  <td>
 								<button type="button" class="btn btn-primary btn-sm"  th:onclick="editpage([[${row.qstnId}]])"  onclick="javascript:editpage('1')">修改</button>
@@ -160,6 +171,11 @@
 
 
 <script type="text/javascript">
+
+	function editCode(){
+		$.post("/qstn/addCode",function(resp){ console.log(resp) });
+	}
+
 
 	function selectSubj(subjId){
 		var url = "/subjUnit/selectSubj";

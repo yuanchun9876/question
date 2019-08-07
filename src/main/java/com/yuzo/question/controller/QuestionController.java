@@ -100,6 +100,19 @@ public class QuestionController {
 		return "qstn/add_qstn";
 	}
 	
+	
+	@RequestMapping("/addCode")
+	@ResponseBody
+	public String addCode(){
+		
+		int count = qstnService.addCode();
+	
+		
+		return count + "";
+	}
+	
+	
+	
 
 	@RequestMapping("addSave")
 	public String addSave(Question qstn, Model model){

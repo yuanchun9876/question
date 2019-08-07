@@ -1,5 +1,7 @@
 package com.yuzo.question.mapper;
 
+import org.apache.ibatis.annotations.Param;
+
 import com.yuzo.question.entity.UserClassHistory;
 
 public interface UserClassHistoryMapper {
@@ -18,4 +20,6 @@ public interface UserClassHistoryMapper {
 	int updateState(String userId);
 
 	UserClassHistory queryByUserId(String userId);
+
+	int updateBeforeClass(@Param("userId")String userId, @Param("mcId")String mcId);
 }

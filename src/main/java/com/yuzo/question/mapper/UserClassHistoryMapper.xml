@@ -121,5 +121,11 @@
       uc_state = #{ucState,jdbcType=VARCHAR}
     where uc_id = #{ucId,jdbcType=VARCHAR}
   </update>
+  <update id="updateBeforeClass"  >
+    update user_class_history
+    set 
+      uc_state = '0'
+    where mc_id = #{mcId}  and user_id = #{userId}
+  </update>
 
 </mapper>

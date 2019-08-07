@@ -183,4 +183,36 @@ public class QuestionServiceImpl implements IQuestionService{
 		// TODO Auto-generated method stub
 		return ansMapper.queryByQstnId4(qstnId);
 	}
+
+	@Override
+	public int addCode() {
+		// TODO Auto-generated method stub
+		int count = 0;
+		List<Question> qstnAllList = qstnMapper.selectAll();
+		for (int i = 0; i < qstnAllList.size(); i++) {
+			Question qstn = qstnAllList.get(i);
+			String code = "";
+			code += qstn.getSubjCode() + "_";
+			code += qstn.getSubjUnitCode() + "_";
+			code += qstn.getSubjSctnCode() + "_";
+			if (qstn.getQstnNum() != null ) {
+				code += this.code6num(qstn.getQstnNum());
+			} else {
+				code += this.code6num(i);
+				qstn.setQstnNum(i);
+			}
+			
+			qstn.setQstnCode(code);
+			qstnMapper.updateByPrimaryKey(qstn);
+		}
+		
+		return count;
+	}
+
+	private String code6num(int num) {
+		// TODO Auto-generated method stub
+		num = 1000000 + num;
+
+		return (num+"").substring(1);
+	}
 }

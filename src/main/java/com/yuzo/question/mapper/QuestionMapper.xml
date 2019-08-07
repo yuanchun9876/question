@@ -9,6 +9,8 @@
     <result column="QSTN_TITLE" property="qstnTitle" jdbcType="VARCHAR" />
     <result column="QSTN_INPUT_TIME" property="qstnInputTime"  />
     <result column="QSTN_PICTEXT" property="qstnPictext" jdbcType="VARCHAR" />
+    <result column="QSTN_CODE" property="qstnCode" jdbcType="VARCHAR" />
+    
     <result column="QSTN_NUM" property="qstnNum" jdbcType="INTEGER" />
      
      <result column="QSTN_TYPE_NAME" property="qstnTypeName" jdbcType="VARCHAR" />
@@ -16,16 +18,20 @@
     <result column="SUBJ_SCTN_TITLE" property="subjSctnTitle" jdbcType="VARCHAR" />
      <result column="SUBJ_UNIT_TITLE" property="subjUnitTitle" jdbcType="VARCHAR" />
     <result column="SUBJ_TITLE" property="subjTitle" jdbcType="VARCHAR" />
+    
+    <result column="SUBJ_CODE" property="subjCode" jdbcType="VARCHAR" />
+     <result column="SUBJ_UNIT_CODE" property="subjUnitCode" jdbcType="VARCHAR" />
+    <result column="SUBJ_SCTN_CODE" property="subjSctnCode" jdbcType="VARCHAR" />
 
   </resultMap>
   <sql id="Base_Column_List" >
     QSTN_ID, SUBJ_SCTN_ID, QSTN_TYPE_ID, QSTN_FROM_TYPE_ID, QSTN_TITLE, QSTN_INPUT_TIME, 
-    QSTN_PICTEXT, QSTN_NUM
+    QSTN_PICTEXT, QSTN_NUM , QSTN_CODE
   </sql>
   
   
   <select id="queryQuesByParams" resultMap="BaseResultMap" parameterType="string" >
-	 	select QSTN_ID, QSTN_TITLE, QSTN_INPUT_TIME, qstn.QSTN_TYPE_ID, qstn.QSTN_FROM_TYPE_ID, QSTN_PICTEXT, QSTN_NUM, qstn.SUBJ_SCTN_ID
+	 	select QSTN_ID, QSTN_TITLE, QSTN_INPUT_TIME, qstn.QSTN_TYPE_ID, qstn.QSTN_FROM_TYPE_ID, QSTN_CODE, QSTN_PICTEXT, QSTN_NUM, qstn.SUBJ_SCTN_ID
 		,qttype.QSTN_TYPE_NAME , qtfrom.QSTN_FROM_TYPE_CODE  , sctn.SUBJ_SCTN_TITLE 
 		,unit.SUBJ_UNIT_TITLE, subj.SUBJ_TITLE
 		FROM question qstn
@@ -49,8 +55,23 @@
 		order by qstn.QSTN_INPUT_TIME
   </select>
   
+  <select id="selectAll" resultMap="BaseResultMap"  >
+   	select QSTN_ID, QSTN_TITLE, QSTN_INPUT_TIME, qstn.QSTN_TYPE_ID, qstn.QSTN_FROM_TYPE_ID, QSTN_CODE, QSTN_PICTEXT, QSTN_NUM, qstn.SUBJ_SCTN_ID
+		,qttype.QSTN_TYPE_NAME , qtfrom.QSTN_FROM_TYPE_CODE  , sctn.SUBJ_SCTN_TITLE 
+		,unit.SUBJ_UNIT_TITLE, subj.SUBJ_TITLE
+		,unit.SUBJ_UNIT_CODE, subj.SUBJ_CODE, sctn.SUBJ_SCTN_CODE
+		FROM question qstn
+			left JOIN question_type qttype  on qttype.QSTN_TYPE_ID = qstn.QSTN_TYPE_ID
+			LEFT JOIN qstn_from_type  qtfrom on qtfrom.QSTN_FROM_TYPE_ID = qstn.QSTN_FROM_TYPE_ID
+			LEFT JOIN subj_section sctn on sctn.SUBJ_SCTN_ID = qstn.SUBJ_SCTN_ID
+			LEFT JOIN subj_unit unit on sctn.SUBJ_UNIT_ID = unit.SUBJ_UNIT_ID
+			LEFT JOIN subject_course subj on subj.SUBJ_ID = unit.SUBJ_ID
+		order by QSTN_INPUT_TIME
+  </select>
+  
+  
   <select id="queryAll" resultMap="BaseResultMap" parameterType="com.yuzo.question.page.QuestionPage" >
-   	select QSTN_ID, QSTN_TITLE, QSTN_INPUT_TIME, qstn.QSTN_TYPE_ID, qstn.QSTN_FROM_TYPE_ID, QSTN_PICTEXT, QSTN_NUM, qstn.SUBJ_SCTN_ID
+   	select QSTN_ID, QSTN_TITLE, QSTN_INPUT_TIME, qstn.QSTN_TYPE_ID, qstn.QSTN_FROM_TYPE_ID, QSTN_CODE, QSTN_PICTEXT, QSTN_NUM, qstn.SUBJ_SCTN_ID
 		,qttype.QSTN_TYPE_NAME , qtfrom.QSTN_FROM_TYPE_CODE  , sctn.SUBJ_SCTN_TITLE 
 		,unit.SUBJ_UNIT_TITLE, subj.SUBJ_TITLE
 		FROM question qstn
@@ -62,6 +83,9 @@
 	<where>
 		<if test="qstnTypeId != null   and  qstnTypeId  != ''  ">
 			and qstn.QSTN_TYPE_ID = #{qstnTypeId}
+		</if>
+		<if test="qstnCode != null   and  qstnCode  != ''  ">
+			and qstn.QSTN_CODE = #{qstnCode}
 		</if>
 		<if test="qstnFromTypeId != null   and  qstnFromTypeId  != ''  ">
 			and qstn.QSTN_FROM_TYPE_ID = #{qstnFromTypeId}
@@ -92,6 +116,9 @@
 	<where>
 		<if test="qstnTypeId != null   and  qstnTypeId  != ''  ">
 			and qstn.QSTN_TYPE_ID = #{qstnTypeId}
+		</if>
+		<if test="qstnCode != null   and  qstnCode  != ''  ">
+			and qstn.QSTN_CODE = #{qstnCode}
 		</if>
 		<if test="qstnFromTypeId != null   and  qstnFromTypeId  != ''  ">
 			and qstn.QSTN_FROM_TYPE_ID = #{qstnFromTypeId}
@@ -124,10 +151,10 @@
   </delete>
  <insert id="insert" parameterType="com.yuzo.question.entity.Question" >
     insert into question (QSTN_ID, SUBJ_SCTN_ID, QSTN_TYPE_ID, 
-      QSTN_FROM_TYPE_ID, QSTN_TITLE, QSTN_INPUT_TIME, 
+      QSTN_FROM_TYPE_ID, QSTN_TITLE, QSTN_INPUT_TIME,  QSTN_CODE,
       QSTN_PICTEXT, QSTN_NUM)
     values (#{qstnId,jdbcType=VARCHAR}, #{subjSctnId,jdbcType=VARCHAR}, #{qstnTypeId,jdbcType=VARCHAR}, 
-      #{qstnFromTypeId,jdbcType=VARCHAR}, #{qstnTitle,jdbcType=VARCHAR}, #{qstnInputTime,jdbcType=TIMESTAMP}, 
+      #{qstnFromTypeId,jdbcType=VARCHAR}, #{qstnTitle,jdbcType=VARCHAR}, #{qstnInputTime,jdbcType=TIMESTAMP},   #{qstnCode,jdbcType=VARCHAR},
       #{qstnPictext,jdbcType=VARCHAR}, #{qstnNum,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="com.yuzo.question.entity.Question" >
@@ -150,6 +177,9 @@
       </if>
       <if test="qstnInputTime != null" >
         QSTN_INPUT_TIME,
+      </if>
+      <if test="qstnCode != null   and  qstnCode  != ''  " >
+       QSTN_CODE,
       </if>
       <if test="qstnPictext != null" >
         QSTN_PICTEXT,
@@ -177,6 +207,9 @@
       <if test="qstnInputTime != null" >
         #{qstnInputTime,jdbcType=TIMESTAMP},
       </if>
+       <if test="qstnCode != null   and  qstnCode  != ''  " >
+       #{qstnCode,jdbcType=VARCHAR},
+      </if>
       <if test="qstnPictext != null" >
         #{qstnPictext,jdbcType=VARCHAR},
       </if>
@@ -203,6 +236,9 @@
       <if test="qstnInputTime != null" >
         QSTN_INPUT_TIME = #{qstnInputTime,jdbcType=TIMESTAMP},
       </if>
+        <if test="qstnCode != null   and  qstnCode  != ''  " >
+       QSTN_CODE = #{qstnCode,jdbcType=VARCHAR},
+      </if>
       <if test="qstnPictext != null" >
         QSTN_PICTEXT = #{qstnPictext,jdbcType=VARCHAR},
       </if>
@@ -219,6 +255,7 @@
       QSTN_FROM_TYPE_ID = #{qstnFromTypeId,jdbcType=VARCHAR},
       QSTN_TITLE = #{qstnTitle,jdbcType=VARCHAR},
       QSTN_INPUT_TIME = #{qstnInputTime,jdbcType=TIMESTAMP},
+       QSTN_CODE = #{qstnCode,jdbcType=VARCHAR},
       QSTN_PICTEXT = #{qstnPictext,jdbcType=VARCHAR},
       QSTN_NUM = #{qstnNum,jdbcType=INTEGER}
     where QSTN_ID = #{qstnId,jdbcType=VARCHAR}

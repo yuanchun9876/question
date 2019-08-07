@@ -94,4 +94,11 @@ public class SubjUnitServiceImpl implements ISubjUnitService{
 		// TODO Auto-generated method stub
 		return unitMapper.queryPage(page);
 	}
+
+
+	@Override
+	public List<SubjUnit> queryByCode(String unitCode) {
+		// TODO Auto-generated method stub
+		return unitMapper.queryByCode(unitCode);
+	}
 }

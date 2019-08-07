@@ -69,8 +69,14 @@
 										</div>
 										<div class="form-group">
 											<label for="cardid" class="col-sm-2 control-label">知识章序号</label>
-											<div class="col-sm-10">
+											<div class="col-sm-3">
 												<input type="number" class="form-control" name='subjUnitNum' placeholder="请输入知识章序号"  required="required">
+											</div>
+											<label for="cardid" class="col-sm-2 control-label">科目代号</label>
+											<div class="col-sm-3">
+												<input type="text" class="form-control" name='subjUnitCode'  onblur="singleUnitCode(this)" placeholder="请您输入科目代号"  required="required">
+											</div>
+											<div class="col-sm-2" id="msg" >
 											</div>
 										</div>
 									
@@ -99,7 +105,19 @@
 	</body>
 	
 	<script type="text/javascript">
+	function singleUnitCode(unitCode){
 		
+		$.post("/subjUnit/singleUnitCode",{"unitCode":unitCode.value},function(resp){
+			if(resp == "no"){
+				$("#msg").html("<font color='red'>已使用</font>");
+				unitCode.setCustomValidity("已使用");  
+			}else{
+				$("#msg").html("<font color='green'>可以用</font>");
+				unitCode.setCustomValidity("");  
+			}
+		})
+	
+	}
 
 		//清空
 		function cleanUp(btn) {

@@ -29,4 +29,6 @@ public interface SubjUnitMapper {
 	List<SubjUnit> queryUnitsBySubjs(String[] subjIds);
 
 	List<SubjUnit> queryPage(SubjUnitPage page);
+
+	List<SubjUnit> queryByCode(String unitCode);
 }

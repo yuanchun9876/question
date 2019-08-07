@@ -52,4 +52,6 @@ public interface IQuestionService {
 
 	List<Answer> queryAnswer4(String qstnId);
 
+	int addCode();
+
 }

@@ -18,6 +18,8 @@ public class Question {
 
     private String qstnPictext;
     
+    private String qstnCode;
+    
     private Integer qstnNum;
     
     
@@ -30,6 +32,13 @@ public class Question {
     private String subjUnitTitle;
     
     private String subjTitle;
+    
+    
+    private String subjCode;
+    
+    private String subjUnitCode;
+    
+    private String subjSctnCode;
     
     
     
@@ -45,7 +54,7 @@ public class Question {
 
     @Override
 	public String toString() {
-		return "Question [qstnId=" + qstnId + ", subjSctnId=" + subjSctnId + ", qstnTypeId=" + qstnTypeId
+		return "Question [qstnId=" + qstnId + ", subjSctnId=" + subjSctnId + ", qstnTypeId=" + qstnTypeId + ", qstnCode=" + qstnCode
 				+ ", qstnFromTypeId=" + qstnFromTypeId + ", qstnTitle=" + qstnTitle + ", qstnInputTime=" + qstnInputTime
 				+ ", qstnPictext=" + qstnPictext + ", qstnNum=" + qstnNum + ", subjSctnTitle=" + subjSctnTitle
 				+ ", qstnTypeName=" + qstnTypeName + ", qstnFromTypeCode=" + qstnFromTypeCode + ", subjUnitTitle="
@@ -172,4 +181,38 @@ public class Question {
     public void setQstnNum(Integer qstnNum) {
         this.qstnNum = qstnNum;
     }
+
+	public String getQstnCode() {
+		return qstnCode;
+	}
+
+	public void setQstnCode(String qstnCode) {
+		this.qstnCode = qstnCode;
+	}
+
+	public String getSubjCode() {
+		return subjCode;
+	}
+
+	public void setSubjCode(String subjCode) {
+		this.subjCode = subjCode;
+	}
+
+	public String getSubjUnitCode() {
+		return subjUnitCode;
+	}
+
+	public void setSubjUnitCode(String subjUnitCode) {
+		this.subjUnitCode = subjUnitCode;
+	}
+
+	public String getSubjSctnCode() {
+		return subjSctnCode;
+	}
+
+	public void setSubjSctnCode(String subjSctnCode) {
+		this.subjSctnCode = subjSctnCode;
+	}
+    
+    
 }

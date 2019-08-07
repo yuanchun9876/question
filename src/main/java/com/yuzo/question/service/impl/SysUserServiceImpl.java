@@ -138,6 +138,7 @@ public class SysUserServiceImpl implements ISysUserService {
 		System.out.println("ucCount:" + ucCount);
 //		SysUser user = new SysUser();
 
+		int updateuc = ucMapper.updateBeforeClass(userId, mcId);
 		
 		return ucCount;
 	}

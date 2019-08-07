@@ -10,7 +10,7 @@ public class QuestionPage {
 	private String	subjId;
 	private String	unitId;
 	private String	subjSctnId;
-	
+	private String	qstnCode;
 	
 	@Override
 	public String toString() {
@@ -80,6 +80,14 @@ public class QuestionPage {
 
 	public void setSubjSctnId(String subjSctnId) {
 		this.subjSctnId = subjSctnId;
+	}
+
+	public String getQstnCode() {
+		return qstnCode;
+	}
+
+	public void setQstnCode(String qstnCode) {
+		this.qstnCode = qstnCode;
 	}
 	
 	

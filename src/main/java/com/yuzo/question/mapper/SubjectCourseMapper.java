@@ -20,4 +20,6 @@ public interface SubjectCourseMapper {
     int updateByPrimaryKey(SubjectCourse record);
 
 	List<SubjectCourse> queryAll();
+
+	List<SubjectCourse> queryByCode(String subjCode);
 }

@@ -106,21 +106,25 @@ public class SubjUnitController {
 				) throws IllegalStateException, IOException {
 		// �ϴ�logoͼƬ
 		ServletContext app = session.getServletContext();
-//		if(picFile != null) {
-//			System.out.println("picFile-fileName��" + picFile.getOriginalFilename());
-//			String picRootPath = app.getRealPath("/upload/unit/pic/");
-//	        String picPath = new Date().getTime() + picFile.getOriginalFilename();	         
-//	        File sctnPicFile = new File(picRootPath + picPath);
-//	        //ͨ��CommonsMultipartFile�ķ���ֱ��д�ļ���ע�����ʱ��
-//	        picFile.transferTo(sctnPicFile);
-//	        unit.setSubjUnitLogoUrl("/upload/unit/pic/" + picPath);
-//		}
+
 		unit.setSubjUnitId(UUID.randomUUID().toString());
 		int count = subjUnitService.save(unit);
 		
 		System.out.println("unit:" + count);
 		
 		return "redirect:query";
+	}
+	
+	@RequestMapping("/singleUnitCode")
+	@ResponseBody
+	public String singleUnitCode(String unitCode) {
+		
+		List<SubjUnit> unitList = subjUnitService.queryByCode(unitCode);
+		if (unitList!=null && unitList.size()>0) {
+			return "no";
+		} else {
+			return "yes";
+		}
 	}
 	
 	@RequestMapping("/editPage")

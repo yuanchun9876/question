@@ -30,4 +30,6 @@ public interface QuestionMapper {
 	List<Question> queryQstnByTpId(String tpId);
 
 	List<Question> queryQuesByParams(@Param("qstnTypeId")String qstnTypeId, @Param("qstnFromTypeId")String qstnFromTypeId, @Param("subjSctnId")String subjSctnId);
+
+	List<Question> selectAll();
 }

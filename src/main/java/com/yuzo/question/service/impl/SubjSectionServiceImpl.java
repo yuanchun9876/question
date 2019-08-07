@@ -145,4 +145,10 @@ public class SubjSectionServiceImpl implements ISubjSectionService{
 		
 		return list ;
 	}
+
+	@Override
+	public List<SubjSection> queryByCode(String sctnCode) {
+		// TODO Auto-generated method stub
+		return sctnMapper.queryByCode(sctnCode);
+	}
 }

@@ -30,4 +30,6 @@ public interface SubjSectionMapper {
 	List<SubjSection> queryAll(SubjSectionPage page);
 
 	List<SubjSection> querySctnsByUnits(String[] unitIds);
+
+	List<SubjSection> queryByCode(String sctnCode);
 }

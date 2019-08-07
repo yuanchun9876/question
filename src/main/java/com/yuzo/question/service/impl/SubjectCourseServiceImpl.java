@@ -52,4 +52,10 @@ public class SubjectCourseServiceImpl implements ISubjectCourseService{
 		// TODO Auto-generated method stub
 		return subjMapper.updateByPrimaryKeySelective(subj);
 	}
+
+	@Override
+	public List<SubjectCourse> queryByCode(String subjCode) {
+		// TODO Auto-generated method stub
+		return subjMapper.queryByCode(subjCode);
+	}
 }

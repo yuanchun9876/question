@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.yuzo.question.entity.SubjectCourse;
 import com.yuzo.question.service.ISubjectCourseService;
@@ -69,6 +70,17 @@ public class SubjectCourseController {
 		model.addAttribute("subj", subj);
 		
 		return "subj/edit_subj";
+	}
+	@RequestMapping("/singleSubjCode")
+	@ResponseBody
+	public String singleSubjCode(String subjCode) {
+		
+		List<SubjectCourse> subjList = subjectCourseService.queryByCode(subjCode);
+		if (subjList!=null && subjList.size()>0) {
+			return "no";
+		} else {
+			return "yes";
+		}
 	}
 	
 	@RequestMapping("/editSave")

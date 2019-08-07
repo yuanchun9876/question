@@ -18,4 +18,6 @@ public interface ISubjectCourseService {
 
 	int update(SubjectCourse subj);
 
+	List<SubjectCourse> queryByCode(String subjCode);
+
 }

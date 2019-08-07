@@ -85,6 +85,12 @@
 	</select>
   <!--  分割    -->
   
+  <select id="queryByCode" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from subj_unit
+    where SUBJ_UNIT_CODE = #{value,jdbcType=VARCHAR}
+  </select>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
