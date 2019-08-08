@@ -21,13 +21,13 @@ public class UserAnswerList {
     
     private String ansContent;
     
-    
+    private String qstnCode;
 
     @Override
 	public String toString() {
 		return "UserAnswerList [uansId=" + uansId + ", utsId=" + utsId + ", qstnId=" + qstnId + ", subjSctnId="
 				+ subjSctnId + ", uansContent=" + uansContent + ", uansResult=" + uansResult + ", qstnTitle="
-				+ qstnTitle + "]";
+				+ qstnTitle + ", qstnCode=" + qstnCode + "]";
 	}
 
 	public String getUansId() {
@@ -100,6 +100,14 @@ public class UserAnswerList {
 
 	public void setAnsContent(String ansContent) {
 		this.ansContent = ansContent;
+	}
+
+	public String getQstnCode() {
+		return qstnCode;
+	}
+
+	public void setQstnCode(String qstnCode) {
+		this.qstnCode = qstnCode;
 	}
 	
 	

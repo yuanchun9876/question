@@ -83,7 +83,7 @@
 								<button type="button" class="btn btn-success" name="addInfo" onclick="javascript:addPage()">添加</button>
 								<button type="button" class="btn btn-warning" name="delbtn" onclick="javascript:dels()">删除</button>
 								
-								<button type="button" class="btn btn-info" name="codeInfo"    >代号</button>
+								<button type="button" class="btn btn-info" name="codeInfo"   >代号</button>
 							</div>
 						</div>
 						<div class="box-header clearfix">
@@ -173,6 +173,7 @@
 <script type="text/javascript">
 
 	function editCode(){
+		console.log(123);
 		$.post("/qstn/addCode",function(resp){ console.log(resp) });
 	}
 

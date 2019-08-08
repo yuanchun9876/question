@@ -104,10 +104,10 @@ public class QuestionController {
 	@RequestMapping("/addCode")
 	@ResponseBody
 	public String addCode(){
-		
+		System.out.println("addCode");
 		int count = qstnService.addCode();
 	
-		
+		System.out.println("addCode:" + count );
 		return count + "";
 	}
 	
