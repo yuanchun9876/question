@@ -138,7 +138,7 @@ public class SysUserServiceImpl implements ISysUserService {
 		System.out.println("ucCount:" + ucCount);
 //		SysUser user = new SysUser();
 
-		int updateuc = ucMapper.updateBeforeClass(userId, mcId);
+		//int updateuc = ucMapper.updateBeforeClass(userId, mcId);
 		
 		return ucCount;
 	}
@@ -194,6 +194,12 @@ public class SysUserServiceImpl implements ISysUserService {
 			count += userRoleMapper.insertSelective(ur);
 		}
 		return count;
+	}
+
+	@Override
+	public List<SysUser> queryByName(String userName) {
+		// TODO Auto-generated method stub
+		return mapper.queryByName(userName);
 	}
 
 

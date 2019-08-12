@@ -36,6 +36,8 @@ public interface ISysUserService {
 
 	int updateUserRole(String userId, String[] ids);
 
+	List<SysUser> queryByName(String userName);
+
 
 
 

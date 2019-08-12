@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.yuzo.question.entity.SubjUnit;
 import com.yuzo.question.entity.SysRole;
 import com.yuzo.question.entity.SysUser;
 import com.yuzo.question.entity.UserMyclass;
@@ -143,6 +144,19 @@ public class SysUserController {
 		System.out.println(":" + count);
 		return "redirect:query";
 	}
+	
+	@RequestMapping("/sysuser/singleUserName")	
+	@ResponseBody
+	public String singleUserName(String userName) {
+		
+		List<SysUser> userList = userService.queryByName(userName);
+		if (userList!=null && userList.size()>0) {
+			return "no";
+		} else {
+			return "yes";
+		}
+	}
+	
 	@RequestMapping("/sysuser/editUserRole")
 	public String editUserMc(String userId, String[] ids) {		
 		
