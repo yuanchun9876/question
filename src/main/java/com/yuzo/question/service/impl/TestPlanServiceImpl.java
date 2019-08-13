@@ -575,6 +575,7 @@ public class TestPlanServiceImpl implements ITestPlanService {
 			userAnswerList.setAnsList(ansList);
 			if (userAnswerList.getUansContent()!=null  &&  !"".equals(userAnswerList.getUansContent())) {
 				Answer ans = ansMapper.selectByPrimaryKey(userAnswerList.getUansContent());
+				System.out.println("ans.getAnsContent():" + ans.getAnsContent());
 				userAnswerList.setAnsContent(ans.getAnsContent());
 			} else {
 				userAnswerList.setAnsContent("");
