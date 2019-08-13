@@ -32,18 +32,18 @@
 	    </p>
 	    <form name="info" autocomplete="off" action="common/main.html" th:action="@{/main}" th:method="post"  >
 	      <div class="form-group has-feedback">
-	        <input type="text" name="userName" class="form-control" value="admin" required placeholder="账号">
+	        <input type="text" name="userName" id="user" class="form-control" value="admin" required placeholder="账号">
 	        <span class="glyphicon glyphicon-user form-control-feedback"></span>
 	      </div>
 	      <div class="form-group has-feedback">
-	        <input type="password" name="userPass" class="form-control" value="123456" required placeholder="密码" onblur="checkPass(this)">
+	        <input type="password" name="userPass" id="pass" class="form-control" value="123456" required placeholder="密码" onblur="checkPass(this)">
 	        <span class="glyphicon glyphicon-lock form-control-feedback"></span>
 	      </div>
 	      <div class="row">
 	        <div class="col-xs-8">
 	          <div class="checkbox icheck">
 	            <label>
-	              <input type="checkbox" name="rememberMe" value="true"> 记住账号
+	              <input type="checkbox" name="rememberMe" id="rm" value="true"> 记住账号
 	            </label>
 	          </div>
 	        </div>
@@ -72,18 +72,37 @@
 		//根据key得到cookie中的值
 		function getCookie(c_name) {
 			if(document.cookie.length > 0) {
+			//	console.log(document.cookie);//username=admin; password=111211
+				
 				c_start = document.cookie.indexOf(c_name + "=");//获取字符串的起点
 				if(c_start != -1) {
 					c_start = c_start + c_name.length + 1;//获取值的起点
 					c_end = document.cookie.indexOf(";", c_start);//获取结尾处
 					if(c_end == -1) c_end = document.cookie.length;//如果是最后一个，结尾就是cookie字符串的结尾
+					//console.log(decodeURI(document.cookie.substring(c_start, c_end)));
 					return decodeURI(document.cookie.substring(c_start, c_end));//截取字符串返回
-				}
+				}/**/
 			}
 			return "";
 		}
 	  
-	  var accountName = getCookie('accountName');
+	
+	  
+	  $(function(){
+		  var name = getCookie('username');
+		  var pass = getCookie('password');
+		  var rememberMe = getCookie('rememberMe');
+		  if("true" == rememberMe){
+			  $("#user").val(name);
+			  $("#pass").val(pass);
+			 // $("#rm").prop("checked", "checked");
+			  $('input').iCheck('check')
+		  }else{
+			  $("#user").val("");
+			  $("#pass").val("");
+			//  $("#rm").prop("checked", false);
+		  }
+	  });
 
 	  $(function () {
 	    $('input').iCheck({

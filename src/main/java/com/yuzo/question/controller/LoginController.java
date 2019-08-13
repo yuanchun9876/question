@@ -4,7 +4,9 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.List;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.tomcat.util.bcel.Const;
@@ -31,7 +33,7 @@ public class LoginController {
 	}
 	
 	@RequestMapping("/main")
-	public String mainPage(SysUser user , HttpServletRequest request, HttpSession session , Model model) throws FileNotFoundException{
+	public String mainPage(SysUser user ,String rememberMe, HttpServletRequest request, HttpServletResponse response, HttpSession session , Model model) throws FileNotFoundException{
 		String path = request.getRealPath("");
 	
 		File filePath=new File(ResourceUtils.getURL("classpath:").getPath());
@@ -60,7 +62,39 @@ public class LoginController {
 				System.out.println("cmenuList:" + cmenuList);
 				model.addAttribute("cmenuList", cmenuList);
 				System.err.println(userList.get(0).getNickName() + ":login");
+				
 				session.setAttribute("user", userList.get(0));
+				Cookie cookieUsername = null;
+				Cookie cookiePassword = null;
+				Cookie cookieRememberMe = null;
+				System.out.println("rememberMe:" + rememberMe);
+				if("true".equals(rememberMe)) {
+					cookieUsername = new Cookie("username", name);
+			        cookiePassword = new Cookie("password", pass);
+			        cookieRememberMe = new Cookie("rememberMe", rememberMe);
+			        
+					cookieUsername.setMaxAge(60*60*24*30);
+		            cookiePassword.setMaxAge(60*60*24*30);
+		            cookieRememberMe.setMaxAge(60*60*24*30);
+		            
+		            response.addCookie(cookieUsername);
+		            response.addCookie(cookiePassword);
+		            response.addCookie(cookieRememberMe);
+				}else {
+					cookieUsername = new Cookie("username", name);
+			        cookiePassword = new Cookie("password", pass);
+			        cookieRememberMe = new Cookie("rememberMe", rememberMe);
+			        
+					cookieUsername.setMaxAge(0);
+		            cookiePassword.setMaxAge(0);
+		            cookieRememberMe.setMaxAge(0);
+		            
+		            response.addCookie(cookieUsername);
+		            response.addCookie(cookiePassword);
+		            response.addCookie(cookieRememberMe);
+				}
+				
+			
 				
 				return "/common/main";
 			} else {
