@@ -47,7 +47,7 @@ public class UserUpdatePointsServiceImpl implements IUserUpdatePointsService {
 	@Override
 	public UserUpdatePointsType queryById(String uuptId) {
 		// TODO Auto-generated method stub
-		return null;
+		return uuptMapper.selectByPrimaryKey(uuptId);
 	}
 
 	@Override
@@ -107,6 +107,12 @@ public class UserUpdatePointsServiceImpl implements IUserUpdatePointsService {
 		}
 		
 		return count;
+	}
+
+	@Override
+	public UserUpdatePoints queryUupById(String uupId) {
+		// TODO Auto-generated method stub
+		return uupMapper.selectByPrimaryKey(uupId);
 	}
 
 }

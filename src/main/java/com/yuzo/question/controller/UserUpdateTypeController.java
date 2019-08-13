@@ -52,8 +52,9 @@ public class UserUpdateTypeController {
 	
 	@RequestMapping("/editPage")
 	public String editPage(String uuptId,HttpSession session, Model model) {
-		
+//		System.out.println(uuptId);
 		UserUpdatePointsType uupt = userUpdateTypeService.queryById(uuptId);
+//		System.out.println(uupt);
 		model.addAttribute("uupt", uupt);
 		
 		return "updatetype/edit_uupt";

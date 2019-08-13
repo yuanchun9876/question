@@ -44,7 +44,7 @@
 				<section class="content">
 					<div class="row">
 						<form class="form form-horizontal" method="post"    th:action="@{/updatetype/editSave}"  th:object="${uupt}"  >
-						<input type="hidden" name="uuptId"  th:field="*{uuptId}"  >
+						<input type="hidden" name="uuptId"  th:value="*{uuptId}"  >
 							<!-- left column -->
 							<div class="col-md-8 col-md-offset-2">
 								<!-- general form elements -->

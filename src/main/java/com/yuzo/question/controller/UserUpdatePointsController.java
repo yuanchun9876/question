@@ -124,12 +124,13 @@ public class UserUpdatePointsController {
 	}
 	
 	@RequestMapping("/editPage")
-	public String editPage(String uuptId,HttpSession session, Model model) {
+	public String editPage(String uupId,HttpSession session, Model model) {
+		System.out.println(uupId);
+		UserUpdatePoints uup = userUpdatePointsService.queryUupById(uupId);
+		System.out.println(uup);
+		model.addAttribute("uupt", uup);
 		
-		UserUpdatePointsType uupt = userUpdatePointsService.queryById(uuptId);
-		model.addAttribute("uupt", uupt);
-		
-		return "updatetype/edit_uupt";
+		return "updatetype/edit_uup";
 	}
 	
 	@RequestMapping("/editSave")

@@ -24,4 +24,6 @@ public interface IUserUpdatePointsService {
 
 	int save(UserUpdatePoints uup);
 
+	UserUpdatePoints queryUupById(String uupId);
+
 }
