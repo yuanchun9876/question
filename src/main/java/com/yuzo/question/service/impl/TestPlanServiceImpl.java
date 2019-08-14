@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -474,18 +475,40 @@ public class TestPlanServiceImpl implements ITestPlanService {
 		return 0;
 	}
 
+	// 填空题判断
 	private double checkAnswer2(String qstnId, String answer) {
 		// TODO Auto-generated method stub
 		List<Answer> ansList = ansMapper.queryByQstnId(qstnId);
 		
 		int total = 0;
-		for (Answer ans : ansList) {		
-			if(this.getStr(ans.getAnsContent()).trim().toLowerCase().equals(answer.trim().toLowerCase())) {
-				total = 1;				
+		for (Answer ans : ansList) {
+			
+			String anscontent = this.getStr(ans.getAnsContent()).trim().toLowerCase();
+			anscontent = anscontent.replaceAll("&lt;", "<");
+			anscontent = anscontent.replaceAll("&gt;", ">");
+			anscontent = anscontent.replaceAll("&amp;", "&");
+//			System.out.println(answer.trim().toLowerCase());
+			if(anscontent.equals(answer.trim().toLowerCase())) {
+				
+				total = 1;		
+				break;
 			}
 		}		
 		return total/1.0;
 	}
+	/**
+	 * 
+	 * @param args
+	 */
+	
+	public static void main(String[] args) {
+		
+		String HTMLText="&lt;qwe&gt;&lt;/qwe&gt;";
+		HTMLText = HTMLText.replaceAll("&lt;", "<");
+		HTMLText = HTMLText.replaceAll("&gt;", ">");
+		System.out.println(HTMLText);
+	}
+	
 
 	private double checkAnswer0(String qstnId, String answer) {
 		// TODO Auto-generated method stub
