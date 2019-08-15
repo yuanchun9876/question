@@ -77,7 +77,7 @@
 	       				<td th:text="${row.uupInfo}">JAVASE</td>
 	       				
 						<td>
-							<button type="button" class="btn btn-primary btn-sm"  th:onclick="editpage([[${row.uupId}]])"     onclick="javascript:editpage('1')"    >修改</button>
+							<button type="button" class="btn btn-primary btn-sm"  th:onclick="editpage([[${row.uupId}]],[[${user.userId}]])"     onclick="javascript:editpage('1')"    >修改</button>
 						</td>
        				</tr>	       			  		
         		</tbody>
@@ -117,9 +117,9 @@
 		location.href = "/updatepoints/addPage?userId=" + userId; 
 	}
 
-	function editpage(id){
+	function editpage(id, userId){
 		//console.log(id);
-		location.href = "/updatepoints/editPage?uupId=" + id; 
+		location.href = "/updatepoints/editPage?userId=" + userId + "&uupId=" + id; 
 	}
 	
 

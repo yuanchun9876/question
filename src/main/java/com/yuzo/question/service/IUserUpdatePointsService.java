@@ -8,11 +8,10 @@ import com.yuzo.question.entity.UserUpdatePointsType;
 
 public interface IUserUpdatePointsService {
 
-	int save(UserUpdatePointsType uupt);
 
 	UserUpdatePointsType queryById(String uuptId);
 
-	int update(UserUpdatePointsType uupt);
+	int update(UserUpdatePoints uup);
 
 	int dels(String[] ids);
 

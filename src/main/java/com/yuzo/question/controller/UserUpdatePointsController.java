@@ -124,19 +124,25 @@ public class UserUpdatePointsController {
 	}
 	
 	@RequestMapping("/editPage")
-	public String editPage(String uupId,HttpSession session, Model model) {
+	public String editPage(String userId, String uupId,HttpSession session, Model model) {
+		SysUser user = userService.queryById(userId);
+		model.addAttribute("user", user);	
+		
+		List<UserUpdatePointsType> uuptList = userUpdatePointsService.queryUupt();
+		model.addAttribute("uuptList", uuptList);	
+		
 		System.out.println(uupId);
 		UserUpdatePoints uup = userUpdatePointsService.queryUupById(uupId);
 		System.out.println(uup);
 		model.addAttribute("uupt", uup);
 		
-		return "updatetype/edit_uup";
+		return "updatepoints/edit_uup";
 	}
 	
 	@RequestMapping("/editSave")
-	public String editSave(UserUpdatePointsType uupt ) {
-		
-		int count = userUpdatePointsService.update(uupt);
+	public String editSave(UserUpdatePoints uup ) {
+		System.out.println(uup);
+		int count = userUpdatePointsService.update(uup);
 	
 		return "redirect:query";
 	}
