@@ -156,12 +156,12 @@ public class SysUserServiceImpl implements ISysUserService {
 	}
 
 	@Override
-	public List<SysRole> queryRoleList() {
+	public List<SysRole> queryRoleList(List<SysUserRole> urList) {
 		// TODO Auto-generated method stub
 		List<SysRole> roleList = new ArrayList<>();
 		
 		List<SysRole> list = roleMapper.queryAll();
-		List<SysUserRole> urList = userRoleMapper.queryAll();
+		//List<SysUserRole> urList = userRoleMapper.queryAll();
 		
 		for (SysRole role : list) {
 			if("1".equals(role.getRoleState())) {
@@ -200,6 +200,12 @@ public class SysUserServiceImpl implements ISysUserService {
 	public List<SysUser> queryByName(String userName) {
 		// TODO Auto-generated method stub
 		return mapper.queryByName(userName);
+	}
+
+	@Override
+	public List<SysUserRole> queryUserRole(String userId) {
+		// TODO Auto-generated method stub
+		return userRoleMapper.queryByUser(userId);
 	}
 
 

@@ -21,6 +21,7 @@ import com.github.pagehelper.PageInfo;
 import com.yuzo.question.entity.SubjUnit;
 import com.yuzo.question.entity.SysRole;
 import com.yuzo.question.entity.SysUser;
+import com.yuzo.question.entity.SysUserRole;
 import com.yuzo.question.entity.UserMyclass;
 import com.yuzo.question.entity.UserTeam;
 import com.yuzo.question.page.SysUserPage;
@@ -172,7 +173,11 @@ public class SysUserController {
 		System.out.println(user);
 		model.addAttribute("user", user);
 		
-		List<SysRole> rolelist = userService.queryRoleList();
+		List<SysUserRole> urList = userService.queryUserRole(user.getUserId());
+		System.out.println(urList);
+		model.addAttribute("urList", urList);	
+		
+		List<SysRole> rolelist = userService.queryRoleList(urList);
 		System.out.println(rolelist);
 		model.addAttribute("rolelist", rolelist);	
 		

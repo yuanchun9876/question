@@ -20,4 +20,6 @@ public interface SysUserRoleMapper {
 	List<SysUserRole> queryAll();
 
 	int delsByUserId(String userId);
+
+	List<SysUserRole> queryByUser(String userId);
 }

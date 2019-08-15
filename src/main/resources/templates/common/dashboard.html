@@ -153,74 +153,144 @@
 		 // 基于准备好的dom，初始化echarts实例
         var myChart = echarts.init(document.getElementById('main'),"default");
  
-				option = {
-				    title : {
-				        text: '视频播放量与完成量',
-				        subtext: '用于分析'
-				    },
-				    tooltip : {
-				        trigger: 'axis'
-				    },
-				    legend: {
-				        data:['完成量','播放量']
-				    },
-				    toolbox: {
-				        show : true,
-				        feature : {
-				            mark : {show: false},
-				            dataView : {show: true, readOnly: false},
-				            magicType : {show: true, type: ['line', 'bar']},
-				            restore : {show: true},
-				            saveAsImage : {show: true}
-				        }
-				    },
-				    calculable : true,
-				    xAxis : [
-				        {
-				            type : 'category',
-				            data : ['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月']
-				        }
-				    ],
-				    yAxis : [
-				        {
-				            type : 'value'
-				        }
-				    ],
-				    series : [
-				        {
-				            name:'完成量',
-				            type:'bar',
-				            data:[2.0, 4.9, 7.0, 23.2, 25.6, 76.7, 135.6, 162.2, 32.6, 20.0, 6.4, 3.3],
-				            markPoint : {
-				                data : [
-				                    {type : 'max', name: '最大值'},
-				                    {type : 'min', name: '最小值'}
-				                ]
-				            },
-				            markLine : {
-				                data : [
-				                    {type : 'average', name: '平均值'}
-				                ]
-				            }
-				        },
-				        {
-				            name:'播放量',
-				            type:'bar',
-				            data:[2.6, 5.9, 9.0, 26.4, 28.7, 70.7, 175.6, 182.2, 48.7, 18.8, 6.0, 2.3],
-				            markPoint : {
-				                data : [
-				                    {name : '年最高', value : 182.2, xAxis: 7, yAxis: 183, symbolSize:18},
-				                    {name : '年最低', value : 2.3, xAxis: 11, yAxis: 3}
-				                ]
-				            },
-				            markLine : {
-				                data : [
-				                    {type : 'average', name : '平均值'}
-				                ]
-				            }
-				        }
-				    ]
-				};
+        function createRandomItemStyle() {
+		    return {
+		        normal: {
+		            color: 'rgb(' + [
+		                Math.round(Math.random() * 160),
+		                Math.round(Math.random() * 160),
+		                Math.round(Math.random() * 160)
+		            ].join(',') + ')'
+		        }
+		    };
+		}
+		
+		option = {
+		    title: {
+		        text: '知识图云'
+		        //,link: 'http://www.google.com/trends/hottrends'
+		    },
+		    tooltip: {
+		        show: true
+		    },
+		    series: [{
+		        name: 'Google Trends',
+		        type: 'wordCloud',
+		        size: ['90%', '90%'],
+		        textRotation : [0, 45, 90, -45],
+		        textPadding: 0,
+		        autoSize: {
+		            enable: true,
+		            minSize: 14
+		        },
+		        data: [
+		            {
+		                name: "TuringEdu",
+		                value: 10000,
+		                itemStyle: {
+		                    normal: {
+		                        color: 'black'
+		                    }
+		                }
+		            },
+		            {
+		                name: "Java",
+		                value: 6181,
+		                itemStyle: createRandomItemStyle()
+		            },
+		            {
+		                name: "HTML",
+		                value: 2386,
+		                itemStyle: createRandomItemStyle()
+		            },
+		            {
+		                name: "CSS",
+		                value: 455,
+		                itemStyle: createRandomItemStyle()
+		            },
+		            {
+		                name: "JavaScript",
+		                value: 2467,
+		                itemStyle: createRandomItemStyle()
+		            },
+		            {
+		                name: "JQuery",
+		                value: 2244,
+		                itemStyle: createRandomItemStyle()
+		            },
+		            {
+		                name: "Bootstrap",
+		                value: 1898,
+		                itemStyle: createRandomItemStyle()
+		            },
+		            {
+		                name: "HTTP",
+		                value: 1484,
+		                itemStyle: createRandomItemStyle()
+		            },
+		            {
+		                name: "AJAX",
+		                value: 1112,
+		                itemStyle: createRandomItemStyle()
+		            },
+		            {
+		                name: "JSP/Servlet",
+		                value: 965,
+		                itemStyle: createRandomItemStyle()
+		            },
+		            {
+		                name: "MVC",
+		                value: 847,
+		                itemStyle: createRandomItemStyle()
+		            },
+		            {
+		                name: "SpringMVC",
+		                value: 5582,
+		                itemStyle: createRandomItemStyle()
+		            },
+		            {
+		                name: "Spring",
+		                value: 6555,
+		                itemStyle: createRandomItemStyle()
+		            },
+		            {
+		                name: "Tomcat",
+		                value: 3550,
+		                itemStyle: createRandomItemStyle()
+		            },
+		            {
+		                name: "SQL",
+		                value: 462,
+		                itemStyle: createRandomItemStyle()
+		            },
+		            {
+		                name: "JDBC",
+		                value: 366,
+		                itemStyle: createRandomItemStyle()
+		            },
+		            {
+		                name: "ORM",
+		                value: 360,
+		                itemStyle: createRandomItemStyle()
+		            },
+		            {
+		                name: "Mybatis",
+		                value: 5282,
+		                itemStyle: createRandomItemStyle()
+		            },
+		            {
+		                name: "Oracle",
+		                value: 273,
+		                itemStyle: createRandomItemStyle()
+		            },
+		            {
+		                name: "Web",
+		                value: 265,
+		                itemStyle: createRandomItemStyle()
+		            }
+		        ]
+		    }]
+		};
 
         // 使用刚指定的配置项和数据显示图表。
         myChart.setOption(option);

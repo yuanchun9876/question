@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.yuzo.question.entity.SysRole;
 import com.yuzo.question.entity.SysUser;
+import com.yuzo.question.entity.SysUserRole;
 import com.yuzo.question.entity.UserMyclass;
 import com.yuzo.question.entity.UserTeam;
 import com.yuzo.question.page.SysUserPage;
@@ -32,11 +33,13 @@ public interface ISysUserService {
 
 	List<SysUser> queryByMcId(String mcId);
 
-	List<SysRole> queryRoleList();
+	List<SysRole> queryRoleList(List<SysUserRole> urList);
 
 	int updateUserRole(String userId, String[] ids);
 
 	List<SysUser> queryByName(String userName);
+
+	List<SysUserRole> queryUserRole(String userId);
 
 
 

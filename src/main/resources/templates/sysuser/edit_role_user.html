@@ -42,7 +42,7 @@
 				<section class="content">
 					<div class="row">
 						<form class="form form-horizontal" method="post"   th:action="@{/sysuser/editUserRole}"  th:object="${user}" >
-							<input type="" name="userId"  th:value="*{userId}"  >
+							<input type="hidden" name="userId"  th:value="*{userId}"  >
 							<!-- left column -->
 							<div class="col-md-8 col-md-offset-2">
 								<!-- general form elements -->
