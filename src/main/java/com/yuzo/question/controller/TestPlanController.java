@@ -329,16 +329,18 @@ public class TestPlanController {
 		TestPlan plan = testPlanService.queryById(tpId);
 		model.addAttribute("plan", plan);	
 		
-		List<QstnFromType> qstnFromList = testPlanService.queryQstnFrom();
+		
+		
+		List<QstnFromType> qstnFromList = testPlanService.queryQstnFrom2(tpId);
 		model.addAttribute("qstnFromList", qstnFromList);
-		List<QuestionType> qstnTypeList = testPlanService.queryQstnType();
+		List<QuestionType> qstnTypeList = testPlanService.queryQstnType2(tpId);
 		model.addAttribute("qstnTypeList", qstnTypeList);
 		
-		List<SubjectCourse> subjList = testPlanService.querySubj();
+		List<SubjectCourse> subjList = testPlanService.querySubj(tpId);
 		model.addAttribute("subjList", subjList);
-		List<SubjUnit> subjUnitList = testPlanService.querySubjUnit();
+		List<SubjUnit> subjUnitList = testPlanService.querySubjUnit(tpId);
 		model.addAttribute("subjUnitList", subjUnitList);
-		List<SubjSection> subjSctnList = testPlanService.querySubjSctn();
+		List<SubjSection> subjSctnList = testPlanService.querySubjSctn(tpId);
 		model.addAttribute("subjSctnList", subjSctnList);
 		
 		return "testplan/set_plan";

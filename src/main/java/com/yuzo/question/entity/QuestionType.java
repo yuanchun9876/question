@@ -9,10 +9,20 @@ public class QuestionType {
     
     private Integer qstnTypeCount;
     
+    private String qstnTypeSelected = "";
+    
     
     
 
-    public Integer getQstnTypeCount() {
+    public String getQstnTypeSelected() {
+		return qstnTypeSelected;
+	}
+
+	public void setQstnTypeSelected(String qstnTypeSelected) {
+		this.qstnTypeSelected = qstnTypeSelected;
+	}
+
+	public Integer getQstnTypeCount() {
 		return qstnTypeCount;
 	}
 

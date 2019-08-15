@@ -18,11 +18,19 @@ public class SubjectCourse {
     
     private Integer subjCount;
     
-    
+    private String subjSelected = "";
     
     
 
-    public Integer getSubjCount() {
+    public String getSubjSelected() {
+		return subjSelected;
+	}
+
+	public void setSubjSelected(String subjSelected) {
+		this.subjSelected = subjSelected;
+	}
+
+	public Integer getSubjCount() {
 		return subjCount;
 	}
 

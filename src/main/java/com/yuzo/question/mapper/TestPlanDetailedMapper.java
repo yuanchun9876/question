@@ -22,4 +22,6 @@ public interface TestPlanDetailedMapper {
 	void delsByPlan(String string);
 
 	List<TestPlanDetailed> queryWhere(@Param("tpId")String tpId, @Param("type")String type);
+
+	
 }

@@ -9,10 +9,26 @@ public class QstnFromType {
     
     private Integer qstnFromCount;
     
+    private String qstnFromSelected = "";
     
     
 
-    public Integer getQstnFromCount() {
+	@Override
+	public String toString() {
+		return "QstnFromType [qstnFromTypeId=" + qstnFromTypeId + ", qstnFromTypeCode=" + qstnFromTypeCode
+				+ ", qstnFromTypeInfo=" + qstnFromTypeInfo + ", qstnFromCount=" + qstnFromCount + ", qstnFromSelected="
+				+ qstnFromSelected + "]";
+	}
+
+	public String getQstnFromSelected() {
+		return qstnFromSelected;
+	}
+
+	public void setQstnFromSelected(String qstnFromSelected) {
+		this.qstnFromSelected = qstnFromSelected;
+	}
+
+	public Integer getQstnFromCount() {
 		return qstnFromCount;
 	}
 

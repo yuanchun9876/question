@@ -20,15 +20,15 @@ public interface ITestPlanService {
 
 	List<TestPlan> queryAll();
 
-	List<QstnFromType> queryQstnFrom();
+	List<QstnFromType> queryQstnFrom2(String tpId);
 
-	List<QuestionType> queryQstnType();
+	List<QuestionType> queryQstnType2(String tpId);
 
-	List<SubjSection> querySubjSctn();
+	List<SubjSection> querySubjSctn(String tpId);
 	
-	List<SubjectCourse> querySubj();
+	List<SubjectCourse> querySubj(String tpId);
 
-	List<SubjUnit> querySubjUnit();
+	List<SubjUnit> querySubjUnit(String tpId);
 
 	int save(TestPlan plan);
 
@@ -67,4 +67,6 @@ public interface ITestPlanService {
 	List<UserAnswerList> addAnswerByQstnForUal2(List<UserAnswerList> ualList2);
 
 	Map<String, Object> queryAnswer(String mcId, String tpId);
+
+	
 }

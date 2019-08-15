@@ -26,9 +26,21 @@ public class SubjSection {
     
     private String subjUnitTitle;
     
+    private String sctnSelected = "";
+    
     
 
-    public Integer getSctnCount() {
+
+
+	public String getSctnSelected() {
+		return sctnSelected;
+	}
+
+	public void setSctnSelected(String sctnSelected) {
+		this.sctnSelected = sctnSelected;
+	}
+
+	public Integer getSctnCount() {
 		return sctnCount;
 	}
 

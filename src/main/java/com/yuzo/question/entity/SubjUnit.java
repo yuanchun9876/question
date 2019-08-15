@@ -24,9 +24,20 @@ public class SubjUnit {
     
     private Integer unitCount;
     
+    private String unitSelected = "";
+    
+    
     
 
-    public Integer getUnitCount() {
+    public String getUnitSelected() {
+		return unitSelected;
+	}
+
+	public void setUnitSelected(String unitSelected) {
+		this.unitSelected = unitSelected;
+	}
+
+	public Integer getUnitCount() {
 		return unitCount;
 	}
 

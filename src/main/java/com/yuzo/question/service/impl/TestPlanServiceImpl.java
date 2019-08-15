@@ -88,67 +88,91 @@ public class TestPlanServiceImpl implements ITestPlanService {
 	private SysUserMapper userMapper;
 
 	@Override
-	public List<QstnFromType> queryQstnFrom() {
+	public List<QstnFromType> queryQstnFrom2(String tpId) {
 		// TODO Auto-generated method stub
 		List<QstnFromType> list = qstnFromMapper.queryAll();
-//		for (QstnFromType qstnFromType : list) {
-//			QuestionPage qpage = new QuestionPage();
-//			qpage.setQstnFromTypeId(qstnFromType.getQstnFromTypeId());
-//			//qstnMapper.queryCountByXxx(qpage);
-//			qstnFromType.setQstnFromCount(qstnMapper.queryCountByXxx(qpage));
-//		}
+		List<TestPlanDetailed> tpdList = planDtdMapper.queryWhere(tpId, "2");
+		for (QstnFromType qstnFromType : list) {
+			qstnFromType.setQstnFromSelected("false");
+			for (TestPlanDetailed testPlanDetailed : tpdList) {
+//				System.out.println("qstnFromType:" + qstnFromType.getQstnFromTypeId());
+//				System.out.println("testPlanDetailed:" + testPlanDetailed.getQstnFromTypeId());
+//				System.out.println(qstnFromType.getQstnFromTypeId().equals(testPlanDetailed.getQstnFromTypeId()));
+				if(qstnFromType.getQstnFromTypeId().equals(testPlanDetailed.getQstnFromTypeId())) {
+					qstnFromType.setQstnFromSelected("checked");
+					break;
+				}
+			}
+		}
+//		System.out.println("QstnFromType:" + list);
 		return list;
 	}
 
 	@Override
-	public List<QuestionType> queryQstnType() {
+	public List<QuestionType> queryQstnType2(String tpId) {
 		// TODO Auto-generated method stub
 		List<QuestionType> list =  qstnTypeMapper.queryAll();
-//		for (QuestionType qstnType : list) {
-//			QuestionPage qpage = new QuestionPage();
-//			qpage.setQstnTypeId(qstnType.getQstnTypeId());
-//			//qstnMapper.queryCountByXxx(qpage);
-//			qstnType.setQstnTypeCount(qstnMapper.queryCountByXxx(qpage));
-//		}
+		List<TestPlanDetailed> tpdList = planDtdMapper.queryWhere(tpId, "1");
+		for (QuestionType qstnType : list) {
+			qstnType.setQstnTypeSelected("false");
+			for (TestPlanDetailed testPlanDetailed : tpdList) {
+				if(qstnType.getQstnTypeId().equals(testPlanDetailed.getQstnTypeId())) {
+					qstnType.setQstnTypeSelected("checked");
+					break;
+				}
+			}
+		}
 		return list;
 	}
 
 	@Override
-	public List<SubjSection> querySubjSctn() {
+	public List<SubjSection> querySubjSctn(String tpId) {
 		// TODO Auto-generated method stub
 		List<SubjSection> list = sctnMapper.queryAll(null);
-//		for (SubjSection sctn : list) {
-//			QuestionPage qpage = new QuestionPage();
-//			qpage.setSubjSctnId(sctn.getSubjSctnId());
-//			//qstnMapper.queryCountByXxx(qpage);
-//			sctn.setSctnCount(qstnMapper.queryCountByXxx(qpage));
-//		}
+		List<TestPlanDetailed> tpdList = planDtdMapper.queryWhere(tpId, "5");
+		for (SubjSection sctn : list) {
+			sctn.setSctnSelected("false");
+			for (TestPlanDetailed testPlanDetailed : tpdList) {
+				if(sctn.getSubjSctnId().equals(testPlanDetailed.getSubjSctnId())) {
+					sctn.setSctnSelected("checked");
+					break;
+				}
+			}
+		}
 		return list;
 	}
 
 	@Override
-	public List<SubjectCourse> querySubj() {
+	public List<SubjectCourse> querySubj(String tpId) {
 		// TODO Auto-generated method stub
 		List<SubjectCourse> list = subjMapper.queryAll();
-//		for (SubjectCourse subj : list) {
-//			QuestionPage qpage = new QuestionPage();
-//			qpage.setSubjId(subj.getSubjId());
-//			//qstnMapper.queryCountByXxx(qpage);
-//			subj.setSubjCount(qstnMapper.queryCountByXxx(qpage));
-//		}
+		List<TestPlanDetailed> tpdList = planDtdMapper.queryWhere(tpId, "3");
+		for (SubjectCourse subj : list) {
+			subj.setSubjSelected("false");
+			for (TestPlanDetailed testPlanDetailed : tpdList) {
+				if(subj.getSubjId().equals(testPlanDetailed.getSubjId())) {
+					subj.setSubjSelected("checked");
+					break;
+				}
+			}
+		}
 		return list;
 	}
 
 	@Override
-	public List<SubjUnit> querySubjUnit() {
+	public List<SubjUnit> querySubjUnit(String tpId) {
 		// TODO Auto-generated method stub
 		List<SubjUnit> list = unitMapper.queryAll();
-//		for (SubjUnit unit : list) {
-//			QuestionPage qpage = new QuestionPage();
-//			qpage.setUnitId(unit.getSubjUnitId());
-//			//qstnMapper.queryCountByXxx(qpage);
-//			unit.setUnitCount(qstnMapper.queryCountByXxx(qpage));
-//		}
+		List<TestPlanDetailed> tpdList = planDtdMapper.queryWhere(tpId, "4");
+		for (SubjUnit unit : list) {
+			unit.setUnitSelected("false");
+			for (TestPlanDetailed testPlanDetailed : tpdList) {
+				if(unit.getSubjUnitId().equals(testPlanDetailed.getSubjUnitId())) {
+					unit.setUnitSelected("checked");
+					break;
+				}
+			}
+		}
 		return list;
 	}
 	
@@ -652,6 +676,7 @@ public class TestPlanServiceImpl implements ITestPlanService {
 		
 		return map;
 	}
+
 	
 
 	
