@@ -13,16 +13,17 @@
     <result column="SUBJ_SCTN_PIC_TEXT" property="subjSctnPicText" jdbcType="VARCHAR" />
     <result column="SUBJ_SCTN_VIDEO_LEN" property="subjSctnVideoLen" jdbcType="INTEGER" />
     <result column="SUBJ_UNIT_TITLE" property="subjUnitTitle" jdbcType="VARCHAR" />
+    <result column="SCTN_COUNT" property="sctnCount" jdbcType="INTEGER" />
   </resultMap>
   <sql id="Base_Column_List" >
     SUBJ_SCTN_ID, SUBJ_UNIT_ID, SUBJ_SCTN_TITLE, SUBJ_SCTN_NUM, SUBJ_SCTN_CODE, SUBJ_SCTN_INFO, 
-    SUBJ_SCTN_LOGO_URL, SUBJ_SCTN_VIDEO_URL, SUBJ_SCTN_PIC_TEXT, SUBJ_SCTN_VIDEO_LEN
+    SUBJ_SCTN_LOGO_URL, SUBJ_SCTN_VIDEO_URL, SUBJ_SCTN_PIC_TEXT, SUBJ_SCTN_VIDEO_LEN, SCTN_COUNT
   </sql>
   
   <select id="queryAllByTchId" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     SUBJ_SCTN_ID, sctn.SUBJ_UNIT_ID, SUBJ_SCTN_TITLE, SUBJ_SCTN_NUM, SUBJ_SCTN_CODE, SUBJ_SCTN_INFO, 
-    SUBJ_SCTN_LOGO_URL, SUBJ_SCTN_VIDEO_URL, SUBJ_SCTN_PIC_TEXT, SUBJ_SCTN_VIDEO_LEN
+    SUBJ_SCTN_LOGO_URL, SUBJ_SCTN_VIDEO_URL, SUBJ_SCTN_PIC_TEXT, SUBJ_SCTN_VIDEO_LEN, SCTN_COUNT
     ,tch.tch_name ,tch.TCH_ID
     from subj_section sctn left join subj_unit su on sctn.SUBJ_UNIT_ID = su.SUBJ_UNIT_ID
     left join teacher tch  on su.TCH_ID = tch.TCH_ID
@@ -34,7 +35,7 @@
   <select id="queryByUnit" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     SUBJ_SCTN_ID, SUBJ_UNIT_ID, SUBJ_SCTN_TITLE, SUBJ_SCTN_NUM, SUBJ_SCTN_CODE, SUBJ_SCTN_INFO, 
-    SUBJ_SCTN_LOGO_URL, SUBJ_SCTN_VIDEO_URL, SUBJ_SCTN_PIC_TEXT, SUBJ_SCTN_VIDEO_LEN
+    SUBJ_SCTN_LOGO_URL, SUBJ_SCTN_VIDEO_URL, SUBJ_SCTN_PIC_TEXT, SUBJ_SCTN_VIDEO_LEN, SCTN_COUNT
     from subj_section
     where SUBJ_UNIT_ID = #{value,jdbcType=VARCHAR}
   </select>
@@ -42,7 +43,7 @@
   <select id="queryAll" resultMap="BaseResultMap" parameterType="com.yuzo.question.page.SubjSectionPage" >
     select 
     SUBJ_SCTN_ID, sctn.SUBJ_UNIT_ID, SUBJ_SCTN_TITLE, SUBJ_SCTN_NUM, SUBJ_SCTN_CODE, SUBJ_SCTN_INFO, 
-    SUBJ_SCTN_LOGO_URL, SUBJ_SCTN_VIDEO_URL, SUBJ_SCTN_PIC_TEXT, SUBJ_SCTN_VIDEO_LEN , unit.SUBJ_UNIT_TITLE 
+    SUBJ_SCTN_LOGO_URL, SUBJ_SCTN_VIDEO_URL, SUBJ_SCTN_PIC_TEXT, SUBJ_SCTN_VIDEO_LEN , unit.SUBJ_UNIT_TITLE ,SCTN_COUNT
     from subj_section sctn left join subj_unit unit   on  sctn.SUBJ_UNIT_ID = unit.SUBJ_UNIT_ID
     <where>
     	<if test="subjId != null   and  subjId  != ''  ">
@@ -60,7 +61,7 @@
     <select id="querySctnsByUnits" resultMap="BaseResultMap"  >
     select 
     SUBJ_SCTN_ID, SUBJ_UNIT_ID, SUBJ_SCTN_TITLE, SUBJ_SCTN_NUM, SUBJ_SCTN_CODE, SUBJ_SCTN_INFO, 
-    SUBJ_SCTN_LOGO_URL, SUBJ_SCTN_VIDEO_URL, SUBJ_SCTN_PIC_TEXT, SUBJ_SCTN_VIDEO_LEN
+    SUBJ_SCTN_LOGO_URL, SUBJ_SCTN_VIDEO_URL, SUBJ_SCTN_PIC_TEXT, SUBJ_SCTN_VIDEO_LEN, SCTN_COUNT
     from subj_section
    	<where>
   		<if test="array != null ">
@@ -194,6 +195,9 @@
       </if>
       <if test="subjSctnVideoLen != null" >
         SUBJ_SCTN_VIDEO_LEN = #{subjSctnVideoLen,jdbcType=INTEGER},
+      </if>
+      <if test="sctnCount != null" >
+        SCTN_COUNT = #{sctnCount,jdbcType=INTEGER},
       </if>
     </set>
     where SUBJ_SCTN_ID = #{subjSctnId,jdbcType=VARCHAR}

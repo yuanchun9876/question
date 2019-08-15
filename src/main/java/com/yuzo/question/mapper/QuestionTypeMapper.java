@@ -23,7 +23,7 @@ public interface QuestionTypeMapper {
     int updateByPrimaryKey(QuestionType record);
 
     @Select("  select \r\n" + 
-    		"   QSTN_TYPE_ID, QSTN_TYPE_NAME, QSTN_TYPE_INFO\r\n" + 
+    		"   QSTN_TYPE_ID, QSTN_TYPE_NAME, QSTN_TYPE_INFO, QSTN_TYPE_COUNT \r\n" + 
     		"    from question_type")
     @ResultMap("BaseResultMap")
 	List<QuestionType> queryAll();

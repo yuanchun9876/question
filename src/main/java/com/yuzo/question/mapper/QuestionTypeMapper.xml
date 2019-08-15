@@ -5,9 +5,10 @@
     <id column="QSTN_TYPE_ID" property="qstnTypeId" jdbcType="VARCHAR" />
     <result column="QSTN_TYPE_NAME" property="qstnTypeName" jdbcType="VARCHAR" />
     <result column="QSTN_TYPE_INFO" property="qstnTypeInfo" jdbcType="VARCHAR" />
+    <result column="QSTN_TYPE_COUNT" property="qstnTypeCount"  />
   </resultMap>
   <sql id="Base_Column_List" >
-    QSTN_TYPE_ID, QSTN_TYPE_NAME, QSTN_TYPE_INFO
+    QSTN_TYPE_ID, QSTN_TYPE_NAME, QSTN_TYPE_INFO, QSTN_TYPE_COUNT
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
@@ -58,6 +59,9 @@
       </if>
       <if test="qstnTypeInfo != null" >
         QSTN_TYPE_INFO = #{qstnTypeInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="qstnTypeCount != null" >
+        QSTN_TYPE_COUNT = #{qstnTypeCount},
       </if>
     </set>
     where QSTN_TYPE_ID = #{qstnTypeId,jdbcType=VARCHAR}

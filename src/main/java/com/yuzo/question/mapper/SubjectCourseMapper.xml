@@ -9,10 +9,11 @@
     <result column="SUBJ_LOGO_URL" property="subjLogoUrl" jdbcType="VARCHAR" />
     <result column="SUBJ_INFO" property="subjInfo" jdbcType="VARCHAR" />
     <result column="SUBJ_PROGRESS" property="subjProgress" jdbcType="INTEGER" />
+    <result column="SUBJ_COUNT" property="subjCount" jdbcType="INTEGER" />
   </resultMap>
   
   <sql id="Base_Column_List" >
-    SUBJ_ID, SUBJ_TITLE, SUBJ_NUM, SUBJ_CODE, SUBJ_LOGO_URL, SUBJ_INFO, SUBJ_PROGRESS
+    SUBJ_ID, SUBJ_TITLE, SUBJ_NUM, SUBJ_CODE, SUBJ_LOGO_URL, SUBJ_INFO, SUBJ_PROGRESS, SUBJ_COUNT
   </sql>
   
   <select id="queryAll" resultMap="BaseResultMap"  >
@@ -117,6 +118,9 @@
       </if>
       <if test="subjProgress != null" >
         SUBJ_PROGRESS = #{subjProgress,jdbcType=INTEGER},
+      </if>
+      <if test="subjCount != null" >
+        SUBJ_COUNT = #{subjCount,jdbcType=INTEGER},
       </if>
     </set>
     where SUBJ_ID = #{subjId,jdbcType=VARCHAR}

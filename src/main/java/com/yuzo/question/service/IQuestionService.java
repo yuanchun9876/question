@@ -54,4 +54,6 @@ public interface IQuestionService {
 
 	int addCode();
 
+	void totalCount();
+
 }

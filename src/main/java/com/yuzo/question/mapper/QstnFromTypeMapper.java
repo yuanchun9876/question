@@ -22,7 +22,7 @@ public interface QstnFromTypeMapper {
 
     int updateByPrimaryKey(QstnFromType record);
 
-    @Select("select qstn_from_type_id, qstn_from_type_code, qstn_from_type_info from qstn_from_type")
+    @Select("select qstn_from_type_id, qstn_from_type_code, qstn_from_type_info , QSTN_FROM_COUNT from qstn_from_type")
 	@ResultMap("BaseResultMap")
     List<QstnFromType> queryAll();
 }

@@ -215,4 +215,55 @@ public class QuestionServiceImpl implements IQuestionService{
 
 		return (num+"").substring(1);
 	}
+
+	@Override
+	public void totalCount() {
+		// TODO Auto-generated method stub
+		List<QstnFromType> fromList = qstnFromMapper.queryAll();
+		for (QstnFromType qstnFromType : fromList) {
+			QuestionPage qpage = new QuestionPage();
+			qpage.setQstnFromTypeId(qstnFromType.getQstnFromTypeId());
+			//qstnMapper.queryCountByXxx(qpage);
+			qstnFromType.setQstnFromCount(qstnMapper.queryCountByXxx(qpage));
+			qstnFromMapper.updateByPrimaryKeySelective(qstnFromType);
+		}
+		
+		List<QuestionType> typeList =  qstnTypeMapper.queryAll();
+		for (QuestionType qstnType : typeList) {
+			QuestionPage qpage = new QuestionPage();
+			qpage.setQstnTypeId(qstnType.getQstnTypeId());
+			//qstnMapper.queryCountByXxx(qpage);
+			qstnType.setQstnTypeCount(qstnMapper.queryCountByXxx(qpage));
+			qstnTypeMapper.updateByPrimaryKeySelective(qstnType);
+		}
+		
+		List<SubjSection> sctnList = sctnMapper.queryAll(null);
+		for (SubjSection sctn : sctnList) {
+			QuestionPage qpage = new QuestionPage();
+			qpage.setSubjSctnId(sctn.getSubjSctnId());
+			//qstnMapper.queryCountByXxx(qpage);
+			sctn.setSctnCount(qstnMapper.queryCountByXxx(qpage));
+			sctnMapper.updateByPrimaryKeySelective(sctn);
+		}
+		List<SubjectCourse> subjList = subjMapper.queryAll();
+		for (SubjectCourse subj : subjList) {
+			QuestionPage qpage = new QuestionPage();
+			qpage.setSubjId(subj.getSubjId());
+			//qstnMapper.queryCountByXxx(qpage);
+			subj.setSubjCount(qstnMapper.queryCountByXxx(qpage));
+			subjMapper.updateByPrimaryKeySelective(subj);
+		}
+		
+		List<SubjUnit> unitList = unitMapper.queryAll();
+		for (SubjUnit unit : unitList) {
+			QuestionPage qpage = new QuestionPage();
+			qpage.setUnitId(unit.getSubjUnitId());
+			//qstnMapper.queryCountByXxx(qpage);
+			unit.setUnitCount(qstnMapper.queryCountByXxx(qpage));
+			unitMapper.updateByPrimaryKeySelective(unit);
+		}
+		
+		
+		
+	}
 }

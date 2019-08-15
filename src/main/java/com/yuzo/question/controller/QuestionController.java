@@ -110,6 +110,15 @@ public class QuestionController {
 		System.out.println("addCode:" + count );
 		return count + "";
 	}
+	@RequestMapping("/totalCount")
+	@ResponseBody
+	public String totalCount(){
+		
+		System.out.println("totalCount");
+		qstnService.totalCount();
+
+		return "ok";
+	}
 	
 	
 	

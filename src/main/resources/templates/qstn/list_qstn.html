@@ -82,8 +82,7 @@
 								<button type="button" class="btn btn-primary" name="clearInfo" onclick="javascript:clearEle()">清空</button>
 								<button type="button" class="btn btn-success" name="addInfo" onclick="javascript:addPage()">添加</button>
 								<button type="button" class="btn btn-warning" name="delbtn" onclick="javascript:dels()">删除</button>
-								
-								<button type="button" class="btn btn-info" name="codeInfo"   >代号</button>
+
 							</div>
 						</div>
 						<div class="box-header clearfix">
@@ -114,9 +113,10 @@
 									</select>
 								</div>
 							</div>
-							<div class="box-search">
-								<div class="input-group">
-								</div>
+							<div class="box-search btn-group">
+								
+								<button type="button" class="btn btn-danger" name="codeInfo"   onclick="javascript:editCode()" >代号</button>
+								<button type="button" class="btn btn-info" name="codeInfo"   onclick="javascript:totalCount()" >统计</button>
 							</div>
 						</div>
 					</form>
@@ -173,8 +173,16 @@
 <script type="text/javascript">
 
 	function editCode(){
-		console.log(123);
-		$.post("/qstn/addCode",function(resp){ console.log(resp) });
+		//console.log(123);
+		if(confirm("确认要重置代号吗?")){
+			$.post("/qstn/addCode",function(resp){ console.log(resp) });
+		}
+		
+	}
+	function totalCount(){
+		if(confirm("确认要统计数量吗?")){
+			$.post("/qstn/totalCount",function(resp){ console.log(resp) });
+		}
 	}
 
 

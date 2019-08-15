@@ -91,12 +91,12 @@ public class TestPlanServiceImpl implements ITestPlanService {
 	public List<QstnFromType> queryQstnFrom() {
 		// TODO Auto-generated method stub
 		List<QstnFromType> list = qstnFromMapper.queryAll();
-		for (QstnFromType qstnFromType : list) {
-			QuestionPage qpage = new QuestionPage();
-			qpage.setQstnFromTypeId(qstnFromType.getQstnFromTypeId());
-			qstnMapper.queryCountByXxx(qpage);
-			qstnFromType.setQstnFromCount(qstnMapper.queryCountByXxx(qpage));
-		}
+//		for (QstnFromType qstnFromType : list) {
+//			QuestionPage qpage = new QuestionPage();
+//			qpage.setQstnFromTypeId(qstnFromType.getQstnFromTypeId());
+//			//qstnMapper.queryCountByXxx(qpage);
+//			qstnFromType.setQstnFromCount(qstnMapper.queryCountByXxx(qpage));
+//		}
 		return list;
 	}
 
@@ -104,12 +104,12 @@ public class TestPlanServiceImpl implements ITestPlanService {
 	public List<QuestionType> queryQstnType() {
 		// TODO Auto-generated method stub
 		List<QuestionType> list =  qstnTypeMapper.queryAll();
-		for (QuestionType qstnType : list) {
-			QuestionPage qpage = new QuestionPage();
-			qpage.setQstnTypeId(qstnType.getQstnTypeId());
-			qstnMapper.queryCountByXxx(qpage);
-			qstnType.setQstnTypeCount(qstnMapper.queryCountByXxx(qpage));
-		}
+//		for (QuestionType qstnType : list) {
+//			QuestionPage qpage = new QuestionPage();
+//			qpage.setQstnTypeId(qstnType.getQstnTypeId());
+//			//qstnMapper.queryCountByXxx(qpage);
+//			qstnType.setQstnTypeCount(qstnMapper.queryCountByXxx(qpage));
+//		}
 		return list;
 	}
 
@@ -117,12 +117,12 @@ public class TestPlanServiceImpl implements ITestPlanService {
 	public List<SubjSection> querySubjSctn() {
 		// TODO Auto-generated method stub
 		List<SubjSection> list = sctnMapper.queryAll(null);
-		for (SubjSection sctn : list) {
-			QuestionPage qpage = new QuestionPage();
-			qpage.setSubjSctnId(sctn.getSubjSctnId());
-			qstnMapper.queryCountByXxx(qpage);
-			sctn.setSctnCount(qstnMapper.queryCountByXxx(qpage));
-		}
+//		for (SubjSection sctn : list) {
+//			QuestionPage qpage = new QuestionPage();
+//			qpage.setSubjSctnId(sctn.getSubjSctnId());
+//			//qstnMapper.queryCountByXxx(qpage);
+//			sctn.setSctnCount(qstnMapper.queryCountByXxx(qpage));
+//		}
 		return list;
 	}
 
@@ -130,12 +130,12 @@ public class TestPlanServiceImpl implements ITestPlanService {
 	public List<SubjectCourse> querySubj() {
 		// TODO Auto-generated method stub
 		List<SubjectCourse> list = subjMapper.queryAll();
-		for (SubjectCourse subj : list) {
-			QuestionPage qpage = new QuestionPage();
-			qpage.setSubjId(subj.getSubjId());
-			qstnMapper.queryCountByXxx(qpage);
-			subj.setSubjCount(qstnMapper.queryCountByXxx(qpage));
-		}
+//		for (SubjectCourse subj : list) {
+//			QuestionPage qpage = new QuestionPage();
+//			qpage.setSubjId(subj.getSubjId());
+//			//qstnMapper.queryCountByXxx(qpage);
+//			subj.setSubjCount(qstnMapper.queryCountByXxx(qpage));
+//		}
 		return list;
 	}
 
@@ -143,12 +143,12 @@ public class TestPlanServiceImpl implements ITestPlanService {
 	public List<SubjUnit> querySubjUnit() {
 		// TODO Auto-generated method stub
 		List<SubjUnit> list = unitMapper.queryAll();
-		for (SubjUnit unit : list) {
-			QuestionPage qpage = new QuestionPage();
-			qpage.setUnitId(unit.getSubjUnitId());
-			qstnMapper.queryCountByXxx(qpage);
-			unit.setUnitCount(qstnMapper.queryCountByXxx(qpage));
-		}
+//		for (SubjUnit unit : list) {
+//			QuestionPage qpage = new QuestionPage();
+//			qpage.setUnitId(unit.getSubjUnitId());
+//			//qstnMapper.queryCountByXxx(qpage);
+//			unit.setUnitCount(qstnMapper.queryCountByXxx(qpage));
+//		}
 		return list;
 	}
 	
