@@ -68,5 +68,7 @@ public interface ITestPlanService {
 
 	Map<String, Object> queryAnswer(String mcId, String tpId);
 
+	int setScore(String tpId, String[] userIds, String[] points);
+
 	
 }

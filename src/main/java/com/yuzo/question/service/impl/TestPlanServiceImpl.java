@@ -677,6 +677,23 @@ public class TestPlanServiceImpl implements ITestPlanService {
 		return map;
 	}
 
+	@Override
+	public int setScore(String tpId, String[] userIds, String[] points) {
+		// TODO Auto-generated method stub  utlMapper
+		int count = 0;
+		for (int i = 0; i < points.length; i++) {
+			UserTestList utl = new UserTestList();
+			utl.setUtsId(UUID.randomUUID().toString());
+			utl.setTpId(tpId);
+			utl.setUserId(userIds[i]);
+			utl.setUtsTime(new Date());
+			utl.setUtsTotal(Integer.parseInt(points[i]));
+			count += utlMapper.insertSelective(utl);
+		}
+		
+		return count;
+	}
+
 	
 
 	

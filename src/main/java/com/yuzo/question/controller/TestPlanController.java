@@ -270,6 +270,17 @@ public class TestPlanController {
 
 		return "testplan/edit_plan";
 	}
+	@RequestMapping("/inputScore")
+	public String inputScore(String tpId, Model model) {
+		
+		TestPlan plan = testPlanService.queryById(tpId);
+		model.addAttribute("plan", plan);	
+		
+		List<UserMyclass> mclist = testPlanService.queryMc();
+		model.addAttribute("mclist", mclist);	
+		
+		return "testplan/inputScore_plan";
+	}
 	
 	@RequestMapping("/classCharts")
 	public String classCharts(String tpId, Model model) {
@@ -280,6 +291,18 @@ public class TestPlanController {
 		model.addAttribute("mclist", mclist);	
 		
 		return "testplan/query_charts_plan";
+	}
+	
+	@RequestMapping("/setScore")
+	public String setScore(String tpId, String[] userIds, String[] points) {
+		
+		System.out.println(tpId);
+		System.out.println(Arrays.toString(userIds));
+		System.out.println(Arrays.toString(points));
+			
+		int count = testPlanService.setScore(tpId, userIds, points );
+		
+		return "redirect:query";
 	}
 	
 	

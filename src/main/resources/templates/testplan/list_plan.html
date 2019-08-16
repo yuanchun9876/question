@@ -74,11 +74,12 @@
         			  <td  th:text="${i.count }" >1</td>
         			  <td ><input type="checkbox" name="ids" value="1"    th:value="${row.tpId}"  ></td>
         				<td  th:text="${row.tpTitle}"  >${unit.subjUnitTitle }</td>
-        				<td  th:text="${#dates.format(row.tpBeginDate, 'yyyy-MM-dd')}" >${unit.subjTitle }</td>
-        				<td  th:text="${#dates.format(row.tpEndDate, 'yyyy-MM-dd')}" >${unit.subjUnitNum }</td>
+        				<td  th:text="${#dates.format(row.tpDate, 'yyyy-MM-dd')}" >${row.tpDate }</td>
         				<td th:switch="${row.tpType}">
 								<span  th:case="'1'">固定出题</span>
 								<span  th:case="'0'">随机出题</span>
+								<span  th:case="'2'">笔试</span>
+								<span  th:case="'3'">测试</span>
 						</td>
         				
 						<td>
@@ -87,6 +88,7 @@
 							<button type="button" class="btn btn-danger btn-sm"  th:onclick="openpaper([[${row.tpId}]])"  onclick="javascript:editpage('1')">打开试卷</button>
 							<button type="button" class="btn btn-success btn-sm"  th:onclick="targetClass([[${row.tpId}]])"  onclick="javascript:editpage('1')">关联班级</button>
 							<button type="button" class="btn  btn-sm"  th:onclick="classCharts([[${row.tpId}]])"  onclick="javascript:editpage('1')">成绩查询</button>
+							<button type="button" class="btn btn-warning  btn-sm"  th:if="${row.tpType eq '2'}"  th:onclick="inputScore([[${row.tpId}]])"  onclick="javascript:editpage('1')">录入成绩</button>
 						</td>
         			</tr>
         			</tbody>
@@ -120,6 +122,9 @@
 
 	function editpage(id){
 		location.href = "/testplan/editPage?tpId=" + id; 
+	}
+	function inputScore(id){
+		location.href = "/testplan/inputScore?tpId=" + id; 
 	}
 	function classCharts(id){
 		location.href = "/testplan/classCharts?tpId=" + id; 

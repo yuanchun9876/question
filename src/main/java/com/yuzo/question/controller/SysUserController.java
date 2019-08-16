@@ -78,6 +78,16 @@ public class SysUserController {
 		return "sysuser/list_mc_user";
 	}
 	
+	@RequestMapping("/sysuser/queryStuByMc")
+	@ResponseBody
+	public List<SysUser> queryStuByMc(String mcId, Model model) {
+			
+		List<SysUser> list = userService.queryByMcId(mcId );
+		System.out.println("/sysuser/querybymc:" + list);
+		
+		return list;
+	}
+	
 	@RequestMapping("/sysuser/queryTmByUser")
 	@ResponseBody
 	public List<SysUser> queryTmByUser(String userId, Model model) {
