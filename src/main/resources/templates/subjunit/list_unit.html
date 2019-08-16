@@ -75,7 +75,7 @@
         				<th>所属科目</th>
         				<th>知识章序号</th>
         				<th>知识章代号</th>
-        				<th>知识章说明</th>
+        				<th>试题数量</th>
 						<th>操作</th>
         			</tr>
         			<form name="delForm"  method="post"  action="/subjUnit/dels.action"  th:action="@{/subjUnit/dels}" >
@@ -88,7 +88,7 @@
         				<td  th:text="${row.subjTitle}" >${unit.subjTitle }</td>
         				<td  th:text="${row.subjUnitNum}" >${unit.subjUnitNum }</td>
         				<td  th:text="${row.subjUnitCode}" >${unit.subjUnitCode }</td>
-        				<td  th:text="${row.subjUnitInfo}" >${unit.subjUnitInfo }</td>
+        				<td  th:text="${row.unitCount}" >${unit.subjUnitInfo }</td>
 						<td>
 							<button type="button" class="btn btn-primary btn-sm"  th:onclick="editpage([[${row.subjUnitId}]])"  onclick="javascript:editpage('1')">修改</button>
 						</td>

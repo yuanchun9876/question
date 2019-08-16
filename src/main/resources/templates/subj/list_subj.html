@@ -65,7 +65,7 @@
         				<th>科目单元序号</th>
         				<th>科目单元代号</th>
         				<th>科目完成进度</th>
-        				<th>知识章说明</th>
+        				<th>试题数量</th>
 						<th>操作</th>
         			</tr>
         			<form name="delForm"  method="post"  action="#"  th:action="@{/subj/dels}"  >    
@@ -77,7 +77,7 @@
 	       				<td th:text="${row.subjNum}">1</td>
 	       				<td th:text="${row.subjCode}">JAVASE</td>
 	       				<td th:text="${row.subjProgress}">85</td>
-	       				<td th:text="${row.subjInfo}">java语言基础语法</td>
+	       				<td th:text="${row.subjCount}">java语言基础语法</td>
 						<td>
 							<button type="button" class="btn btn-primary btn-sm"  th:onclick="editpage([[${row.subjId}]])"     onclick="javascript:editpage('1')"    >修改</button>
 						</td>

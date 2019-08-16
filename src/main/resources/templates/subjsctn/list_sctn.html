@@ -85,7 +85,7 @@
         				<th>知识节序号</th>
         				<th>所属知识章</th>
         				<th>代号</th>
-						
+						<th>试题数量</th>
 						<th>操作</th>
         			</tr>
         			</thead>
@@ -98,6 +98,7 @@
         				<td   th:text="${row.subjSctnNum}">${scth.subjSctnNum }</td>
         				<td   th:text="${row.subjUnitTitle}">${scth.subjUnitTitle }</td>
         				<td   th:text="${row.subjSctnCode}">${scth.subjUnitTitle }</td>
+        				<td   th:text="${row.sctnCount}">${scth.subjUnitTitle }</td>
         				
 						<td>
 							<button type="button" class="btn btn-primary btn-sm"  th:onclick="editpage([[${row.subjSctnId}]])"   onclick="javascript:editpage('1')">修改</button>
