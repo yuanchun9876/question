@@ -54,7 +54,7 @@
         			<tr>
         				<th>序号</th>
         				<th>作业名称</th>
-        				
+        				<th th:each="user,i:${userList}" th:text="${user.nickName + '(' + user.ucPoints +')'}" >学员名称</th>
         			
         			</tr>
         		
@@ -62,7 +62,7 @@
         			<tr  th:each="row,i:${list}" >
 	        			<td th:text="${i.count }">1</td>
 	        			<td th:text="${row.wlTitle}" >比</td>
-	       				
+	       				<td th:each="p,i:${row.proints}" th:text="${p }" >比</td>
        				</tr>	       			  		
         		</tbody>
         		
