@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yuzo.question.mapper.WorkTypeMapper" >
+  <resultMap id="BaseResultMap" type="com.yuzo.question.entity.WorkType" >
+    <id column="wt_id" property="wtId" jdbcType="VARCHAR" />
+    <result column="wt_name" property="wtName" jdbcType="VARCHAR" />
+    <result column="wt_info" property="wtInfo" jdbcType="VARCHAR" />
+    <result column="wt_aproint" property="wtAproint" jdbcType="INTEGER" />
+    <result column="wt_cproint" property="wtCproint" jdbcType="INTEGER" />
+    <result column="wt_eproint" property="wtEproint" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    wt_id, wt_name, wt_info, wt_aproint, wt_cproint, wt_eproint
+  </sql>
+  <select id="queryAll" resultMap="BaseResultMap" >
+    select 
+    <include refid="Base_Column_List" />
+	 from work_type
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from work_type
+    where wt_id = #{wtId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from work_type
+    where wt_id = #{wtId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.yuzo.question.entity.WorkType" >
+    insert into work_type (wt_id, wt_name, wt_info, 
+      wt_aproint, wt_cproint, wt_eproint
+      )
+    values (#{wtId,jdbcType=VARCHAR}, #{wtName,jdbcType=VARCHAR}, #{wtInfo,jdbcType=VARCHAR}, 
+      #{wtAproint,jdbcType=INTEGER}, #{wtCproint,jdbcType=INTEGER}, #{wtEproint,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.yuzo.question.entity.WorkType" >
+    insert into work_type
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="wtId != null" >
+        wt_id,
+      </if>
+      <if test="wtName != null" >
+        wt_name,
+      </if>
+      <if test="wtInfo != null" >
+        wt_info,
+      </if>
+      <if test="wtAproint != null" >
+        wt_aproint,
+      </if>
+      <if test="wtCproint != null" >
+        wt_cproint,
+      </if>
+      <if test="wtEproint != null" >
+        wt_eproint,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="wtId != null" >
+        #{wtId,jdbcType=VARCHAR},
+      </if>
+      <if test="wtName != null" >
+        #{wtName,jdbcType=VARCHAR},
+      </if>
+      <if test="wtInfo != null" >
+        #{wtInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="wtAproint != null" >
+        #{wtAproint,jdbcType=INTEGER},
+      </if>
+      <if test="wtCproint != null" >
+        #{wtCproint,jdbcType=INTEGER},
+      </if>
+      <if test="wtEproint != null" >
+        #{wtEproint,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.yuzo.question.entity.WorkType" >
+    update work_type
+    <set >
+      <if test="wtName != null" >
+        wt_name = #{wtName,jdbcType=VARCHAR},
+      </if>
+      <if test="wtInfo != null" >
+        wt_info = #{wtInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="wtAproint != null" >
+        wt_aproint = #{wtAproint,jdbcType=INTEGER},
+      </if>
+      <if test="wtCproint != null" >
+        wt_cproint = #{wtCproint,jdbcType=INTEGER},
+      </if>
+      <if test="wtEproint != null" >
+        wt_eproint = #{wtEproint,jdbcType=INTEGER},
+      </if>
+    </set>
+    where wt_id = #{wtId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.yuzo.question.entity.WorkType" >
+    update work_type
+    set wt_name = #{wtName,jdbcType=VARCHAR},
+      wt_info = #{wtInfo,jdbcType=VARCHAR},
+      wt_aproint = #{wtAproint,jdbcType=INTEGER},
+      wt_cproint = #{wtCproint,jdbcType=INTEGER},
+      wt_eproint = #{wtEproint,jdbcType=INTEGER}
+    where wt_id = #{wtId,jdbcType=VARCHAR}
+  </update>
+</mapper>

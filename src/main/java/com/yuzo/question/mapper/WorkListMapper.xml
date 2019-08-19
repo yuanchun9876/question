@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yuzo.question.mapper.WorkListMapper" >
+  <resultMap id="BaseResultMap" type="com.yuzo.question.entity.WorkList" >
+    <id column="wl_id" property="wlId" jdbcType="VARCHAR" />
+    <result column="wt_id" property="wtId" jdbcType="VARCHAR" />
+    <result column="wl_title" property="wlTitle" jdbcType="VARCHAR" />
+    <result column="wl_info" property="wlInfo" jdbcType="VARCHAR" />
+    <result column="wl_num" property="wlNum" jdbcType="INTEGER" />
+    <result column="wt_name" property="wtName" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    wl_id, wt_id, wl_title, wl_info, wl_num
+  </sql>
+  <select id="queryAll" resultMap="BaseResultMap"  >
+    select 
+    wl_id, wl.wt_id, wl_title, wl_info, wl_num  , wt.wt_name
+    from work_list wl left join work_type wt on wl.wt_id = wt.wt_id
+	order by wl_num
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from work_list
+    where wl_id = #{wlId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from work_list
+    where wl_id = #{wlId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.yuzo.question.entity.WorkList" >
+    insert into work_list (wl_id, wt_id, wl_title, 
+      wl_info, wl_num)
+    values (#{wlId,jdbcType=VARCHAR}, #{wtId,jdbcType=VARCHAR}, #{wlTitle,jdbcType=VARCHAR}, 
+      #{wlInfo,jdbcType=VARCHAR}, #{wlNum,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.yuzo.question.entity.WorkList" >
+    insert into work_list
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="wlId != null" >
+        wl_id,
+      </if>
+      <if test="wtId != null" >
+        wt_id,
+      </if>
+      <if test="wlTitle != null" >
+        wl_title,
+      </if>
+      <if test="wlInfo != null" >
+        wl_info,
+      </if>
+      <if test="wlNum != null" >
+        wl_num,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="wlId != null" >
+        #{wlId,jdbcType=VARCHAR},
+      </if>
+      <if test="wtId != null" >
+        #{wtId,jdbcType=VARCHAR},
+      </if>
+      <if test="wlTitle != null" >
+        #{wlTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="wlInfo != null" >
+        #{wlInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="wlNum != null" >
+        #{wlNum,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.yuzo.question.entity.WorkList" >
+    update work_list
+    <set >
+      <if test="wtId != null" >
+        wt_id = #{wtId,jdbcType=VARCHAR},
+      </if>
+      <if test="wlTitle != null" >
+        wl_title = #{wlTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="wlInfo != null" >
+        wl_info = #{wlInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="wlNum != null" >
+        wl_num = #{wlNum,jdbcType=INTEGER},
+      </if>
+    </set>
+    where wl_id = #{wlId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.yuzo.question.entity.WorkList" >
+    update work_list
+    set wt_id = #{wtId,jdbcType=VARCHAR},
+      wl_title = #{wlTitle,jdbcType=VARCHAR},
+      wl_info = #{wlInfo,jdbcType=VARCHAR},
+      wl_num = #{wlNum,jdbcType=INTEGER}
+    where wl_id = #{wlId,jdbcType=VARCHAR}
+  </update>
+</mapper>
