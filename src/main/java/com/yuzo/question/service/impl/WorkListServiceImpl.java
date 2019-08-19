@@ -107,13 +107,42 @@ public class WorkListServiceImpl implements IWorkListService{
 			Map<String, Object> map = new HashMap<>();
 			map.put("wlTitle",wl.getWtName() + "." + wl.getWlTitle());
 			List<Integer> proints = new ArrayList<>();
+			List<String> levels = new ArrayList<>();
 			for (SysUser sysUser : userlist) {
 //				System.out.println(sysUser.getNickName());
 				UserUpdatePoints uup = uupMapper.queryByUserAndWl(sysUser.getUserId(), wl.getWlId());
-				proints.add(uup==null?0:uup.getUuptPrimaryPoint());
+				Integer p = uup==null?0:uup.getUuptPrimaryPoint();
+				proints.add(p);
+				switch (p) {
+				case 3:
+					levels.add("<font color='#3F48CC'>优秀</font>");
+					break;
+				case 5:
+					levels.add("<font color='#3F48CC'>优秀</font>");
+					break;
+				case 1:
+					levels.add("<font color='#FFC000'>一般</font>");
+					break;
+				case 2:
+					levels.add("<font color='#FFC000'>一般</font>");
+					break;
+				case 0:
+					levels.add("<font color='#808080'>无</font>");
+					break;
+				case -2:
+					levels.add("<font color='red'>未完成</font>");
+					break;
+
+				default:
+					levels.add("<font color='#808080'>无</font>");
+					break;
+				}
+				
+				
+				
 			}
 			map.put("proints", proints);
-			
+			map.put("levels", levels);
 			list.add(map);
 		}
 			

@@ -62,7 +62,7 @@
         			<tr  th:each="row,i:${list}" >
 	        			<td th:text="${i.count }">1</td>
 	        			<td th:text="${row.wlTitle}" >比</td>
-	       				<td th:each="p,i:${row.proints}" th:text="${p }" >比</td>
+	       				<td th:each="p,i:${row.levels}" th:utext="${p }" >比</td>
        				</tr>	       			  		
         		</tbody>
         		
