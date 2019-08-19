@@ -30,6 +30,7 @@
     FROM sys_user u  
      LEFT JOIN user_class_history uch ON uch.user_id = u.user_id
  	WHERE   uch.mc_id = #{value} AND  uch.uc_state = '1'  
+ 	order by tm_id
   </select>
   
     <select id="queryAll" resultMap="BaseResultMap" parameterType="java.lang.String" >

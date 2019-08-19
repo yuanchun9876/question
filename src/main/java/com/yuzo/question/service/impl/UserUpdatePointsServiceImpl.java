@@ -11,11 +11,13 @@ import com.yuzo.question.entity.UserClassHistory;
 import com.yuzo.question.entity.UserReplyList;
 import com.yuzo.question.entity.UserUpdatePoints;
 import com.yuzo.question.entity.UserUpdatePointsType;
+import com.yuzo.question.entity.WorkList;
 import com.yuzo.question.mapper.SysUserMapper;
 import com.yuzo.question.mapper.UserClassHistoryMapper;
 import com.yuzo.question.mapper.UserReplyListMapper;
 import com.yuzo.question.mapper.UserUpdatePointsMapper;
 import com.yuzo.question.mapper.UserUpdatePointsTypeMapper;
+import com.yuzo.question.mapper.WorkListMapper;
 import com.yuzo.question.service.IUserUpdatePointsService;
 
 @Service
@@ -35,6 +37,9 @@ public class UserUpdatePointsServiceImpl implements IUserUpdatePointsService {
 	
 	@Autowired
 	private UserClassHistoryMapper uchMapper;
+	
+	@Autowired
+	private WorkListMapper wlMapper;
 	
 
 	@Override
@@ -148,6 +153,12 @@ public class UserUpdatePointsServiceImpl implements IUserUpdatePointsService {
 	public UserUpdatePoints queryUupById(String uupId) {
 		// TODO Auto-generated method stub
 		return uupMapper.selectByPrimaryKey(uupId);
+	}
+
+	@Override
+	public List<WorkList> queryWl() {
+		// TODO Auto-generated method stub
+		return wlMapper.queryAll();
 	}
 
 }

@@ -12,6 +12,8 @@ public class WorkType {
     private Integer wtCproint;
 
     private Integer wtEproint;
+    
+    private String wtCode;
 
     public String getWtId() {
         return wtId;
@@ -60,4 +62,14 @@ public class WorkType {
     public void setWtEproint(Integer wtEproint) {
         this.wtEproint = wtEproint;
     }
+
+	public String getWtCode() {
+		return wtCode;
+	}
+
+	public void setWtCode(String wtCode) {
+		this.wtCode = wtCode;
+	}
+    
+    
 }

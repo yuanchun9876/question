@@ -5,12 +5,13 @@
     <id column="wt_id" property="wtId" jdbcType="VARCHAR" />
     <result column="wt_name" property="wtName" jdbcType="VARCHAR" />
     <result column="wt_info" property="wtInfo" jdbcType="VARCHAR" />
+    <result column="wt_code" property="wtCode" jdbcType="VARCHAR" />
     <result column="wt_aproint" property="wtAproint" jdbcType="INTEGER" />
     <result column="wt_cproint" property="wtCproint" jdbcType="INTEGER" />
     <result column="wt_eproint" property="wtEproint" jdbcType="INTEGER" />
   </resultMap>
   <sql id="Base_Column_List" >
-    wt_id, wt_name, wt_info, wt_aproint, wt_cproint, wt_eproint
+    wt_id, wt_name, wt_info, wt_aproint, wt_cproint, wt_eproint, wt_code
   </sql>
   <select id="queryAll" resultMap="BaseResultMap" >
     select 

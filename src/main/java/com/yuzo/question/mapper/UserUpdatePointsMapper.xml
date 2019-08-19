@@ -8,16 +8,38 @@
     <result column="uup_time" property="uupTime" jdbcType="TIMESTAMP" />
     <result column="uup_info" property="uupInfo" jdbcType="VARCHAR" />
     <result column="uupt_info" property="uuptInfo" jdbcType="VARCHAR" />
+    <result column="wl_id" property="wlId" jdbcType="VARCHAR" />
+    <result column="wl_title" property="wlTitle" jdbcType="VARCHAR" />
+    <result column="wt_code" property="wtCode" jdbcType="VARCHAR" />
+     <result column="uupt_primary_point" property="uuptPrimaryPoint" jdbcType="INTEGER" />
   </resultMap>
   <sql id="Base_Column_List" >
-    uup_id, uupt_id, user_id, uup_time, uup_info
+    uup_id, uupt_id, user_id, uup_time, uup_info, wl_id
   </sql>
+  
+  <select id="queryByUserAndWl" resultMap="BaseResultMap"  >
+    select 
+     uup_id, uup.uupt_id, user_id, uup_time, uup_info, uupt.uupt_info, uup.wl_id,  wl.wl_title, wt.wt_code , uupt.uupt_primary_point
+    from user_update_points  uup 
+    		left join user_update_points_type uupt  on uup.uupt_id = uupt.uupt_id
+    		left join work_list wl   on uup.wl_id = wl.wl_id
+    		left join work_type wt on wl.wt_id = wt.wt_id   
+    where user_id = #{userId}  and uup.wl_id = #{wlId}
+  </select>
+  
   <select id="queryByUser" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
-     uup_id, uup.uupt_id, user_id, uup_time, uup_info, uupt.uupt_info
-    from user_update_points  uup left join user_update_points_type uupt  on uup.uupt_id = uupt.uupt_id
+     uup_id, uup.uupt_id, user_id, uup_time, uup_info, uupt.uupt_info, uup.wl_id,  wl.wl_title, wt.wt_code
+    from user_update_points  uup 
+    		left join user_update_points_type uupt  on uup.uupt_id = uupt.uupt_id
+    		left join work_list wl   on uup.wl_id = wl.wl_id
+    		left join work_type wt on wl.wt_id = wt.wt_id   
     where user_id = #{value}
   </select>
+  
+  
+  
+  
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
@@ -30,9 +52,9 @@
   </delete>
   <insert id="insert" parameterType="com.yuzo.question.entity.UserUpdatePoints" >
     insert into user_update_points (uup_id, uupt_id, user_id, 
-      uup_time, uup_info)
+      uup_time, uup_info, wl_id)
     values (#{uupId,jdbcType=VARCHAR}, #{uuptId,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR}, 
-      #{uupTime,jdbcType=TIMESTAMP}, #{uupInfo,jdbcType=VARCHAR})
+      #{uupTime,jdbcType=TIMESTAMP}, #{uupInfo,jdbcType=VARCHAR}, #{wlId,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.yuzo.question.entity.UserUpdatePoints" >
     insert into user_update_points
@@ -52,6 +74,9 @@
       <if test="uupInfo != null" >
         uup_info,
       </if>
+      <if test="wlId != null  and wlId != '' " >
+        wl_id,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="uupId != null" >
@@ -68,6 +93,9 @@
       </if>
       <if test="uupInfo != null" >
         #{uupInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="wlId != null  and wlId != '' " >
+       #{wlId,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -86,6 +114,9 @@
       <if test="uupInfo != null" >
         uup_info = #{uupInfo,jdbcType=VARCHAR},
       </if>
+      <if test="wlId != null  and wlId != '' " >
+       wl_id = #{wlId,jdbcType=VARCHAR},
+      </if>
     </set>
     where uup_id = #{uupId,jdbcType=VARCHAR}
   </update>
@@ -94,6 +125,7 @@
     set uupt_id = #{uuptId,jdbcType=VARCHAR},
       user_id = #{userId,jdbcType=VARCHAR},
       uup_time = #{uupTime,jdbcType=TIMESTAMP},
+       wl_id = #{wlId,jdbcType=VARCHAR},
       uup_info = #{uupInfo,jdbcType=VARCHAR}
     where uup_id = #{uupId,jdbcType=VARCHAR}
   </update>

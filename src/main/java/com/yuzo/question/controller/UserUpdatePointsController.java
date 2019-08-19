@@ -24,6 +24,7 @@ import com.yuzo.question.entity.UserReplyList;
 import com.yuzo.question.entity.UserTeam;
 import com.yuzo.question.entity.UserUpdatePoints;
 import com.yuzo.question.entity.UserUpdatePointsType;
+import com.yuzo.question.entity.WorkList;
 import com.yuzo.question.page.SysUserPage;
 import com.yuzo.question.service.ISubjectCourseService;
 import com.yuzo.question.service.ISysUserService;
@@ -109,6 +110,10 @@ public class UserUpdatePointsController {
 		
 		List<UserUpdatePointsType> uuptList = userUpdatePointsService.queryUupt();
 		model.addAttribute("uuptList", uuptList);	
+		
+		List<WorkList> wlList = userUpdatePointsService.queryWl();
+		model.addAttribute("wlList", wlList);
+		
 		return "updatepoints/add_uup";
 	}
 	
@@ -135,6 +140,9 @@ public class UserUpdatePointsController {
 		UserUpdatePoints uup = userUpdatePointsService.queryUupById(uupId);
 		System.out.println(uup);
 		model.addAttribute("uupt", uup);
+		
+		List<WorkList> wlList = userUpdatePointsService.queryWl();
+		model.addAttribute("wlList", wlList);
 		
 		return "updatepoints/edit_uup";
 	}

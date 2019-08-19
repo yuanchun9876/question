@@ -4,12 +4,12 @@
 	<head>
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
-		<title>添加页面</title>
+		<title>修改页面</title>
 		<!-- Tell the browser to be responsive to screen width -->
 		<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-	  <include th:replace="/common/css :: commoncss"/>
-		
-		
+  		
+  		<include th:replace="/common/css :: commoncss"/>
+				
 		<style type="text/css">
 			
 			.content-wrapper {
@@ -27,24 +27,24 @@
 			<div class="content-wrapper">
 				<!-- Content Header (Page header) -->
 				<section class="content-header">
-					<h1  th:text="${user.nickName + '  调整分数'}">
-          				调整分数
+					<h1>
+          				作业修改
 			        </h1>
-			       <ol class="breadcrumb">
-						<li>
+			        <ol class="breadcrumb">
+			        	<li>
 							<a th:href="@{/dashboard}"><i class="glyphicon glyphicon-globe"></i>导航</a>
 						</li>
 						<li class="active">
-							<a href="#">调整分数</a>
+							<a href="#">作业修改</a>
 						</li>
-					</ol>
+			        </ol>
 				</section>
 
 				<!-- Main content -->
 				<section class="content">
 					<div class="row">
-						<form class="form form-horizontal" method="post"    th:action="@{/updatepoints/addSave}"  >
-							<input name="userId"  th:value="${user.userId}"  type="hidden"   >
+						<form class="form form-horizontal" method="post"   th:action="@{/worklist/editSave}"  th:object="${wl}" >
+							<input type="hidden" name="wlId"  th:field="*{wlId}"  >
 							<!-- left column -->
 							<div class="col-md-8 col-md-offset-2">
 								<!-- general form elements -->
@@ -58,30 +58,35 @@
 									<!-- /.box-header -->
 									<!-- form start -->
 									<div class="box-body">
-										<div class="form-group">
-											<label for="name" class="col-sm-2 control-label">调分类型</label>
-											<div class="col-sm-4">
-												<select class="form-control" name="uuptId"   required="required"   >
-													<option value="">请选择</option>
-													<option  th:value = "${uupt.uuptId}"   th:each="uupt,i:${uuptList}"   th:text="${uupt.uuptInfo }"  >所属班级</option>
-												</select>
-											</div>
-											<label for="name" class="col-sm-2 control-label">作业列表</label>
-											<div class="col-sm-4">
-												<select class="form-control" name="uuptId"   >
-													<option value="">请选择</option>
-													<option  th:value = "${wl.wlId}"   th:each="wl,i:${wlList}"   th:text="${wl.wtName +'.'+ wl.wlTitle }"  >所属班级</option>
-												</select>
+											<div class="form-group">
+											<label for="name" class="col-sm-2 control-label">作业名称</label>
+											<div class="col-sm-10">
+												<input type="text" class="form-control" name="wlTitle" th:field="*{wlTitle}"    placeholder="请您输入作业名称" required="required">
 											</div>
 										</div>
 									
 										<div class="form-group">
-											<label for="name" class="col-sm-2 control-label">调分说明</label>
-											<div class="col-sm-10">
-												<textarea type="text" class="form-control" name="uupInfo"  placeholder="请输入调分说明" required="required"></textarea>
+											<label for="cardid" class="col-sm-2 control-label">作业序号</label>
+											<div class="col-sm-4">
+												<input type="number" class="form-control" name='wlNum' th:field="*{wlNum}"  placeholder="请您输入作业序号"  required="required">
 											</div>
+											<label for="cardid" class="col-sm-2 control-label">作业类型</label>
+											<div class="col-sm-4">
+												<select class="form-control" name="wtId"  th:field="*{wtId}"  >
+													<option  value = "" >请选择</option>													
+													<option  th:value = "${wt.wtId }"   th:each="wt,i:${wtList}"    th:text="${wt.wtName }" >所属科目</option>											
+												</select>
+											</div>
+											
 										</div>
-															
+										<div class="form-group">
+											<label for="cardid" class="col-sm-2 control-label">作业说明</label>
+											<div class="col-sm-10 ">
+									       		<textarea rows="3" name="wlInfo"   class="form-control" th:field="*{wlInfo}"   placeholder="请您输入作业说明" ></textarea>
+											</div>
+										</div>	
+									
+									</div>
 									<!-- /.box-body -->
 									<div class="box-footer">
 										<button type="button" class="btn btn-danger" onclick="cleanUp(this)">清空</button>
@@ -102,12 +107,29 @@
 			<!-- /.content-wrapper -->
 		
 		</div>
+		
 		<div th:replace="/common/js :: commonjs"></div>
 	</body>
-	
-	<script type="text/javascript">
-		
 
+
+
+	<script type="text/javascript">
+	
+		function singleSubjCode(subjCode){
+			if($("#oldCode").val() != subjCode.value){
+				$.post("/subj/singleSubjCode",{"subjCode":subjCode.value},function(resp){
+					if(resp == "no"){
+						$("#msg").html("<font color='red'>已使用</font>");
+						subjCode.setCustomValidity("已使用");  
+					}else{
+						$("#msg").html("<font color='green'>可以用</font>");
+						subjCode.setCustomValidity("");  
+					}
+				})
+			}
+		}
+	
+		
 		//清空
 		function cleanUp(btn) {
 			parDiv = $(btn).parent().parent();

@@ -5,6 +5,7 @@ import java.util.List;
 import com.yuzo.question.entity.UserReplyList;
 import com.yuzo.question.entity.UserUpdatePoints;
 import com.yuzo.question.entity.UserUpdatePointsType;
+import com.yuzo.question.entity.WorkList;
 
 public interface IUserUpdatePointsService {
 
@@ -24,5 +25,7 @@ public interface IUserUpdatePointsService {
 	int save(UserUpdatePoints uup);
 
 	UserUpdatePoints queryUupById(String uupId);
+
+	List<WorkList> queryWl();
 
 }

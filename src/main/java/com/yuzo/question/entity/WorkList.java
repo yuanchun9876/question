@@ -13,12 +13,14 @@ public class WorkList {
     
     private String wtName;
     
+    private String wtCode;
+    
     
     
 
     @Override
 	public String toString() {
-		return "WorkList [wlId=" + wlId + ", wtId=" + wtId + ", wlTitle=" + wlTitle + ", wlInfo=" + wlInfo + ", wlNum="
+		return "WorkList [wlId=" + wlId + ", wtId=" + wtId + ", wlTitle=" + wlTitle + ", wtCode=" + wtCode + ", wlInfo=" + wlInfo + ", wlNum="
 				+ wlNum + ", wtName=" + wtName + "]";
 	}
 
@@ -68,6 +70,14 @@ public class WorkList {
 
 	public void setWtName(String wtName) {
 		this.wtName = wtName;
+	}
+
+	public String getWtCode() {
+		return wtCode;
+	}
+
+	public void setWtCode(String wtCode) {
+		this.wtCode = wtCode;
 	}
     
     

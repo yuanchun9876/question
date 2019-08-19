@@ -15,6 +15,14 @@ public class UserUpdatePoints {
     
     private String uuptInfo;
     
+    private Integer uuptPrimaryPoint;
+    
+    private String wlId;
+    
+    private String wlTitle;
+    
+    private String wtCode;
+    
     
     
 
@@ -65,4 +73,38 @@ public class UserUpdatePoints {
     public void setUupInfo(String uupInfo) {
         this.uupInfo = uupInfo == null ? null : uupInfo.trim();
     }
+
+	public String getWlId() {
+		return wlId;
+	}
+
+	public void setWlId(String wlId) {
+		this.wlId = wlId;
+	}
+
+	public String getWlTitle() {
+		return wlTitle;
+	}
+
+	public void setWlTitle(String wlTitle) {
+		this.wlTitle = wlTitle;
+	}
+
+	public String getWtCode() {
+		return wtCode;
+	}
+
+	public void setWtCode(String wtCode) {
+		this.wtCode = wtCode;
+	}
+
+	public Integer getUuptPrimaryPoint() {
+		return uuptPrimaryPoint;
+	}
+
+	public void setUuptPrimaryPoint(Integer uuptPrimaryPoint) {
+		this.uuptPrimaryPoint = uuptPrimaryPoint;
+	}
+    
+    
 }
