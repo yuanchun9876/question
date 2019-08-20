@@ -115,26 +115,29 @@ public class WorkListServiceImpl implements IWorkListService{
 				proints.add(p);
 				switch (p) {
 				case 3:
-					levels.add("<font color='#3F48CC'>优秀</font>");
+					levels.add("<button type=\"button\" class=\"btn btn-primary btn-xs\">优秀</button>");
 					break;
 				case 5:
-					levels.add("<font color='#3F48CC'>优秀</font>");
+					levels.add("<button type=\"button\" class=\"btn btn-primary btn-xs\">优秀</button>");
 					break;
 				case 1:
-					levels.add("<font color='#FFC000'>一般</font>");
+					levels.add("<button type=\"button\" class=\"btn btn-info btn-xs\">一般</button>");
 					break;
 				case 2:
-					levels.add("<font color='#FFC000'>一般</font>");
+					levels.add("<button type=\"button\" class=\"btn btn-info btn-xs\">一般</button>");
 					break;
 				case 0:
-					levels.add("<font color='#808080'>无</font>");
+					levels.add("<button type=\"button\" class=\"btn  btn-xs\">无</button>");
+					break;
+				case -1:
+					levels.add("<button type=\"button\" class=\"btn btn-warning btn-xs\">不完整</button>");
 					break;
 				case -2:
-					levels.add("<font color='red'>未完成</font>");
+					levels.add("<button type=\"button\" class=\"btn btn-danger btn-xs\">未完成</button>");
 					break;
 
 				default:
-					levels.add("<font color='#808080'>无</font>");
+					levels.add("<button type=\"button\" class=\"btn  btn-xs\">无</button>");
 					break;
 				}
 				
