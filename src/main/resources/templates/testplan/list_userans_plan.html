@@ -32,13 +32,13 @@
       <!-- Content Header (Page header) -->
       <section class="content-header">
         <h1>
-         	测试方案查询
+         	训练结果查询
         </h1>
         <ol class="breadcrumb">
        <li>
 			<a th:href="@{/dashboard}"><i class="glyphicon glyphicon-globe"></i>导航</a>
 		</li>
-          <li class="active"><a href="#">测试方案查询</a></li>
+          <li class="active"><a href="#">训练结果查询</a></li>
         </ol>
       </section>
   
@@ -54,31 +54,24 @@
         				<th>序号</th>
         			
         				<th>方案名称</th>     				
-        				<th>开始时间</th>
-        				<th>结束时间</th>
-        				<th>类型</th>        				
+        				<th>训练时间</th>
+        				<th>结果</th>       				
 						<th>操作</th>
         			</tr>
         		
         		
         			<tbody th:remove="all-but-first" >       			  	
-        			<tr  th:each="row,i:${planlist}" >
+        			<tr  th:each="row,i:${list}" >
         			  <td  th:text="${i.count }" >1</td>
         			  
         				<td  th:text="${row.tpTitle}"  >${unit.subjUnitTitle }</td>
-        				<td  th:text="${#dates.format(row.tpBeginDate, 'yyyy-MM-dd')}" >${unit.subjTitle }</td>
-        				<td  th:text="${#dates.format(row.tpEndDate, 'yyyy-MM-dd')}" >${unit.subjUnitNum }</td>
-        				<td th:switch="${row.tpType}">
-								<span  th:case="'1'">固定出题</span>
-								<span  th:case="'0'">随机出题</span>
-								<span  th:case="'3'">训练</span>
-						</td>
+        				<td  th:text="${#dates.format(row.utsTime, 'yyyy-MM-dd')}" >${unit.subjTitle }</td>
+        				<td  th:text="${row.utsTotal}" >${unit.subjUnitNum }</td>
+        			
         				
 						<td>
 						
-							<button type="button" class="btn btn-danger btn-sm"  th:unless="${row.tpType eq '3' }"  th:onclick="openpaper([[${row.tpId}]])"  onclick="javascript:editpage('1')">打开试卷</button>
-							<button type="button" class="btn btn-warning btn-sm"  th:if="${row.tpType eq '3' }"  th:onclick="openpaper([[${row.tpId}]], [[${row.tpType}]])"  onclick="javascript:editpage('1')">开始训练</button>
-							<button type="button" class="btn btn-info btn-sm"  th:if="${row.tpType eq '3' }"  th:onclick="ansList([[${row.tpId}]])"  onclick="javascript:editpage('1')">查看成绩</button>
+							<button type="button" class="btn btn-danger btn-sm"    th:onclick="openpaper([[${row.tpId}]],[[${row.utsId}]])"  onclick="javascript:editpage('1')">打开试卷</button>
 							
 						</td>
         			</tr>
@@ -109,15 +102,11 @@
 	  
 
 	
-	function openpaper(id, type){
-		location.href = "/testplan/openpaper?tpId=" + id + "&tpType=" + type; 
+	function openpaper(id, utsId){
+		location.href = "/testplan/openpaper?tpId=" + id + "&utsId=" + utsId ; 
 	}
 	
-	function ansList(tpId){
-		
-		location.href = "/testplan/userAnsList?tpId=" + tpId;
-	}
-
+	
 </script>
 
 </html>

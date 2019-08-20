@@ -70,5 +70,7 @@ public interface ITestPlanService {
 
 	int setScore(String tpId, String[] userIds, String[] points);
 
+	UserTestList queryUtlById(String utsId);
+
 	
 }

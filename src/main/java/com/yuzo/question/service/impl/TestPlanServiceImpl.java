@@ -694,6 +694,12 @@ public class TestPlanServiceImpl implements ITestPlanService {
 		return count;
 	}
 
+	@Override
+	public UserTestList queryUtlById(String utsId) {
+		// TODO Auto-generated method stub
+		return utlMapper.selectByPrimaryKey(utsId);
+	}
+
 	
 
 	

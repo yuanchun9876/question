@@ -28,13 +28,17 @@
   </select>
   
   <select id="queryByUser" resultMap="BaseResultMap" parameterType="java.lang.String" >
-    select 
-     uup_id, uup.uupt_id, user_id, uup_time, uup_info, uupt.uupt_info, uup.wl_id,  wl.wl_title, wt.wt_code
-    from user_update_points  uup 
-    		left join user_update_points_type uupt  on uup.uupt_id = uupt.uupt_id
-    		left join work_list wl   on uup.wl_id = wl.wl_id
-    		left join work_type wt on wl.wt_id = wt.wt_id   
-    where user_id = #{value}
+    SELECT 
+     uup_id, uup.uupt_id, uup.user_id, uup_time, uup_info, uupt.uupt_info, uup.wl_id,  wl.wl_title, wt.wt_code
+    FROM user_update_points  uup 
+    		LEFT JOIN user_update_points_type uupt  ON uup.uupt_id = uupt.uupt_id
+    		LEFT JOIN work_list wl   ON uup.wl_id = wl.wl_id
+    		LEFT JOIN work_type wt ON wl.wt_id = wt.wt_id   
+    		LEFT JOIN user_class_history  hh ON hh.user_id = uup.user_id  AND uc_state='1'
+    		
+    		
+    WHERE uup.user_id = #{value}  AND uup_time > hh.uc_in_date
+    
   </select>
   
   

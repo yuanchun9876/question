@@ -5,6 +5,7 @@
     <id column="uts_id" property="utsId" jdbcType="VARCHAR" />
     <result column="tp_id" property="tpId" jdbcType="VARCHAR" />
     <result column="user_id" property="userId" jdbcType="VARCHAR" />
+    <result column="TP_TITLE" property="tpTitle" jdbcType="VARCHAR" />
     <result column="uts_time" property="utsTime" jdbcType="TIMESTAMP" />
     <result column="uts_total" property="utsTotal" jdbcType="INTEGER" />
   </resultMap>
@@ -14,9 +15,10 @@
   
   <select id="queryByUserAndTp" resultMap="BaseResultMap" >
     select 
-    <include refid="Base_Column_List" />
-    from user_test_list
-    where user_id = #{userId} and tp_id = #{tpId}
+    uts_id, utl.tp_id, user_id, uts_time, uts_total , tp.TP_TITLE
+    from user_test_list  utl  left join test_plan tp  on  tp.tp_id = utl.tp_id 
+    where user_id = #{userId} and utl.tp_id = #{tpId}
+    order by uts_time desc
   </select>
   
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >

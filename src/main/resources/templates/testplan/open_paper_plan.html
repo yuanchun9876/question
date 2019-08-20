@@ -46,7 +46,8 @@
 				<section class="content">
 					<div class="row">
 						<form class="form form-horizontal" method="post"     th:action="@{/testplan/answerSave}"  onsubmit="return(doSub())"  >
-							<input  type="hidden"  name="tpId"  th:value="${tpId}" >
+							<input  type="hidden"  name="tpId"  th:value="${plan.tpId}" >
+							<input  type="hidden"  name="tpType"  th:value="${plan.tpType}" >
 							<!-- left column -->
 							<div class="col-md-10 col-md-offset-1">
 							
@@ -139,9 +140,9 @@
 								</div>
 								
 								
-								<div class="box-footer">
+								<div class="box-footer">									
+									<button type="submit"    class="btn btn-info btn-lg pull-right">提交</button>
 									
-									<button type="submit" class="btn btn-info btn-lg pull-right">提交</button>
 								</div>
 								<!-- /.box-footer -->
 								
@@ -180,6 +181,7 @@
 			return true;
 		}
 	
+		
 		
 	
 	 	$(function () {

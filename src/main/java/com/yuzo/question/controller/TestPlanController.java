@@ -90,16 +90,23 @@ public class TestPlanController {
 	}
 	
 	@RequestMapping("/openpaper")
-	public String openpaper(String tpId, HttpSession session, Model model) {
+	public String openpaper(String tpId, String tpType, String utsId, HttpSession session, Model model) {
 		
 		SysUser user = (SysUser) session.getAttribute("user");
-		
+		//System.out.println("user:" + user.getNickName());
 		// 判断是否已经答完题
 		List<UserTestList> utlist = testPlanService.queryByUserAndTp(user.getUserId(), tpId);
+		System.out.println("utlist:" + utlist);
 		
-		if (utlist!=null && utlist.size()>0) {
-			TestPlan tp = testPlanService.queryById(tpId);
-			UserTestList utl = utlist.get(0);
+		if (!"3".equals(tpType)  &&  utlist!=null  &&  utlist.size()>0 ) {
+			UserTestList utl = null;
+			if(utsId!=null && !"".equals(utsId)) {
+				utl = testPlanService.queryUtlById(utsId);
+			}else {
+				TestPlan tp = testPlanService.queryById(tpId);
+				utl = utlist.get(0);
+			}
+			
 			model.addAttribute("utl", utl);
 			
 			List<UserAnswerList> ualList0 = testPlanService.queryUalBy(utl.getUtsId(), "0");			
@@ -131,11 +138,14 @@ public class TestPlanController {
 			return "testplan/show_paper_plan";
 			
 		} else {
-			model.addAttribute("tpId", tpId);
-			session.setMaxInactiveInterval(5*60*60);
+			
+		//	session.setMaxInactiveInterval(5*60*60);
 			
 			TestPlan plan = testPlanService.queryById(tpId);
-			if("0".equals(plan.getTpType())) {
+			model.addAttribute("plan", plan);
+			System.out.println("type:" + plan.getTpType());
+			// 随机 0   或者  测试 3
+			if("0".equals(plan.getTpType()) ||  "3".equals(plan.getTpType())) {
 				
 				// 类型
 				List<TestPlanDetailed> typeList = testPlanService.queryQstnType(tpId);
@@ -149,7 +159,7 @@ public class TestPlanController {
 				for (TestPlanDetailed tpdType : typeList) {
 					
 					// 单选
-					if("0".equals(tpdType.getQstnTypeId())) {
+					if("0".equals(tpdType.getQstnTypeId())  ) {
 						List<Question> qstnList0 = new ArrayList<>();
 						
 						for (TestPlanDetailed tpdFrom : fromList) {
@@ -239,9 +249,11 @@ public class TestPlanController {
 			
 			return "testplan/open_paper_plan";
 		}
-		
-	
 	}
+	
+	
+	
+
 	
 	@RequestMapping("addPage")
 	public String addPage(HttpSession session, Model model) {
@@ -334,7 +346,7 @@ public class TestPlanController {
 //		System.out.println(Arrays.toString(qstns0));
 //		System.out.println(Arrays.toString(ans0));
 		
-		request.getSession().setMaxInactiveInterval(1800);
+		//request.getSession().setMaxInactiveInterval(1800);
 		
 		SysUser user = (SysUser) request.getSession().getAttribute("user");
 		
@@ -397,5 +409,13 @@ public class TestPlanController {
 		model.addAttribute("planlist", planlist);	
 	
 		return "testplan/list_plan_userclass";
+	}
+	
+	@RequestMapping("/userAnsList")
+	public String userAnsList(String tpId, HttpSession session, Model model) {
+		SysUser user = (SysUser) session.getAttribute("user");
+		List<UserTestList> list = testPlanService.queryByUserAndTp(user.getUserId(), tpId);
+		model.addAttribute("list", list);	
+		return "testplan/list_userans_plan";
 	}
 }

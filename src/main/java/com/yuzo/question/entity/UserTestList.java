@@ -12,6 +12,8 @@ public class UserTestList {
     private Date utsTime;
 
     private Integer utsTotal;
+    
+    private String tpTitle;
 
     public String getUtsId() {
         return utsId;
@@ -52,4 +54,13 @@ public class UserTestList {
     public void setUtsTotal(Integer utsTotal) {
         this.utsTotal = utsTotal;
     }
+
+	public String getTpTitle() {
+		return tpTitle;
+	}
+
+	public void setTpTitle(String tpTitle) {
+		this.tpTitle = tpTitle;
+	}
+    
 }
