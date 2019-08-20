@@ -81,8 +81,9 @@ public class WorkListController {
 	
 	@RequestMapping("/editPage")
 	public String editPage(String wlId,HttpSession session, Model model) {
-		
+		//System.out.println(wlId);
 		WorkList wl = workListService.queryById(wlId);
+		//System.out.println(wl);
 		model.addAttribute("wl", wl);
 		
 		List<WorkType> wtList = workListService.queryWt();

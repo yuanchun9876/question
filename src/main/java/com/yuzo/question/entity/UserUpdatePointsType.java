@@ -10,6 +10,8 @@ public class UserUpdatePointsType {
     private Integer uuptPrimaryPoint;
 
     private Integer uuptTeamPoint;
+    
+    private Integer uuptNum;
 
     public String getUuptId() {
         return uuptId;
@@ -50,4 +52,14 @@ public class UserUpdatePointsType {
     public void setUuptTeamPoint(Integer uuptTeamPoint) {
         this.uuptTeamPoint = uuptTeamPoint;
     }
+
+	public Integer getUuptNum() {
+		return uuptNum;
+	}
+
+	public void setUuptNum(Integer uuptNum) {
+		this.uuptNum = uuptNum;
+	}
+    
+    
 }

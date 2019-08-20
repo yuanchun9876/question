@@ -7,20 +7,21 @@
     <result column="uupt_type" property="uuptType" jdbcType="VARCHAR" />
     <result column="uupt_primary_point" property="uuptPrimaryPoint" jdbcType="INTEGER" />
     <result column="uupt_team_point" property="uuptTeamPoint" jdbcType="INTEGER" />
+    <result column="uupt_num" property="uuptNum" jdbcType="INTEGER" />
   </resultMap>
   <sql id="Base_Column_List" >
-    uupt_id, uupt_info, uupt_type, uupt_primary_point, uupt_team_point
+    uupt_id, uupt_info, uupt_type, uupt_primary_point, uupt_team_point, uupt_num
   </sql>
   
   <select id="queryAll" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
-   uupt_id, uupt_info,  uupt_primary_point, uupt_team_point
+   uupt_id, uupt_info,  uupt_primary_point, uupt_team_point, uupt_num
    ,case uupt_type 
    		when '0' then '个人'
    		when '1' then '团队'
    	end uupt_type
     from user_update_points_type
-   
+    order by uupt_num
   </select>
   
   
@@ -36,9 +37,9 @@
   </delete>
   <insert id="insert" parameterType="com.yuzo.question.entity.UserUpdatePointsType" >
     insert into user_update_points_type (uupt_id, uupt_info, uupt_type, 
-      uupt_primary_point, uupt_team_point)
+      uupt_primary_point, uupt_team_point, uupt_num)
     values (#{uuptId,jdbcType=VARCHAR}, #{uuptInfo,jdbcType=VARCHAR}, #{uuptType,jdbcType=VARCHAR}, 
-      #{uuptPrimaryPoint,jdbcType=INTEGER}, #{uuptTeamPoint,jdbcType=INTEGER})
+      #{uuptPrimaryPoint,jdbcType=INTEGER}, #{uuptTeamPoint,jdbcType=INTEGER}, #{uuptNum,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="com.yuzo.question.entity.UserUpdatePointsType" >
     insert into user_update_points_type
@@ -58,6 +59,9 @@
       <if test="uuptTeamPoint != null" >
         uupt_team_point,
       </if>
+      <if test="uuptNum != null" >
+        uupt_num,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="uuptId != null" >
@@ -74,6 +78,9 @@
       </if>
       <if test="uuptTeamPoint != null" >
         #{uuptTeamPoint,jdbcType=INTEGER},
+      </if>
+        <if test="uuptNum != null" >
+        #{uuptNum,jdbcType=INTEGER}
       </if>
     </trim>
   </insert>
@@ -92,6 +99,9 @@
       <if test="uuptTeamPoint != null" >
         uupt_team_point = #{uuptTeamPoint,jdbcType=INTEGER},
       </if>
+       <if test="uuptNum != null" >
+         uupt_num =  #{uuptNum,jdbcType=INTEGER}
+      </if>
     </set>
     where uupt_id = #{uuptId,jdbcType=VARCHAR}
   </update>
@@ -100,7 +110,8 @@
     set uupt_info = #{uuptInfo,jdbcType=VARCHAR},
       uupt_type = #{uuptType,jdbcType=VARCHAR},
       uupt_primary_point = #{uuptPrimaryPoint,jdbcType=INTEGER},
-      uupt_team_point = #{uuptTeamPoint,jdbcType=INTEGER}
+      uupt_team_point = #{uuptTeamPoint,jdbcType=INTEGER},
+       uupt_num =  #{uuptNum,jdbcType=INTEGER}
     where uupt_id = #{uuptId,jdbcType=VARCHAR}
   </update>
 </mapper>

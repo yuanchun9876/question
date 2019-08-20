@@ -65,6 +65,7 @@
         				<th>调分类型分类</th>
         				<th>主体分值</th>
         				<th>团队分值</th>
+        				<th>序号</th>      				
 						<th>操作</th>
         			</tr>
         			<form name="delForm"  method="post"  action="#"  th:action="@{/updatetype/dels}"  >    
@@ -76,6 +77,7 @@
 	       				<td th:text="${row.uuptType}">1</td>
 	       				<td th:text="${row.uuptPrimaryPoint}">JAVASE</td>
 	       				<td th:text="${row.uuptTeamPoint}">85</td>
+	       				<td th:text="${row.uuptNum}">85</td>
 						<td>
 							<button type="button" class="btn btn-primary btn-sm"  th:onclick="editpage([[${row.uuptId}]])"     onclick="javascript:editpage('1')"    >修改</button>
 						</td>

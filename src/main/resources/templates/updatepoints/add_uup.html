@@ -63,14 +63,14 @@
 											<div class="col-sm-4">
 												<select class="form-control" name="uuptId"   required="required"   >
 													<option value="">请选择</option>
-													<option  th:value = "${uupt.uuptId}"   th:each="uupt,i:${uuptList}"   th:text="${uupt.uuptInfo }"  >所属班级</option>
+													<option  th:value = "${uupt.uuptId}"   th:each="uupt,i:${uuptList}"   th:text="${uupt.uuptInfo }"  >调分类型</option>
 												</select>
 											</div>
 											<label for="name" class="col-sm-2 control-label">作业列表</label>
 											<div class="col-sm-4">
-												<select class="form-control" name="uuptId"   >
+												<select class="form-control" name="wlId"   >
 													<option value="">请选择</option>
-													<option  th:value = "${wl.wlId}"   th:each="wl,i:${wlList}"   th:text="${wl.wtName +'.'+ wl.wlTitle }"  >所属班级</option>
+													<option  th:value = "${wl.wlId}"   th:each="wl,i:${wlList}"   th:text="${wl.wtName +'.'+ wl.wlTitle }"  >作业列表</option>
 												</select>
 											</div>
 										</div>
