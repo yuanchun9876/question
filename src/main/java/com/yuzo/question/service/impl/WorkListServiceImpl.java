@@ -140,9 +140,6 @@ public class WorkListServiceImpl implements IWorkListService{
 					levels.add("<button type=\"button\" class=\"btn  btn-xs\">无</button>");
 					break;
 				}
-				
-				
-				
 			}
 			map.put("proints", proints);
 			map.put("levels", levels);
