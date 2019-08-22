@@ -117,6 +117,7 @@
 								
 								<button type="button" class="btn btn-danger" name="codeInfo"   onclick="javascript:editCode()" >代号</button>
 								<button type="button" class="btn btn-info" name="codeInfo"   onclick="javascript:totalCount()" >统计</button>
+								<button type="button" class="btn " name="codeInfo"   onclick="javascript:includeInfoCount()" >导入</button>
 							</div>
 						</div>
 					</form>
@@ -182,6 +183,11 @@
 	function totalCount(){
 		if(confirm("确认要统计数量吗?")){
 			$.post("/qstn/totalCount",function(resp){ console.log(resp) });
+		}
+	}
+	function includeInfoCount(){
+		if(confirm("确认要导入数据吗?")){
+			$.post("/qstn/includeInfoCount",{'oldId':'','newId':''},function(resp){ console.log(resp) });
 		}
 	}
 

@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yuzo.question.mapper.TopicMapper" >
+  <resultMap id="BaseResultMap" type="com.yuzo.question.entity.Topic" >
+    <id column="topic_id" property="topicId" jdbcType="INTEGER" />
+    <result column="subject_id" property="subjectId" jdbcType="VARCHAR" />
+    <result column="topic_name" property="topicName" jdbcType="VARCHAR" />
+    <result column="topic_answer_a" property="topicAnswerA" jdbcType="VARCHAR" />
+    <result column="topic_answer_b" property="topicAnswerB" jdbcType="VARCHAR" />
+    <result column="topic_answer_c" property="topicAnswerC" jdbcType="VARCHAR" />
+    <result column="topic_answer_d" property="topicAnswerD" jdbcType="VARCHAR" />
+    <result column="topic_answer_true" property="topicAnswerTrue" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    topic_id, subject_id, topic_name, topic_answer_a, topic_answer_b, topic_answer_c, 
+    topic_answer_d, topic_answer_true
+  </sql>
+  
+  <select id="queryBySub" resultMap="BaseResultMap" >
+    select 
+    <include refid="Base_Column_List" />
+    from topic
+    where subject_id = #{value,jdbcType=INTEGER}
+  </select>
+  
+  
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from topic
+    where topic_id = #{topicId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from topic
+    where topic_id = #{topicId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.yuzo.question.entity.Topic" >
+    insert into topic (topic_id, subject_id, topic_name, 
+      topic_answer_a, topic_answer_b, topic_answer_c, 
+      topic_answer_d, topic_answer_true)
+    values (#{topicId,jdbcType=INTEGER}, #{subjectId,jdbcType=VARCHAR}, #{topicName,jdbcType=VARCHAR}, 
+      #{topicAnswerA,jdbcType=VARCHAR}, #{topicAnswerB,jdbcType=VARCHAR}, #{topicAnswerC,jdbcType=VARCHAR}, 
+      #{topicAnswerD,jdbcType=VARCHAR}, #{topicAnswerTrue,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.yuzo.question.entity.Topic" >
+    insert into topic
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="topicId != null" >
+        topic_id,
+      </if>
+      <if test="subjectId != null" >
+        subject_id,
+      </if>
+      <if test="topicName != null" >
+        topic_name,
+      </if>
+      <if test="topicAnswerA != null" >
+        topic_answer_a,
+      </if>
+      <if test="topicAnswerB != null" >
+        topic_answer_b,
+      </if>
+      <if test="topicAnswerC != null" >
+        topic_answer_c,
+      </if>
+      <if test="topicAnswerD != null" >
+        topic_answer_d,
+      </if>
+      <if test="topicAnswerTrue != null" >
+        topic_answer_true,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="topicId != null" >
+        #{topicId,jdbcType=INTEGER},
+      </if>
+      <if test="subjectId != null" >
+        #{subjectId,jdbcType=VARCHAR},
+      </if>
+      <if test="topicName != null" >
+        #{topicName,jdbcType=VARCHAR},
+      </if>
+      <if test="topicAnswerA != null" >
+        #{topicAnswerA,jdbcType=VARCHAR},
+      </if>
+      <if test="topicAnswerB != null" >
+        #{topicAnswerB,jdbcType=VARCHAR},
+      </if>
+      <if test="topicAnswerC != null" >
+        #{topicAnswerC,jdbcType=VARCHAR},
+      </if>
+      <if test="topicAnswerD != null" >
+        #{topicAnswerD,jdbcType=VARCHAR},
+      </if>
+      <if test="topicAnswerTrue != null" >
+        #{topicAnswerTrue,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.yuzo.question.entity.Topic" >
+    update topic
+    <set >
+      <if test="subjectId != null" >
+        subject_id = #{subjectId,jdbcType=VARCHAR},
+      </if>
+      <if test="topicName != null" >
+        topic_name = #{topicName,jdbcType=VARCHAR},
+      </if>
+      <if test="topicAnswerA != null" >
+        topic_answer_a = #{topicAnswerA,jdbcType=VARCHAR},
+      </if>
+      <if test="topicAnswerB != null" >
+        topic_answer_b = #{topicAnswerB,jdbcType=VARCHAR},
+      </if>
+      <if test="topicAnswerC != null" >
+        topic_answer_c = #{topicAnswerC,jdbcType=VARCHAR},
+      </if>
+      <if test="topicAnswerD != null" >
+        topic_answer_d = #{topicAnswerD,jdbcType=VARCHAR},
+      </if>
+      <if test="topicAnswerTrue != null" >
+        topic_answer_true = #{topicAnswerTrue,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where topic_id = #{topicId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.yuzo.question.entity.Topic" >
+    update topic
+    set subject_id = #{subjectId,jdbcType=VARCHAR},
+      topic_name = #{topicName,jdbcType=VARCHAR},
+      topic_answer_a = #{topicAnswerA,jdbcType=VARCHAR},
+      topic_answer_b = #{topicAnswerB,jdbcType=VARCHAR},
+      topic_answer_c = #{topicAnswerC,jdbcType=VARCHAR},
+      topic_answer_d = #{topicAnswerD,jdbcType=VARCHAR},
+      topic_answer_true = #{topicAnswerTrue,jdbcType=VARCHAR}
+    where topic_id = #{topicId,jdbcType=INTEGER}
+  </update>
+</mapper>

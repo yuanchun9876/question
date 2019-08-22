@@ -56,4 +56,6 @@ public interface IQuestionService {
 
 	void totalCount();
 
+	int includeInfoCount(String oldId, String newId);
+
 }

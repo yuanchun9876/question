@@ -119,6 +119,15 @@ public class QuestionController {
 
 		return "ok";
 	}
+	@RequestMapping("/includeInfoCount")
+	@ResponseBody
+	public String includeInfoCount(String oldId, String newId){
+		
+		System.out.println("includeInfoCount");
+		int count = qstnService.includeInfoCount(oldId, newId);
+		
+		return "" + count;
+	}
 	
 	
 	

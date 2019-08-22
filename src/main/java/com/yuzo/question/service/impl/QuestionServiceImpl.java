@@ -3,6 +3,7 @@ package com.yuzo.question.service.impl;
 import java.io.File;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,6 +18,7 @@ import com.yuzo.question.entity.QuestionType;
 import com.yuzo.question.entity.SubjSection;
 import com.yuzo.question.entity.SubjUnit;
 import com.yuzo.question.entity.SubjectCourse;
+import com.yuzo.question.entity.Topic;
 import com.yuzo.question.mapper.AnswerMapper;
 import com.yuzo.question.mapper.QstnFromTypeMapper;
 import com.yuzo.question.mapper.QuestionMapper;
@@ -24,6 +26,7 @@ import com.yuzo.question.mapper.QuestionTypeMapper;
 import com.yuzo.question.mapper.SubjSectionMapper;
 import com.yuzo.question.mapper.SubjUnitMapper;
 import com.yuzo.question.mapper.SubjectCourseMapper;
+import com.yuzo.question.mapper.TopicMapper;
 import com.yuzo.question.page.QuestionPage;
 import com.yuzo.question.page.SubjSectionPage;
 import com.yuzo.question.service.IQuestionService;
@@ -55,6 +58,10 @@ public class QuestionServiceImpl implements IQuestionService{
 	
 	@Autowired
 	private AnswerMapper ansMapper;
+	
+	
+	@Autowired
+	private TopicMapper topicMapper;
 
 	@Override
 	public List<QstnFromType> queryQstnFrom() {
@@ -265,5 +272,56 @@ public class QuestionServiceImpl implements IQuestionService{
 		
 		
 		
+	}
+
+	@Override
+	public int includeInfoCount(String oldId, String newId) {
+		// TODO Auto-generated method stub
+//		System.out.println(oldId);
+//		System.out.println(newId);
+		int count = 0;
+		List<Topic> oldList = topicMapper.queryBySub(oldId);
+		System.out.println(oldList);
+		for (Topic topic : oldList) {
+			Question qstn = new Question();
+			String qstnId = UUID.randomUUID().toString();
+			qstn.setQstnId(qstnId);
+			qstn.setQstnTypeId("0");
+			qstn.setQstnFromTypeId("1");
+			qstn.setSubjSctnId(newId);
+			qstn.setQstnInputTime(new Date());
+			qstn.setQstnTitle("<p>" + topic.getTopicName() +"</p>");
+			count += qstnMapper.insertSelective(qstn);
+			
+			Answer ansa = new Answer();//ansMapper.selectByPrimaryKey("");
+			ansa.setAnsId(UUID.randomUUID().toString());
+			ansa.setQstnId(qstnId);
+			ansa.setAnsContent("<p>" + topic.getTopicAnswerA()  +"</p>");
+			ansa.setAnsIsright("A".equals(topic.getTopicAnswerTrue())?"1":"0");
+			ansMapper.insertSelective(ansa);
+			
+			Answer ansb = new Answer();
+			ansb.setAnsId(UUID.randomUUID().toString());
+			ansb.setQstnId(qstnId);
+			ansb.setAnsContent("<p>" + topic.getTopicAnswerB()  +"</p>");
+			ansb.setAnsIsright("B".equals(topic.getTopicAnswerTrue())?"1":"0");
+			ansMapper.insertSelective(ansb);
+			
+			Answer ansc = new Answer();
+			ansc.setAnsId(UUID.randomUUID().toString());
+			ansc.setQstnId(qstnId);
+			ansc.setAnsContent("<p>" + topic.getTopicAnswerC()  +"</p>");
+			ansc.setAnsIsright("C".equals(topic.getTopicAnswerTrue())?"1":"0");
+			ansMapper.insertSelective(ansc);
+			
+			Answer ansd = new Answer();
+			ansd.setAnsId(UUID.randomUUID().toString());
+			ansd.setQstnId(qstnId);
+			ansd.setAnsContent("<p>" + topic.getTopicAnswerD()  +"</p>");
+			ansd.setAnsIsright("D".equals(topic.getTopicAnswerTrue())?"1":"0");
+			ansMapper.insertSelective(ansd);
+		}
+				
+		return count;
 	}
 }
