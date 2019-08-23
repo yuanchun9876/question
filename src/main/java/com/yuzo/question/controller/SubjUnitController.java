@@ -117,9 +117,9 @@ public class SubjUnitController {
 	
 	@RequestMapping("/singleUnitCode")
 	@ResponseBody
-	public String singleUnitCode(String unitCode) {
+	public String singleUnitCode(String unitCode, String subjId) {
 		
-		List<SubjUnit> unitList = subjUnitService.queryByCode(unitCode);
+		List<SubjUnit> unitList = subjUnitService.queryByCode(unitCode, subjId);
 		if (unitList!=null && unitList.size()>0) {
 			return "no";
 		} else {

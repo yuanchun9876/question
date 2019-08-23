@@ -71,11 +71,11 @@
   	order by SUBJ_SCTN_NUM
   </select>
   
-  <select id="queryByCode" resultMap="BaseResultMap" parameterType="java.lang.String" >
+  <select id="queryByCode" resultMap="BaseResultMap"  >
     select 
     <include refid="Base_Column_List" />
     from subj_section
-    where SUBJ_SCTN_CODE = #{value}
+    where SUBJ_SCTN_CODE = #{sctnCode} and SUBJ_UNIT_ID = #{subjUnitId}
   </select>
   
   

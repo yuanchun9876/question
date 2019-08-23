@@ -30,6 +30,6 @@ public interface ISubjUnitService {
 
 	List<SubjUnit> queryPage(SubjUnitPage page);
 
-	List<SubjUnit> queryByCode(String unitCode);
+	List<SubjUnit> queryByCode(String unitCode, String subjId);
 
 }

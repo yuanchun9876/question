@@ -2,6 +2,8 @@ package com.yuzo.question.mapper;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+
 import com.yuzo.question.entity.SubjUnit;
 import com.yuzo.question.page.SubjUnitPage;
 
@@ -30,5 +32,5 @@ public interface SubjUnitMapper {
 
 	List<SubjUnit> queryPage(SubjUnitPage page);
 
-	List<SubjUnit> queryByCode(String unitCode);
+	List<SubjUnit> queryByCode(@Param("unitCode")String unitCode, @Param("subjId")String subjId);
 }

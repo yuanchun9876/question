@@ -77,9 +77,9 @@ public class SubjSectionController {
 	
 	@RequestMapping("/singleSctnCode")
 	@ResponseBody
-	public String singleSctnCode(String sctnCode) {
+	public String singleSctnCode(String sctnCode, String subjUnitId) {
 		
-		List<SubjSection> sctnList = subjSctnService.queryByCode(sctnCode);
+		List<SubjSection> sctnList = subjSctnService.queryByCode(sctnCode, subjUnitId);
 		if (sctnList!=null && sctnList.size()>0) {
 			return "no";
 		} else {

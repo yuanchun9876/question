@@ -71,7 +71,7 @@
 											</div>
 											<label for="birth" class="col-sm-2 control-label">所属章</label>
 											<div class="col-sm-4">
-												<select class="form-control" name="subjUnitId"  th:field="*{subjUnitId}"  id="unitSelect" >
+												<select class="form-control" name="subjUnitId"     th:field="*{subjUnitId}"  id="unitSelect" >
 													<option  value = "" >请选择</option>
 													<option  th:value = "${unit.subjUnitId }"   th:each="unit,i:${unitList}"   th:text="${unit.subjUnitTitle}"   >${unit.subjUnitTitle }</option>													
 											
@@ -119,7 +119,12 @@
 	<script type="text/javascript">
 	function singleSctnCode(sctnCode){
 		if($("#oldCode").val() != sctnCode.value){	
-		$.post("/subjSctn/singleSctnCode",{"sctnCode":sctnCode.value},function(resp){
+		var	subjUnitId = $("#unitSelect").val();
+		if(subjUnitId == null  ||  subjUnitId == ""){
+			alert("请选择知识章!");
+			return;
+		}
+		$.post("/subjSctn/singleSctnCode",{"sctnCode":sctnCode.value,"subjUnitId":subjUnitId},function(resp){
 			if(resp == "no"){
 				$("#msg").html("<font color='red'>已使用</font>");
 				sctnCode.setCustomValidity("已使用");  

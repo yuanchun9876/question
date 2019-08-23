@@ -38,6 +38,6 @@ public interface ISubjSectionService {
 
 	List<Map<String, Object>> queryTree();
 
-	List<SubjSection> queryByCode(String sctnCode);
+	List<SubjSection> queryByCode(String sctnCode, String subjUnitId);
 
 }

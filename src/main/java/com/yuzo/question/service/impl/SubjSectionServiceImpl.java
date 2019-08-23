@@ -52,7 +52,7 @@ public class SubjSectionServiceImpl implements ISubjSectionService{
 	@Override
 	public int save(SubjSection sctn) {
 		// TODO Auto-generated method stub
-		
+		sctn.setSubjSctnCode(sctn.getSubjSctnCode().toLowerCase());
 		return sctnMapper.insertSelective(sctn);
 	}
 
@@ -81,6 +81,7 @@ public class SubjSectionServiceImpl implements ISubjSectionService{
 	@Override
 	public int update(SubjSection sctn) {
 		// TODO Auto-generated method stub
+		sctn.setSubjSctnCode(sctn.getSubjSctnCode().toLowerCase());
 		return sctnMapper.updateByPrimaryKeySelective(sctn);
 	}
 
@@ -147,8 +148,10 @@ public class SubjSectionServiceImpl implements ISubjSectionService{
 	}
 
 	@Override
-	public List<SubjSection> queryByCode(String sctnCode) {
+	public List<SubjSection> queryByCode(String sctnCode, String subjUnitId) {
 		// TODO Auto-generated method stub
-		return sctnMapper.queryByCode(sctnCode);
+		System.out.println(sctnCode);
+		System.out.println(subjUnitId);
+		return sctnMapper.queryByCode(sctnCode, subjUnitId);
 	}
 }

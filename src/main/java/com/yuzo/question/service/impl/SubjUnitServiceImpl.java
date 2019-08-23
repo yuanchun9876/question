@@ -32,7 +32,8 @@ public class SubjUnitServiceImpl implements ISubjUnitService{
 
 	@Override
 	public int save(SubjUnit unit) {
-		// TODO Auto-generated method stub		
+		// TODO Auto-generated method stub	
+		unit.setSubjUnitCode(unit.getSubjUnitCode().toLowerCase());
 		return unitMapper.insertSelective(unit);
 	}
 
@@ -78,6 +79,7 @@ public class SubjUnitServiceImpl implements ISubjUnitService{
 	@Override
 	public int update(SubjUnit unit) {
 		// TODO Auto-generated method stub
+		unit.setSubjUnitCode(unit.getSubjUnitCode().toLowerCase());
 		return unitMapper.updateByPrimaryKeySelective(unit);
 	}
 
@@ -97,8 +99,8 @@ public class SubjUnitServiceImpl implements ISubjUnitService{
 
 
 	@Override
-	public List<SubjUnit> queryByCode(String unitCode) {
+	public List<SubjUnit> queryByCode(String unitCode, String subjId) {
 		// TODO Auto-generated method stub
-		return unitMapper.queryByCode(unitCode);
+		return unitMapper.queryByCode(unitCode, subjId);
 	}
 }

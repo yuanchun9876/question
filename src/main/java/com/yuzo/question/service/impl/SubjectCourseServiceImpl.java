@@ -21,7 +21,7 @@ public class SubjectCourseServiceImpl implements ISubjectCourseService{
 	@Override
 	public int save(SubjectCourse subj) {
 		// TODO Auto-generated method stub
-		
+		subj.setSubjCode(subj.getSubjCode().toLowerCase());
 		return subjMapper.insertSelective(subj);
 	}
 
@@ -50,6 +50,7 @@ public class SubjectCourseServiceImpl implements ISubjectCourseService{
 	@Override
 	public int update(SubjectCourse subj) {
 		// TODO Auto-generated method stub
+		subj.setSubjCode(subj.getSubjCode().toLowerCase());
 		return subjMapper.updateByPrimaryKeySelective(subj);
 	}
 

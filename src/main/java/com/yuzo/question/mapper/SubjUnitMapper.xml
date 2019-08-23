@@ -87,11 +87,11 @@
 	</select>
   <!--  分割    -->
   
-  <select id="queryByCode" resultMap="BaseResultMap" parameterType="java.lang.String" >
+  <select id="queryByCode" resultMap="BaseResultMap" >
     select 
     <include refid="Base_Column_List" />
     from subj_unit
-    where SUBJ_UNIT_CODE = #{value,jdbcType=VARCHAR}
+    where SUBJ_UNIT_CODE = #{unitCode,jdbcType=VARCHAR}  and SUBJ_ID = #{subjId}
   </select>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
