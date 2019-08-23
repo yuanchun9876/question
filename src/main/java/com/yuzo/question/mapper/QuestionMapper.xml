@@ -46,7 +46,7 @@
   
   
   <select id="queryQstnByTpId" resultMap="BaseResultMap" parameterType="string" >
-	  select * from question  qstn  where   qstn.SUBJ_SCTN_ID in (
+	  select * from question  qstn  where qstn_type_id='4' AND   qstn.SUBJ_SCTN_ID in (
 		select tpd.SUBJ_SCTN_ID 
 		from test_plan_detailed  tpd 
 					LEFT JOIN test_plan tp  on tpd.TP_ID = tp.TP_ID  
