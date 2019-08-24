@@ -197,7 +197,7 @@ public class TestPlanServiceImpl implements ITestPlanService {
 	@Override
 	public int update(TestPlan plan) {
 		// TODO Auto-generated method stub
-		
+		plan.setTpDate(new Date());
 		return planMapper.updateByPrimaryKeySelective(plan);
 	}
 
