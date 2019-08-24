@@ -99,6 +99,9 @@
 		<if test="subjSctnId != null   and  subjSctnId  != ''  ">
 			and qstn.SUBJ_SCTN_ID = #{subjSctnId}
 		</if>
+		<if test="qstnTitle != null   and  qstnTitle  != ''  ">
+			and qstn.QSTN_TITLE like CONCAT('%', #{qstnTitle}, '%')
+		</if>
 	</where>
 		order by QSTN_INPUT_TIME
   </select>

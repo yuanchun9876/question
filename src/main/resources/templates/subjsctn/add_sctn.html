@@ -70,7 +70,7 @@
 											</div>
 											<label for="birth" class="col-sm-2 control-label">所属章</label>
 											<div class="col-sm-4">
-												<select class="form-control" name="subjUnitId" id="subjUnitId" id="unitSelect" >
+												<select class="form-control" name="subjUnitId" id="unitSelect" >
 													<option  value = "" >请选择</option>				
 													<option  th:value = "${unit.subjUnitId }"   th:each="unit,i:${unitList}"   th:text="${unit.subjUnitTitle }"   >${unit.subjUnitTitle }</option>													
 												</select>
