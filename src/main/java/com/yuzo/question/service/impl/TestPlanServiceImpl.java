@@ -1,5 +1,6 @@
 package com.yuzo.question.service.impl;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
@@ -698,6 +699,62 @@ public class TestPlanServiceImpl implements ITestPlanService {
 	public UserTestList queryUtlById(String utsId) {
 		// TODO Auto-generated method stub
 		return utlMapper.selectByPrimaryKey(utsId);
+	}
+
+	@Override
+	public Map<String, Object> classplanlist(String mcId) {
+		// TODO Auto-generated method stub
+	
+		// 取得基本信息
+		
+		List<TestPlan> tpList = planMapper.queryByUserClassNotType(mcId);
+		System.out.println(tpList);
+		List<SysUser> userList = userMapper.queryByMcId(mcId);
+		System.out.println(userList);
+		UserMyclass mc = userMyclassMapper.selectByPrimaryKey(mcId);
+		
+		
+		// 总容器
+		Map<String, Object> map = new HashMap<>();
+		// tpNames 测试名称
+		List<String> tpNames = new ArrayList<String>();
+		// userNames  学生名称
+		List<String> userNames = new ArrayList<String>();
+		
+		for (int i = 0; i < userList.size(); i++) {
+			userNames.add( userList.get(i).getNickName() );
+		}
+		
+		// 成绩 tplist  里面装 第一个人的成绩
+		
+		List<Map<String, Object>> tpProintsList = new ArrayList<>();
+//		  name:'蒸发量',
+//	        type:'bar',
+//	        data:
+		for (int i = 0; i < tpList.size(); i++) {
+			Map<String, Object> mm = new HashMap<String, Object>();
+			TestPlan tp = tpList.get(i);
+			tpNames.add( tp.getTpTitle() );
+			mm.put("name", tp.getTpTitle());
+			mm.put("type", "bar");
+			List<Integer> data = new ArrayList<>();
+			for (int j = 0; j < userList.size(); j++) {
+				SysUser user = userList.get(j);
+				List<UserTestList> utlList = utlMapper.queryByUserAndTp(user.getUserId(), tp.getTpId());
+				data.add( utlList.get(0).getUtsTotal() );
+			}
+			mm.put("data", data);
+			tpProintsList.add(mm);
+		}
+		
+		map.put("tpNames", tpNames);
+		map.put("userNames", userNames);
+		map.put("tpProintsList", tpProintsList);
+		map.put("mc", mc.getMcCode());
+		
+
+		
+		return map;
 	}
 
 	

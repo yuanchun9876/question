@@ -72,5 +72,7 @@ public interface ITestPlanService {
 
 	UserTestList queryUtlById(String utsId);
 
+	Map<String, Object> classplanlist(String mcId);
+
 	
 }

@@ -33,6 +33,13 @@
     where TP_TARGET = #{value}
   </select>
   
+  <select id="queryByUserClassNotType" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from test_plan
+    where TP_TARGET = #{value} and TP_TYPE != '1'  and TP_TYPE != '3'
+  </select>
+  
   
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 

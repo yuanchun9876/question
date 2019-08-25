@@ -398,6 +398,19 @@ public class TestPlanController {
 		return "redirect:query";
 	}
 	
+	/**
+	 * 以班级为单位的每次考试总成绩
+	 * @return
+	 */
+	@RequestMapping("/classplanlist")
+	@ResponseBody
+	public Map<String, Object> classplanlist(String mcId) {
+
+		Map<String, Object> map = testPlanService.classplanlist(mcId);
+		
+		return map;
+	}
+	
 	//----------------------------------------------------------
 	
 	@RequestMapping("/userplanlist")
@@ -418,4 +431,8 @@ public class TestPlanController {
 		model.addAttribute("list", list);	
 		return "testplan/list_userans_plan";
 	}
+	
+
+	
+	
 }

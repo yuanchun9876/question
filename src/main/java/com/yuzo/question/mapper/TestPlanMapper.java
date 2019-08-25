@@ -21,4 +21,6 @@ public interface TestPlanMapper {
 	List<TestPlan> queryAll();
 
 	List<TestPlan> queryByUserClass(String mcId);
+
+	List<TestPlan> queryByUserClassNotType(String mcId);
 }
