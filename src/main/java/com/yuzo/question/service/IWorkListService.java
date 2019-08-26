@@ -28,4 +28,6 @@ public interface IWorkListService {
 
 	List<SysUser> queryUserByMc(String mcId);
 
+	Map<String, Object> classPointlist(String mcId);
+
 }

@@ -47,8 +47,10 @@
 									<div class="box-header with-border">
 										<h3 class="box-title"></h3>
 										<div class="box-search">
+											<button type="button" class="btn btn-info pull-right" onclick="doSubPoints()">积分统计</button>
+											<button type="button" class="btn btn-warning pull-right" onclick="doSubPlan()">考试统计</button>
 											<button type="button" class="btn btn-primary pull-right" onclick="doSub()">作业统计</button>
-											<button type="button" class="btn btn-info pull-right" onclick="doSubPlan()">考试统计</button>
+											
 										</div>
 									</div>
 									<!-- /.box-header -->
@@ -148,7 +150,74 @@
 
 			});
 		}
-		
+		function doSubPoints(){
+			
+			var url ="/worklist/classPointlist"  ;
+			$.post(url, {'mcId': $("#mcId").val() }, function(resp){
+				
+				 console.log(resp);
+				 option = {
+						    title : {
+						        text: resp.mcCode + '积分',
+						        subtext: '出勤 + 作业'
+						    },
+						    tooltip : {
+						        trigger: 'axis'
+						    },
+						    legend: {
+						        data:['积分']
+						    },
+						    toolbox: {
+						        show : true,
+						        feature : {
+						            mark : {show: true},
+						            dataView : {show: true, readOnly: false},
+						            magicType : {show: true, type: ['line', 'bar']},
+						            restore : {show: true},
+						            saveAsImage : {show: true}
+						        }
+						    },
+						    calculable : true,
+						    xAxis : [
+						        {
+						            type : 'category',
+						            boundaryGap : false,
+						            data : resp.userNames
+						        }
+						    ],
+						    yAxis : [
+						        {
+						            type : 'value',
+						        }
+						    ],
+						    series : [
+						       
+						        {
+						            name:'积分',
+						            type:'line',
+						            data: resp.userPoints,
+						            markPoint : {
+						                data : [
+						                    {type : 'max', name: '最大值'},
+						                    {type : 'min', name: '最小值'}
+						                ]
+						            },
+						            markLine : {
+						                data : [
+						                    {type : 'average', name: '平均值'}
+						                ]
+						            }
+						        }
+						    ]
+						};
+				var myChart = echarts.init(document.getElementById('main'),"default");
+				// 使用刚指定的配置项和数据显示图表。
+				myChart.setOption(option);
+
+								
+
+			});
+		}
 
 	</script>
 

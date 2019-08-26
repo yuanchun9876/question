@@ -54,7 +54,7 @@ public interface ITestPlanService {
 
 	List<UserMyclass> queryMc();
 
-	List<TestPlan> queryByUserClass(SysUser user);
+	List<TestPlan> queryByUserClass(SysUser user, String type);
 
 	List<UserTestList> queryByUserAndTp(String userId, String tpId);
 

@@ -26,11 +26,11 @@
   </select>
   
   
-  <select id="queryByUserClass" resultMap="BaseResultMap" parameterType="java.lang.String" >
+  <select id="queryByUserClass" resultMap="BaseResultMap"  >
     select 
     <include refid="Base_Column_List" />
     from test_plan
-    where TP_TARGET = #{value}
+    where TP_TARGET = #{mcId} and TP_TYPE = #{type}
   </select>
   
   <select id="queryByUserClassNotType" resultMap="BaseResultMap" parameterType="java.lang.String" >

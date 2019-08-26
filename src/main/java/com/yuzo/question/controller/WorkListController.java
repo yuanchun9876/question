@@ -109,4 +109,12 @@ public class WorkListController {
 		return "redirect:query";
 	}
 	
+	@RequestMapping("/classPointlist")
+	@ResponseBody
+	public Map<String, Object> classPointlist(String mcId) {		
+		
+		Map<String, Object> map = workListService.classPointlist(mcId);
+		return map;
+	}
+	
 }

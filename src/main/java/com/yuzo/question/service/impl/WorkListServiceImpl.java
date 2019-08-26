@@ -154,4 +154,25 @@ public class WorkListServiceImpl implements IWorkListService{
 		// TODO Auto-generated method stub
 		return userMapper.queryByMcId(mcId);
 	}
+
+	@Override
+	public Map<String, Object> classPointlist(String mcId) {
+		// TODO Auto-generated method stub
+		Map<String, Object> map = new HashMap<String, Object>();
+		List<SysUser>  userlist = userMapper.queryByMcId(mcId);
+		
+		UserMyclass mc = userMyclassMapper.selectByPrimaryKey(mcId);
+		map.put("mcCode", mc.getMcCode());		
+		// userNames  学生名称
+		List<String> userNames = new ArrayList<String>();		
+		List<Integer> userPoints = new ArrayList<Integer>();		
+		for (int i = 0; i < userlist.size(); i++) {
+			userNames.add( userlist.get(i).getNickName() );
+			userPoints.add(userlist.get(i).getUcPoints());
+		}
+		map.put("userNames", userNames);
+		map.put("userPoints", userPoints);
+		
+		return map;
+	}
 }

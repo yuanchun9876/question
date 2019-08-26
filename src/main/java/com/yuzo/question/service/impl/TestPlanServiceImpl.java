@@ -585,10 +585,10 @@ public class TestPlanServiceImpl implements ITestPlanService {
 	}
 
 	@Override
-	public List<TestPlan> queryByUserClass(SysUser user) {
+	public List<TestPlan> queryByUserClass(SysUser user, String type) {
 		// TODO Auto-generated method stub
 		UserTeam tm = tmMapper.selectByPrimaryKey(user.getTmId());
-		return planMapper.queryByUserClass(tm.getMcId());
+		return planMapper.queryByUserClass(tm.getMcId(), type);
 	}
 
 	@Override

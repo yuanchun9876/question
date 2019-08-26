@@ -413,14 +413,25 @@ public class TestPlanController {
 	
 	//----------------------------------------------------------
 	
-	@RequestMapping("/userplanlist")
-	public String userplanlist(HttpSession session, Model model) {
+	@RequestMapping("/userplanlist0")
+	public String userplanlist0(HttpSession session, Model model) {
 		
 		SysUser user = (SysUser) session.getAttribute("user");
 	
-		List<TestPlan> planlist = testPlanService.queryByUserClass(user);
+		List<TestPlan> planlist = testPlanService.queryByUserClass(user,"0");
 		model.addAttribute("planlist", planlist);	
 	
+		return "testplan/list_plan_userclass";
+	}
+	
+	@RequestMapping("/userplanlist3")
+	public String userplanlist3(HttpSession session, Model model) {
+		
+		SysUser user = (SysUser) session.getAttribute("user");
+		
+		List<TestPlan> planlist = testPlanService.queryByUserClass(user,"3");
+		model.addAttribute("planlist", planlist);	
+		
 		return "testplan/list_plan_userclass";
 	}
 	

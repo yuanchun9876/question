@@ -2,6 +2,8 @@ package com.yuzo.question.mapper;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+
 import com.yuzo.question.entity.SysUser;
 import com.yuzo.question.entity.TestPlan;
 
@@ -19,8 +21,8 @@ public interface TestPlanMapper {
     int updateByPrimaryKey(TestPlan record);
 
 	List<TestPlan> queryAll();
-
-	List<TestPlan> queryByUserClass(String mcId);
+	// TP_TARGET = #{mcId} and TP_TYPE = #{type}
+	List<TestPlan> queryByUserClass(@Param("mcId")String mcId, @Param("type")String type);
 
 	List<TestPlan> queryByUserClassNotType(String mcId);
 }
