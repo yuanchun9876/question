@@ -51,7 +51,7 @@
 				<div class="box-search">
 					<div class="input-group">
 						<span class="input-group-addon" style="background: #EEEEEE;">科目单元</span>
-						<select class="form-control" name="subjId"  onchange="selectSubj(this.value)"  th:field="*{subjId}"  >
+						<select class="form-control" name="subjId"  onclick="selectSubj(this.value)"  th:field="*{subjId}"  >
 							<option value="">请选择</option>
 							<option  th:value = "${subj.subjId }"   th:each="subj,i:${subjList}"   th:text="${subj.subjTitle }"  >科目单元</option>
 						</select>

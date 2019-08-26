@@ -137,16 +137,16 @@
 					<div class="box-body no-padding">
 						<table class="table table-bordered  table-striped">
 							<tr>
-								<th width="5%">序号</th>
-								<th width="5%">全选</th>
+								<th>序号</th>
+								<th>全选</th>
 								<th >试题内容</th>
-								<th width="10%">试题类型</th>
-								<th width="10%">来源类型</th>
-								<th width="15%">所属知识</th>
-								<th width="5%">序号</th>
-								<th width="10%">代号</th>
-								<th width="10%">上传时间</th>
-								<th width="20%">操作</th>
+								<th>试题类型</th>
+								<th>来源类型</th>
+								<th>所属知识</th>
+								
+								<th>代号</th>
+								<th>上传时间</th>
+								<th>操作</th>
 							</tr>
 							<form name="delForm"  method="post"  action="#"  th:action="@{/qstn/dels}"  >    
 							<tbody th:remove="all-but-first" >       			  	
@@ -157,7 +157,7 @@
 							  <td  th:text="${row.qstnTypeName}" >${qstn.qstnTypeId }</td>
 							  <td  th:text="${row.qstnFromTypeCode}" >${qstn.qstnFromTypeId }</td>
 							  <td  th:text="${row.subjSctnTitle}"  >${qstn.subjSctnId }</td>
-							  <td  th:text="${row.qstnNum}"  >${qstn.subjSctnId }</td>
+							  
 							  <td  th:text="${row.qstnCode}"  >${qstn.subjSctnId }</td>
 							  <td  th:text="${#dates.format(row.qstnInputTime, 'yyyy-MM-dd')}" ></td>
 							  <td>
