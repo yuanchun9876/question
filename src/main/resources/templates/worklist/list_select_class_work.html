@@ -25,7 +25,7 @@
 				<!-- Content Header (Page header) -->
 				<section class="content-header">
 					<h1>
-          				选择班级
+          				统计
 			        </h1>
 			       <ol class="breadcrumb">
 			       		<li>
@@ -47,9 +47,10 @@
 									<div class="box-header with-border">
 										<h3 class="box-title"></h3>
 										<div class="box-search">
-											<button type="button" class="btn btn-info pull-right" onclick="doSubPoints()">积分统计</button>
-											<button type="button" class="btn btn-warning pull-right" onclick="doSubPlan()">考试统计</button>
-											<button type="button" class="btn btn-primary pull-right" onclick="doSub()">作业统计</button>
+											<button type="button" class="btn btn-warning pull-right" onclick="doSubTest()">训练</button>
+											<button type="button" class="btn btn-info pull-right" onclick="doSubPoints()">积分</button>
+											<button type="button" class="btn btn-success pull-right" onclick="doSubPlan()">考试</button>
+											<button type="button" class="btn btn-primary pull-right" onclick="doSub()">作业</button>
 											
 										</div>
 									</div>
@@ -90,10 +91,13 @@
 	</body>
 	
 	<script type="text/javascript">
-		function doSub(){
-			
+		function doSub(){			
 			location.href="/worklist/queryWlByMc?mcId=" + $("#mcId").val();
 		}
+		function doSubTest(){			
+			location.href="/testplan/classTestlist?mcId=" + $("#mcId").val();
+		}
+		
 		function doSubPlan(){
 			
 			var url ="/testplan/classplanlist"  ;

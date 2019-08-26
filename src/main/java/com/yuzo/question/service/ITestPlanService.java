@@ -74,5 +74,7 @@ public interface ITestPlanService {
 
 	Map<String, Object> classplanlist(String mcId);
 
+	List<Map<String, Object>> clasTestlist(String mcId);
+
 	
 }

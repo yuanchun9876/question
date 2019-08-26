@@ -757,6 +757,34 @@ public class TestPlanServiceImpl implements ITestPlanService {
 		return map;
 	}
 
+	@Override
+	public List<Map<String, Object>> clasTestlist(String mcId) {
+		// TODO Auto-generated method stub
+		List<Map<String, Object>> list = new ArrayList<>();
+		List<TestPlan> tpList = planMapper.queryByUserClass(mcId, "3");
+		System.out.println(tpList);
+		List<SysUser> userList = userMapper.queryByMcId(mcId);
+		System.out.println(userList);
+		
+		for (SysUser sysUser : userList) {
+			Map<String, Object> map = new HashMap<>();
+			map.put("userId", sysUser.getUserId());
+			map.put("nickName", sysUser.getNickName());
+			List<String> levels = new ArrayList<>();
+			for (int i = 0; i < tpList.size(); i++) {
+				TestPlan tp = tpList.get(i);
+				List<UserTestList> utlList = utlMapper.queryByUserAndTp(sysUser.getUserId(), tp.getTpId());
+				for (int j = 0; j < utlList.size(); j++) {
+					UserTestList utl = utlList.get(i);
+					System.out.println( sysUser.getNickName() + ":" + utl.getUtsTotal());
+				}
+			}
+		}
+		
+		
+		return list;
+	}
+
 	
 
 	

@@ -411,6 +411,19 @@ public class TestPlanController {
 		return map;
 	}
 	
+	/**
+	 * 以班级为单位的每次考试总成绩
+	 * @return
+	 */
+	@RequestMapping("/classTestlist")
+	public String classTestlist(String mcId, Model model) {
+		
+		List<Map<String, Object>> list = testPlanService.clasTestlist(mcId);
+		System.out.println(list);
+		model.addAttribute("list", list);
+		return "";
+	}
+	
 	//----------------------------------------------------------
 	
 	@RequestMapping("/userplanlist0")
