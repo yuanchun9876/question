@@ -421,7 +421,12 @@ public class TestPlanController {
 		List<Map<String, Object>> list = testPlanService.clasTestlist(mcId);
 		System.out.println(list);
 		model.addAttribute("list", list);
-		return "";
+		
+		List<TestPlan> tp3list = testPlanService.queryByUserClass3(mcId);
+		System.out.println(tp3list);
+		model.addAttribute("tp3list", tp3list);
+		
+		return "worklist/list_stu_test";
 	}
 	
 	//----------------------------------------------------------
@@ -449,9 +454,17 @@ public class TestPlanController {
 	}
 	
 	@RequestMapping("/userAnsList")
-	public String userAnsList(String tpId, HttpSession session, Model model) {
-		SysUser user = (SysUser) session.getAttribute("user");
-		List<UserTestList> list = testPlanService.queryByUserAndTp(user.getUserId(), tpId);
+	public String userAnsList(String tpId, String userId, HttpSession session, Model model) {
+		SysUser user = null;
+		if(userId == null ||  "".equals(userId)) {
+			user = (SysUser) session.getAttribute("user");
+			userId = user.getUserId();
+		}else {
+			user = testPlanService.queryUserById(userId);
+		}
+		model.addAttribute("user", user);	
+		
+		List<UserTestList> list = testPlanService.queryByUserAndTp(userId, tpId);
 		model.addAttribute("list", list);	
 		return "testplan/list_userans_plan";
 	}

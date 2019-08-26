@@ -770,19 +770,56 @@ public class TestPlanServiceImpl implements ITestPlanService {
 			Map<String, Object> map = new HashMap<>();
 			map.put("userId", sysUser.getUserId());
 			map.put("nickName", sysUser.getNickName());
-			List<String> levels = new ArrayList<>();
+			List<Map<String, Object>> levels = new ArrayList<>(); // 次数/平均分
 			for (int i = 0; i < tpList.size(); i++) {
+				Map<String, Object> mm = new HashMap<String, Object>();
 				TestPlan tp = tpList.get(i);
+				mm.put("tpId", tp.getTpId());				
 				List<UserTestList> utlList = utlMapper.queryByUserAndTp(sysUser.getUserId(), tp.getTpId());
-				for (int j = 0; j < utlList.size(); j++) {
-					UserTestList utl = utlList.get(i);
-					System.out.println( sysUser.getNickName() + ":" + utl.getUtsTotal());
+				if (utlList!=null && utlList.size()>0) {
+					double tt = 0.0;
+					for (int j = 0; j < utlList.size(); j++) {
+						UserTestList utl = utlList.get(j);
+						tt += utl.getUtsTotal();
+					}
+					double pjf = tt/utlList.size()/1.0;
+					pjf = (double) Math.round(pjf * 100) / 100;
+					String btn = "";
+					if (pjf > 80) {
+						btn = "<button type=\"button\" class=\"btn btn-primary btn-xs\"  onclick=\"ansList('" + tp.getTpId() + "','" + sysUser.getUserId() + "')\" >" + utlList.size() + "次(" + pjf + "分)" + "</button>";
+					} else if(pjf > 60) {
+						btn = "<button type=\"button\" class=\"btn btn-info btn-xs\"    onclick=\"ansList('" + tp.getTpId() + "','" + sysUser.getUserId() + "')\">" + utlList.size() + "次(" + pjf + "分)" + "</button>";
+					} else if(pjf > 30) {
+						btn = "<button type=\"button\" class=\"btn btn-warning btn-xs\"   onclick=\"ansList('" + tp.getTpId() + "','" + sysUser.getUserId() + "')\">" + utlList.size() + "次(" + pjf + "分)" + "</button>";
+					} else  {
+						btn = "<button type=\"button\" class=\"btn btn-danger btn-xs\"    onclick=\"ansList('" + tp.getTpId() + "','" + sysUser.getUserId() + "')\">" + utlList.size() + "次(" + pjf + "分)" + "</button>";
+					}
+
+					mm.put("info",btn);
+				} else {
+					mm.put("info","<button type=\"button\" class=\"btn  btn-xs\">0次(0.0分)</button>");
 				}
+				levels.add(mm);
 			}
+			map.put("levels", levels);
+			
+			list.add(map);
 		}
-		
+		System.out.println( list );
 		
 		return list;
+	}
+
+	@Override
+	public List<TestPlan> queryByUserClass3(String mcId) {
+		// TODO Auto-generated method stub
+		return planMapper.queryByUserClass(mcId, "3");
+	}
+
+	@Override
+	public SysUser queryUserById(String userId) {
+		// TODO Auto-generated method stub
+		return userMapper.selectByPrimaryKey(userId);
 	}
 
 	

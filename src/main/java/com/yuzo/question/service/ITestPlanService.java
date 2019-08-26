@@ -76,5 +76,9 @@ public interface ITestPlanService {
 
 	List<Map<String, Object>> clasTestlist(String mcId);
 
+	List<TestPlan> queryByUserClass3(String mcId);
+
+	SysUser queryUserById(String userId);
+
 	
 }
