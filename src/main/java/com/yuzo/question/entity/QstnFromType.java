@@ -9,7 +9,7 @@ public class QstnFromType {
     
     private Integer qstnFromCount;
     
-    private String qstnFromSelected = "";
+    private String qstnFromSelected = "1";
     
     
 

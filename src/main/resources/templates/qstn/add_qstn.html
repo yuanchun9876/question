@@ -75,9 +75,9 @@
 												</select>
 											</div>
 											<label for="birth" class="col-sm-2 control-label">试题来源</label>
-											<div class="col-sm-4">
-												<select class="form-control" name="qstnFromTypeId"  required="required">
-													<option value="">请选择</option>
+											<div class="col-sm-4"  >
+												<select class="form-control" name="qstnFromTypeId"    required="required">
+													
 										
 													<option  th:value = "${qstnFrom.qstnFromTypeId }"   th:each="qstnFrom,i:${qstnFromList}"   th:text="${qstnFrom.qstnFromTypeCode}"  >试题来源</option>
 													
