@@ -29,7 +29,7 @@ public class LoginController {
 	@RequestMapping("/")
 	public String login(){
 		
-		return "/login";
+		return "login";
 	}
 	
 	@RequestMapping("/main")
@@ -96,14 +96,14 @@ public class LoginController {
 				
 			
 				
-				return "/common/main";
+				return "common/main";
 			} else {
 				model.addAttribute("msg", "登录异常");
-				return "/login";
+				return "login";
 			}
 		}else {
 			model.addAttribute("msg", "登录异常");
-			return "/login";
+			return "login";
 		}
 		
 	}
@@ -113,17 +113,17 @@ public class LoginController {
 	@RequestMapping("/dashboard")
 	public String dashboard(){
 		
-		return "/common/dashboard";
+		return "common/dashboard";
 	}
 	@RequestMapping("/loginOut")
 	public String loginOut(HttpServletRequest request){
 		request.getSession().invalidate();    
-		return "/login";  
+		return "login";  
 	}
 	
 	@RequestMapping("/perLoginOut")
 	public String perLoginOut(HttpServletRequest request){
 		//request.getSession().invalidate();
-		return "/loginOut";
+		return "loginOut";
 	}
 }
