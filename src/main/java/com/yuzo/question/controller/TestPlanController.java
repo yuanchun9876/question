@@ -341,10 +341,11 @@ public class TestPlanController {
 	}
 	
 	@RequestMapping("/answerSave")
-	public String answerSave(String tpId, String[] qstns0,String[] ans0, String[] qstns2,String[] ans2, String[] qstns4,String[] ans4, HttpServletRequest request, Model model) {
+	public String answerSave(String tpId,String tpType, String[] qstns0,String[] ans0, String[] qstns2,String[] ans2, String[] qstns4,String[] ans4, HttpServletRequest request, Model model) {
 		
 //		System.out.println(Arrays.toString(qstns0));
 //		System.out.println(Arrays.toString(ans0));
+		System.out.println("tpType:" + tpType);
 		
 		//request.getSession().setMaxInactiveInterval(1800);
 		
@@ -352,7 +353,12 @@ public class TestPlanController {
 		
 		testPlanService.saveAnswer(user, tpId, qstns0, ans0, qstns2, ans2, qstns4, ans4);
 		
-		return "redirect:userplanlist";
+		if ("3".equals(tpType)) {
+			return "redirect:userplanlist3";
+		} else {
+			return "redirect:userplanlist0";
+		}
+		
 	}
 	
 	

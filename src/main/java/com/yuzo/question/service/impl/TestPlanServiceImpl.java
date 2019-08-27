@@ -426,10 +426,19 @@ public class TestPlanServiceImpl implements ITestPlanService {
 				
 				Question qstn = qstnMapper.selectByPrimaryKey(qstns0[i]);			
 				ual.setSubjSctnId(qstn.getSubjSctnId());
-				ual.setUansContent(ans0[i]);
+				// ----------------------------
+				if(ans0!=null && ans0.length>i) {
+					ual.setUansContent(ans0[i]);
+				}				
 				ual.setUtsId(utsId);
+				double result = 0.0;
+				// ----------------------------
+				if(ans0!=null && ans0.length>i) {
+					result = this.checkAnswer0(qstns0[i], ans0[i]);
+				}else {
+					result = this.checkAnswer0(qstns0[i], "");
+				}
 				
-				double result = this.checkAnswer0(qstns0[i], ans0[i]);
 				int result0 =  (int) Math.round(points0 * result);
 				
 				total += result0;
