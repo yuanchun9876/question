@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yuzo.question.mapper.QuestionFeedbackMapper" >
+  <resultMap id="BaseResultMap" type="com.yuzo.question.entity.QuestionFeedback" >
+    <id column="qtfb_id" property="qtfbId" jdbcType="VARCHAR" />
+    <result column="qstn_id" property="qstnId" jdbcType="VARCHAR" />
+    <result column="user_id" property="userId" jdbcType="VARCHAR" />
+    <result column="qtfb_info" property="qtfbInfo" jdbcType="VARCHAR" />
+    <result column="qtfb_time" property="qtfbTime" jdbcType="TIMESTAMP" />
+    <result column="qtfb_state" property="qtfbState" jdbcType="VARCHAR" />
+    <result column="QSTN_CODE" property="qstnCode" jdbcType="VARCHAR" />
+    <result column="nick_name" property="nickName" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    qtfb_id, qstn_id, user_id, qtfb_info, qtfb_time, qtfb_state
+  </sql>
+  <select id="queryAll" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+     qtfb_id, fb.qstn_id, fb.user_id, qtfb_info, qtfb_time, qtfb_state
+     ,qstn.QSTN_CODE
+     ,user.nick_name
+    from question_feedback fb 
+    	left join question qstn on fb.qstn_id = qstn.qstn_id
+    	left join sys_user user on fb.user_id = user.user_id
+ 	order by qtfb_time desc
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from question_feedback
+    where qtfb_id = #{qtfbId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from question_feedback
+    where qtfb_id = #{qtfbId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.yuzo.question.entity.QuestionFeedback" >
+    insert into question_feedback (qtfb_id, qstn_id, user_id, 
+      qtfb_info, qtfb_time, qtfb_state
+      )
+    values (#{qtfbId,jdbcType=VARCHAR}, #{qstnId,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR}, 
+      #{qtfbInfo,jdbcType=VARCHAR}, #{qtfbTime,jdbcType=TIMESTAMP}, #{qtfbState,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.yuzo.question.entity.QuestionFeedback" >
+    insert into question_feedback
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="qtfbId != null" >
+        qtfb_id,
+      </if>
+      <if test="qstnId != null" >
+        qstn_id,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="qtfbInfo != null" >
+        qtfb_info,
+      </if>
+      <if test="qtfbTime != null" >
+        qtfb_time,
+      </if>
+      <if test="qtfbState != null" >
+        qtfb_state,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="qtfbId != null" >
+        #{qtfbId,jdbcType=VARCHAR},
+      </if>
+      <if test="qstnId != null" >
+        #{qstnId,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="qtfbInfo != null" >
+        #{qtfbInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="qtfbTime != null" >
+        #{qtfbTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="qtfbState != null" >
+        #{qtfbState,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.yuzo.question.entity.QuestionFeedback" >
+    update question_feedback
+    <set >
+      <if test="qstnId != null" >
+        qstn_id = #{qstnId,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="qtfbInfo != null" >
+        qtfb_info = #{qtfbInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="qtfbTime != null" >
+        qtfb_time = #{qtfbTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="qtfbState != null" >
+        qtfb_state = #{qtfbState,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where qtfb_id = #{qtfbId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.yuzo.question.entity.QuestionFeedback" >
+    update question_feedback
+    set qstn_id = #{qstnId,jdbcType=VARCHAR},
+      user_id = #{userId,jdbcType=VARCHAR},
+      qtfb_info = #{qtfbInfo,jdbcType=VARCHAR},
+      qtfb_time = #{qtfbTime,jdbcType=TIMESTAMP},
+      qtfb_state = #{qtfbState,jdbcType=VARCHAR}
+    where qtfb_id = #{qtfbId,jdbcType=VARCHAR}
+  </update>
+</mapper>

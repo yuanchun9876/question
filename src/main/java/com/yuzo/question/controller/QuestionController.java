@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.BeanUtils;
@@ -23,12 +24,13 @@ import com.github.pagehelper.PageInfo;
 import com.yuzo.question.entity.Answer;
 import com.yuzo.question.entity.QstnFromType;
 import com.yuzo.question.entity.Question;
+import com.yuzo.question.entity.QuestionFeedback;
 import com.yuzo.question.entity.QuestionType;
 import com.yuzo.question.entity.SubjSection;
 import com.yuzo.question.entity.SubjUnit;
 import com.yuzo.question.entity.SubjectCourse;
+import com.yuzo.question.entity.SysUser;
 import com.yuzo.question.page.QuestionPage;
-import com.yuzo.question.page.SubjSectionPage;
 import com.yuzo.question.service.IQuestionService;
 
 @Controller
@@ -177,9 +179,6 @@ public class QuestionController {
 			model.addAttribute("ansList4", ansList4);
 			return "qstn/show_ans4";
 		}
-		
-				
-		
 		return "qstn/qstn/show_ans4";
 	}
 	
@@ -201,6 +200,12 @@ public class QuestionController {
 		return "redirect:query";
 	}
 	
+
+
+	
+	
+	
+	
 	@RequestMapping("/uploadSimditorImg")
 	@ResponseBody
 	public JSONObject uploadSimditorImg(MultipartFile file, String type, HttpServletRequest request) {
@@ -214,7 +219,40 @@ public class QuestionController {
 		logger.debug("json:" + json);
 		return json;
 	}
-
 	
-
+	//------------------------------------------------------------------
+	
+	@RequestMapping("/setfd")
+	public String setfd(String qstnId, Model model) {		
+		Question qstn = qstnService.queryById(qstnId);
+		System.out.println("��ɾ��:" + qstn);
+		model.addAttribute("qstn", qstn);
+		List<Answer> ansList = qstnService.queryAnswersByQstnId(qstnId);
+		model.addAttribute("ansList", ansList);
+		return "feedback/add_fdbk";
+	}
+	
+	@RequestMapping("/fdbkSave")
+	@ResponseBody
+	public JSONObject fdbkSave(QuestionFeedback qtfd, HttpSession session) {
+		JSONObject json = new JSONObject();
+		SysUser user = (SysUser) session.getAttribute("user");
+		qtfd.setUserId(user.getUserId());
+		System.out.println("fdbkSave:" + qtfd);
+		int count = qstnService.fdbkSave(qtfd);
+		return null;
+	}
+	
+	@RequestMapping("/queryQtfb")
+	public String queryQtfb( Model model) {		
+		List<QuestionFeedback> list = qstnService.queryQtfb();
+		model.addAttribute("list", list );
+		return "feedback/list_fdbk";
+	}
+	@RequestMapping("/okfbPage")
+	public String okfbPage(String qtfbId) {		
+		int count = qstnService.okfbPage(qtfbId);
+		return "redirect:queryQtfb";
+	}
+	
 }

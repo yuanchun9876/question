@@ -91,6 +91,7 @@
 												<span th:text="${'得  ' + ua.uansResult + ' 分'}"></span>
 												
 												<button type="button" class="btn btn-primary">相关知识</button>
+												<button type="button" class="btn btn-danger"   th:onclick="setfd([[${ua.qstnId}]])" >意见反馈</button>
 											</div>
 										</div>
 										<hr/>
@@ -140,6 +141,7 @@
 												<span th:text="${'得  ' + ua.uansResult + ' 分'}"></span>
 												
 												<button type="button" class="btn btn-primary">相关知识</button>
+												<button type="button" class="btn btn-danger"   th:onclick="setfd([[${ua.qstnId}]])" >意见反馈</button>
 											</div>
 										</div>
 										<hr/>
@@ -184,6 +186,7 @@
 												<span th:text="${'得  ' + ua.uansResult + ' 分'}"></span>
 												<button type="button" class="btn btn-info" th:onclick="showAnswer([[${ua.qstnId}]],'4')" >参考答案</button>
 												<button type="button" class="btn btn-primary">相关知识</button>
+												<button type="button" class="btn btn-danger"  th:onclick="setfd([[${ua.qstnId}]])" >意见反馈</button>
 											</div>
 										</div>
 										<hr/>
@@ -218,6 +221,40 @@
 	
 	<script type="text/javascript">
 
+		function setfd(qid){
+			//alert(qid);
+			 bootbox.dialog({
+				  // dialog的内容
+				  message: "<iframe src='/qstn/setfd?qstnId=" + qid + "' style='width:100%;height:369px;border:0 solid;'></iframe>",
+				   
+
+				  // 是否显示此dialog，默认true
+				  show: true,
+
+				     // 显示尺寸，可选 small  /large
+				 size: "large",
+
+				  // 是否显示body的遮罩，默认true
+				  backdrop: true,
+				   
+				  // 是否显示关闭按钮，默认true
+				  closeButton: true,
+				   
+				  // 是否动画弹出dialog，IE10以下版本不支持
+				  animate: true,
+				   
+				  // dialog的类名
+				  className: "my-modal",
+				   
+				});
+		}
+	
+		
+		function closeBootbox(){
+			bootbox.hideAll();
+		}
+		
+		
 		function showAnswer(qstnId, type){
 			 bootbox.dialog({
 				  // dialog的内容

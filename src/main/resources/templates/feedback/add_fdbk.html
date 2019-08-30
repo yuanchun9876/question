@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<title>页面</title>
+		<!-- Tell the browser to be responsive to screen width -->
+		<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+	   <include th:replace="common/css :: commoncss"/>
+		<style type="text/css">
+			
+			.content-wrapper {
+				margin-left: 0px;
+			}
+		</style>
+	</head>
+
+	<body class="hold-transition skin-blue sidebar-mini">
+		<div class="wrapper">
+
+			<!-- Content Wrapper. Contains page content -->
+			<div class="content-wrapper">
+				<!-- Content Header (Page header) -->
+				<section class="content-header">
+					<h1>
+			          	意见反馈
+			        </h1>
+			       
+				</section>
+
+				<!-- Main content -->
+				<section class="content">
+					<div class="row">
+						<form class="form form-horizontal" method="post"     th:object="${qstn}" >
+							<input type="hidden" name="qstnId"   th:field="*{qstnId}"   >
+							<!-- left column -->
+							<div class="col-md-10 col-md-offset-1">
+								<!-- general form elements -->
+								<div class="box box-primary">
+									<div class="box-footer">
+										
+										<button type="button" class="btn btn-info pull-right" onclick="doSub()">提交</button>
+									</div>
+									<!-- form start -->
+									<div class="box-body">
+										<div class="form-group">
+											<label for="name" class="col-sm-2 control-label">试题内容:</label>
+											<div class="col-sm-10" th:utext="*{qstnTitle}">
+											</div>
+										</div>
+										<div class="form-group">
+											<label for="name" class="col-sm-2 control-label">试题代号:</label>
+											<div class="col-sm-10" th:text="*{qstnCode}">
+											</div>
+										</div>
+										<div class="form-group">
+											<label for="name" class="col-sm-2 control-label"  >被选答案</label>
+											<div class="col-sm-10"  >
+												<div th:each="ans,i:${ansList}">
+													<span th:utext="${'(' + (ans.ansIsright eq '0'?'错误':'正确') + ') ' + ans.ansContent}" ></span>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="box-body">
+										<div class="form-group" >
+											<label for="name" class="col-sm-2 control-label">意见反馈:</label>
+											<div class="col-sm-10">
+											<textarea class="form-control" id="info" name="qtfbInfo"  placeholder="请输入意见反馈" required="required"></textarea>
+											</div>
+										</div>
+								
+									</div>
+									<!-- /.box-body -->
+									
+									<!-- /.box-footer -->
+								</div>
+								<!-- /.box -->
+								<!-- /.modal -->
+							</div>
+							<!--/.col (right) -->
+						</form>
+					</div>
+					<!-- /.row -->
+				</section>
+				<!-- /.content -->
+			</div>
+			<!-- /.content-wrapper -->
+
+		</div>
+
+		<div th:replace="common/js :: commonjs"></div>
+	</body>
+	<script type="text/javascript">
+		
+		function doSub(){
+			var info = $("#info").val();
+		
+			if(info==null  ||  info==""  ){
+				alert("请提出反馈意见");
+				$("#info").focus();
+				return;
+			}
+			var data = $(document.forms[0]).serialize();
+			//alert(data);
+			$.ajax({
+				"url":"/qstn/fdbkSave",
+				"data":data,
+				"type":"post",
+				"success":function(resp){
+					parent.closeBootbox();
+				}
+			});
+		}
+	
+	</script>
+
+</html>

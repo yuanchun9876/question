@@ -9,6 +9,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.yuzo.question.entity.Answer;
 import com.yuzo.question.entity.QstnFromType;
 import com.yuzo.question.entity.Question;
+import com.yuzo.question.entity.QuestionFeedback;
 import com.yuzo.question.entity.QuestionType;
 import com.yuzo.question.entity.SubjSection;
 import com.yuzo.question.entity.SubjUnit;
@@ -57,5 +58,11 @@ public interface IQuestionService {
 	void totalCount();
 
 	int includeInfoCount(String oldId, String newId);
+
+	int fdbkSave(QuestionFeedback qtfd);
+
+	List<QuestionFeedback> queryQtfb();
+
+	int okfbPage(String qtfbId);
 
 }

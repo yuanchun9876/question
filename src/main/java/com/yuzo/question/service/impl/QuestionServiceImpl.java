@@ -14,6 +14,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.yuzo.question.entity.Answer;
 import com.yuzo.question.entity.QstnFromType;
 import com.yuzo.question.entity.Question;
+import com.yuzo.question.entity.QuestionFeedback;
 import com.yuzo.question.entity.QuestionType;
 import com.yuzo.question.entity.SubjSection;
 import com.yuzo.question.entity.SubjUnit;
@@ -21,6 +22,7 @@ import com.yuzo.question.entity.SubjectCourse;
 import com.yuzo.question.entity.Topic;
 import com.yuzo.question.mapper.AnswerMapper;
 import com.yuzo.question.mapper.QstnFromTypeMapper;
+import com.yuzo.question.mapper.QuestionFeedbackMapper;
 import com.yuzo.question.mapper.QuestionMapper;
 import com.yuzo.question.mapper.QuestionTypeMapper;
 import com.yuzo.question.mapper.SubjSectionMapper;
@@ -40,6 +42,9 @@ public class QuestionServiceImpl implements IQuestionService{
 
 	@Autowired
 	private QuestionMapper qstnMapper;
+	
+	@Autowired
+	private QuestionFeedbackMapper  fdMapper;
 	
 	@Autowired
 	private QstnFromTypeMapper qstnFromMapper;
@@ -323,5 +328,30 @@ public class QuestionServiceImpl implements IQuestionService{
 		}
 				
 		return count;
+	}
+
+	@Override
+	public int fdbkSave(QuestionFeedback qtfd) {
+		// TODO Auto-generated method stub
+		qtfd.setQtfbId(UUID.randomUUID().toString());
+		qtfd.setQtfbState("A");
+		qtfd.setQtfbTime(new Date());
+		return fdMapper.insertSelective(qtfd);
+	}
+
+	@Override
+	public List<QuestionFeedback> queryQtfb() {
+		// TODO Auto-generated method stub
+		return fdMapper.queryAll();
+	}
+
+	@Override
+	public int okfbPage(String qtfbId) {
+		// TODO Auto-generated method stub
+		QuestionFeedback qf = new QuestionFeedback();
+		qf.setQtfbId(qtfbId);
+		qf.setQtfbState("O");
+		
+		return fdMapper.updateByPrimaryKeySelective(qf);
 	}
 }
