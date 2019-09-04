@@ -8,7 +8,10 @@
 		<!-- Tell the browser to be responsive to screen width -->
 		<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
 	  <include th:replace="common/css :: commoncss"/>
- 	 
+ 	  <link rel="stylesheet" th:href="@{https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css}">
+
+ 
+
 		<style type="text/css">
 			
 			.content-wrapper {
@@ -21,6 +24,40 @@
 				width:90%;
 				margin: 3px;
 			}
+			
+			.mask{
+				position: fixed;
+				top: 0px;
+				left: 0px;
+				width: 100%;
+				height: 100%;
+				background-color: black;
+				opacity: 0.5;
+				z-index: 3000;
+			}
+			.ui-progressbar {
+			
+			position: fixed;
+			top: 50%;
+			left: 50%;
+			margin-left: -200px;
+			margin-top: -160px ;
+			  z-index: 3001;
+			  width:400px;
+			}
+			.progress-label {
+			  display: none;
+			  position: absolute; 
+			  left: 40%;
+			  top: 4px;
+			  font-weight: bold;
+			  text-shadow: 1px 1px 0 #fff;
+			  z-index: 3002;
+			}
+			
+			  #progressbar .ui-progressbar-value {
+			    background-color: skyblue;
+			  }
 		</style>
 	</head>
 
@@ -159,7 +196,9 @@
 			</div>
 			<!-- /.content-wrapper -->
 		</div>
+		<div id="progressbar"><div class="progress-label">处理中...</div></div>
 		<div th:replace="common/js :: commonjs"></div>
+		  <script th:src="@{https://code.jquery.com/ui/1.12.1/jquery-ui.js}"></script>
 	</body>
 	
 	<script type="text/javascript">
@@ -178,7 +217,14 @@
 				$("<input type='hidden'  name='ans0'  value='" + (ans==null?'':ans) + "' >").appendTo("#ans0div");
 			});
 			
+			var $maskDiv = $("<div></div>").addClass("mask").appendTo("body");
+			$(".progress-label").show();
+			$( "#progressbar" ).show().progressbar( {
+				value:false
+			});
+			
 			return true;
+			
 		}
 	
 		
