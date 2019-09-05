@@ -93,6 +93,7 @@
         				<th>用户账号</th>     				
         				<th>用户电话</th>     				
         				<th>当前积分</th>     				
+        				<th>状态</th>     				
 						<th>操作</th>
         			</tr>
         			<form name="delForm"  method="post"  action="#"  th:action="@{/sysuser/dels}"  >    
@@ -106,8 +107,10 @@
 	       				<td th:text="${row.userName}" >JavaSE</td>
 	       				<td th:text="${row.userPhone}" >JavaSE</td>
 	       				<td th:text="${row.ucPoints}" >0</td>	       				
+	       				<td th:text="${row.userState}" >0</td>	       				
 						<td>
 							<button type="button" class="btn btn-primary btn-sm"  th:onclick="editpage([[${row.userId}]])"     onclick="javascript:editpage('1')"    >修改</button>
+							<button type="button" class="btn btn-warning btn-sm"  th:onclick="setName([[${row.userId}]])"     onclick="javascript:editpage('1')"    >姓名确认</button>
 							<button type="button" class="btn btn-success btn-sm"  th:onclick="rolepage([[${row.userId}]])"     onclick="javascript:editpage('1')"    >设置角色</button>
 							<button type="button" class="btn btn-danger btn-sm"  th:onclick="updatemc([[${row.userId}]])"     onclick="javascript:editpage('1')"    >调整班级</button>
 							<button type="button" class="btn btn-info btn-sm"  th:onclick="updatetm([[${row.userId}]])"     onclick="javascript:editpage('1')"    >调整团队</button>
@@ -195,6 +198,10 @@
 	function editpage(id){
 		//console.log(id);
 		location.href = "/sysuser/editPage?userId=" + id; 
+	}
+	function setName(id){
+		//console.log(id);
+		location.href = "/sysuser/setName?userId=" + id; 
 	}
 	
 	function clearEle() {

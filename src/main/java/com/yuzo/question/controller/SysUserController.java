@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
+import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.yuzo.question.entity.SubjUnit;
@@ -133,6 +134,14 @@ public class SysUserController {
 		model.addAttribute("mclist", mclist);	
 		
 		return "sysuser/edit_user";
+	}
+	
+	@RequestMapping("/sysuser/setName")
+	public String setName(String userId, Model model) {
+		
+		int count = userService.setName(userId);
+
+		return "redirect:query";
 	}
 	
 	@RequestMapping("/sysuser/editSave")
@@ -299,6 +308,19 @@ public class SysUserController {
 		}
 		
 	}
+	@RequestMapping("/sysuser/editNickSave")
+	@ResponseBody
+	public String editNickSave(SysUser user, HttpServletRequest request) {
+		
+		System.out.println(user);
+		int count = userService.update(user);
+		if (count > 0) {
+			return "true";
+		} else {
+			return "false";
+		}
+		
+	}
 	
 	@RequestMapping("/sysuser/updateFace")
 	public String updateFace(HttpServletRequest request,  Model model) {
@@ -315,6 +337,79 @@ public class SysUserController {
 		
 		model.addAttribute("user", user);
 		return "sysuser/edit_phone_user";
+	}
+	@RequestMapping("/sysuser/updateNick")
+	public String updateNick(HttpServletRequest request,  Model model) {
+		
+		SysUser user = (SysUser) request.getSession().getAttribute("user");
+		
+		model.addAttribute("user", user);
+		return "sysuser/edit_nick_user";
+	}
+	
+
+	/**
+	 * 
+	* @Title: checkCustomertTel  
+	* @Description: 验证手机号是否重复
+	* @param @param tel
+	* @param @return    
+	* @return Boolean     
+	* @throws
+	*         
+	 */
+	@RequestMapping("/sysuser/checkCustomertTel")
+	@ResponseBody
+	public JSONObject checkCustomertTel(String tel, HttpSession session) {
+		return userService.checkCustomertTel(tel, session);
+	}
+
+	
+	/**
+	 * 
+	* @Title: checkSMSCode  
+	* @Description: 验证短信验证码
+	* @param @param smsCode
+	* @param @return    
+	* @return Boolean     
+	* @throws
+	 */
+	@RequestMapping("/sysuser/checkSMSCode")
+	@ResponseBody
+	public JSONObject checkSMSCode(String smsCode, HttpSession session) {
+		return userService.checkSMSCode(smsCode, session);
+	}
+	
+	
+	/**
+	 * @throws ClientException 
+	 * 
+	* @Title: sendCode  
+	* @Description: 发送短信验证码
+	* @param @return    
+	* @return JSONObject     
+	* @throws
+	 */
+	@RequestMapping("/sysuser/sendCode")
+	@ResponseBody
+	public JSONObject sendCode(String tel, HttpSession session)  {
+		return userService.sendCode(tel, session);
+	}
+	
+	
+	/**
+	 * 
+	* @Title: sendCode  
+	* @Description: 用户注册
+	* @param @return    
+	* @return JSONObject     
+	* @throws
+	 */
+	@RequestMapping("/sysuser/registerUser")
+	@ResponseBody
+	public JSONObject registerUser(SysUser user, HttpSession session)  {
+		System.out.println("user:" + user);
+		return userService.registerUser(user,  session);
 	}
 	
 }

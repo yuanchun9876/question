@@ -28,21 +28,21 @@
 				<!-- Content Header (Page header) -->
 				<section class="content-header">
 					<h1>
-          				用户修改
+          				修改昵称
 			        </h1>
 			        <ol class="breadcrumb">
 			        	<li>
 							<a th:href="@{/dashboard}"><i class="glyphicon glyphicon-globe"></i>导航</a>
 						</li>
-			          <li class="active"><a href="#">用户修改</a></li>
+			          <li class="active"><a href="#">修改昵称</a></li>
 			        </ol>
 				</section>
 
 				<!-- Main content -->
 				<section class="content">
 					<div class="row">
-						<form class="form form-horizontal" method="post"   th:action="@{/sysuser/editSave}"  th:object="${user}" >
-							<input type="hidden" name="userId"  th:field="*{userId}"  >
+						<form class="form form-horizontal" method="post"   th:action="@{/sysuser/editNickSave}"  th:object="${user}" >
+							<input type="hidden" id="userId"  th:value="*{userId}"  >
 							<!-- left column -->
 							<div class="col-md-8 col-md-offset-2">
 								<!-- general form elements -->
@@ -57,40 +57,21 @@
 									<!-- form start -->
 									<div class="box-body">
 										<div class="form-group">
-											<label for="name" class="col-sm-2 control-label">用户账号</label>
-											<div class="col-sm-10">
-												<input type="text" class="form-control" name="userName"   th:field="*{userName}"    placeholder="请输入用户账号" required="required">
+											<label for="name" class="col-sm-2 control-label">新昵称</label>
+											<div class="col-sm-8">
+												<input type="text" class="form-control" id="nick"   placeholder="请输入新昵称" required="required">
+											</div>
+											<div class="col-sm-2">
+												<span id="msg"></span>
 											</div>
 										</div>
-										<div class="form-group">
-											<label for="name" class="col-sm-2 control-label">用户昵称</label>
-											<div class="col-sm-10">
-												<input type="text" class="form-control" name="nickName"   th:field="*{nickName}"   placeholder="请输入用户昵称" required="required">
-											</div>
-										</div>
-										<div class="form-group">
-											<label for="name" class="col-sm-2 control-label">用户电话</label>
-											<div class="col-sm-10">
-												<input type="text" class="form-control" name="userPhone"   th:field="*{userPhone}"   placeholder="请输入用户电话" required="required">
-											</div>
-										</div>
-										<div class="form-group">
-											<label for="name" class="col-sm-2 control-label">用户状态</label>
-											<div class="col-sm-10">
-											<label>
-										          <input type="radio"  value="0" name="userState" th:field="*{userState}"  th:value="0"  th:checked="checked"  >0未锁定
-										        </label>
-										         <label>
-										          <input type="radio"  value="1" name="userState"  th:field="*{userState}"  th:value="1"  th:checked="checked" >1锁定
-										        </label>
-											</div>
-										</div>
+										
 									
 									</div>
 									<!-- /.box-body -->
 									<div class="box-footer">
 										<button type="button" class="btn btn-danger" onclick="cleanUp(this)">清空</button>
-										<button type="submit" class="btn btn-info pull-right">提交</button>
+										<button type="button" class="btn btn-info pull-right" onclick="doSub()">提交</button>
 									</div>
 									<!-- /.box-footer -->
 								</div>
@@ -114,6 +95,36 @@
 
 
 	<script type="text/javascript">
+		
+		function doSub(){
+			var nick = $("#nick").val();
+			if(nick == "" ){
+				bootbox.alert("请输入新昵称!");
+				return;
+			}else{
+				var url = "/sysuser/editNickSave";
+				var userId = $("#userId").val();
+				var nick = $("#nick").val();
+				var data = {"userId":userId, "nickName":nick}
+				// console.log(data);
+				$.ajax({
+					url: url,
+					method: 'POST',
+					data: data,
+					cache: false,
+					success: function(data) {
+						if("true" == data){
+							top.location.href = "/loginOut";
+						}
+					},
+					error: function (data) {
+						
+					}
+				})	
+			}
+		}
+		
+		
 		
 		//清空
 		function cleanUp(btn) {

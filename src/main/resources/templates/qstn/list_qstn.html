@@ -159,7 +159,7 @@
 							  <td  th:text="${row.subjSctnTitle}"  >${qstn.subjSctnId }</td>
 							  
 							  <td  th:text="${row.qstnCode}"  >${qstn.subjSctnId }</td>
-							  <td  th:text="${#dates.format(row.qstnInputTime, 'yyyy-MM-dd')}" ></td>
+							  <td  th:text="${#dates.format(row.qstnInputTime, 'yyyy-MM-dd HH:mm:ss')}" ></td>
 							  <td>
 								<button type="button" class="btn btn-primary btn-sm"  th:onclick="editpage([[${row.qstnId}]])"  onclick="javascript:editpage('1')">修改</button>
 								<button type="button" class="btn btn-info btn-sm"  th:onclick="answerpage([[${row.qstnId}]])"  onclick="javascript:editpage('1')">设置答案</button>

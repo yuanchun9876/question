@@ -3,11 +3,18 @@ package com.yuzo.question.service.impl;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.UUID;
+
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.alibaba.fastjson.JSONObject;
+import com.aliyuncs.dysmsapi.model.v20170525.SendSmsResponse;
+import com.aliyuncs.exceptions.ClientException;
 import com.yuzo.question.entity.SysRole;
 import com.yuzo.question.entity.SysUser;
 import com.yuzo.question.entity.SysUserRole;
@@ -22,6 +29,7 @@ import com.yuzo.question.mapper.UserMyclassMapper;
 import com.yuzo.question.mapper.UserTeamMapper;
 import com.yuzo.question.page.SysUserPage;
 import com.yuzo.question.service.ISysUserService;
+import com.yuzo.question.util.SmsUtil;
 
 @Service
 public class SysUserServiceImpl implements ISysUserService {
@@ -208,6 +216,145 @@ public class SysUserServiceImpl implements ISysUserService {
 		return userRoleMapper.queryByUser(userId);
 	}
 
+	@Override
+	public JSONObject checkCustomertTel(String tel, HttpSession session) {
+		// TODO Auto-generated method stub
+		JSONObject obj = new JSONObject();
+		if(mapper.checkTel(tel)>0) {
+			obj.put("result", "fail");
+			obj.put("message", "该手机号已被占用!");
+			
+		}else {
+			
+			obj.put("result", "success");
+			obj.put("message", "验证通过");
+		}
+		return obj;
+	}
 
 
+	@Override
+	public JSONObject sendCode(String tel, HttpSession session) {
+		// TODO Auto-generated method stub
+		//得到客户建档发送验证码模板
+		JSONObject obj = new JSONObject();
+		try {
+			
+			//生成6位随机验证码
+			String code = SmsUtil.getRandNum(6);
+			System.out.println(code);
+			
+			SendSmsResponse response = SmsUtil.sendSms(tel, "code", code, "SMS_155571050");//SMS_155571050  SMS_164150336 
+			if(response!=null && "OK".equals(response.getCode())) {
+				obj.put("result", "success");
+				obj.put("message", "验证码发送成功!");
+				//存储短信记录
+				//Session session = SecurityUtils.getSubject().getSession();
+				
+				//得到短信内容
+				String info = "感谢您成为我们的一员，您的验证码为：${code}，该验证码3分钟内有效，请勿泄露给他人。";
+				String smsInfo = info.replace("${code}", code);
+
+				//将验证码存入session中
+				session.setAttribute("SESSION_CHECKCODE", code);
+				
+				//开一个定时线程，3分钟后清空session中的验证码
+				Timer timer=new Timer();
+				timer.schedule(new TimerTask() {
+					@Override public void run() { 
+						session.removeAttribute("SESSION_CHECKCODE"); 
+						timer.cancel(); 
+					} 
+				},3*60*1000);
+			}else {
+				obj.put("result", "fail");
+				obj.put("message", "验证码发送失败，请重试!");
+			}
+			return obj;
+			
+		
+		} catch (ClientException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return obj;
+	}
+
+	
+	@Override
+	public JSONObject checkSMSCode(String smsCode, HttpSession session) {
+		// TODO Auto-generated method stub
+		System.out.println("smsCode:" + smsCode);
+		JSONObject obj = new JSONObject();
+		String checkCode = (String) session.getAttribute("SESSION_CHECKCODE");
+		System.out.println("checkCode:" + checkCode);
+		if(checkCode == null) {
+			obj.put("result", "fail");
+			obj.put("message", "验证码已过期，请重新发送!");
+		}else if(!checkCode.equals(smsCode)){
+			obj.put("result", "fail");
+			obj.put("message", "验证码不正确!");
+		}else {
+			obj.put("result", "success");
+			obj.put("message", "验证通过");
+		}
+		return obj;
+	}
+
+	@Override
+	public JSONObject registerUser(SysUser user, HttpSession session) {
+		JSONObject obj = new JSONObject();
+		
+		String userId = UUID.randomUUID().toString();
+		
+		user.setUserId(userId);
+		user.setUserPhone(user.getUserName());
+		user.setUserInfo("/images/face/user1.png");
+		user.setTmId("0");
+		user.setUserState("0");
+		int count = mapper.insertSelective(user);
+		
+		// f39376b6-316f-4a8f-acc1-1db8cf6d27d3  学生角色
+		SysUserRole ur = new SysUserRole();
+		ur.setRoleId("f39376b6-316f-4a8f-acc1-1db8cf6d27d3");
+		ur.setUserId(userId);
+		ur.setUrId(UUID.randomUUID().toString());
+		int urcount = userRoleMapper.insertSelective(ur);
+		
+		// 0 新生待分配
+		UserClassHistory uch = new UserClassHistory();
+		uch.setUcId(UUID.randomUUID().toString());
+		uch.setMcId("0");
+		uch.setUcInDate(new Date());
+		uch.setUcPoints(0);
+		uch.setUcState("1");
+		uch.setUserId(userId);
+		int ucCount = ucMapper.insertSelective(uch);
+		
+		if((count + urcount + ucCount) > 1) {
+			obj.put("result", "success");
+			obj.put("message", "保存成功");
+		}else if(urcount < 1){
+			obj.put("result", "fail");
+			obj.put("message", "角色设置失败!");
+		}else if(count < 1){
+			obj.put("result", "fail");
+			obj.put("message", "保存失败!");
+		}else if(ucCount < 1){
+			obj.put("result", "fail");
+			obj.put("message", "分班失败!");
+		}else {
+			obj.put("result", "fail");
+			obj.put("message", "失败!");
+		}
+		return obj;
+	}
+
+	@Override
+	public int setName(String userId) {
+		// TODO Auto-generated method stub
+		SysUser user = this.queryById(userId);
+		user.setUserState("1");
+		return mapper.updateByPrimaryKeySelective(user);
+	}
 }

@@ -9,7 +9,7 @@ public class SessionInterceptor implements HandlerInterceptor {
 	
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object o) throws  Exception{
         
-        if (request.getRequestURI().equals("/") ||request.getRequestURI().equals("/loginOut")||request.getRequestURI().equals("/perLoginOut") || request.getRequestURI().equals("/main")||request.getRequestURI().equals("/error")){
+        if (request.getRequestURI().equals("/sysuser/registerUser") || request.getRequestURI().equals("/sysuser/checkSMSCode") || request.getRequestURI().equals("/sysuser/sendCode") || request.getRequestURI().equals("/sysuser/checkCustomertTel") || request.getRequestURI().equals("/") || request.getRequestURI().equals("/loginOut")||request.getRequestURI().equals("/perLoginOut") || request.getRequestURI().equals("/main")||request.getRequestURI().equals("/error")){
             return true;
         }
          Object obj = request.getSession().getAttribute("user");

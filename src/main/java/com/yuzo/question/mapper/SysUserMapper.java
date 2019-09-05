@@ -27,4 +27,6 @@ public interface SysUserMapper {
 	List<SysUser> queryByMcId(String mcId);
 
 	List<SysUser> queryByName(String name);
+
+	int checkTel(String tel);
 }

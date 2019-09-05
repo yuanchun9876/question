@@ -82,7 +82,7 @@
 	                    <a th:href="@{/sysuser/updateFace}"  target="ifr_content" >修改头像</a>
 	                  </div>
 	                  <div class="col-xs-4 text-center">
-	                    <a th:href="@{/sysuser/updatePhone}"  target="ifr_content" >修改电话</a>
+	                    <a th:href="@{/sysuser/updateNick}"  th:if="${session.user.userState ne '1' }"  target="ifr_content" >修改昵称</a>
 	                  </div>
 	                </div>
 	                <!-- /.row -->
