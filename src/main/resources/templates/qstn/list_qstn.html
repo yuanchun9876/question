@@ -153,7 +153,8 @@
 		        			<tr  th:each="row,i:${pageInfo.list}" >
 		        			  <td  th:text="${i.index} + ${pageInfo.startRow}" >1</td>
 		        			  <td ><input type="checkbox" name="ids" value="1"    th:value="${row.qstnId}"  ></td>
-							  <td class="qstnTitle"  th:text="${#strings.substring(row.qstnTitle,0,15)}" >${qstn.qstnTitle }</td>
+		        			  <td class="qstnTitle" th:if="${row.qstnTitle.length() >= 15}"  th:text="${#strings.substring(row.qstnTitle,0,15)}" >${qstn.qstnTitle }</td>
+							  <td class="qstnTitle" th:if="${row.qstnTitle.length() < 15}"   th:text="${row.qstnTitle}" >${qstn.qstnTitle }</td>
 							  <td  th:text="${row.qstnTypeName}" >${qstn.qstnTypeId }</td>
 							 
 							  <td  th:text="${row.subjSctnTitle}"  >${qstn.subjSctnId }</td>
@@ -163,6 +164,7 @@
 							  <td>
 								<button type="button" class="btn btn-primary btn-sm"  th:onclick="editpage([[${row.qstnId}]])"  onclick="javascript:editpage('1')">修改</button>
 								<button type="button" class="btn btn-info btn-sm"  th:onclick="answerpage([[${row.qstnId}]])"  onclick="javascript:editpage('1')">设置答案</button>
+								<button type="button" class="btn btn-danger btn-sm"  th:onclick="testpage([[${row.qstnId}]],[[${row.qstnTypeId}]])"  onclick="javascript:editpage('1')">测试</button>
 							 </td>
 							</tr>	
 							</tbody>
@@ -184,6 +186,8 @@
 
 
 <script type="text/javascript">
+
+
 
 	function editCode(){
 		//console.log(123);
@@ -274,6 +278,33 @@
 		function addPage(){
 			window.location.href = "/qstn/addPage";
 		}
-	</script>
+
+		function testpage(qstnId, type){
+			 bootbox.dialog({
+				  // dialog的内容
+				  message: "<iframe src='/qstn/checkQstn?qstnId=" + qstnId + "&type=" + type + "' style='width:100%;height:399px;border:0 solid;'></iframe>",
+				   
+
+				  // 是否显示此dialog，默认true
+				  show: true,
+
+				     // 显示尺寸，可选 small  /large
+				 size: "large",
+
+				  // 是否显示body的遮罩，默认true
+				  backdrop: true,
+				   
+				  // 是否显示关闭按钮，默认true
+				  closeButton: true,
+				   
+				  // 是否动画弹出dialog，IE10以下版本不支持
+				  animate: true,
+				   
+				  // dialog的类名
+				  className: "my-modal",
+				   
+				});
+		}
+		</script>
 
 </html>

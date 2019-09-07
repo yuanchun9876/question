@@ -516,12 +516,14 @@ public class TestPlanServiceImpl implements ITestPlanService {
 		
 		int total = 0;
 		for (Answer ans : ansList) {
-			
+			System.err.println("ans:" + ans);
 			String anscontent = this.getStr(ans.getAnsContent()).trim().toLowerCase();
 			anscontent = anscontent.replaceAll("&lt;", "<");
 			anscontent = anscontent.replaceAll("&gt;", ">");
 			anscontent = anscontent.replaceAll("&amp;", "&");
 //			System.out.println(answer.trim().toLowerCase());
+			System.err.println("anscontent:" + anscontent);
+			System.err.println(answer.trim().toLowerCase());
 			if(anscontent.equals(answer.trim().toLowerCase())) {
 				
 				total = 1;		
@@ -579,9 +581,19 @@ public class TestPlanServiceImpl implements ITestPlanService {
 		// <p><span style="">为什么Mybatis叫半映射?</span><br></p>
 		// <p>为什么没有信息</p>
 		if(str.startsWith("<p><span style=\"\">")) {
-			return str.substring(18, str.lastIndexOf("</span><br></p>")).trim();
+			if (str.lastIndexOf("</span><br></p>") != -1) {
+				return str.substring(18, str.lastIndexOf("</span><br></p>")).trim();
+			} else {
+				return str.substring(18, str.lastIndexOf("</span></p>")).trim();
+			}
+		
 		}else {
-			return str.substring(3, str.lastIndexOf("</p>")).trim();
+			if (str.lastIndexOf("<br></p>") != -1) {
+				return str.substring(3, str.lastIndexOf("<br></p>")).trim();
+			} else {
+				return str.substring(3, str.lastIndexOf("</p>")).trim();
+			}
+			
 		}
 		
 		
@@ -829,6 +841,62 @@ public class TestPlanServiceImpl implements ITestPlanService {
 	public SysUser queryUserById(String userId) {
 		// TODO Auto-generated method stub
 		return userMapper.selectByPrimaryKey(userId);
+	}
+
+	@Override
+	public Map<String, Object> checkAnswer(String type, String[] qstns0, String[] ans0, String[] qstns2, String[] ans2,
+			String[] qstns4, String[] ans4) {
+	//	System.err.println(type);
+		Map<String, Object> map = new HashMap<String, Object>();
+		// map .answer  / qstn  /  result
+		if ("0".equals(type)) {
+			Question qstn = qstnMapper.selectByPrimaryKey(qstns0[0]);			
+			map.put("qstn", qstn);
+			if(ans0!=null && ans0.length>0) {
+				//ual.setUansContent(ans0[i]);
+				Answer ans = ansMapper.selectByPrimaryKey(ans0[0]);
+				map.put("answer", ans.getAnsContent());
+			}							
+			double result = 0.0;
+			// ----------------------------
+			if(ans0!=null && ans0.length>0) {
+				result = this.checkAnswer0(qstns0[0], ans0[0]);
+			}else {
+				result = this.checkAnswer0(qstns0[0], "");
+			}
+			map.put("result", result);
+			
+		} else if ("2".equals(type)){
+			
+			Question qstn = qstnMapper.selectByPrimaryKey(qstns2[0]);
+			map.put("qstn", qstn);
+			map.put("answer", ans2[0]);			
+			double result = this.checkAnswer2(qstns2[0], ans2[0]);				
+			map.put("result", result);
+			
+		} else if ("4".equals(type)){
+			Question qstn = qstnMapper.selectByPrimaryKey(qstns4[0]);			
+			map.put("qstn", qstn);
+			map.put("answer", ans4[0]);		
+			
+			double result = this.checkAnswer4(qstns4[0], ans4[0]);
+			map.put("result", result);
+		}else {
+			map = null;
+		}
+		return map;
+	}
+
+	@Override
+	public List<Answer> queryAnswersByQstnId(String qstnId) {
+		// TODO Auto-generated method stub
+		return ansMapper.queryByQstnId(qstnId);
+	}
+
+	@Override
+	public Question queryQstnById(String qstnId) {
+		// TODO Auto-generated method stub
+		return qstnMapper.selectByPrimaryKey(qstnId);
 	}
 
 	

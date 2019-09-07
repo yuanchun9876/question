@@ -19,6 +19,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.yuzo.question.entity.Answer;
 import com.yuzo.question.entity.QstnFromType;
 import com.yuzo.question.entity.Question;
 import com.yuzo.question.entity.QuestionType;
@@ -361,7 +362,27 @@ public class TestPlanController {
 		
 	}
 	
-	
+	@RequestMapping("/checkAnswer")
+	public String checkAnswer(String type, String[] qstns0,String[] ans0, String[] qstns2,String[] ans2, String[] qstns4,String[] ans4, HttpServletRequest request, Model model) {
+		
+//		System.out.println(Arrays.toString(qstns0));
+//		System.out.println(Arrays.toString(ans0));
+
+		Map<String, Object> map = testPlanService.checkAnswer(type, qstns0, ans0, qstns2, ans2, qstns4, ans4);
+
+		Question qstn = testPlanService.queryQstnById(((Question)map.get("qstn")).getQstnId());
+		model.addAttribute("qstn", qstn);
+		
+		List<Answer> ansList = testPlanService.queryAnswersByQstnId(((Question)map.get("qstn")).getQstnId());
+		model.addAttribute("ansList", ansList);
+		
+		model.addAttribute("myanswer", map.get("answer"));
+		model.addAttribute("result", map.get("result"));
+		
+		model.addAttribute("type", type);
+		
+		return "qstn/check_answer";
+	}
 	
 	
 	@RequestMapping("/setPage")

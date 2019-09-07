@@ -3,6 +3,7 @@ package com.yuzo.question.service;
 import java.util.List;
 import java.util.Map;
 
+import com.yuzo.question.entity.Answer;
 import com.yuzo.question.entity.QstnFromType;
 import com.yuzo.question.entity.Question;
 import com.yuzo.question.entity.QuestionType;
@@ -79,6 +80,12 @@ public interface ITestPlanService {
 	List<TestPlan> queryByUserClass3(String mcId);
 
 	SysUser queryUserById(String userId);
+
+	Map<String, Object> checkAnswer(String type, String[] qstns0, String[] ans0, String[] qstns2, String[] ans2, String[] qstns4, String[] ans4);
+
+	List<Answer> queryAnswersByQstnId(String qstnId);
+
+	Question queryQstnById(String qstnId);
 
 	
 }

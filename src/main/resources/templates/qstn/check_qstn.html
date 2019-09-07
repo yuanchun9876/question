@@ -82,31 +82,30 @@
 				<!-- Main content -->
 				<section class="content">
 					<div class="row">
-						<form class="form form-horizontal" method="post"   onkeydown="if(event.keyCode==13)return false;"    th:action="@{/testplan/answerSave}"  onsubmit="return(doSub())"  >
-							<input  type="hidden"  name="tpId"  th:value="${plan.tpId}" >
-							<input  type="hidden"  name="tpType"  th:value="${plan.tpType}" >
+						<form class="form form-horizontal" method="post"    onkeydown="if(event.keyCode==13)return false;"     th:action="@{/testplan/checkAnswer}"  onsubmit="return(doSub())"  >
+							<input type="hidden" name="type" th:value="${type}">
 							<!-- left column -->
 							<div class="col-md-10 col-md-offset-1">
 							
 								<!-- general form elements -->
-								<div class="box box-primary"  th:if="${qstnList0 != null}" >
+								<div class="box box-primary"  th:if="${type eq '0'}" >
 								
 									<div class="box-header with-border">
 										<h3 class="box-title">单项选择</h3>
 									
 									</div>
 									<!-- /.box-header -->
-										<div class="box-body"  th:each="qstn,i:${qstnList0}" >
+										<div class="box-body"   >
 										<input  type="hidden"   name="qstns0" th:value="${qstn.qstnId}">
 										<div class="form-group" >
-											<label for="name" class="col-sm-1 control-label" th:text="${'第' + i.count + '题:'}" >试题名称</label>
+											<label for="name" class="col-sm-1 control-label" th:text="${'第1题:'}" >试题名称</label>
 											<div class="col-sm-11" th:utext="${qstn.qstnTitle}">	
 											</div>
 										</div>
 										<div class="form-group" >
 											<label class="col-sm-1 control-label"  >选择</label>
 											<div class="col-sm-11 radio text-left" >
-												<div  th:each="ans,i:${qstn.ansList}">
+												<div  th:each="ans,i:${ansList}">
 												<label  class="questionanswer">
 										          <input type="radio"  th:value="${ans.ansId}" th:name="${qstn.qstnId + 'ans'}"    ><span   th:utext="${ans.ansContent}"     ></span>			
 										        </label>	
@@ -120,7 +119,7 @@
 								</div>
 								
 								
-								<div class="box box-primary" th:if="${qstnList2 != null}" >
+								<div class="box box-primary" th:if="${type eq '2'}" >
 								
 									<div class="box-header with-border">
 										<h3 class="box-title">填空题</h3>
@@ -128,10 +127,10 @@
 									</div>
 									<!-- /.box-header -->
 						
-									<div class="box-body"  th:each="qstn,i:${qstnList2}" >
+									<div class="box-body"   >
 										<input  type="hidden"  name="qstns2" th:value="${qstn.qstnId}">
 										<div class="form-group" >
-											<label for="name" class="col-sm-1 control-label" th:text="${'第' + i.count + '题:'}" >试题名称</label>
+											<label for="name" class="col-sm-1 control-label" th:text="${'第1题:'}" >试题名称</label>
 											<div class="col-sm-11" th:utext="${qstn.qstnTitle}">
 												
 											</div>
@@ -148,7 +147,7 @@
 								
 								</div>
 								
-								<div class="box box-primary" th:if="${qstnList4 != null}" >
+								<div class="box box-primary" th:if="${type eq '4'}" >
 								
 									<div class="box-header with-border">
 										<h3 class="box-title">简答题</h3>
@@ -156,10 +155,10 @@
 									</div>
 									<!-- /.box-header -->
 						
-									<div class="box-body"  th:each="qstn,i:${qstnList4}" >
+									<div class="box-body"   >
 										<input  type="hidden"  name="qstns4" th:value="${qstn.qstnId}">
 										<div class="form-group" >
-											<label for="name" class="col-sm-1 control-label" th:text="${'第' + i.count + '题:'}" >试题名称</label>
+											<label for="name" class="col-sm-1 control-label" th:text="${'第1题:'}" >试题名称</label>
 											<div class="col-sm-11" th:utext="${qstn.qstnTitle}">
 												
 											</div>
@@ -203,11 +202,7 @@
 	
 	<script type="text/javascript">
 		
-		window.setInterval("xintiao()", 1000*60*10);// 10分钟一次心跳
-		function xintiao(){
-			var url = "/testplan/xintiao";
-			$.post(url,function(resp){console.log("xintiao")});
-		}
+
 	
 		function doSub(){
 			// ans0div
@@ -216,6 +211,8 @@
 				var ans = $("[name=" + name + "]:checked").val();
 				$("<input type='hidden'  name='ans0'  value='" + (ans==null?'':ans) + "' >").appendTo("#ans0div");
 			});
+			
+			
 			
 			var $maskDiv = $("<div></div>").addClass("mask").appendTo("body");
 			$(".progress-label").show();

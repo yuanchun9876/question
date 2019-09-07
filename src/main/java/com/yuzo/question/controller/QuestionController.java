@@ -243,6 +243,18 @@ public class QuestionController {
 		return null;
 	}
 	
+	@RequestMapping("/checkQstn")
+	public String checkQstn(String qstnId, String type, Model model) {
+		Question qstn = qstnService.queryById(qstnId);
+		model.addAttribute("qstn", qstn);
+		List<Answer> ansList = qstnService.queryAnswersByQstnId(qstnId);
+		model.addAttribute("ansList", ansList);
+		model.addAttribute("type", type);
+		
+		return "qstn/check_qstn";
+	}
+
+	
 	@RequestMapping("/queryQtfb")
 	public String queryQtfb( Model model) {		
 		List<QuestionFeedback> list = qstnService.queryQtfb();
