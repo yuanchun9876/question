@@ -64,27 +64,32 @@
 	        <input type="text" name="userName" id="phone" class="form-control" onblur="validTel(this)"  placeholder="手机号">
 	        <span class="glyphicon glyphicon-phone form-control-feedback"></span>
 	      </div>
-		  <div class="form-group has-feedback">
-		    <input type="text" id="checkCode" class="form-control"   onblur="validSMSCode(this)"   placeholder="验证码">
-		    <span class="glyphicon glyphicon-bell form-control-feedback"></span>
+		  <div class="form-group has-feedback" >
+		    <div class="row">
+		        <div class="col-xs-7">
+				    <input type="text" id="checkCode" class="form-control"   onblur="validSMSCode(this)"   placeholder="验证码">
+				    <span class="glyphicon glyphicon-bell form-control-feedback"></span>	
+		  		</div>
+		        <div class="col-xs-5">
+			    	<button type="button" class="btn btn-warning btn-block btn-flat"  onclick="sendCode(this)">发送验证码</button>
+			    </div>
+		    </div>
 		  </div>
 	      <div class="form-group has-feedback">
 	        <input type="text" name="nickName" class="form-control" id="nick"  required placeholder="姓名" >
 	        <span class="glyphicon glyphicon-user form-control-feedback"></span>
 	      </div>
 		  <div class="form-group has-feedback">
-		    <input type="password" name="userPass" class="form-control"  id="pass"  required placeholder="密码" onblur="checkPass(this)">
+		    <input type="password" name="userPass" class="form-control"  id="pppp"  required placeholder="密码" >
 		    <span class="glyphicon glyphicon-lock form-control-feedback"></span>
 		  </div>
-	      <div class="row">
-	        <div class="col-xs-3">
-				<button type="button" class="btn btn-info btn-block btn-flat"   onclick="loginPage()">登 录</button>
+		   <div class="row">
+	   		 <div class="col-xs-6">
+				<button type="button" class="btn btn-info btn-block btn-flat"   onclick="loginPage()">转回登录</button>
 	        </div>
-	  			<div class="col-xs-5">
-	  				<button type="button" class="btn btn-warning btn-block btn-flat"  onclick="sendCode(this)">发送验证码</button>
-	  			</div>
-	        <div class="col-xs-4">
-	  				<button type="button" class="btn btn-primary btn-block btn-flat"  onclick="doSub()" >保 存</button>
+	  		
+	        <div class="col-xs-6">
+	  				<button type="button" class="btn btn-primary btn-block btn-flat"  onclick="doSub()" >注册保存</button>
 	        </div>
 	      </div>
 	    </form>
@@ -101,7 +106,8 @@
 	<script th:src="@{/dist/js/adminlte.min.js}"></script>
 	<!-- iCheck -->
 	<script th:src="@{/plugins/iCheck/icheck.min.js}"></script>
-	
+	<!-- bootbox -->
+	<script th:src="@{/bower_components/bootbox/js/bootbox.js}"></script>
 
   <script type="text/javascript" >
   
@@ -181,25 +187,25 @@
 		
 		var telInput = $("#phone")[0];
 		if(!validTel(telInput)){
-			//alert("请输入电话号码");
-			$("#phone").focus();
+			//bootbox.alert("请输入电话号码");
+			//$("#phone").focus();
 			return false;
 		};
 		var checkInput = $("#checkCode")[0];
 		if(!validSMSCode(checkInput)){
-			alert("请输入验证码");
+			//bootbox.alert("请输入验证码");
 			return false;
 		};
 		var nick = $("#nick")[0];
 		if(nick.value==null ||  nick.value==""){
-			alert("请输入姓名");
+			bootbox.alert("请输入姓名");
 			$("#nick").focus();
 			return false;
 		};
-		var pass = $("#pass")[0];
+		var pass = $("#pppp")[0];
 		if(pass.value==null ||  pass.value==""){
-			alert("请输入密码");
-			$("#pass").focus();
+			bootbox.alert("请输入密码");
+			$("#pppp").focus();
 			return false;
 		};
 		var data = $("#regiform").serialize()
@@ -227,7 +233,7 @@
 		var telIpt = $("#phone")[0];
 		
 		if(!validTel(telIpt)){
-			alert("手机格式不正确或手机号已被占用!");
+			bootbox.alert("手机格式不正确或手机号已被占用!");
 			//console.log("手机格式不正确或手机号已被占用!");
 			return;
 		}
@@ -266,7 +272,7 @@
 		//先进行格式检查
 		var t = /^1(3|4|5|6|7|8|9)\d{9}$/;
 		if(!t.test(tel)){
-			alert("手机号格式不正确!");
+			bootbox.alert("手机号格式不正确!");
 			return false;
 		}
 		/**/
@@ -280,7 +286,7 @@
 			success:function(msg){
 				console.log(msg);
 				if(msg.result=="fail"){
-					alert(msg.message);
+					bootbox.alert(msg.message);
 					flag = false;
 				}
 			}
@@ -301,7 +307,7 @@
 			success:function(msg){
 				console.log(msg)
 				if(msg.result=="fail"){
-					alert(msg.message);
+					bootbox.alert(msg.message);
 					flag = false;
 				}
 			}
