@@ -57,6 +57,8 @@ public class SysUserServiceImpl implements ISysUserService {
 		// TODO Auto-generated method stub
 		int count = 0;
 		for (int i = 0; i < ids.length; i++) {
+			ucMapper.deleteByUser(ids[i]);
+			userRoleMapper.delsByUserId(ids[i]);
 			count += mapper.deleteByPrimaryKey(ids[i]);
 		}
 		return count;

@@ -17,7 +17,7 @@
     select 
     wl_id, wl.wt_id, wl_title, wl_info, wl_num  , wt.wt_name, wt.wt_code
     from work_list wl left join work_type wt on wl.wt_id = wt.wt_id
-	order by wl_num
+	order by wl_num, wl_title
   </select>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 

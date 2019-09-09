@@ -40,6 +40,12 @@
     delete from user_class_history
     where uc_id = #{ucId,jdbcType=VARCHAR}
   </delete>
+  
+  <delete id="deleteByUser" parameterType="java.lang.String" >
+    delete from user_class_history
+    where user_id = #{value,jdbcType=VARCHAR}
+  </delete>
+  
   <insert id="insert" parameterType="com.yuzo.question.entity.UserClassHistory" >
     insert into user_class_history (uc_id, user_id, mc_id, 
       uc_points, uc_in_date, uc_state

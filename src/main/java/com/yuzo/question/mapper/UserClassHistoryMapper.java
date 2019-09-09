@@ -22,4 +22,6 @@ public interface UserClassHistoryMapper {
 	UserClassHistory queryByUserId(String userId);
 
 	int updateBeforeClass(@Param("userId")String userId, @Param("mcId")String mcId);
+
+	void deleteByUser(String string);
 }
