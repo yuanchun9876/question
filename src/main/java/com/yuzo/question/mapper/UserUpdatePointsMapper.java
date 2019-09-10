@@ -21,5 +21,5 @@ public interface UserUpdatePointsMapper {
 
 	List<UserUpdatePoints> queryByUser(String userId);
 
-	UserUpdatePoints queryByUserAndWl(@Param("userId")String userId, @Param("wlId")String wlId);
+	UserUpdatePoints queryByUserAndWl(@Param("mcId")String mcId, @Param("userId")String userId, @Param("wlId")String wlId);
 }

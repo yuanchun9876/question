@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yuzo.question.mapper.TestplanClassteamMapper" >
+  <resultMap id="BaseResultMap" type="com.yuzo.question.entity.TestplanClassteam" >
+    <id column="tpct_id" property="tpctId" jdbcType="VARCHAR" />
+    <result column="tp_id" property="tpId" jdbcType="VARCHAR" />
+    <result column="mc_id" property="mcId" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    tpct_id, tp_id, mc_id
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from testplan_classteam
+    where tpct_id = #{tpctId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from testplan_classteam
+    where tpct_id = #{tpctId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.yuzo.question.entity.TestplanClassteam" >
+    insert into testplan_classteam (tpct_id, tp_id, mc_id
+      )
+    values (#{tpctId,jdbcType=VARCHAR}, #{tpId,jdbcType=VARCHAR}, #{mcId,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.yuzo.question.entity.TestplanClassteam" >
+    insert into testplan_classteam
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="tpctId != null" >
+        tpct_id,
+      </if>
+      <if test="tpId != null" >
+        tp_id,
+      </if>
+      <if test="mcId != null" >
+        mc_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="tpctId != null" >
+        #{tpctId,jdbcType=VARCHAR},
+      </if>
+      <if test="tpId != null" >
+        #{tpId,jdbcType=VARCHAR},
+      </if>
+      <if test="mcId != null" >
+        #{mcId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.yuzo.question.entity.TestplanClassteam" >
+    update testplan_classteam
+    <set >
+      <if test="tpId != null" >
+        tp_id = #{tpId,jdbcType=VARCHAR},
+      </if>
+      <if test="mcId != null" >
+        mc_id = #{mcId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where tpct_id = #{tpctId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.yuzo.question.entity.TestplanClassteam" >
+    update testplan_classteam
+    set tp_id = #{tpId,jdbcType=VARCHAR},
+      mc_id = #{mcId,jdbcType=VARCHAR}
+    where tpct_id = #{tpctId,jdbcType=VARCHAR}
+  </update>
+</mapper>

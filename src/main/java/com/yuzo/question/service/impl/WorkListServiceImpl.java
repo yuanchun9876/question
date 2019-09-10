@@ -110,7 +110,7 @@ public class WorkListServiceImpl implements IWorkListService{
 			List<String> levels = new ArrayList<>();
 			for (SysUser sysUser : userlist) {
 //				System.out.println(sysUser.getNickName());
-				UserUpdatePoints uup = uupMapper.queryByUserAndWl(sysUser.getUserId(), wl.getWlId());
+				UserUpdatePoints uup = uupMapper.queryByUserAndWl(mcId, sysUser.getUserId(), wl.getWlId());
 				Integer p = uup==null?0:uup.getUuptPrimaryPoint();
 				proints.add(p);
 				switch (p) {
