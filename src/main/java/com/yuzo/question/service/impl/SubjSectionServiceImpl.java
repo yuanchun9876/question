@@ -118,21 +118,21 @@ public class SubjSectionServiceImpl implements ISubjSectionService{
 		List<SubjectCourse> subjList = subjMapper.queryAll();		
 		for (SubjectCourse subj : subjList) {
 			Map<String, Object> subjMap = new HashMap<>();
-			subjMap.put("name", subj.getSubjTitle());
+			subjMap.put("name", subj.getSubjTitle()+" [ "+subj.getSubjCount()+" ]");
 			
 			List<SubjUnit> unitList = unitMapper.queryBySubj(subj.getSubjId());
 			if(unitList!=null && unitList.size()>0) {
 				List<Map<String, Object>> subjChdList = new ArrayList<>();
 				for (SubjUnit unit : unitList) {
 					Map<String, Object> unitMap = new HashMap<>();
-					unitMap.put("name",unit.getSubjUnitTitle());
+					unitMap.put("name",unit.getSubjUnitTitle()+" [ "+unit.getUnitCount()+" ]");
 					
 					List<SubjSection> sctnList = sctnMapper.queryByUnit(unit.getSubjUnitId());
 					if(sctnList!=null && sctnList.size()>0) {
 						List<Map<String, Object>> unitChdList = new ArrayList<>();
 						for (SubjSection sctn : sctnList) {
 							Map<String, Object> sctnMap = new HashMap<>();
-							sctnMap.put("name", sctn.getSubjSctnTitle());
+							sctnMap.put("name", sctn.getSubjSctnTitle()+" [ "+sctn.getSctnCount()+" ]");
 							unitChdList.add(sctnMap);
 						}
 						unitMap.put("children", unitChdList);
