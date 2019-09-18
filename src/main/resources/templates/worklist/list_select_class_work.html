@@ -198,12 +198,23 @@
 						       
 						        {
 						            name:'积分',
-						            type:'line',
+						            type:'bar',
+						            itemStyle: {
+						                normal: {                   // 系列级个性化，横向渐变填充
+						                    
+						                    label : {
+						                        show : true,
+						                        textStyle : {
+						                            fontSize : '20',
+						                            fontFamily : '微软雅黑'
+						                        }
+						                    }
+						                }
+						            },
 						            data: resp.userPoints,
 						            markPoint : {
 						                data : [
-						                    {type : 'max', name: '最大值'},
-						                    {type : 'min', name: '最小值'}
+						                 
 						                ]
 						            },
 						            markLine : {
