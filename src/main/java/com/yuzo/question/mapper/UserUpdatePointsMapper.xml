@@ -19,12 +19,13 @@
   
   <select id="queryByUserAndWl" resultMap="BaseResultMap"  >
     select 
-     uup_id, uup.uupt_id, user_id, uup_time, uup_info, uupt.uupt_info, uup.wl_id,  wl.wl_title, wt.wt_code , uupt.uupt_primary_point
+     uup_id, uup.uupt_id, uup.user_id, uup_time, uup_info, uupt.uupt_info, uup.wl_id,  wl.wl_title, wt.wt_code , uupt.uupt_primary_point
     from user_update_points  uup 
     		left join user_update_points_type uupt  on uup.uupt_id = uupt.uupt_id
     		left join work_list wl   on uup.wl_id = wl.wl_id
-    		left join work_type wt on wl.wt_id = wt.wt_id   
-    where user_id = #{userId}  and uup.wl_id = #{wlId}
+    		left join work_type wt on wl.wt_id = wt.wt_id  
+    		left join user_class_history uch on uup.user_id = uch.user_id
+    where uup.user_id = #{userId}  and uup.wl_id = #{wlId} and uch.mc_id = #{mcId}  and uup_time >= uc_in_date
   </select>
   
   <select id="queryByUser" resultMap="BaseResultMap" parameterType="java.lang.String" >

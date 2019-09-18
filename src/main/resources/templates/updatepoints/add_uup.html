@@ -68,9 +68,9 @@
 											</div>
 											<label for="name" class="col-sm-2 control-label">作业列表</label>
 											<div class="col-sm-4">
-												<select class="form-control" name="wlId"   >
+												<select class="form-control" name="wlId"  onchange="wlinfo(this)"  >
 													<option value="">请选择</option>
-													<option  th:value = "${wl.wlId}"   th:each="wl,i:${wlList}"   th:text="${wl.wtName +'.'+ wl.wlTitle }"  >作业列表</option>
+													<option  th:value = "${wl.wlId}"    th:each="wl,i:${wlList}"   th:text="${wl.wtName +'.'+ wl.wlTitle }"  >作业列表</option>
 												</select>
 											</div>
 										</div>
@@ -78,7 +78,7 @@
 										<div class="form-group">
 											<label for="name" class="col-sm-2 control-label">调分说明</label>
 											<div class="col-sm-10">
-												<textarea type="text" class="form-control" name="uupInfo"  placeholder="请输入调分说明" required="required"></textarea>
+												<textarea  class="form-control"  id="uupInfo" name="uupInfo"  placeholder="请输入调分说明" required="required"></textarea>
 											</div>
 										</div>
 															
@@ -107,6 +107,10 @@
 	
 	<script type="text/javascript">
 		
+		function wlinfo(sel){
+			var info = sel.options[sel.selectedIndex].innerText
+			$("#uupInfo").html(info);
+		}
 
 		//清空
 		function cleanUp(btn) {

@@ -22,6 +22,7 @@ import com.yuzo.question.entity.SubjectCourse;
 import com.yuzo.question.entity.SysUser;
 import com.yuzo.question.entity.TestPlan;
 import com.yuzo.question.entity.TestPlanDetailed;
+import com.yuzo.question.entity.TestplanClassteam;
 import com.yuzo.question.entity.UserAnswerList;
 import com.yuzo.question.entity.UserMyclass;
 import com.yuzo.question.entity.UserTeam;
@@ -36,6 +37,7 @@ import com.yuzo.question.mapper.SubjectCourseMapper;
 import com.yuzo.question.mapper.SysUserMapper;
 import com.yuzo.question.mapper.TestPlanDetailedMapper;
 import com.yuzo.question.mapper.TestPlanMapper;
+import com.yuzo.question.mapper.TestplanClassteamMapper;
 import com.yuzo.question.mapper.UserAnswerListMapper;
 import com.yuzo.question.mapper.UserMyclassMapper;
 import com.yuzo.question.mapper.UserTeamMapper;
@@ -87,6 +89,9 @@ public class TestPlanServiceImpl implements ITestPlanService {
 	
 	@Autowired
 	private SysUserMapper userMapper;
+	
+	@Autowired
+	private TestplanClassteamMapper tpctMapper;
 
 	@Override
 	public List<QstnFromType> queryQstnFrom2(String tpId) {
@@ -897,6 +902,19 @@ public class TestPlanServiceImpl implements ITestPlanService {
 	public Question queryQstnById(String qstnId) {
 		// TODO Auto-generated method stub
 		return qstnMapper.selectByPrimaryKey(qstnId);
+	}
+
+	@Override
+	public int setPlanTarget(TestPlan plan) {
+		// TODO Auto-generated method stub
+		planMapper.updateByPrimaryKeySelective(plan);
+		//tpctMapper
+		TestplanClassteam tpct = new TestplanClassteam();
+		tpct.setTpctId(UUID.randomUUID().toString());
+		tpct.setTpId(plan.getTpId());
+		tpct.setMcId(plan.getTpTarget());
+		
+		return tpctMapper.insertSelective(tpct);
 	}
 
 	

@@ -64,6 +64,7 @@
         				<th>全选</th>
         				<th>调分类型</th>     				
         				<th>调分时间</th>
+        				<th>关联作业</th>
         				<th>说明</th>
 						<th>操作</th>
         			</tr>
@@ -74,6 +75,7 @@
 	        			<td ><input type="checkbox" name="ids"  value="1"    th:value="${row.uuptId}"  ></td>
 	       				<td th:text="${row.uuptInfo}" >JavaSE</td>
 	       				<td th:text="${#dates.format(row.uupTime, 'yyyy-MM-dd')}" >1</td>
+	       				<td th:text="${row.wlTitle}">JAVASE</td>
 	       				<td th:text="${row.uupInfo}">JAVASE</td>
 	       				
 						<td>

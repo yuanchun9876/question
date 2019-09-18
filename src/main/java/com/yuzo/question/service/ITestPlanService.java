@@ -87,5 +87,7 @@ public interface ITestPlanService {
 
 	Question queryQstnById(String qstnId);
 
+	int setPlanTarget(TestPlan plan);
+
 	
 }

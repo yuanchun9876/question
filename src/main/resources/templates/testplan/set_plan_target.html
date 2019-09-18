@@ -38,7 +38,7 @@
 				<!-- Main content -->
 				<section class="content">
 					<div class="row">
-						<form class="form form-horizontal" method="post"  th:object="${plan}"    th:action="@{/testplan/editSave}"  >
+						<form class="form form-horizontal" method="post"  th:object="${plan}"    th:action="@{/testplan/setPlanTarget}"  >
 							<input type="hidden" name="tpId"  th:field="*{tpId}"  >
 							<!-- left column -->
 							<div class="col-md-8 col-md-offset-2">

@@ -341,6 +341,14 @@ public class TestPlanController {
 		return "testplan/set_plan_target";
 	}
 	
+	@RequestMapping("/setPlanTarget")
+	public String setPlanTarget(TestPlan plan) {
+		
+		int count = testPlanService.setPlanTarget(plan);
+		System.out.println(":" + count);
+		return "redirect:query";
+	}
+	
 	@RequestMapping("/answerSave")
 	public String answerSave(String tpId,String tpType, String[] qstns0,String[] ans0, String[] qstns2,String[] ans2, String[] qstns4,String[] ans4, HttpServletRequest request, Model model) {
 		
