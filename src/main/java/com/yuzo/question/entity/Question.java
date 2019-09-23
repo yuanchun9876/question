@@ -22,6 +22,8 @@ public class Question {
     
     private Integer qstnNum;
     
+    private Integer qstnLevel;
+    
     
     private String subjSctnTitle;
 
@@ -47,20 +49,18 @@ public class Question {
     // 答案列表
     private List<Answer>  ansList;
     
-    
-    
-    
-    
-
-    @Override
+	@Override
 	public String toString() {
-		return "Question [qstnId=" + qstnId + ", subjSctnId=" + subjSctnId + ", qstnTypeId=" + qstnTypeId + ", qstnCode=" + qstnCode
+		return "Question [qstnId=" + qstnId + ", subjSctnId=" + subjSctnId + ", qstnTypeId=" + qstnTypeId
 				+ ", qstnFromTypeId=" + qstnFromTypeId + ", qstnTitle=" + qstnTitle + ", qstnInputTime=" + qstnInputTime
-				+ ", qstnPictext=" + qstnPictext + ", qstnNum=" + qstnNum + ", subjSctnTitle=" + subjSctnTitle
-				+ ", qstnTypeName=" + qstnTypeName + ", qstnFromTypeCode=" + qstnFromTypeCode + ", subjUnitTitle="
-				+ subjUnitTitle + ", subjTitle=" + subjTitle + ", qstnCount=" + qstnCount + ", ansList=" + ansList
-				+ "]";
+				+ ", qstnPictext=" + qstnPictext + ", qstnCode=" + qstnCode + ", qstnNum=" + qstnNum + ", qstnLevel="
+				+ qstnLevel + ", subjSctnTitle=" + subjSctnTitle + ", qstnTypeName=" + qstnTypeName
+				+ ", qstnFromTypeCode=" + qstnFromTypeCode + ", subjUnitTitle=" + subjUnitTitle + ", subjTitle="
+				+ subjTitle + ", subjCode=" + subjCode + ", subjUnitCode=" + subjUnitCode + ", subjSctnCode="
+				+ subjSctnCode + ", qstnCount=" + qstnCount + ", ansList=" + ansList + "]";
 	}
+
+
 
 	public List<Answer> getAnsList() {
 		return ansList;
@@ -212,6 +212,14 @@ public class Question {
 
 	public void setSubjSctnCode(String subjSctnCode) {
 		this.subjSctnCode = subjSctnCode;
+	}
+
+	public Integer getQstnLevel() {
+		return qstnLevel;
+	}
+
+	public void setQstnLevel(Integer qstnLevel) {
+		this.qstnLevel = qstnLevel;
 	}
     
     

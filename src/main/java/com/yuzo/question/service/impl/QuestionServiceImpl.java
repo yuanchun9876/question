@@ -139,6 +139,7 @@ public class QuestionServiceImpl implements IQuestionService{
 	@Override
 	public int save(Question qstn) {
 		// TODO Auto-generated method stub
+		qstn.setQstnLevel(0);;
 		return qstnMapper.insertSelective(qstn);
 	}
 
