@@ -77,7 +77,8 @@
 	  
 						<td>
 							<button type="button" class="btn btn-primary btn-sm"  th:onclick="editpage([[${row.crseId}]])"     onclick="javascript:editpage('1')"    >修改</button>
-							<button type="button" class="btn btn-primary btn-sm"  th:onclick="setmenupage([[${row.crseId}]])"     onclick="javascript:editpage('1')"    >设置菜单</button>
+							<button type="button" class="btn btn-info btn-sm"  th:onclick="setsctnpage([[${row.crseId}]])"     onclick="javascript:editpage('1')"    >设置知识</button>
+							<button type="button" class="btn btn-warning btn-sm"  th:onclick="setqstnpage([[${row.crseId}]])"     onclick="javascript:editpage('1')"    >设置训练</button>
 						</td>
        				</tr>	       			  		
         		</tbody>
@@ -121,9 +122,13 @@
 		//console.log(id);
 		location.href = "/stdycrse/editPage?crseId=" + id; 
 	}
-	function setmenupage(id){
+	function setsctnpage(id){
 		//console.log(id);
-		location.href = "/stdycrse/setmenupage?roleId=" + id; 
+		location.href = "/stdycrse/setsctnpage?crseId=" + id; 
+	}
+	function setqstnpage(id){
+		//console.log(id);
+		location.href = "/stdycrse/setqstnpage?crseId=" + id; 
 	}
 	
 

@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<title>修改页面</title>
+		<!-- Tell the browser to be responsive to screen width -->
+		<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+	  <include th:replace="common/css :: commoncss"/>
+		
+		
+		<style type="text/css">
+			
+			.content-wrapper {
+				margin-left: 0px;
+			}
+		</style>
+	</head>
+
+	<body class="hold-transition skin-blue sidebar-mini">
+		<div class="wrapper">
+
+		
+
+			<!-- Content Wrapper. Contains page content -->
+			<div class="content-wrapper">
+				<!-- Content Header (Page header) -->
+				<section class="content-header">
+					<h1>
+          				设置课程相关知识
+			        </h1>
+			       <ol class="breadcrumb">
+						<li>
+							<a th:href="@{/dashboard}"><i class="glyphicon glyphicon-globe"></i>导航</a>
+						</li>
+						<li class="active">
+							<a href="#">设置课程相关知识</a>
+						</li>
+					</ol>
+				</section>
+
+				<!-- Main content -->
+				<section class="content">
+					<div class="row">
+						<form class="form form-horizontal" method="post"   th:object="${crse}"   th:action="@{/stdycrse/setSctnSave}"  >
+							<input type="hidden" name="crseId"  th:field="*{crseId}"  >
+							<!-- left column -->
+							<div class="col-md-10 col-md-offset-1">
+								<!-- general form elements -->
+								<div class="box box-primary">
+									<div class="box-header with-border">
+										<h3 class="box-title">基本信息</h3>
+										<div class="box-search">
+											<button type="button" class="btn btn-default pull-right" onclick="history.back()">返回</button>
+										</div>
+									</div>
+									<!-- /.box-header -->
+									<!-- form start -->
+									<div class="box-body">
+										<div class="form-group">
+											<label for="name" class="col-sm-2 control-label">课程名称</label>
+											<div class="col-sm-10"  th:text="*{crseName}"   >
+												
+											</div>
+										</div>
+									
+											<div class="form-group">
+												<div class="col-sm-4 ">
+												<table class="table table-striped">
+													<caption>科目单元</caption>
+								        			<tbody th:remove="all-but-first" id="subjTbody" >       			  	
+								        			<tr  th:each="subj,i:${subjList}" >
+								        			  	<td  th:text="${i.count }" >1</td>
+								        			  	<td ><input type="checkbox" name="subjIds"   th:checked="${subj.subjSelected}"   th:value="${subj.subjId}"  th:onclick="selectSubj(this,[[${subj.subjId}]])"  ></td>
+							        					<td  th:text="${subj.subjTitle}"  ></td>
+							        					<td th:text="${subj.subjCount}"  ></td>
+								        			</tr>
+								        			</tbody>
+								        		</table>
+												</div>
+												<div class="col-sm-4 ">
+												<table class="table table-striped">
+													<caption>知识章</caption>
+								        			<tbody th:remove="all-but-first"  id="unitTbody" >       			  	
+								        		
+								        			</tbody>
+								        		</table>
+												</div>
+												<div class="col-sm-4 ">
+												<table class="table table-striped">
+													<caption>知识节</caption>
+								        			<tbody th:remove="all-but-first"  id="sctnTbody" >       			  	
+								        			
+								        			</tbody>
+								        		</table>
+												</div>
+										</div>
+										
+									</div>						
+									<!-- /.box-body -->
+									<div class="box-footer">
+										<button type="button" class="btn btn-danger" onclick="cleanUp(this)">清空</button>
+										<button type="submit" class="btn btn-info pull-right">提交</button>
+									</div>
+									<!-- /.box-footer -->
+								</div>
+								<!-- /.box -->
+								<!-- /.modal -->
+							</div>
+							<!--/.col (right) -->
+						</form>
+					</div>
+					<!-- /.row -->
+				</section>
+				<!-- /.content -->
+			</div>
+			<!-- /.content-wrapper -->
+		
+		</div>
+		<div th:replace="common/js :: commonjs"></div>
+	</body>
+	
+	<script type="text/javascript">
+		
+
+		//清空
+		function cleanUp(btn) {
+			parDiv = $(btn).parent().parent();
+			parDiv.find("input").val("");
+			parDiv.find("textarea").html("");
+			parDiv.find("select").each(function(i, j) {
+				$(j).find("option:selected").prop("selected", false);
+				$(j).find("option").first().prop("selected", true);
+			});
+		}
+		
+		function selectSubj(subj, subjId){
+			var subjIds = [];
+			$("#subjTbody :checked").each(function(){
+				subjIds.push($(this).val());
+			});
+//			console.log(subjIds);
+			if(subjIds.length > 0){
+				var url = "/subjUnit/selectUnitsBySubjs";
+				$.ajax({
+				   type: "POST",
+				   url: url,
+				   data:{"subjIds":subjIds},
+				   success: function(resp){
+						$("#unitTbody").empty();
+						$.each(resp, function(i, item){
+							var tds = "<td>" + (i+1) + "</td>";
+								tds += "<td><input type='checkbox'  checked='checked'  name='unitIds' value='" + item.subjUnitId + "'  onclick='selectUnit()'  ><td>";
+								tds += "<td>" + item.subjUnitNum + "." + item.subjUnitTitle + "</td>";
+								tds += "<td>" + item.unitCount + "</td>";
+							$("<tr>" + tds + "</tr>").appendTo("#unitTbody");
+						});	
+				   },
+				   async: false,
+				   dataType:"json"
+				});
+			}else{
+				$("#unitTbody").empty();
+				$("#sctnTbody").empty();
+			}
+		}
+		
+		function selectUnit(unitId){
+			var unitIds = [];
+			$("#unitTbody :checked").each(function(){
+				unitIds.push($(this).val());
+			});
+//			console.log(subjIds);
+			if(unitIds.length > 0){
+				var url = "/subjSctn/selectSctnsByUnits";
+				$.ajax({
+				   type: "POST",
+				   url: url,
+				   data:{"unitIds":unitIds},
+				   success: function(resp){
+						$("#sctnTbody").empty();
+						$.each(resp, function(i, item){
+							var tds = "<td>" + (i+1) + "</td>";
+							tds += "<td><input type='checkbox'  checked='checked' name='sctnIds' value='" + item.subjSctnId + "' ><td>";
+							tds += "<td>" + item.subjSctnNum + "." + item.subjSctnTitle + "</td>";
+							tds += "<td>" + item.sctnCount + "</td>";
+						$("<tr>" + tds + "</tr>").appendTo("#sctnTbody");
+						});
+				   },
+				   async: false,
+				   dataType:"json"
+				});	
+			}else{
+				$("#sctnTbody").empty();
+			}
+		}
+		
+
+	</script>
+
+</html>

@@ -62,7 +62,7 @@
 									<span class="input-group-addon" style="background: #EEEEEE;">选择方案</span>
 									<select class="form-control" name="tpId"    >
 										<option value="">请选择</option>
-										<option   th:value = "${tp.tpId }"   th:each="tp,i:${tplist}"   th:text="${tp.tpTitle }"   >试题类型</option>		
+										<option   th:value = "${tp.tpId }" th:if="${tp.tpType eq '1'}"  th:each="tp,i:${tplist}"   th:text="${tp.tpTitle }"   >试题类型</option>		
 									</select>
 								</div>
 							</div>
@@ -85,11 +85,50 @@
 						
 					</form>
 					<!-- /.box-header -->
-					
-			
-					
+				</div>
+				
+				<div class="box">
+					<form name="infoForm" id="queryForm" method="post"   th:action="@{/testplan/charsPlanMc}"  >
+						<div class="box-header clearfix">
+							<h1>
+					         	考试统计
+					        </h1>
+						</div>
+						<div class="box-header clearfix">
+						
+							<div class="box-search">
+								<div class="input-group">
+									<span class="input-group-addon" style="background: #EEEEEE;">选择方案</span>
+									<select class="form-control" name="tpId" id="tp"   >
+										<option value="">请选择</option>
+										<option   th:value = "${tp.tpId }" th:if="${tp.tpType eq '0'}"  th:each="tp,i:${tplist}"   th:text="${tp.tpTitle }"   >试题类型</option>		
+									</select>
+								</div>
+							</div>
+							<div class="box-search">
+								<div class="input-group">
+									<span class="input-group-addon" style="background: #EEEEEE;">所属班级</span>
+									<select class="form-control" name="mcId" id="mc"   >
+										<option value="">请选择</option>
+										<option  th:value = "${mc.mcId}"   th:each="mc,i:${mclist}"   th:text="${mc.mcCode }"  >所属班级</option>
+									</select>
+								</div>
+							</div>
+						
+							<div class="box-search btn-group">
+								<button type="button" onclick="charsPlanMc()" class="btn btn-danger" name="queryInfo">统计</button>
+								<button type="button" class="btn btn-primary" name="clearInfo" onclick="javascript:clearEle()">清空</button>
+							
+							</div>
+						</div>
+						
+					</form>
+					<!-- /.box-header -->
 				</div>
 				<!-- /.row -->
+				<div class="box-footer">
+					<div id="main" style="width:100%;height:320px;"></div>
+				</div>
 			</section>
 			<!-- /.content -->
 		</div>
@@ -101,7 +140,72 @@
 
 <script type="text/javascript">
 
+	function charsPlanMc(){
+		var tpId = $("#tp").val();
+		if(tpId==null  ||  tpId==""){
+			alert("请选择考试方案");
+			return;
+		}
+		var mcId = $("#mc").val();
+		if(mcId==null  ||  mcId==""){
+			alert("请选择班级");
+			return;
+		}
+		var url ="/testplan/charsPlanMc"  ;
+		$.post(url, {'mcId': mcId, "tpId": tpId}, function(resp){
+			
+			 console.log(resp);
+				option = {
+						title : {
+						    text: resp.mc + "考试统计",
+						    subtext: resp.tpNames.length + '次考试成绩'
+						},
+						tooltip : {
+						    trigger: 'axis'
+						},
+						legend: {
+						    data:resp.tpNames
+						},
+						toolbox: {
+						    show : true,
+						    feature : {
+						        mark : {show: true},
+						        dataView : {show: true, readOnly: false},
+						        magicType : {show: true, type: ['line', 'bar']},
+						        restore : {show: true},
+						        saveAsImage : {show: true}
+						    }
+						},
+						calculable : true,
+						xAxis : [
+						    {
+						        type : 'category',
+						        data : resp.userNames
+						    }
+						],
+						yAxis : [
+						    {
+						        type : 'value'
+						    }
+						],
+						series : resp.tpProintsList 
+						,
+			            markLine : {
+			                data : [
+			                    {type : 'average', name : '平均值'}
+			                ]
+			            }
+					};
+			
+			var myChart = echarts.init(document.getElementById('main'),"default");
+			// 使用刚指定的配置项和数据显示图表。
+			myChart.setOption(option);
 
+							
+
+		});
+		
+	}
 
 		
 

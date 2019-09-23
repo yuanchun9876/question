@@ -15,6 +15,12 @@
     from study_course_section
     where crse_sctn_id = #{crseSctnId,jdbcType=VARCHAR}
   </select>
+  
+  <delete id="delsByCrseId" parameterType="java.lang.String" >
+    delete from study_course_section
+    where crse_id = #{value,jdbcType=VARCHAR}
+  </delete>
+  
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
     delete from study_course_section
     where crse_sctn_id = #{crseSctnId,jdbcType=VARCHAR}

@@ -464,6 +464,14 @@ public class TestPlanController {
 		return "worklist/list_stu_test";
 	}
 	
+	@RequestMapping("/charsPlanMc")
+	public String charsPlanMc(String tpId,String mcId, Model model) {
+		System.out.println(tpId + ":" + mcId);
+		
+		
+		return "worklist/list_stu_test";
+	}
+	
 	//----------------------------------------------------------
 	
 	@RequestMapping("/userplanlist0")

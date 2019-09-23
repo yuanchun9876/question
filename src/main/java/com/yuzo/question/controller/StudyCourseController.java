@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.yuzo.question.entity.StudyCourse;
 import com.yuzo.question.entity.StudyPeriod;
+import com.yuzo.question.entity.SubjSection;
 import com.yuzo.question.entity.SubjUnit;
 import com.yuzo.question.entity.SubjectCourse;
 import com.yuzo.question.entity.SysMenu;
@@ -75,6 +76,53 @@ public class StudyCourseController {
 	
 		return "stdycrse/edit_crse";
 	}
+	
+	@RequestMapping("/setsctnpage")
+	public String setsctnpage(String crseId, Model model) {
+		
+		StudyCourse crse = stdycrseService.queryById(crseId);
+		model.addAttribute("crse", crse);	
+			
+		List<SubjectCourse> subjList = stdycrseService.querySubj();
+		model.addAttribute("subjList", subjList);
+		List<SubjUnit> subjUnitList = stdycrseService.querySubjUnit();
+		model.addAttribute("subjUnitList", subjUnitList);
+		List<SubjSection> subjSctnList = stdycrseService.querySubjSctn();
+		model.addAttribute("subjSctnList", subjSctnList);		
+		return "stdycrse/set_sctn_crse";
+	}
+	
+	
+	
+	@RequestMapping("/setSctnSave")
+	public String setSctnSave(String crseId, String[] sctnIds, Model model) {		
+		int count = stdycrseService.setCrseSctn(crseId, sctnIds);			
+		return "redirect:query";
+	}
+	
+	
+	@RequestMapping("/setqstnpage")
+	public String setqstnpage(String crseId, Model model) {
+		
+		StudyCourse crse = stdycrseService.queryById(crseId);
+		model.addAttribute("crse", crse);	
+		
+		List<SubjectCourse> subjList = stdycrseService.querySubj();
+		model.addAttribute("subjList", subjList);
+		List<SubjUnit> subjUnitList = stdycrseService.querySubjUnit();
+		model.addAttribute("subjUnitList", subjUnitList);
+		List<SubjSection> subjSctnList = stdycrseService.querySubjSctn();
+		model.addAttribute("subjSctnList", subjSctnList);		
+		return "stdycrse/set_qstn_crse";
+	}
+	
+	
+	
+//	@RequestMapping("/setqstnSave")
+//	public String setqstnSave(String crseId, String[] sctnIds, Model model) {		
+//		int count = stdycrseService.setCrseSctn(crseId, sctnIds);			
+//		return "redirect:query";
+//	}
 	
 
 	

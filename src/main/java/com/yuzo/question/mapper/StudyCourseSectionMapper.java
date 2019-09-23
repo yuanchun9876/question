@@ -14,4 +14,6 @@ public interface StudyCourseSectionMapper {
     int updateByPrimaryKeySelective(StudyCourseSection record);
 
     int updateByPrimaryKey(StudyCourseSection record);
+
+	int delsByCrseId(String crseId);
 }
