@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<title>修改页面</title>
+		<!-- Tell the browser to be responsive to screen width -->
+		<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+	  <include th:replace="common/css :: commoncss"/>
+		
+		
+		<style type="text/css">
+			
+			.content-wrapper {
+				margin-left: 0px;
+			}
+		</style>
+	</head>
+
+	<body class="hold-transition skin-blue sidebar-mini">
+		<div class="wrapper">
+
+		
+
+			<!-- Content Wrapper. Contains page content -->
+			<div class="content-wrapper">
+				<!-- Content Header (Page header) -->
+				<section class="content-header">
+					<h1>
+          				课程修改
+			        </h1>
+			       <ol class="breadcrumb">
+						<li>
+							<a th:href="@{/dashboard}"><i class="glyphicon glyphicon-globe"></i>导航</a>
+						</li>
+						<li class="active">
+							<a href="#">课程修改</a>
+						</li>
+					</ol>
+				</section>
+
+				<!-- Main content -->
+				<section class="content">
+					<div class="row">
+						<form class="form form-horizontal" method="post"   th:object="${crse}"   th:action="@{/stdycrse/editSave}"  >
+							<input type="hidden" name="crseId"  th:field="*{crseId}"  >
+							<!-- left column -->
+							<div class="col-md-8 col-md-offset-2">
+								<!-- general form elements -->
+								<div class="box box-primary">
+									<div class="box-header with-border">
+										<h3 class="box-title">基本信息</h3>
+										<div class="box-search">
+											<button type="button" class="btn btn-default pull-right" onclick="history.back()">返回</button>
+										</div>
+									</div>
+									<!-- /.box-header -->
+									<!-- form start -->
+									<div class="box-body">
+										<div class="form-group">
+											<label for="name" class="col-sm-2 control-label">课程名称</label>
+											<div class="col-sm-10">
+												<input type="text" class="form-control" name="crseName"  th:field="*{crseName}"    placeholder="请输入课程名称" required="required">
+											</div>
+										</div>
+										<div class="form-group">
+											<label for="cardid" class="col-sm-2 control-label">课程序号</label>
+											<div class="col-sm-4">
+												<input type="number" class="form-control" name='crseNum'  th:field="*{crseNum}"   placeholder="请输入课程序号"  required="required">
+											</div>
+											<label for="birth" class="col-sm-2 control-label">所属阶段</label>
+											<div class="col-sm-4">
+												<select class="form-control" id="subjId"  name="pdId"  th:field="*{pdId}"  >
+													<option  value = "" >请选择</option>													
+													<option  th:value = "${pd.pdId }"   th:each="pd,i:${pdList}"   th:text="${pd.pdName }" >所属科目</option>											
+												</select>
+											</div>
+										</div>
+										<div class="form-group">
+											<label for="cardid" class="col-sm-2 control-label">课程说明</label>
+											<div class="col-sm-10 ">
+									       		<textarea rows="3" name="crseInfo"   class="form-control"  th:field="*{crseInfo}"  ></textarea>
+											</div>
+										</div>
+										
+															
+									<!-- /.box-body -->
+									<div class="box-footer">
+										<button type="button" class="btn btn-danger" onclick="cleanUp(this)">清空</button>
+										<button type="submit" class="btn btn-info pull-right">提交</button>
+									</div>
+									<!-- /.box-footer -->
+								</div>
+								<!-- /.box -->
+								<!-- /.modal -->
+							</div>
+							<!--/.col (right) -->
+						</form>
+					</div>
+					<!-- /.row -->
+				</section>
+				<!-- /.content -->
+			</div>
+			<!-- /.content-wrapper -->
+		
+		</div>
+		<div th:replace="common/js :: commonjs"></div>
+	</body>
+	
+	<script type="text/javascript">
+		
+
+		//清空
+		function cleanUp(btn) {
+			parDiv = $(btn).parent().parent();
+			parDiv.find("input").val("");
+			parDiv.find("textarea").html("");
+			parDiv.find("select").each(function(i, j) {
+				$(j).find("option:selected").prop("selected", false);
+				$(j).find("option").first().prop("selected", true);
+			});
+		}
+	</script>
+
+</html>

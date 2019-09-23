@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yuzo.question.mapper.StudyCourseQuestionMapper" >
+  <resultMap id="BaseResultMap" type="com.yuzo.question.entity.StudyCourseQuestion" >
+    <id column="crse_qstn_id" property="crseQstnId" jdbcType="VARCHAR" />
+    <result column="crse_id" property="crseId" jdbcType="VARCHAR" />
+    <result column="qstn_id" property="qstnId" jdbcType="VARCHAR" />
+    <result column="qstn_type_id" property="qstnTypeId" jdbcType="VARCHAR" />
+    <result column="subj_sctn_id" property="subjSctnId" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    crse_qstn_id, crse_id, qstn_id, qstn_type_id, subj_sctn_id
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from study_course_question
+    where crse_qstn_id = #{crseQstnId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from study_course_question
+    where crse_qstn_id = #{crseQstnId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.yuzo.question.entity.StudyCourseQuestion" >
+    insert into study_course_question (crse_qstn_id, crse_id, qstn_id, 
+      qstn_type_id, subj_sctn_id)
+    values (#{crseQstnId,jdbcType=VARCHAR}, #{crseId,jdbcType=VARCHAR}, #{qstnId,jdbcType=VARCHAR}, 
+      #{qstnTypeId,jdbcType=VARCHAR}, #{subjSctnId,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.yuzo.question.entity.StudyCourseQuestion" >
+    insert into study_course_question
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="crseQstnId != null" >
+        crse_qstn_id,
+      </if>
+      <if test="crseId != null" >
+        crse_id,
+      </if>
+      <if test="qstnId != null" >
+        qstn_id,
+      </if>
+      <if test="qstnTypeId != null" >
+        qstn_type_id,
+      </if>
+      <if test="subjSctnId != null" >
+        subj_sctn_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="crseQstnId != null" >
+        #{crseQstnId,jdbcType=VARCHAR},
+      </if>
+      <if test="crseId != null" >
+        #{crseId,jdbcType=VARCHAR},
+      </if>
+      <if test="qstnId != null" >
+        #{qstnId,jdbcType=VARCHAR},
+      </if>
+      <if test="qstnTypeId != null" >
+        #{qstnTypeId,jdbcType=VARCHAR},
+      </if>
+      <if test="subjSctnId != null" >
+        #{subjSctnId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.yuzo.question.entity.StudyCourseQuestion" >
+    update study_course_question
+    <set >
+      <if test="crseId != null" >
+        crse_id = #{crseId,jdbcType=VARCHAR},
+      </if>
+      <if test="qstnId != null" >
+        qstn_id = #{qstnId,jdbcType=VARCHAR},
+      </if>
+      <if test="qstnTypeId != null" >
+        qstn_type_id = #{qstnTypeId,jdbcType=VARCHAR},
+      </if>
+      <if test="subjSctnId != null" >
+        subj_sctn_id = #{subjSctnId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where crse_qstn_id = #{crseQstnId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.yuzo.question.entity.StudyCourseQuestion" >
+    update study_course_question
+    set crse_id = #{crseId,jdbcType=VARCHAR},
+      qstn_id = #{qstnId,jdbcType=VARCHAR},
+      qstn_type_id = #{qstnTypeId,jdbcType=VARCHAR},
+      subj_sctn_id = #{subjSctnId,jdbcType=VARCHAR}
+    where crse_qstn_id = #{crseQstnId,jdbcType=VARCHAR}
+  </update>
+</mapper>

@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yuzo.question.mapper.StudyCourseMapper" >
+  <resultMap id="BaseResultMap" type="com.yuzo.question.entity.StudyCourse" >
+    <id column="crse_id" property="crseId" jdbcType="VARCHAR" />
+    <result column="pd_id" property="pdId" jdbcType="VARCHAR" />
+    <result column="crse_name" property="crseName" jdbcType="VARCHAR" />
+    <result column="crse_info" property="crseInfo" jdbcType="VARCHAR" />
+    <result column="crse_num" property="crseNum" jdbcType="VARCHAR" />
+    <result column="pd_name" property="pdName" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    crse_id, pd_id, crse_name, crse_info, crse_num
+  </sql>
+  <select id="query" resultMap="BaseResultMap"  >
+    select 
+   crse_id, crse.pd_id, crse_name, crse_info, crse_num
+   , pd.pd_name
+    from study_course crse left  join study_period pd  on crse.pd_id = pd.pd_id
+   	order by crse_num
+  </select>
+  
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from study_course
+    where crse_id = #{crseId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from study_course
+    where crse_id = #{crseId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.yuzo.question.entity.StudyCourse" >
+    insert into study_course (crse_id, pd_id, crse_name, 
+      crse_info, crse_num)
+    values (#{crseId,jdbcType=VARCHAR}, #{pdId,jdbcType=VARCHAR}, #{crseName,jdbcType=VARCHAR}, 
+      #{crseInfo,jdbcType=VARCHAR}, #{crseNum,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.yuzo.question.entity.StudyCourse" >
+    insert into study_course
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="crseId != null" >
+        crse_id,
+      </if>
+      <if test="pdId != null" >
+        pd_id,
+      </if>
+      <if test="crseName != null" >
+        crse_name,
+      </if>
+      <if test="crseInfo != null" >
+        crse_info,
+      </if>
+      <if test="crseNum != null" >
+        crse_num,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="crseId != null" >
+        #{crseId,jdbcType=VARCHAR},
+      </if>
+      <if test="pdId != null" >
+        #{pdId,jdbcType=VARCHAR},
+      </if>
+      <if test="crseName != null" >
+        #{crseName,jdbcType=VARCHAR},
+      </if>
+      <if test="crseInfo != null" >
+        #{crseInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="crseNum != null" >
+        #{crseNum,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.yuzo.question.entity.StudyCourse" >
+    update study_course
+    <set >
+      <if test="pdId != null" >
+        pd_id = #{pdId,jdbcType=VARCHAR},
+      </if>
+      <if test="crseName != null" >
+        crse_name = #{crseName,jdbcType=VARCHAR},
+      </if>
+      <if test="crseInfo != null" >
+        crse_info = #{crseInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="crseNum != null" >
+        crse_num = #{crseNum,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where crse_id = #{crseId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.yuzo.question.entity.StudyCourse" >
+    update study_course
+    set pd_id = #{pdId,jdbcType=VARCHAR},
+      crse_name = #{crseName,jdbcType=VARCHAR},
+      crse_info = #{crseInfo,jdbcType=VARCHAR},
+      crse_num = #{crseNum,jdbcType=VARCHAR}
+    where crse_id = #{crseId,jdbcType=VARCHAR}
+  </update>
+</mapper>

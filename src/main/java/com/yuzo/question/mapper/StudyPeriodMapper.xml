@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yuzo.question.mapper.StudyPeriodMapper" >
+  <resultMap id="BaseResultMap" type="com.yuzo.question.entity.StudyPeriod" >
+    <id column="pd_id" property="pdId" jdbcType="VARCHAR" />
+    <result column="pd_name" property="pdName" jdbcType="VARCHAR" />
+    <result column="pd_info" property="pdInfo" jdbcType="VARCHAR" />
+    <result column="pd_code" property="pdCode" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    pd_id, pd_name, pd_info, pd_code
+  </sql>
+  
+  <select id="query" resultMap="BaseResultMap" >
+    select 
+    <include refid="Base_Column_List" />
+    from study_period
+  
+  </select>
+  
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from study_period
+    where pd_id = #{pdId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from study_period
+    where pd_id = #{pdId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.yuzo.question.entity.StudyPeriod" >
+    insert into study_period (pd_id, pd_name, pd_info, 
+      pd_code)
+    values (#{pdId,jdbcType=VARCHAR}, #{pdName,jdbcType=VARCHAR}, #{pdInfo,jdbcType=VARCHAR}, 
+      #{pdCode,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.yuzo.question.entity.StudyPeriod" >
+    insert into study_period
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="pdId != null" >
+        pd_id,
+      </if>
+      <if test="pdName != null" >
+        pd_name,
+      </if>
+      <if test="pdInfo != null" >
+        pd_info,
+      </if>
+      <if test="pdCode != null" >
+        pd_code,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="pdId != null" >
+        #{pdId,jdbcType=VARCHAR},
+      </if>
+      <if test="pdName != null" >
+        #{pdName,jdbcType=VARCHAR},
+      </if>
+      <if test="pdInfo != null" >
+        #{pdInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="pdCode != null" >
+        #{pdCode,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.yuzo.question.entity.StudyPeriod" >
+    update study_period
+    <set >
+      <if test="pdName != null" >
+        pd_name = #{pdName,jdbcType=VARCHAR},
+      </if>
+      <if test="pdInfo != null" >
+        pd_info = #{pdInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="pdCode != null" >
+        pd_code = #{pdCode,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where pd_id = #{pdId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.yuzo.question.entity.StudyPeriod" >
+    update study_period
+    set pd_name = #{pdName,jdbcType=VARCHAR},
+      pd_info = #{pdInfo,jdbcType=VARCHAR},
+      pd_code = #{pdCode,jdbcType=VARCHAR}
+    where pd_id = #{pdId,jdbcType=VARCHAR}
+  </update>
+</mapper>

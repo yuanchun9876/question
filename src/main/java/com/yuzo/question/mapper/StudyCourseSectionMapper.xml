@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yuzo.question.mapper.StudyCourseSectionMapper" >
+  <resultMap id="BaseResultMap" type="com.yuzo.question.entity.StudyCourseSection" >
+    <id column="crse_sctn_id" property="crseSctnId" jdbcType="VARCHAR" />
+    <result column="crse_id" property="crseId" jdbcType="VARCHAR" />
+    <result column="SUBJ_SCTN_ID" property="subjSctnId" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    crse_sctn_id, crse_id, SUBJ_SCTN_ID
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from study_course_section
+    where crse_sctn_id = #{crseSctnId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from study_course_section
+    where crse_sctn_id = #{crseSctnId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.yuzo.question.entity.StudyCourseSection" >
+    insert into study_course_section (crse_sctn_id, crse_id, SUBJ_SCTN_ID
+      )
+    values (#{crseSctnId,jdbcType=VARCHAR}, #{crseId,jdbcType=VARCHAR}, #{subjSctnId,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.yuzo.question.entity.StudyCourseSection" >
+    insert into study_course_section
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="crseSctnId != null" >
+        crse_sctn_id,
+      </if>
+      <if test="crseId != null" >
+        crse_id,
+      </if>
+      <if test="subjSctnId != null" >
+        SUBJ_SCTN_ID,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="crseSctnId != null" >
+        #{crseSctnId,jdbcType=VARCHAR},
+      </if>
+      <if test="crseId != null" >
+        #{crseId,jdbcType=VARCHAR},
+      </if>
+      <if test="subjSctnId != null" >
+        #{subjSctnId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.yuzo.question.entity.StudyCourseSection" >
+    update study_course_section
+    <set >
+      <if test="crseId != null" >
+        crse_id = #{crseId,jdbcType=VARCHAR},
+      </if>
+      <if test="subjSctnId != null" >
+        SUBJ_SCTN_ID = #{subjSctnId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where crse_sctn_id = #{crseSctnId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.yuzo.question.entity.StudyCourseSection" >
+    update study_course_section
+    set crse_id = #{crseId,jdbcType=VARCHAR},
+      SUBJ_SCTN_ID = #{subjSctnId,jdbcType=VARCHAR}
+    where crse_sctn_id = #{crseSctnId,jdbcType=VARCHAR}
+  </update>
+</mapper>
