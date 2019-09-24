@@ -467,25 +467,41 @@ public class TestPlanController {
 		return "worklist/list_stu_test";
 	}
 	
+	@RequestMapping("/showQstnPage")
+	public String showQstnPage(String qstnId, String tpId, Model model) {
+		System.out.println(tpId + "<>:" + qstnId);
+		Question qstn = testPlanService.queryQstnById(qstnId);
+		model.addAttribute("qstn", qstn);		
+		List<Answer> ansList = testPlanService.queryByQstnId(qstnId);
+		System.out.println(ansList);
+		model.addAttribute("list", ansList);	
+		
+		return "worklist/show_qstn_plan";
+	}
+	
 	@RequestMapping("/charsPlanMc")
 	public String charsPlanMc(String tpId,String mcId, Model model) {
 		System.out.println(tpId + ":" + mcId);
+		
+		model.addAttribute("tpId", tpId);
+		model.addAttribute("mcId", mcId);
+		
 		//testPlanService.charsPlanMc(tpId, mcId);
 		List<UserAnswerList> ansList = testPlanService.queryQstnPlanMc(tpId, mcId);
 		model.addAttribute("ansList", ansList);
 
 		Set<String> qstnIds = new HashSet<>();
-		Set<String> sctnIds = new HashSet<>();
-		Set<String> unitIds = new HashSet<>();
+//		Set<String> sctnIds = new HashSet<>();
+//		Set<String> unitIds = new HashSet<>();
 		
 		for (UserAnswerList ual : ansList) {
 			qstnIds.add(ual.getQstnId());
-			sctnIds.add(ual.getSubjSctnId());
-			unitIds.add(ual.getSubjUnitId());
+//			sctnIds.add(ual.getSubjSctnId());
+//			unitIds.add(ual.getSubjUnitId());
 		}
-		System.out.println(qstnIds.size());
-		System.out.println(sctnIds.size());
-		System.out.println(unitIds.size());
+//		System.out.println(qstnIds.size());
+//		System.out.println(sctnIds.size());
+//		System.out.println(unitIds.size());
 		
 
 		// 试题
@@ -496,58 +512,204 @@ public class TestPlanController {
 			qstnMap.put("qstnId", qstn.getQstnId());
 			qstnMap.put("qstnTitle", qstn.getQstnTitle());
 			qstnMap.put("qstnCode", qstn.getQstnCode());
-
-			qstnMap.put("qstn_count", testPlanService.totalCount(tpId, mcId, qstnId));
-			qstnMap.put("qstn_yes", testPlanService.totalYes(tpId, mcId, qstnId));
-			qstnMap.put("qstn_no", testPlanService.totalNo(tpId, mcId, qstnId));
+			
+			qstnMap.put("qstnSctn", qstn.getSubjSctnTitle());
+			qstnMap.put("qstnUnit", qstn.getSubjUnitTitle());
+			
+			
+			Integer count = testPlanService.totalCount(tpId, mcId, qstnId);
+			qstnMap.put("qstn_count", count);
+			Integer yes = testPlanService.totalYes(tpId, mcId, qstnId);
+			qstnMap.put("qstn_yes", yes);
+			Integer no = testPlanService.totalNo(tpId, mcId, qstnId);
+			qstnMap.put("qstn_no", no);	
+			
+			int yes_count =  (int) Math.round(yes/1.0/count*100);			
+			qstnMap.put("qstn_yes_count", yes_count);
+			if (yes_count >= 80 ) {
+				qstnMap.put("qstn_ratio", "<button type=\"button\" class=\"btn btn-primary btn-xs\">" + yes_count + "%</button>");
+			} else if (yes_count >= 60  &&  yes_count < 80) {
+				qstnMap.put("qstn_ratio", "<button type=\"button\" class=\"btn btn-info btn-xs\">" + yes_count + "%</button>");
+			} else if (yes_count >= 30  &&  yes_count < 60) {
+				qstnMap.put("qstn_ratio", "<button type=\"button\" class=\"btn btn-warning btn-xs\">" + yes_count + "%</button>");
+			} else {
+				qstnMap.put("qstn_ratio", "<button type=\"button\" class=\"btn btn-danger btn-xs\">" + yes_count + "%</button>");
+			}
 			
 			qstnList.add(qstnMap);
 		}
 		System.out.println(qstnList);
-		
+		Collections.sort(qstnList, new Comparator<Map>() {
+			@Override
+			public int compare(Map u1, Map u2) {
+				int diff = (int)u1.get("qstn_yes_count") - (int)u2.get("qstn_yes_count");
+				if (diff > 0) {
+					return 1;
+				} else if (diff < 0) {
+					return -1;
+				}
+				return 0; // 相等为0
+			}
+		}); // 按年龄排序
 
 		model.addAttribute("qstnList", qstnList);
 		
+//		// 知识节
+//		List<Map<String, Object>> sctnList = new ArrayList<>();
+//		for (String sctnId : sctnIds) {
+//			Map<String, Object> sctnMap = new HashMap<>();
+//			SubjSection sctn = testPlanService.querySctnById(sctnId);	
+//			
+//			sctnMap.put("sctnId", sctn.getSubjSctnId());
+//			sctnMap.put("sctnTitle", sctn.getSubjSctnTitle());
+//			sctnMap.put("sctnCode", sctn.getSubjSctnCode());
+//			
+//			sctnMap.put("sctn_count", testPlanService.totalSctnCount(tpId, mcId, sctnId));
+//			sctnMap.put("sctn_yes", testPlanService.totalSctnYes(tpId, mcId, sctnId));
+//			sctnMap.put("sctn_no", testPlanService.totalSctnNo(tpId, mcId, sctnId));
+//			
+//			sctnList.add(sctnMap);
+//		}
+//		System.out.println(sctnList);
+//		model.addAttribute("sctnList", sctnList);
+		
+//		String[] unitTitles = new String[unitIds.size()];
+//		Integer[] unit_yes = new Integer[unitIds.size()];
+//		Integer[] unit_no = new Integer[unitIds.size()];
+//		// 知识章
+//		List<Map<String, Object>> unitList = new ArrayList<>();
+//		int i = 0;
+//		for (String unitId : unitIds) {
+//			
+//			Map<String, Object> unitMap = new HashMap<>();
+//			SubjUnit unit = testPlanService.queryUnitById(unitId);	
+//			
+//			unitMap.put("unitId", unit.getSubjUnitId());
+//			unitMap.put("unitTitle", unit.getSubjUnitTitle());
+//			unitMap.put("unitCode", unit.getSubjUnitCode());
+//			unitTitles[i] = unit.getSubjUnitTitle();
+//			
+//			unitMap.put("unit_count", testPlanService.totalUnitCount(tpId, mcId, unitId));
+//			unitMap.put("unit_yes", testPlanService.totalUnitYes(tpId, mcId, unitId));
+//			unit_yes[i] = testPlanService.totalUnitYes(tpId, mcId, unitId);
+//			unitMap.put("unit_no", testPlanService.totalUnitNo(tpId, mcId, unitId));
+//			unit_no[i] = testPlanService.totalUnitNo(tpId, mcId, unitId);
+//			
+//			unitList.add(unitMap);
+//			i++;
+//		}
+//		System.out.println(unitList);
+//		model.addAttribute("unitList", unitList);
+//		model.addAttribute("unitTitles", unitTitles);
+//		model.addAttribute("unit_yes", unit_yes);
+//		model.addAttribute("unit_no", unit_no);
+		
+		
+		return "worklist/chars_plan_mc";
+	}	
+	
+	
+	@RequestMapping("/ajaxCharsPlanMcSctn")
+	@ResponseBody
+	public Map<String, Object> ajaxCharsPlanMcSctn(String tpId,String mcId, Model model) {
+		System.out.println(tpId + ":" + mcId);
+		
+		
+		Map<String, Object> map = new HashMap<>();
+		//testPlanService.charsPlanMc(tpId, mcId);
+		List<UserAnswerList> ansList = testPlanService.queryQstnPlanMc(tpId, mcId);
+		
+		Set<String> sctnIds = new HashSet<>();
+		
+		for (UserAnswerList ual : ansList) {
+			sctnIds.add(ual.getSubjSctnId());
+		}
+		
+		
 		// 知识节
+		Integer[] sctn_yes = new Integer[sctnIds.size()];
+		Integer[] sctn_count = new Integer[sctnIds.size()];
 		List<Map<String, Object>> sctnList = new ArrayList<>();
+		List<Map<String, Object>> cList = new ArrayList<>();
+		int i = 0;
 		for (String sctnId : sctnIds) {
 			Map<String, Object> sctnMap = new HashMap<>();
+			Map<String, Object> cMap = new HashMap<>();
 			SubjSection sctn = testPlanService.querySctnById(sctnId);	
 			
 			sctnMap.put("sctnId", sctn.getSubjSctnId());
 			sctnMap.put("sctnTitle", sctn.getSubjSctnTitle());
 			sctnMap.put("sctnCode", sctn.getSubjSctnCode());
+			cMap.put("text",sctn.getSubjSctnTitle());
 			
 			sctnMap.put("sctn_count", testPlanService.totalSctnCount(tpId, mcId, sctnId));
+			cMap.put("max",testPlanService.totalSctnCount(tpId, mcId, sctnId));
+			sctn_count[i] = testPlanService.totalSctnCount(tpId, mcId, sctnId);
 			sctnMap.put("sctn_yes", testPlanService.totalSctnYes(tpId, mcId, sctnId));
 			sctnMap.put("sctn_no", testPlanService.totalSctnNo(tpId, mcId, sctnId));
-			
+			sctn_yes[i] = testPlanService.totalSctnYes(tpId, mcId, sctnId);
 			sctnList.add(sctnMap);
+			cList.add(cMap);
+			i++;
 		}
 		System.out.println(sctnList);
-		model.addAttribute("sctnList", sctnList);
+		map.put("sctnList", sctnList);
+		map.put("sctn_yes", sctn_yes);
+		map.put("sctn_count", sctn_count);
+		map.put("cList", cList);
 		
+		return map;
+	}
+	
+	@RequestMapping("/ajaxCharsPlanMcUnit")
+	@ResponseBody
+	public Map<String, Object> ajaxCharsPlanMcUnit(String tpId,String mcId, Model model) {
+		System.out.println(tpId + ":" + mcId);
+		
+		
+		Map<String, Object> map = new HashMap<>();
+		//testPlanService.charsPlanMc(tpId, mcId);
+		List<UserAnswerList> ansList = testPlanService.queryQstnPlanMc(tpId, mcId);
+
+		Set<String> unitIds = new HashSet<>();
+		
+		for (UserAnswerList ual : ansList) {
+			unitIds.add(ual.getSubjUnitId());
+		}
+
+		
+		String[] unitTitles = new String[unitIds.size()];
+		Integer[] unit_yes = new Integer[unitIds.size()];
+		Integer[] unit_no = new Integer[unitIds.size()];
 		// 知识章
 		List<Map<String, Object>> unitList = new ArrayList<>();
+		int i = 0;
 		for (String unitId : unitIds) {
+			
 			Map<String, Object> unitMap = new HashMap<>();
 			SubjUnit unit = testPlanService.queryUnitById(unitId);	
 			
 			unitMap.put("unitId", unit.getSubjUnitId());
 			unitMap.put("unitTitle", unit.getSubjUnitTitle());
 			unitMap.put("unitCode", unit.getSubjUnitCode());
+			unitTitles[i] = unit.getSubjUnitTitle();
 			
 			unitMap.put("unit_count", testPlanService.totalUnitCount(tpId, mcId, unitId));
 			unitMap.put("unit_yes", testPlanService.totalUnitYes(tpId, mcId, unitId));
+			unit_yes[i] = testPlanService.totalUnitYes(tpId, mcId, unitId);
 			unitMap.put("unit_no", testPlanService.totalUnitNo(tpId, mcId, unitId));
+			unit_no[i] = testPlanService.totalUnitNo(tpId, mcId, unitId);
 			
 			unitList.add(unitMap);
+			i++;
 		}
 		System.out.println(unitList);
-		model.addAttribute("unitList", unitList);
-		
-		
-		return "worklist/chars_plan_mc";
+		map.put("unitList", unitList);
+		map.put("unitTitles", unitTitles);
+		map.put("unit_yes", unit_yes);
+		map.put("unit_no", unit_no);
+				
+		return map;
 	}
 	
 

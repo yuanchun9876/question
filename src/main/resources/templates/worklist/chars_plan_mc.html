@@ -49,9 +49,13 @@
         <div class="box">
          <form name="infoForm" id="queryForm" method="post" >
         	<div class="box-header clearfix">
-				<div class="box-search btn-group">
-					<button class="btn btn-success"  type="button" name="queryInfo"  onclick="addPage()" >添加</button>
-					<button class="btn btn-warning"  type="button" name="delBtn"  onclick="dels()" >删除</button>
+				
+				<div class="col-sm-6">
+					<div id="mainUnit" style="width:100%;height:320px;"></div>
+				</div>
+			
+				<div class="col-sm-6">
+					<div id="mainSctn" style="width:100%;height:320px;"></div>
 				</div>
         	</div>
         	</form>
@@ -59,29 +63,31 @@
         	<div class="box-body no-padding">
         		<table class="table table-striped">
         			<tr>
-        				<th>序号</th>
-        				
+        				<th>序号</th>      				
+        				<th>知识章</th>     				
+        				<th>知识节</th>
         				<th>试题代号</th>     				
         				<th>出题数量</th>
         				<th>正确/错误</th>
+        				<th>正确率</th>
 						<th>操作</th>
         			</tr>
-        			<form name="delForm"  method="post"  action="#"  th:action="@{/sysrole/dels}"  >    
-        			<tbody th:remove="all-but-first" >       			  	
+        			
+        		<tbody th:remove="all-but-first" >       			  	
         			<tr  th:each="row,i:${qstnList}" >
-	        			<td th:text="${i.count }">1</td>
-	        			
+	        			<td th:text="${i.count }">1</td>	        			
+	       				<td th:text="${row.qstnUnit}" >JavaSE</td>
+	       				<td th:text="${row.qstnSctn}" >JavaSE</td>
 	       				<td th:text="${row.qstnCode}" >JavaSE</td>
 	       				<td th:text="${row.qstn_count}">1</td>
 	       				<td th:text="${row.qstn_yes + ' / ' + row.qstn_no}">1</td>
-	  
+	  					<td th:utext="${row.qstn_ratio}">1</td>
 						<td>
-							<button type="button" class="btn btn-primary btn-sm"  th:onclick="editpage([[${row.qstnId}]])"     onclick="javascript:editpage('1')"    >修改</button>
-							<button type="button" class="btn btn-primary btn-sm"  th:onclick="setmenupage([[${row.qstnId}]])"     onclick="javascript:editpage('1')"    >设置菜单</button>
+							<button type="button" class="btn btn-sm"  th:onclick="showpage([[${row.qstnId}]])"     onclick="javascript:editpage('1')"    >修改</button>
 						</td>
        				</tr>	       			  		
         		</tbody>
-        		</form>
+        		
         		</table>
         	</div>
 <!--         	/.box-body -->
@@ -96,36 +102,165 @@
 </div>
 <!-- ./wrapper -->
 <div th:replace="common/js :: commonjs"></div>
+<script    th:src="@{/plugins/echarts-2.2.7/build/dist/echarts-all.js}"  type="text/javascript" charset="utf-8"></script>
 </body>
 	
 <script type="text/javascript">
 
-
-	function dels(){
-		var ids = $("[name=ids]:checked");
-		if(ids.length==0){
-			alert("请选择要删除记录!");
-			return;
-		}
-		if(window.confirm("确定要删除吗?")){
-			//console.log(document.delForm.action);
-			document.delForm.submit();
-		}
-	}
-	  
-	function addPage(){
-		location.href = "/sysrole/addPage"; 
-	}
-
-	function editpage(id){
+	function showpage(id){
 		//console.log(id);
-		location.href = "/sysrole/editPage?roleId=" + id; 
-	}
-	function setmenupage(id){
-		//console.log(id);
-		location.href = "/sysrole/setmenupage?roleId=" + id; 
+		location.href = "/testplan/showQstnPage?qstnId=" + id + "&tpId=[[${tpId}]]" ; 
 	}
 	
+	$(function(){
+		var url1 = "/testplan/ajaxCharsPlanMcUnit";
+		$.post(url1,{"tpId":"[[${tpId}]]","mcId":"[[${mcId}]]"},function(resp){
+			option1 = {
+				    title : {
+				        text: '知识章统计'
+				    },
+				    tooltip : {
+				        trigger: 'axis',
+				        axisPointer : {            // 坐标轴指示器，坐标轴触发有效
+				            type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+				        },
+				        formatter: function (params){
+				            return params[0].name + '<br/>'
+				                   + params[0].seriesName + ' : ' + params[0].value + '<br/>'
+				                   + params[1].seriesName + ' : ' + (params[1].value + params[0].value);
+				        }
+				    },
+				    legend: {
+				        selectedMode:false,
+				        data:['总数', '错误']
+				    },
+				  
+				    calculable : true,
+				    xAxis : [
+				        {
+				            type : 'category',
+				            data : resp.unitTitles
+				        }
+				    ],
+				    yAxis : [
+				        {
+				            type : 'value',
+				            boundaryGap: [0, 0.1]
+				        }
+				    ],
+				    series : [
+				        {
+				            name:'总数',
+				            type:'bar',
+				            stack: 'sum',
+				            barCategoryGap: '50%',
+				            itemStyle: {
+				                normal: {
+				                    color: 'tomato',
+				                    barBorderColor: 'tomato',
+				                    barBorderWidth: 6,
+				                    barBorderRadius:0,
+				                    label : {
+				                        show: true, position: 'insideTop'
+				                    }
+				                }
+				            },
+				            data: resp.unit_yes
+				        },
+				        {
+				            name:'错误',
+				            type:'bar',
+				            stack: 'sum',
+				            itemStyle: {
+				                normal: {
+				                    color: '#fff',
+				                    barBorderColor: 'tomato',
+				                    barBorderWidth: 6,
+				                    barBorderRadius:0,
+				                    label : {
+				                        show: true, 
+				                        position: 'top',
+				                        formatter: function (params) {
+				                            for (var i = 0, l = option1.xAxis[0].data.length; i < l; i++) {
+				                                if (option1.xAxis[0].data[i] == params.name) {
+				                                    return option1.series[0].data[i] + params.value;
+				                                }
+				                            }
+				                        },
+				                        textStyle: {
+				                            color: 'tomato'
+				                        }
+				                    }
+				                }
+				            },
+				            data: resp.unit_no
+				        }
+				    ]
+				};
+				                    
+
+			var myChart1 = echarts.init(document.getElementById('mainUnit'),"default");
+			// 使用刚指定的配置项和数据显示图表。
+			myChart1.setOption(option1);
+		})
+
+		
+		
+		var url2 = "/testplan/ajaxCharsPlanMcSctn";
+		$.post(url2,{"tpId":"[[${tpId}]]","mcId":"[[${mcId}]]"},function(resp){
+			option2 = {
+					   title : {
+					        text: '知识节统计'
+					    },
+					    tooltip : {
+					        trigger: 'axis'
+					    },
+					    legend: {
+					        x : 'right',
+					        data:['总题数','正确数']
+					    },
+					   
+					    calculable : true,
+					    polar : [
+					        {
+					            indicator : resp.cList,
+					            radius : 130
+					        }
+					    ],
+					    series : [
+					        {
+					            name: '知识节统计',
+					            type: 'radar',
+					            itemStyle: {
+					                normal: {
+					                    areaStyle: {
+					                        type: 'default'
+					                    }
+					                }
+					            },
+					            data : [
+					                {
+					                    value : resp.sctn_count,
+					                    name : '总题数'
+					                },
+					                {
+					                    value : resp.sctn_yes,
+					                    name : '正确数'
+					                }
+					            ]
+					        }
+					    ]
+				};
+				                    
+
+			var myChart2 = echarts.init(document.getElementById('mainSctn'),"default");
+			// 使用刚指定的配置项和数据显示图表。
+			myChart2.setOption(option2);
+		})
+
+		
+		
+	});
 
 
 </script>

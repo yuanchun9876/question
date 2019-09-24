@@ -997,6 +997,12 @@ public class TestPlanServiceImpl implements ITestPlanService {
 		return ualMapper.totalUnitNo(unitId, tpId);
 	}
 
+	@Override
+	public List<Answer> queryByQstnId(String qstnId) {
+		// TODO Auto-generated method stub
+		return ansMapper.queryByQstnId(qstnId);
+	}
+
 	
 
 	

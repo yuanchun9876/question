@@ -115,5 +115,7 @@ public interface ITestPlanService {
 
 	Integer totalUnitNo(String tpId, String mcId, String unitId);
 
+	List<Answer> queryByQstnId(String qstnId);
+
 	
 }
