@@ -89,5 +89,31 @@ public interface ITestPlanService {
 
 	int setPlanTarget(TestPlan plan);
 
+	List<UserAnswerList> queryQstnPlanMc(String tpId, String mcId);
+
+	Integer totalCount(String tpId, String mcId, String qstnId);
+
+	Integer totalYes(String tpId, String mcId, String qstnId);
+
+	Integer totalNo(String tpId, String mcId, String qstnId);
+
+
+	SubjSection querySctnById(String sctnId);
+
+	Integer totalSctnCount(String tpId, String mcId, String sctnId);
+
+	Integer totalSctnYes(String tpId, String mcId, String sctnId);
+
+	Integer totalSctnNo(String tpId, String mcId, String sctnId);
+	
+
+	SubjUnit queryUnitById(String unitId);
+
+	Integer totalUnitCount(String tpId, String mcId, String unitId);
+
+	Integer totalUnitYes(String tpId, String mcId, String unitId);
+
+	Integer totalUnitNo(String tpId, String mcId, String unitId);
+
 	
 }

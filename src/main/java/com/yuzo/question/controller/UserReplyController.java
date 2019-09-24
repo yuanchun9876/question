@@ -55,6 +55,21 @@ public class UserReplyController {
 		return "userreply/set_reply";
 	}
 	
+	@RequestMapping("/openTpPage")
+	public String openTpPage(Model model) {
+		
+		List<TestPlan> tplist = userReplyService.querytp();
+		System.out.println(tplist);
+		model.addAttribute("tplist", tplist);
+		
+		List<UserMyclass> mclist = userReplyService.querymc();
+		System.out.println(mclist);
+		model.addAttribute("mclist", mclist);	
+		
+		return "userreply/set_tp_reply";
+	}
+	
+	
 	@RequestMapping("/openPage")
 	public String openPage(String tpId, String mcId, Model model) {
 		

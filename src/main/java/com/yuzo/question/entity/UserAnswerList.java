@@ -22,12 +22,19 @@ public class UserAnswerList {
     private String ansContent;
     
     private String qstnCode;
+    
+    private String subjUnitId;
+    
+    private String subjUnitTitle;
 
-    @Override
+
+
+	@Override
 	public String toString() {
 		return "UserAnswerList [uansId=" + uansId + ", utsId=" + utsId + ", qstnId=" + qstnId + ", subjSctnId="
 				+ subjSctnId + ", uansContent=" + uansContent + ", uansResult=" + uansResult + ", qstnTitle="
-				+ qstnTitle + ", qstnCode=" + qstnCode + "]";
+				+ qstnTitle + ", ansList=" + ansList + ", ansContent=" + ansContent + ", qstnCode=" + qstnCode
+				+ ", subjUnitId=" + subjUnitId + ", subjUnitTitle=" + subjUnitTitle + "]";
 	}
 
 	public String getUansId() {
@@ -108,6 +115,22 @@ public class UserAnswerList {
 
 	public void setQstnCode(String qstnCode) {
 		this.qstnCode = qstnCode;
+	}
+
+	public String getSubjUnitId() {
+		return subjUnitId;
+	}
+
+	public void setSubjUnitId(String subjUnitId) {
+		this.subjUnitId = subjUnitId;
+	}
+
+	public String getSubjUnitTitle() {
+		return subjUnitTitle;
+	}
+
+	public void setSubjUnitTitle(String subjUnitTitle) {
+		this.subjUnitTitle = subjUnitTitle;
 	}
 	
 	

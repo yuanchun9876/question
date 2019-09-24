@@ -10,6 +10,10 @@
     <result column="uans_result" property="uansResult" jdbcType="VARCHAR" />
     <result column="QSTN_TITLE" property="qstnTitle" jdbcType="VARCHAR" />
     <result column="QSTN_CODE" property="qstnCode" jdbcType="VARCHAR" />
+    
+    <result column="SUBJ_UNIT_ID" property="subjUnitId" jdbcType="VARCHAR" />
+    <result column="SUBJ_UNIT_TITLE" property="subjUnitTitle" jdbcType="VARCHAR" />
+    
   </resultMap>
   <sql id="Base_Column_List" >
     uans_id, uts_id, qstn_id, subj_sctn_id, uans_content, uans_result
@@ -24,6 +28,112 @@
     	left join question_type qtype on qstn.QSTN_TYPE_ID = qtype.QSTN_TYPE_ID  
     where uts_id = #{utsId}  and qtype.QSTN_TYPE_ID = #{type}
   </select>
+  
+  <select id="queryList" resultMap="BaseResultMap"  >
+    select 
+     uans_id, ual.uts_id, ual.qstn_id, ual.subj_sctn_id, uans_content, uans_result 
+     ,  qstn.QSTN_TITLE  , qstn.QSTN_CODE , unit.SUBJ_UNIT_ID, unit.SUBJ_UNIT_TITLE
+    from user_answer_list ual 
+    	left join question qstn  on ual.qstn_id = qstn.QSTN_ID
+    	left join question_type qtype on qstn.QSTN_TYPE_ID = qtype.QSTN_TYPE_ID  
+    	left join user_test_list utl  on utl.uts_id = ual.uts_id
+    	left join subj_section sctn on sctn.SUBJ_SCTN_ID = ual.subj_sctn_id
+    	left join subj_unit  unit on unit.SUBJ_UNIT_ID = sctn.SUBJ_UNIT_ID
+    where utl.tp_id = #{tpId}  and utl.user_id = #{userId}
+  </select>
+  
+  <select id="totalCount" resultType="int"  >
+    select  count(*)
+    from user_answer_list ual 
+    	left join question qstn  on ual.qstn_id = qstn.QSTN_ID
+    	left join user_test_list utl  on utl.uts_id = ual.uts_id
+    where utl.tp_id = #{tpId}  and ual.qstn_id = #{qstnId}
+  </select>
+  <select id="totalYes" resultType="int"  >
+    select  count(*)
+    from user_answer_list ual 
+    	left join question qstn  on ual.qstn_id = qstn.QSTN_ID
+    	left join user_test_list utl  on utl.uts_id = ual.uts_id
+    where utl.tp_id = #{tpId}  and ual.qstn_id = #{qstnId}
+    and ual.uans_result = '0'
+  </select>
+  
+  <select id="totalNo" resultType="int"  >
+    select  count(*)
+    from user_answer_list ual 
+    	left join question qstn  on ual.qstn_id = qstn.QSTN_ID
+    	left join user_test_list utl  on utl.uts_id = ual.uts_id
+    where utl.tp_id = #{tpId}  and ual.qstn_id = #{qstnId}
+    and ual.uans_result != '0'
+  </select>
+  
+  
+  
+  <select id="totalSctnCount" resultType="int"  >
+    select  count(*)
+    from user_answer_list ual 
+    	left join question qstn  on ual.qstn_id = qstn.QSTN_ID
+    	left join user_test_list utl  on utl.uts_id = ual.uts_id
+    where utl.tp_id = #{tpId}  and ual.subj_sctn_id = #{sctnId}
+  </select>
+  <select id="totalSctnYes" resultType="int"  >
+    select  count(*)
+    from user_answer_list ual 
+    	left join question qstn  on ual.qstn_id = qstn.QSTN_ID
+    	left join user_test_list utl  on utl.uts_id = ual.uts_id
+    where utl.tp_id = #{tpId}  and ual.subj_sctn_id = #{sctnId}
+    and ual.uans_result = '0'
+  </select>
+  
+  <select id="totalSctnNo" resultType="int"  >
+    select  count(*)
+    from user_answer_list ual 
+    	left join question qstn  on ual.qstn_id = qstn.QSTN_ID
+    	left join user_test_list utl  on utl.uts_id = ual.uts_id
+    where utl.tp_id = #{tpId}  and ual.subj_sctn_id = #{sctnId}
+    and ual.uans_result != '0'
+  </select>
+  
+  
+  
+  
+  <select id="totalUnitCount" resultType="int"  >
+    select  count(*)
+    from user_answer_list ual 
+    		left join question qstn  on ual.qstn_id = qstn.QSTN_ID
+    	left join question_type qtype on qstn.QSTN_TYPE_ID = qtype.QSTN_TYPE_ID  
+    	left join user_test_list utl  on utl.uts_id = ual.uts_id
+    	left join subj_section sctn on sctn.SUBJ_SCTN_ID = ual.subj_sctn_id
+    	left join subj_unit  unit on unit.SUBJ_UNIT_ID = sctn.SUBJ_UNIT_ID
+    where utl.tp_id = #{tpId}  and unit.SUBJ_UNIT_ID = #{unitId}
+  </select>
+  <select id="totalUnitYes" resultType="int"  >
+    select  count(*)
+    from user_answer_list ual 
+    	left join question qstn  on ual.qstn_id = qstn.QSTN_ID
+    	left join question_type qtype on qstn.QSTN_TYPE_ID = qtype.QSTN_TYPE_ID  
+    	left join user_test_list utl  on utl.uts_id = ual.uts_id
+    	left join subj_section sctn on sctn.SUBJ_SCTN_ID = ual.subj_sctn_id
+    	left join subj_unit  unit on unit.SUBJ_UNIT_ID = sctn.SUBJ_UNIT_ID
+    where utl.tp_id = #{tpId}  and unit.SUBJ_UNIT_ID = #{unitId}
+    and ual.uans_result = '0'
+  </select>
+  
+  <select id="totalUnitNo" resultType="int"  >
+    select  count(*)
+    from user_answer_list ual 
+    	left join question qstn  on ual.qstn_id = qstn.QSTN_ID
+    	left join question_type qtype on qstn.QSTN_TYPE_ID = qtype.QSTN_TYPE_ID  
+    	left join user_test_list utl  on utl.uts_id = ual.uts_id
+    	left join subj_section sctn on sctn.SUBJ_SCTN_ID = ual.subj_sctn_id
+    	left join subj_unit  unit on unit.SUBJ_UNIT_ID = sctn.SUBJ_UNIT_ID
+    where utl.tp_id = #{tpId}  and unit.SUBJ_UNIT_ID = #{unitId}
+    and ual.uans_result != '0'
+  </select>
+  
+  
+  
+  
   
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 

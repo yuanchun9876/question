@@ -3,10 +3,13 @@ package com.yuzo.question.controller;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
@@ -467,11 +470,87 @@ public class TestPlanController {
 	@RequestMapping("/charsPlanMc")
 	public String charsPlanMc(String tpId,String mcId, Model model) {
 		System.out.println(tpId + ":" + mcId);
+		//testPlanService.charsPlanMc(tpId, mcId);
+		List<UserAnswerList> ansList = testPlanService.queryQstnPlanMc(tpId, mcId);
+		model.addAttribute("ansList", ansList);
+
+		Set<String> qstnIds = new HashSet<>();
+		Set<String> sctnIds = new HashSet<>();
+		Set<String> unitIds = new HashSet<>();
+		
+		for (UserAnswerList ual : ansList) {
+			qstnIds.add(ual.getQstnId());
+			sctnIds.add(ual.getSubjSctnId());
+			unitIds.add(ual.getSubjUnitId());
+		}
+		System.out.println(qstnIds.size());
+		System.out.println(sctnIds.size());
+		System.out.println(unitIds.size());
+		
+
+		// 试题
+		List<Map<String, Object>> qstnList = new ArrayList<>();
+		for (String qstnId : qstnIds) {
+			Map<String, Object> qstnMap = new HashMap<>();
+			Question qstn = testPlanService.queryQstnById(qstnId);			
+			qstnMap.put("qstnId", qstn.getQstnId());
+			qstnMap.put("qstnTitle", qstn.getQstnTitle());
+			qstnMap.put("qstnCode", qstn.getQstnCode());
+
+			qstnMap.put("qstn_count", testPlanService.totalCount(tpId, mcId, qstnId));
+			qstnMap.put("qstn_yes", testPlanService.totalYes(tpId, mcId, qstnId));
+			qstnMap.put("qstn_no", testPlanService.totalNo(tpId, mcId, qstnId));
+			
+			qstnList.add(qstnMap);
+		}
+		System.out.println(qstnList);
+		
+
+		model.addAttribute("qstnList", qstnList);
+		
+		// 知识节
+		List<Map<String, Object>> sctnList = new ArrayList<>();
+		for (String sctnId : sctnIds) {
+			Map<String, Object> sctnMap = new HashMap<>();
+			SubjSection sctn = testPlanService.querySctnById(sctnId);	
+			
+			sctnMap.put("sctnId", sctn.getSubjSctnId());
+			sctnMap.put("sctnTitle", sctn.getSubjSctnTitle());
+			sctnMap.put("sctnCode", sctn.getSubjSctnCode());
+			
+			sctnMap.put("sctn_count", testPlanService.totalSctnCount(tpId, mcId, sctnId));
+			sctnMap.put("sctn_yes", testPlanService.totalSctnYes(tpId, mcId, sctnId));
+			sctnMap.put("sctn_no", testPlanService.totalSctnNo(tpId, mcId, sctnId));
+			
+			sctnList.add(sctnMap);
+		}
+		System.out.println(sctnList);
+		model.addAttribute("sctnList", sctnList);
+		
+		// 知识章
+		List<Map<String, Object>> unitList = new ArrayList<>();
+		for (String unitId : unitIds) {
+			Map<String, Object> unitMap = new HashMap<>();
+			SubjUnit unit = testPlanService.queryUnitById(unitId);	
+			
+			unitMap.put("unitId", unit.getSubjUnitId());
+			unitMap.put("unitTitle", unit.getSubjUnitTitle());
+			unitMap.put("unitCode", unit.getSubjUnitCode());
+			
+			unitMap.put("unit_count", testPlanService.totalUnitCount(tpId, mcId, unitId));
+			unitMap.put("unit_yes", testPlanService.totalUnitYes(tpId, mcId, unitId));
+			unitMap.put("unit_no", testPlanService.totalUnitNo(tpId, mcId, unitId));
+			
+			unitList.add(unitMap);
+		}
+		System.out.println(unitList);
+		model.addAttribute("unitList", unitList);
 		
 		
-		return "worklist/list_stu_test";
+		return "worklist/chars_plan_mc";
 	}
 	
+
 	//----------------------------------------------------------
 	
 	@RequestMapping("/userplanlist0")

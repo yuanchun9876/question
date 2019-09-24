@@ -917,6 +917,86 @@ public class TestPlanServiceImpl implements ITestPlanService {
 		return tpctMapper.insertSelective(tpct);
 	}
 
+	@Override
+	public List<UserAnswerList> queryQstnPlanMc(String tpId, String mcId) {
+		// TODO Auto-generated method stub
+		List<SysUser> userList = userMapper.queryByMcId(mcId);
+		
+		List<UserAnswerList> ansList = new ArrayList<>();
+		
+		for (SysUser sysUser : userList) {
+			List<UserAnswerList> aList = ualMapper.queryList(sysUser.getUserId(), tpId);
+			ansList.addAll(aList);
+		}
+		System.out.println(ansList.size());
+		
+		return ansList;
+	}
+
+	@Override
+	public Integer totalCount(String tpId, String mcId, String qstnId) {
+		// TODO Auto-generated method stub
+		return ualMapper.totalCount(qstnId, tpId);
+	}
+	@Override
+	public Integer totalYes(String tpId, String mcId, String qstnId) {
+		// TODO Auto-generated method stub
+		return ualMapper.totalYes(qstnId, tpId);
+	}
+	@Override
+	public Integer totalNo(String tpId, String mcId, String qstnId) {
+		// TODO Auto-generated method stub
+		return ualMapper.totalNo(qstnId, tpId);
+	}
+
+	@Override
+	public SubjSection querySctnById(String sctnId) {
+		// TODO Auto-generated method stub
+		return sctnMapper.selectByPrimaryKey(sctnId);
+	}
+
+	@Override
+	public Integer totalSctnCount(String tpId, String mcId, String sctnId) {
+		// TODO Auto-generated method stub
+		return ualMapper.totalSctnCount(sctnId, tpId);
+	}
+
+	@Override
+	public Integer totalSctnYes(String tpId, String mcId, String sctnId) {
+		// TODO Auto-generated method stub
+		return ualMapper.totalSctnYes(sctnId, tpId);
+	}
+
+	@Override
+	public Integer totalSctnNo(String tpId, String mcId, String sctnId) {
+		// TODO Auto-generated method stub
+		return ualMapper.totalSctnNo(sctnId, tpId);
+	}
+
+	@Override
+	public SubjUnit queryUnitById(String unitId) {
+		// TODO Auto-generated method stub
+		return unitMapper.selectByPrimaryKey(unitId);
+	}
+
+	@Override
+	public Integer totalUnitCount(String tpId, String mcId, String unitId) {
+		// TODO Auto-generated method stub
+		return ualMapper.totalUnitCount(unitId, tpId);
+	}
+
+	@Override
+	public Integer totalUnitYes(String tpId, String mcId, String unitId) {
+		// TODO Auto-generated method stub
+		return ualMapper.totalUnitYes(unitId, tpId);
+	}
+
+	@Override
+	public Integer totalUnitNo(String tpId, String mcId, String unitId) {
+		// TODO Auto-generated method stub
+		return ualMapper.totalUnitNo(unitId, tpId);
+	}
+
 	
 
 	
