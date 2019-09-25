@@ -26,6 +26,12 @@ public class UserAnswerList {
     private String subjUnitId;
     
     private String subjUnitTitle;
+    
+    private String nickName;
+    
+    private String showContent; // 
+
+    private String qstnTypeId;
 
 
 
@@ -34,7 +40,8 @@ public class UserAnswerList {
 		return "UserAnswerList [uansId=" + uansId + ", utsId=" + utsId + ", qstnId=" + qstnId + ", subjSctnId="
 				+ subjSctnId + ", uansContent=" + uansContent + ", uansResult=" + uansResult + ", qstnTitle="
 				+ qstnTitle + ", ansList=" + ansList + ", ansContent=" + ansContent + ", qstnCode=" + qstnCode
-				+ ", subjUnitId=" + subjUnitId + ", subjUnitTitle=" + subjUnitTitle + "]";
+				+ ", subjUnitId=" + subjUnitId + ", subjUnitTitle=" + subjUnitTitle + ", nickName=" + nickName
+				+ ", showContent=" + showContent + ", qstnTypeId=" + qstnTypeId + "]";
 	}
 
 	public String getUansId() {
@@ -131,6 +138,30 @@ public class UserAnswerList {
 
 	public void setSubjUnitTitle(String subjUnitTitle) {
 		this.subjUnitTitle = subjUnitTitle;
+	}
+
+	public String getNickName() {
+		return nickName;
+	}
+
+	public void setNickName(String nickName) {
+		this.nickName = nickName;
+	}
+
+	public String getShowContent() {
+		return showContent;
+	}
+
+	public void setShowContent(String showContent) {
+		this.showContent = showContent;
+	}
+
+	public String getQstnTypeId() {
+		return qstnTypeId;
+	}
+
+	public void setQstnTypeId(String qstnTypeId) {
+		this.qstnTypeId = qstnTypeId;
 	}
 	
 	

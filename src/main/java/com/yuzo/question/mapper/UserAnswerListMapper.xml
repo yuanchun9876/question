@@ -13,6 +13,8 @@
     
     <result column="SUBJ_UNIT_ID" property="subjUnitId" jdbcType="VARCHAR" />
     <result column="SUBJ_UNIT_TITLE" property="subjUnitTitle" jdbcType="VARCHAR" />
+    <result column="nick_name" property="nickName" jdbcType="VARCHAR" />
+    <result column="QSTN_TYPE_ID" property="qstnTypeId" jdbcType="VARCHAR" />
     
   </resultMap>
   <sql id="Base_Column_List" >
@@ -42,6 +44,21 @@
     where utl.tp_id = #{tpId}  and utl.user_id = #{userId}
   </select>
   
+  <select id="totalUal" resultMap="BaseResultMap"  >
+    select u.nick_name,
+     uans_id, ual.uts_id, ual.qstn_id, ual.subj_sctn_id, uans_content, uans_result 
+     ,  qstn.QSTN_TITLE  , qstn.QSTN_CODE , unit.SUBJ_UNIT_ID, unit.SUBJ_UNIT_TITLE
+     	,qstn.QSTN_TYPE_ID
+    from user_answer_list ual 
+    	left join question qstn  on ual.qstn_id = qstn.QSTN_ID
+    	left join question_type qtype on qstn.QSTN_TYPE_ID = qtype.QSTN_TYPE_ID  
+    	left join user_test_list utl  on utl.uts_id = ual.uts_id
+    	left join subj_section sctn on sctn.SUBJ_SCTN_ID = ual.subj_sctn_id
+    	left join subj_unit  unit on unit.SUBJ_UNIT_ID = sctn.SUBJ_UNIT_ID
+    	left join sys_user  u  on  u.user_id = utl.user_id
+     where utl.tp_id = #{tpId}  and ual.qstn_id = #{qstnId}
+  </select>
+  
   <select id="totalCount" resultType="int"  >
     select  count(*)
     from user_answer_list ual 
@@ -49,13 +66,14 @@
     	left join user_test_list utl  on utl.uts_id = ual.uts_id
     where utl.tp_id = #{tpId}  and ual.qstn_id = #{qstnId}
   </select>
+  
   <select id="totalYes" resultType="int"  >
     select  count(*)
     from user_answer_list ual 
     	left join question qstn  on ual.qstn_id = qstn.QSTN_ID
     	left join user_test_list utl  on utl.uts_id = ual.uts_id
     where utl.tp_id = #{tpId}  and ual.qstn_id = #{qstnId}
-    and ual.uans_result = '0'
+    and ual.uans_result != '0'
   </select>
   
   <select id="totalNo" resultType="int"  >
@@ -64,7 +82,7 @@
     	left join question qstn  on ual.qstn_id = qstn.QSTN_ID
     	left join user_test_list utl  on utl.uts_id = ual.uts_id
     where utl.tp_id = #{tpId}  and ual.qstn_id = #{qstnId}
-    and ual.uans_result != '0'
+    and ual.uans_result = '0'
   </select>
   
   
@@ -82,7 +100,7 @@
     	left join question qstn  on ual.qstn_id = qstn.QSTN_ID
     	left join user_test_list utl  on utl.uts_id = ual.uts_id
     where utl.tp_id = #{tpId}  and ual.subj_sctn_id = #{sctnId}
-    and ual.uans_result = '0'
+    and ual.uans_result != '0'
   </select>
   
   <select id="totalSctnNo" resultType="int"  >
@@ -91,7 +109,7 @@
     	left join question qstn  on ual.qstn_id = qstn.QSTN_ID
     	left join user_test_list utl  on utl.uts_id = ual.uts_id
     where utl.tp_id = #{tpId}  and ual.subj_sctn_id = #{sctnId}
-    and ual.uans_result != '0'
+    and ual.uans_result = '0'
   </select>
   
   
@@ -116,7 +134,7 @@
     	left join subj_section sctn on sctn.SUBJ_SCTN_ID = ual.subj_sctn_id
     	left join subj_unit  unit on unit.SUBJ_UNIT_ID = sctn.SUBJ_UNIT_ID
     where utl.tp_id = #{tpId}  and unit.SUBJ_UNIT_ID = #{unitId}
-    and ual.uans_result = '0'
+    and ual.uans_result != '0'
   </select>
   
   <select id="totalUnitNo" resultType="int"  >
@@ -128,7 +146,7 @@
     	left join subj_section sctn on sctn.SUBJ_SCTN_ID = ual.subj_sctn_id
     	left join subj_unit  unit on unit.SUBJ_UNIT_ID = sctn.SUBJ_UNIT_ID
     where utl.tp_id = #{tpId}  and unit.SUBJ_UNIT_ID = #{unitId}
-    and ual.uans_result != '0'
+    and ual.uans_result = '0'
   </select>
   
   

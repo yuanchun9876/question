@@ -86,6 +86,30 @@
 								</form>
 							</table>
 						</div>
+						<hr/>
+						<div class="box-body no-padding">
+							<table class="table table-striped">
+								<tr>
+									<th width="5%">序号</th>									
+									<th  width="15%">人员</th>
+									<th>答案</th>
+									<th width="10%">对错</th>
+								</tr>
+								
+								<tbody th:remove="all-but-first" >       			  	
+			        			<tr  th:each="ual,i:${ualList}" >
+			        			  <td  th:text="${i.count }" >1</td>
+			        			 
+								  <td class="qstnTitle"  th:text="${ual.nickName}" >${qstn.qstnTitle }</td>
+								 
+								  <td  th:text="${ual.showContent}" >${qstn.qstnTypeId }</td>
+								   <td  th:utext="${ual.uansResult eq '0'?'<font color=red ><b><i>错误X</i></b></font>':'<font color=green >正确</font>'}" >${qstn.qstnTypeId }</td>
+								
+								</tr>	
+								</tbody>
+								
+							</table>
+						</div>
 					</div>
 					<!-- /.row -->
 				</section>

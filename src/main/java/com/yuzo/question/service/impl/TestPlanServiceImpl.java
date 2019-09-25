@@ -1003,6 +1003,26 @@ public class TestPlanServiceImpl implements ITestPlanService {
 		return ansMapper.queryByQstnId(qstnId);
 	}
 
+	@Override
+	public List<UserAnswerList> totalUal(String tpId, String qstnId) {
+		// TODO Auto-generated method stub
+		List<UserAnswerList> list = ualMapper.totalUal(qstnId, tpId);
+		for (UserAnswerList ual : list) {
+			if ("0".equals(ual.getQstnTypeId())) {
+				if (ual.getUansContent()==null  ||  "".equals(ual.getUansContent().trim())) {
+					ual.setShowContent("");
+				} else {
+					Answer ans = ansMapper.selectByPrimaryKey(ual.getUansContent().trim());
+					ual.setShowContent(ans.getAnsContent());
+				}
+				
+			} else {
+				ual.setShowContent(ual.getUansContent());
+			}
+		}
+		return list;
+	}
+
 	
 
 	

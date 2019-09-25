@@ -476,6 +476,10 @@ public class TestPlanController {
 		System.out.println(ansList);
 		model.addAttribute("list", ansList);	
 		
+		List<UserAnswerList> ualList = testPlanService.totalUal(tpId, qstnId);
+		System.out.println(ualList);
+		model.addAttribute("ualList", ualList);	
+		
 		return "worklist/show_qstn_plan";
 	}
 	

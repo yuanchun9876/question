@@ -38,4 +38,6 @@ public interface UserAnswerListMapper {
 	Integer totalUnitYes(@Param("unitId")String unitId, @Param("tpId")String tpId);
 
 	Integer totalUnitNo(@Param("unitId")String unitId, @Param("tpId")String tpId);
+
+	List<UserAnswerList> totalUal(@Param("qstnId")String qstnId, @Param("tpId")String tpId);
 }
