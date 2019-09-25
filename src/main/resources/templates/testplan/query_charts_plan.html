@@ -147,13 +147,20 @@
 						        {
 						            name:'成绩',
 						            type:'bar',
-						            data: resp.testlist ,
-						            markPoint : {
-						                data : [
-						                    {type : 'max', name: '最大值'},
-						                    {type : 'min', name: '最小值'}
-						                ]
+						            itemStyle: {
+						                normal: {                   // 系列级个性化，横向渐变填充
+						                    
+						                    label : {
+						                        show : true,
+						                        textStyle : {
+						                            fontSize : '20',
+						                            fontFamily : '微软雅黑'
+						                        }
+						                    }
+						                }
 						            },
+						            data: resp.testlist ,
+						          
 						            markLine : {
 						                data : [
 						                    {type : 'average', name: '平均值'}
