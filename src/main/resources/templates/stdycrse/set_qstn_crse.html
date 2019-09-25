@@ -28,14 +28,14 @@
 				<!-- Content Header (Page header) -->
 				<section class="content-header">
 					<h1>
-          				设置课程相关知识
+          				设置课程相关试题
 			        </h1>
 			       <ol class="breadcrumb">
 						<li>
 							<a th:href="@{/dashboard}"><i class="glyphicon glyphicon-globe"></i>导航</a>
 						</li>
 						<li class="active">
-							<a href="#">设置课程相关知识</a>
+							<a href="#">设置课程相关试题</a>
 						</li>
 					</ol>
 				</section>
@@ -43,7 +43,7 @@
 				<!-- Main content -->
 				<section class="content">
 					<div class="row">
-						<form class="form form-horizontal" method="post"   th:object="${crse}"   th:action="@{/stdycrse/setSctnSave}"  >
+						<form class="form form-horizontal" method="post"   th:object="${crse}"   th:action="@{/stdycrse/setqstnSave}"  >
 							<input type="hidden" name="crseId"  th:field="*{crseId}"  >
 							<!-- left column -->
 							<div class="col-md-10 col-md-offset-1">
@@ -65,37 +65,33 @@
 											</div>
 										</div>
 									
-									<div class="form-group">
-											<label for="birth" class="col-sm-1 control-label">科目单元</label>
-											<div class="col-sm-3">
-												<select class="form-control"  onchange="selectSubj(this.value)"  required="required" >
-													<option value="">请选择</option>
-													
-													<option  th:value = "${subj.subjId }"   th:each="subj,i:${subjList}"   th:text="${subj.subjTitle }"  >科目单元</option>
-												</select>
-											</div>
-											<label for="birth" class="col-sm-1 control-label">知识章</label>
-											<div class="col-sm-3">
-												<select class="form-control" onchange="selectUnit(this.value)"  id="unitSelect"   required="required" >
-													<option value="">请选择</option>
-													
-													<option  th:value = "${unit.subjUnitId}"   th:each="unit,i:${subjUnitList}"   th:text="${unit.subjUnitTitle }"  >知识章</option>
-												</select>
-											</div>
-											<label for="birth" class="col-sm-1 control-label">知识节</label>
-											<div class="col-sm-3">
-												<select class="form-control" name="subjSctnId"  id="sctnSelect"   required="required" >
-													<option value="">请选择</option>
-													
-													<option  th:value = "${subjSctn.subjSctnId }"   th:each="subjSctn,i:${subjSctnList}"   th:text="${subjSctn.subjSctnTitle}" >知识节</option>
-												</select>
-											</div>
+									<div class="box-body no-padding">
+										<div class="col-sm-12">
+											<table  class="table table-bordered table-striped" >
+												<tr>
+							        				
+							        				
+							        				<th>试题代号</th>     				
+							        				<th>所属节</th>
+							        				<th>试题类型</th>
+													<th>操作</th>
+							        			</tr>
+							        			<tbody id="tb" >
+							        				<tr th:each="row,i:${scqList}" >							       
+									       				<td th:text="${row.qstnCode}" >JavaSE</td>
+									       				<td th:text="${row.subjSctnTitle}">1</td>
+									       				<td th:text="${row.qstnTypeName}">1</td>
+									       				<td ></td>
+							        				</tr>
+							        			</tbody>
+											</table>
 										</div>
-										
+									</div>
+
 									</div>						
 									<!-- /.box-body -->
 									<div class="box-footer">
-										<button type="button" class="btn btn-danger" onclick="cleanUp(this)">清空</button>
+										<button type="button" class="btn btn-danger" th:onclick="selectQstn([[${crseId}]])" >试题</button>
 										<button type="submit" class="btn btn-info pull-right">提交</button>
 									</div>
 									<!-- /.box-footer -->
@@ -120,44 +116,51 @@
 		
 
 		//清空
-		function cleanUp(btn) {
-			parDiv = $(btn).parent().parent();
-			parDiv.find("input").val("");
-			parDiv.find("textarea").html("");
-			parDiv.find("select").each(function(i, j) {
-				$(j).find("option:selected").prop("selected", false);
-				$(j).find("option").first().prop("selected", true);
-			});
-		}
-		
-		function selectSubj(subjId){
-			var url = "/subjUnit/selectSubj";
-			$.post(url,{"subjId":subjId},function(resp){
-				// unitSelect
-				console.log(resp);
-				$("#unitSelect").empty();
-				$.each(resp, function(i, item){
-					$("<option value='" + item.subjUnitId + "'>" + item.subjUnitNum + "." + item.subjUnitTitle + "</option>").appendTo("#unitSelect");
-				});
-				if(resp.length > 0){
-					selectUnit(resp[0].subjUnitId);
-				}
-				
-			});
-		}
-		
-		function selectUnit(unitId){
-			var url = "/subjSctn/selectUnit";
-			$.post(url,{"unitId":unitId},function(resp){
-				// sctnSelect
-				console.log(resp);
-				$("#sctnSelect").empty();
-				$.each(resp, function(i, item){
-					$("<option value='" + item.subjSctnId + "'>" + item.subjSctnNum + "." + item.subjSctnTitle + "</option>").appendTo("#sctnSelect");
-				});
-			});
-		}
+		function selectQstn(crseId) {
+			 bootbox.dialog({
+				  // dialog的内容
+				  message: "<iframe src='/qstn/selectQstn' style='width:100%;height:429px;border:0 solid;'></iframe>",
+				   
 
+				  // 是否显示此dialog，默认true
+				  show: true,
+
+				     // 显示尺寸，可选 small  /large
+				 size: "large",
+
+				  // 是否显示body的遮罩，默认true
+				  backdrop: true,
+				   
+				  // 是否显示关闭按钮，默认true
+				  closeButton: true,
+				   
+				  // 是否动画弹出dialog，IE10以下版本不支持
+				  animate: true,
+				   
+				  // dialog的类名
+				  className: "my-modal",
+				   
+				});
+		}
+		
+	
+		function createQstnTable(qstns){
+			bootbox.hideAll();
+			//console.log("__>" + qstns);
+			$.each(qstns, function(i,item){
+				var qqs = item.split("#");
+				console.log(qqs);
+				var tds = "<tr>"
+					tds += "<td><input type='hidden' value='" + qqs[0] +  "' name='qstns'>" + qqs[2] + "</td>"
+					tds += "<td>" + qqs[3] + "</td>"
+					tds += "<td>" + qqs[1] + "</td>"
+					tds += "<td></td>"
+					tds += "</tr>"
+				$(tds).appendTo("#tb");	
+			} );
+		}
+		
+		
 	</script>
 
 </html>

@@ -10,6 +10,10 @@ public class StudyCourseQuestion {
     private String qstnTypeId;
 
     private String subjSctnId;
+    
+    private String qstnCode;
+    private String qstnTypeName;
+    private String subjSctnTitle;
 
     public String getCrseQstnId() {
         return crseQstnId;
@@ -50,4 +54,30 @@ public class StudyCourseQuestion {
     public void setSubjSctnId(String subjSctnId) {
         this.subjSctnId = subjSctnId == null ? null : subjSctnId.trim();
     }
+
+	public String getQstnCode() {
+		return qstnCode;
+	}
+
+	public void setQstnCode(String qstnCode) {
+		this.qstnCode = qstnCode;
+	}
+
+	public String getQstnTypeName() {
+		return qstnTypeName;
+	}
+
+	public void setQstnTypeName(String qstnTypeName) {
+		this.qstnTypeName = qstnTypeName;
+	}
+
+	public String getSubjSctnTitle() {
+		return subjSctnTitle;
+	}
+
+	public void setSubjSctnTitle(String subjSctnTitle) {
+		this.subjSctnTitle = subjSctnTitle;
+	}
+    
+    
 }

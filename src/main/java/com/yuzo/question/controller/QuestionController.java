@@ -84,6 +84,39 @@ public class QuestionController {
 		return "qstn/list_qstn";
 	}
 	
+	@RequestMapping("selectQstn")
+	public String selectQstn(@ModelAttribute("qstnpage")QuestionPage page, Model model,String clearpage) {
+		if (clearpage != null) {
+			BeanUtils.copyProperties(new QuestionPage(), page);
+		}
+		//	
+		System.out.println("page: " + page);
+		
+		model.addAttribute("page", page);
+		
+		PageHelper.startPage(page.getPageNum(), page.getPageSize());		
+		List<Question> list = qstnService.queryAll(page);
+		PageInfo<Question> pageInfo = new PageInfo<Question>(list);
+		model.addAttribute("pageInfo",pageInfo);
+		// System.out.println("pageInfo: " + pageInfo);
+		
+		// 用于条件查询
+		List<QstnFromType> qstnFromList = qstnService.queryQstnFrom();
+		model.addAttribute("qstnFromList", qstnFromList);
+		List<QuestionType> qstnTypeList = qstnService.queryQstnType();
+		model.addAttribute("qstnTypeList", qstnTypeList);
+		
+		List<SubjectCourse> subjList = qstnService.querySubj();
+		model.addAttribute("subjList", subjList);
+		List<SubjUnit> subjUnitList = qstnService.querySubjUnit();
+		model.addAttribute("subjUnitList", subjUnitList);
+		List<SubjSection> subjSctnList = qstnService.querySubjSctn();
+		model.addAttribute("subjSctnList", subjSctnList);
+		
+		
+		return "qstn/list_sel_qstn";
+	}
+	
 	@RequestMapping("addPage")
 	public String addPage(Model model){
 		

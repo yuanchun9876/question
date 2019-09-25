@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>查询页面</title>
+	<!-- Tell the browser to be responsive to screen width -->
+	<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+	
+	<include th:replace="common/css :: commoncss"/>
+
+	<style type="text/css">
+	 	.content-wrapper {
+				margin-left: 0px;
+		}
+		.qstnTitle img{display: none;}
+		
+		@media only screen and (max-width: 768px) {
+			.box-header{
+				flex-direction: column;
+			}
+			.box-header .box-search{
+				margin: 10px auto;
+			}
+		}
+	</style>
+</head>
+
+<body class="hold-transition skin-blue sidebar-mini">
+	<div class="wrapper">
+		<!-- Content Wrapper. Contains page content -->
+		<div class="content-wrapper">
+			<!-- Content Header (Page header) -->
+
+
+			<!-- Main content -->
+			<section class="content">
+				<div class="box">
+					<form name="infoForm" id="queryForm" method="post"   th:object="${page}"  >
+						<div class="box-header clearfix">
+							<div class="box-search">
+								<div class="input-group">
+									<span class="input-group-addon" style="background: #EEEEEE;">试题类型</span>
+									<select class="form-control" name="qstnTypeId"   th:field="*{qstnTypeId}"  >
+										<option value="">请选择</option>
+										<option   th:value = "${qstnType.qstnTypeId }"   th:each="qstnType,i:${qstnTypeList}"   th:text="${qstnType.qstnTypeName }"   >试题类型</option>		
+									</select>
+								</div>
+							</div>
+							<div class="box-search">
+								<div class="input-group">
+									<span class="input-group-addon" style="background: #EEEEEE;">试题来源</span>
+									<select class="form-control" name="qstnFromTypeId"   th:field="*{qstnFromTypeId}" >
+										<option value="">请选择</option>
+										<option  th:value = "${qstnFrom.qstnFromTypeId }"   th:each="qstnFrom,i:${qstnFromList}"   th:text="${qstnFrom.qstnFromTypeCode}"  >试题来源</option>		
+									</select>
+								</div>
+							</div>
+							<div class="box-search">
+								<div class="input-group">
+									<span class="input-group-addon" style="background: #EEEEEE;">试题代号</span>
+									<input type="text" class="form-control" name='qstnCode'  th:field="*{qstnCode}" placeholder="试题代号"  >
+								</div>
+							</div>
+						
+							<div class="box-search btn-group">
+								<button class="btn btn-info" name="queryInfo">查询</button>
+							
+								<button type="button" class="btn btn-primary" name="clearInfo" onclick="javascript:clearEle()">清空</button>
+							
+
+							</div>
+						</div>
+						<div class="box-header clearfix">
+							<div class="box-search">
+								<div class="input-group">
+									<span class="input-group-addon" style="background: #EEEEEE;">科目单元</span>
+									<select class="form-control" name="subjId"  onchange="selectSubj(this.value)"  th:field="*{subjId}"  >
+										<option value="">请选择</option>
+										<option  th:value = "${subj.subjId }"   th:each="subj,i:${subjList}"   th:text="${subj.subjTitle }"  >科目单元</option>
+									</select>
+								</div>
+							</div>
+							<div class="box-search">
+								<div class="input-group">
+									<span class="input-group-addon" style="background: #EEEEEE;">知识章</span>
+									<select class="form-control" name="unitId"  onchange="selectUnit(this.value)"  id="unitSelect"  th:field="*{unitId}"   >
+										<option value="">请选择</option>									
+										<option  th:value = "${unit.subjUnitId}"   th:each="unit,i:${subjUnitList}"   th:text="${unit.subjUnitTitle }"  >知识章</option>
+									</select>
+								</div>
+							</div>
+							<div class="box-search">
+								<div class="input-group">
+									<span class="input-group-addon" style="background: #EEEEEE;">知识节</span>
+									<select class="form-control" name="subjSctnId"  id="sctnSelect"   th:field="*{subjSctnId}"   >
+										<option value="">请选择</option>
+										<option  th:value = "${subjSctn.subjSctnId }"   th:each="subjSctn,i:${subjSctnList}"   th:text="${subjSctn.subjSctnTitle}" >知识节</option>
+									</select>
+								</div>
+							</div>
+							<div class="box-search btn-group">
+								
+							
+							</div>
+						</div>
+						<div class="box-header clearfix">
+							<div class="box-search">
+								<div class="input-group">
+									<span class="input-group-addon" style="background: #EEEEEE;">试题内容</span>
+									<input type="text" class="form-control" value="" name="qstnTitle"  th:field="*{qstnTitle}"  style="width:600px;" placeholder="请输入试题内容">
+								</div>
+							</div>
+						<div class="box-search btn-group">
+							<button type="button" class="btn btn-warning" name="okbtn" onclick="javascript:selectedQstn()">选择</button>
+						</div>
+						
+						</div>
+					</form>
+					<!-- /.box-header -->
+					<div class="box-body no-padding">
+						<table class="table table-bordered  table-striped">
+							<tr>
+								<th>序号</th>
+								<th>全选</th>
+								<th >试题内容</th>
+								<th>试题类型</th>
+							
+							
+								
+								<th>代号</th>
+								
+								<th>操作</th>
+							</tr>
+							
+							<tbody th:remove="all-but-first" >       			  	
+		        			<tr  th:each="row,i:${pageInfo.list}" >
+		        			  <td  th:text="${i.index} + ${pageInfo.startRow}" >1</td>
+		        			  <td ><input type="checkbox" name="ids" value="1"    th:value="${row.qstnId + '#' + row.qstnTypeName + '#' + row.qstnCode + '#' + row.subjSctnTitle}"  ></td>
+		        			  <td class="qstnTitle" th:if="${row.qstnTitle.length() >= 35}"  th:utext="${#strings.substring(row.qstnTitle,0,35)}" >${qstn.qstnTitle }</td>
+							  <td class="qstnTitle" th:if="${row.qstnTitle.length() < 35}"   th:utext="${row.qstnTitle}" >${qstn.qstnTitle }</td>
+							  <td  th:text="${row.qstnTypeName}" >${qstn.qstnTypeId }</td>
+							 
+							
+							  
+							  <td  th:text="${row.qstnCode}"  >${qstn.subjSctnId }</td>
+							
+							  <td>
+							
+								<button type="button" class="btn btn-danger btn-sm"  th:onclick="testpage([[${row.qstnId}]],[[${row.qstnTypeId}]])"  onclick="javascript:editpage('1')">测试</button>
+							 </td>
+							</tr>	
+							</tbody>
+						
+						</table>
+							<br/>
+		        		<div th:replace="common/js :: commonjs"></div>
+						<div th:include="common/pagination::pagination(uri='/qstn/selectQstn',page=${pageInfo})" align="center" ></div>
+					</div>
+				</div>
+				<!-- /.row -->
+			</section>
+			<!-- /.content -->
+		</div>
+	</div>
+	<!-- ./wrapper -->
+
+</body>
+
+
+<script type="text/javascript">
+
+
+	function selectedQstn(){
+		var ids = $("[name=ids]:checked");
+		if(ids.length<=0){
+			alert("请选择试题");
+			return;
+		}
+		var qstns = [];
+		ids.each(function(){
+			qstns.push($(this).val());
+		});
+		//console.log(qstns);
+		
+		parent.createQstnTable(qstns);
+	}
+
+
+
+	function selectSubj(subjId){
+		var url = "/subjUnit/selectSubj";
+		$.post(url,{"subjId":subjId},function(resp){
+			// unitSelect
+			console.log(resp);
+			$("#unitSelect").empty();
+			$("<option value=''>请选择</option>").appendTo("#unitSelect");
+			$.each(resp, function(i, item){
+				$("<option value='" + item.subjUnitId + "'>" + item.subjUnitNum + "." + item.subjUnitTitle + "</option>").appendTo("#unitSelect");
+			});
+			if(resp.length > 0){
+				selectUnit(resp[0].subjUnitId);
+			}
+			
+		});
+	}
+	
+	function selectUnit(unitId){
+		var url = "/subjSctn/selectUnit";
+		$.post(url,{"unitId":unitId},function(resp){
+			// sctnSelect
+			console.log(resp);
+			$("#sctnSelect").empty();
+			$("<option value=''>请选择</option>").appendTo("#sctnSelect");
+			$.each(resp, function(i, item){
+				$("<option value='" + item.subjSctnId + "'>" + item.subjSctnNum + "." + item.subjSctnTitle + "</option>").appendTo("#sctnSelect");
+			});
+		});
+	}
+
+		
+		function answerpage(qstnId){
+			window.location.href = "/ans/query?id=" + qstnId;
+		}
+		
+		function dels(){
+			var ids = $("[name=ids]:checked");
+			if(ids.length==0){
+				alert("请选择要删除记录!");
+				return;
+			}
+			if(window.confirm("确定要删除吗?")){
+				//console.log(document.delForm.action);
+				document.delForm.submit();
+			}
+		}
+
+		function editpage(id) {
+			//bootbox.alert(id);
+			window.location.href = "/qstn/editPage?id=" + id;
+		}
+
+		function clearEle() {
+
+			bootbox.confirm("确定要清空查询条件吗?", function(result) {
+				if(result) {
+					$("[name=infoForm] input").val("");
+					$("[name=infoForm] select").each(function(i, j) {
+						$(j).find("option:selected").prop("selected", false);
+						$(j).find("option").first().prop("selected", true);
+					});
+				} else {
+					console.log("no");
+				}
+			});
+		}
+		
+		function addPage(){
+			window.location.href = "/qstn/addPage";
+		}
+
+		function testpage(qstnId, type){
+			 bootbox.dialog({
+				  // dialog的内容
+				  message: "<iframe src='/qstn/checkQstn?qstnId=" + qstnId + "&type=" + type + "' style='width:100%;height:399px;border:0 solid;'></iframe>",
+				   
+
+				  // 是否显示此dialog，默认true
+				  show: true,
+
+				     // 显示尺寸，可选 small  /large
+				 size: "large",
+
+				  // 是否显示body的遮罩，默认true
+				  backdrop: true,
+				   
+				  // 是否显示关闭按钮，默认true
+				  closeButton: true,
+				   
+				  // 是否动画弹出dialog，IE10以下版本不支持
+				  animate: true,
+				   
+				  // dialog的类名
+				  className: "my-modal",
+				   
+				});
+		}
+		</script>
+
+</html>

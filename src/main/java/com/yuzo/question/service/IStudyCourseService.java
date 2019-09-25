@@ -3,6 +3,7 @@ package com.yuzo.question.service;
 import java.util.List;
 
 import com.yuzo.question.entity.StudyCourse;
+import com.yuzo.question.entity.StudyCourseQuestion;
 import com.yuzo.question.entity.StudyPeriod;
 import com.yuzo.question.entity.SubjSection;
 import com.yuzo.question.entity.SubjUnit;
@@ -30,5 +31,9 @@ public interface IStudyCourseService {
 	List<SubjUnit> querySubjUnit();
 
 	int setCrseSctn(String crseId, String[] sctnIds);
+
+	int setCrseQstn(String crseId, String[] qstns);
+
+	List<StudyCourseQuestion> queryScqByCrseId(String crseId);
 
 }

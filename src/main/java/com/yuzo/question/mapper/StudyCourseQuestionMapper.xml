@@ -7,20 +7,43 @@
     <result column="qstn_id" property="qstnId" jdbcType="VARCHAR" />
     <result column="qstn_type_id" property="qstnTypeId" jdbcType="VARCHAR" />
     <result column="subj_sctn_id" property="subjSctnId" jdbcType="VARCHAR" />
+    
+    <result column="QSTN_CODE" property="qstnCode" jdbcType="VARCHAR" />
+    <result column="QSTN_TYPE_NAME" property="qstnTypeName" jdbcType="VARCHAR" />
+    <result column="SUBJ_SCTN_TITLE" property="subjSctnTitle" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
     crse_qstn_id, crse_id, qstn_id, qstn_type_id, subj_sctn_id
   </sql>
+  
+  <select id="queryScqByCrseId" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    crse_qstn_id, crse_id, scq.qstn_id, scq.qstn_type_id, scq.subj_sctn_id
+    , qstn.QSTN_CODE , qt.QSTN_TYPE_NAME , sctn.SUBJ_SCTN_TITLE
+    from study_course_question  scq  
+    	left join question qstn  on qstn.QSTN_ID = scq.qstn_id
+    	left join question_type qt on qt.QSTN_TYPE_ID = scq.qstn_type_id
+    	left join subj_section sctn on sctn.subj_sctn_id = scq.subj_sctn_id
+    where crse_id = #{value,jdbcType=VARCHAR}
+  </select>
+  
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
     from study_course_question
     where crse_qstn_id = #{crseQstnId,jdbcType=VARCHAR}
   </select>
+   
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
     delete from study_course_question
     where crse_qstn_id = #{crseQstnId,jdbcType=VARCHAR}
   </delete>
+  
+  <delete id="delsByCrseId" parameterType="java.lang.String" >
+    delete from study_course_question
+    where crse_id = #{value,jdbcType=VARCHAR}
+  </delete>
+  
   <insert id="insert" parameterType="com.yuzo.question.entity.StudyCourseQuestion" >
     insert into study_course_question (crse_qstn_id, crse_id, qstn_id, 
       qstn_type_id, subj_sctn_id)

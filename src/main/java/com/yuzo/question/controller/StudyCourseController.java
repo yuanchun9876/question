@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.yuzo.question.entity.StudyCourse;
+import com.yuzo.question.entity.StudyCourseQuestion;
 import com.yuzo.question.entity.StudyPeriod;
 import com.yuzo.question.entity.SubjSection;
 import com.yuzo.question.entity.SubjUnit;
@@ -99,33 +100,25 @@ public class StudyCourseController {
 		int count = stdycrseService.setCrseSctn(crseId, sctnIds);			
 		return "redirect:query";
 	}
-	
-	
+
 	@RequestMapping("/setqstnpage")
 	public String setqstnpage(String crseId, Model model) {
 		
 		StudyCourse crse = stdycrseService.queryById(crseId);
 		model.addAttribute("crse", crse);	
 		
-		List<SubjectCourse> subjList = stdycrseService.querySubj();
-		model.addAttribute("subjList", subjList);
-		List<SubjUnit> subjUnitList = stdycrseService.querySubjUnit();
-		model.addAttribute("subjUnitList", subjUnitList);
-		List<SubjSection> subjSctnList = stdycrseService.querySubjSctn();
-		model.addAttribute("subjSctnList", subjSctnList);		
+		List<StudyCourseQuestion> scqList = stdycrseService.queryScqByCrseId(crseId);
+		model.addAttribute("scqList", scqList);	
+		
 		return "stdycrse/set_qstn_crse";
 	}
 	
-	
-	
-//	@RequestMapping("/setqstnSave")
-//	public String setqstnSave(String crseId, String[] sctnIds, Model model) {		
-//		int count = stdycrseService.setCrseSctn(crseId, sctnIds);			
-//		return "redirect:query";
-//	}
-	
+	@RequestMapping("/setqstnSave")
+	public String setqstnSave(String crseId, String[] qstns, Model model) {		
+		int count = stdycrseService.setCrseQstn(crseId, qstns);			
+		return "redirect:query";
+	}
 
-	
 	@RequestMapping("/editSave")
 	public String editSave(StudyCourse crse) {		
 		
@@ -133,8 +126,6 @@ public class StudyCourseController {
 		System.out.println("role:" + count);
 		return "redirect:query";
 	}
-	
-
 	
 	@RequestMapping("/dels")
 	public String dels(String[] ids) {		
