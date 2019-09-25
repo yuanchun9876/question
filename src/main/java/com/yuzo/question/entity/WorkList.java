@@ -14,14 +14,18 @@ public class WorkList {
     private String wtName;
     
     private String wtCode;
-    
+       
+    private String crseId;
+
+    private String crseName;
     
     
 
-    @Override
+	@Override
 	public String toString() {
-		return "WorkList [wlId=" + wlId + ", wtId=" + wtId + ", wlTitle=" + wlTitle + ", wtCode=" + wtCode + ", wlInfo=" + wlInfo + ", wlNum="
-				+ wlNum + ", wtName=" + wtName + "]";
+		return "WorkList [wlId=" + wlId + ", wtId=" + wtId + ", wlTitle=" + wlTitle + ", wlInfo=" + wlInfo + ", wlNum="
+				+ wlNum + ", wtName=" + wtName + ", wtCode=" + wtCode + ", crseId=" + crseId + ", crseName=" + crseName
+				+ "]";
 	}
 
 	public String getWlId() {
@@ -78,6 +82,22 @@ public class WorkList {
 
 	public void setWtCode(String wtCode) {
 		this.wtCode = wtCode;
+	}
+
+	public String getCrseId() {
+		return crseId;
+	}
+
+	public void setCrseId(String crseId) {
+		this.crseId = crseId;
+	}
+
+	public String getCrseName() {
+		return crseName;
+	}
+
+	public void setCrseName(String crseName) {
+		this.crseName = crseName;
 	}
     
     

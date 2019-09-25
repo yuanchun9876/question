@@ -8,11 +8,13 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.yuzo.question.entity.StudyCourse;
 import com.yuzo.question.entity.SysUser;
 import com.yuzo.question.entity.UserMyclass;
 import com.yuzo.question.entity.UserUpdatePoints;
 import com.yuzo.question.entity.WorkList;
 import com.yuzo.question.entity.WorkType;
+import com.yuzo.question.mapper.StudyCourseMapper;
 import com.yuzo.question.mapper.SysUserMapper;
 import com.yuzo.question.mapper.UserMyclassMapper;
 import com.yuzo.question.mapper.UserUpdatePointsMapper;
@@ -39,6 +41,9 @@ public class WorkListServiceImpl implements IWorkListService{
 	
 	@Autowired
 	private UserUpdatePointsMapper uupMapper;
+	
+	@Autowired
+	private StudyCourseMapper crseMapper;
 	
 
 	@Override
@@ -174,5 +179,11 @@ public class WorkListServiceImpl implements IWorkListService{
 		map.put("userPoints", userPoints);
 		
 		return map;
+	}
+
+	@Override
+	public List<StudyCourse> queryCrse() {
+		// TODO Auto-generated method stub
+		return crseMapper.query();
 	}
 }

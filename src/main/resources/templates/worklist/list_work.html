@@ -64,7 +64,7 @@
         				<th>作业名称</th>     				
         				<th>作业序号</th>
         				<th>作业类型</th>
-        				<th>作业说明</th>
+        				<th>所属课程</th>
 						<th>操作</th>
         			</tr>
         			<form name="delForm"  method="post"  action="#"  th:action="@{/worklist/dels}"  >    
@@ -75,7 +75,7 @@
 	       				<td th:text="${row.wlTitle}" >JavaSE</td>
 	       				<td th:text="${row.wlNum}">1</td>
 	       				<td th:text="${row.wtName}">JAVASE</td>
-	       				<td th:text="${row.wlInfo}">85</td>
+	       				<td th:text="${row.crseName}">85</td>
 	       			
 						<td>
 							<button type="button" class="btn btn-primary btn-sm"  th:onclick="editpage([[${row.wlId}]])"     onclick="javascript:editpage('1')"    >修改</button>

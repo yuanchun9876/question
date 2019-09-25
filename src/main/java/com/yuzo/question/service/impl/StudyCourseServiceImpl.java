@@ -1,6 +1,9 @@
 package com.yuzo.question.service.impl;
 
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -129,8 +132,11 @@ public class StudyCourseServiceImpl implements IStudyCourseService {
 	public int setCrseQstn(String crseId, String[] qstns) {
 		// TODO Auto-generated method stub
 		int delCount = crseQstnMapper.delsByCrseId(crseId);
+		
+		Set<String> qstnIds = new HashSet<>(Arrays.asList(qstns));
+		
 		int count = 0;
-		for (String qstnId : qstns) {
+		for (String qstnId : qstnIds) {
 			StudyCourseQuestion scq = new StudyCourseQuestion();
 			scq.setCrseQstnId(UUID.randomUUID().toString());
 			scq.setCrseId(crseId);

@@ -9,13 +9,17 @@
     <result column="wl_num" property="wlNum" jdbcType="INTEGER" />
     <result column="wt_name" property="wtName" jdbcType="VARCHAR" />
     <result column="wt_code" property="wtCode" jdbcType="VARCHAR" />
+    
+    <result column="crse_id" property="crseId" jdbcType="VARCHAR" />
+    <result column="crse_name" property="crseName" jdbcType="VARCHAR" />
+    
   </resultMap>
   <sql id="Base_Column_List" >
-    wl_id, wt_id, wl_title, wl_info, wl_num
+    wl_id, wt_id, wl_title, wl_info, wl_num ,crse_id , crse_name
   </sql>
   <select id="queryAll" resultMap="BaseResultMap"  >
     select 
-    wl_id, wl.wt_id, wl_title, wl_info, wl_num  , wt.wt_name, wt.wt_code
+    wl_id, wl.wt_id, wl_title, wl_info, wl_num  , wt.wt_name, wt.wt_code ,crse_id , crse_name
     from work_list wl left join work_type wt on wl.wt_id = wt.wt_id
 	order by wl_num, wl_title
   </select>
@@ -25,16 +29,19 @@
     from work_list
     where wl_id = #{wlId,jdbcType=VARCHAR}
   </select>
+  
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
     delete from work_list
     where wl_id = #{wlId,jdbcType=VARCHAR}
   </delete>
+  
   <insert id="insert" parameterType="com.yuzo.question.entity.WorkList" >
     insert into work_list (wl_id, wt_id, wl_title, 
-      wl_info, wl_num)
+      wl_info, wl_num ,crse_id , crse_name)
     values (#{wlId,jdbcType=VARCHAR}, #{wtId,jdbcType=VARCHAR}, #{wlTitle,jdbcType=VARCHAR}, 
-      #{wlInfo,jdbcType=VARCHAR}, #{wlNum,jdbcType=INTEGER})
+      #{wlInfo,jdbcType=VARCHAR}, #{wlNum,jdbcType=INTEGER}, #{crseId,jdbcType=VARCHAR}, #{crseName,jdbcType=VARCHAR})
   </insert>
+  
   <insert id="insertSelective" parameterType="com.yuzo.question.entity.WorkList" >
     insert into work_list
     <trim prefix="(" suffix=")" suffixOverrides="," >
@@ -53,6 +60,13 @@
       <if test="wlNum != null" >
         wl_num,
       </if>
+      
+      <if test="crseId != null" >
+        crse_id,
+      </if>
+      <if test="crseName != null" >
+        crse_name,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="wlId != null" >
@@ -70,6 +84,14 @@
       <if test="wlNum != null" >
         #{wlNum,jdbcType=INTEGER},
       </if>
+      
+       <if test="crseId != null" >
+        #{crseId,jdbcType=VARCHAR},
+      </if>
+      <if test="crseName != null" >
+       #{crseName,jdbcType=VARCHAR},
+      </if>
+      
     </trim>
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="com.yuzo.question.entity.WorkList" >
@@ -87,6 +109,12 @@
       <if test="wlNum != null" >
         wl_num = #{wlNum,jdbcType=INTEGER},
       </if>
+         <if test="crseId != null" >
+        crse_id = #{crseId,jdbcType=VARCHAR},
+      </if>
+      <if test="crseName != null" >
+       crse_name = #{crseName,jdbcType=VARCHAR},
+      </if>
     </set>
     where wl_id = #{wlId,jdbcType=VARCHAR}
   </update>
@@ -95,7 +123,9 @@
     set wt_id = #{wtId,jdbcType=VARCHAR},
       wl_title = #{wlTitle,jdbcType=VARCHAR},
       wl_info = #{wlInfo,jdbcType=VARCHAR},
-      wl_num = #{wlNum,jdbcType=INTEGER}
+      wl_num = #{wlNum,jdbcType=INTEGER},
+     crse_id = #{crseId,jdbcType=VARCHAR},
+     crse_name = #{crseName,jdbcType=VARCHAR} 
     where wl_id = #{wlId,jdbcType=VARCHAR}
   </update>
 </mapper>

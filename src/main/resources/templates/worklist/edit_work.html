@@ -79,6 +79,20 @@
 											</div>
 											
 										</div>
+											<div class="form-group">
+											<label for="cardid" class="col-sm-2 control-label">所属课程</label>
+											<div class="col-sm-4">
+												<select class="form-control" name="crseId"  onchange="selCrseName(this)"  th:field="*{crseId}" >
+													<option  value = "" >请选择</option>													
+													<option  th:value = "${crse.crseId }"   th:each="crse,i:${crseList}"   th:text="${crse.crseName }" >所属科目</option>											
+												</select>
+											</div>
+											<label for="cardid" class="col-sm-2 control-label">所属课程</label>
+											<div class="col-sm-4">
+												<input type="text" readonly="readonly" id="cname" class="form-control"  th:field="*{crseName}"  name='crseName' placeholder="请您输入所属课程"  required="required">
+											</div>
+											
+										</div>
 										<div class="form-group">
 											<label for="cardid" class="col-sm-2 control-label">作业说明</label>
 											<div class="col-sm-10 ">
@@ -115,19 +129,13 @@
 
 	<script type="text/javascript">
 	
-		function singleSubjCode(subjCode){
-			if($("#oldCode").val() != subjCode.value){
-				$.post("/subj/singleSubjCode",{"subjCode":subjCode.value},function(resp){
-					if(resp == "no"){
-						$("#msg").html("<font color='red'>已使用</font>");
-						subjCode.setCustomValidity("已使用");  
-					}else{
-						$("#msg").html("<font color='green'>可以用</font>");
-						subjCode.setCustomValidity("");  
-					}
-				})
-			}
+		function selCrseName(cid){
+			var info = cid.options[cid.selectedIndex].innerText
+			$("#cname").val(info);
 		}
+	
+	
+
 	
 		
 		//清空

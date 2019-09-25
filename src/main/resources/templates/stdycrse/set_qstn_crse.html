@@ -69,19 +69,19 @@
 										<div class="col-sm-12">
 											<table  class="table table-bordered table-striped" >
 												<tr>
-							        				
-							        				
+							        				<th>试题ID</th>     				
 							        				<th>试题代号</th>     				
 							        				<th>所属节</th>
 							        				<th>试题类型</th>
 													<th>操作</th>
 							        			</tr>
 							        			<tbody id="tb" >
-							        				<tr th:each="row,i:${scqList}" >							       
-									       				<td th:text="${row.qstnCode}" >JavaSE</td>
+							        				<tr th:each="row,i:${scqList}"   >	
+							        					<td><input readOnly  th:value="${row.qstnId}" name="qstns" ></td>						       
+									       				<td th:text="${row.qstnCode}" ></td>
 									       				<td th:text="${row.subjSctnTitle}">1</td>
 									       				<td th:text="${row.qstnTypeName}">1</td>
-									       				<td ></td>
+									       				<td ><button type="button" class="btn btn-danger btn-xs" onclick="delQstn(this)" >取消</button></td>
 							        				</tr>
 							        			</tbody>
 											</table>
@@ -121,13 +121,13 @@
 				  // dialog的内容
 				  message: "<iframe src='/qstn/selectQstn' style='width:100%;height:429px;border:0 solid;'></iframe>",
 				   
-
+	
 				  // 是否显示此dialog，默认true
 				  show: true,
-
+	
 				     // 显示尺寸，可选 small  /large
 				 size: "large",
-
+	
 				  // 是否显示body的遮罩，默认true
 				  backdrop: true,
 				   
@@ -151,15 +151,20 @@
 				var qqs = item.split("#");
 				console.log(qqs);
 				var tds = "<tr>"
-					tds += "<td><input type='hidden' value='" + qqs[0] +  "' name='qstns'>" + qqs[2] + "</td>"
+					tds += "<td><input readOnly  value='" + qqs[0] +  "' name='qstns'></td>"
+					tds += "<td>" + qqs[2] + "</td>"
 					tds += "<td>" + qqs[3] + "</td>"
 					tds += "<td>" + qqs[1] + "</td>"
-					tds += "<td></td>"
+					tds += "<td><button type=\"button\" class=\"btn btn-danger btn-xs\" onclick=\"delQstn(this)\"  >取消</button></td>"
 					tds += "</tr>"
 				$(tds).appendTo("#tb");	
 			} );
 		}
 		
+		
+		function delQstn(btn){
+			$(btn).closest("tr").remove();
+		}
 		
 	</script>
 

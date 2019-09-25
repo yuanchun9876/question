@@ -3,6 +3,7 @@ package com.yuzo.question.service;
 import java.util.List;
 import java.util.Map;
 
+import com.yuzo.question.entity.StudyCourse;
 import com.yuzo.question.entity.SysUser;
 import com.yuzo.question.entity.UserMyclass;
 import com.yuzo.question.entity.WorkList;
@@ -29,5 +30,7 @@ public interface IWorkListService {
 	List<SysUser> queryUserByMc(String mcId);
 
 	Map<String, Object> classPointlist(String mcId);
+
+	List<StudyCourse> queryCrse();
 
 }

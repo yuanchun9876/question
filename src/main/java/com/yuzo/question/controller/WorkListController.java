@@ -13,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.yuzo.question.entity.StudyCourse;
 import com.yuzo.question.entity.SubjectCourse;
 import com.yuzo.question.entity.SysUser;
 import com.yuzo.question.entity.UserMyclass;
@@ -63,7 +64,12 @@ public class WorkListController {
 	public String addPage( Model model) {
 		List<WorkType> wtList = workListService.queryWt();
 		System.out.println(wtList);
-		model.addAttribute("wtList", wtList);		
+		model.addAttribute("wtList", wtList);	
+		
+		List<StudyCourse> crseList = workListService.queryCrse();
+		System.out.println(crseList);
+		model.addAttribute("crseList", crseList);	
+		
 		return "worklist/add_work";
 	}
 	
@@ -89,6 +95,10 @@ public class WorkListController {
 		List<WorkType> wtList = workListService.queryWt();
 		System.out.println(wtList);
 		model.addAttribute("wtList", wtList);	
+		
+		List<StudyCourse> crseList = workListService.queryCrse();
+		System.out.println(crseList);
+		model.addAttribute("crseList", crseList);	
 		
 		return "worklist/edit_work";
 	}
