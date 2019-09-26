@@ -8,13 +8,29 @@
     <result column="crse_info" property="crseInfo" jdbcType="VARCHAR" />
     <result column="crse_num" property="crseNum" jdbcType="VARCHAR" />
     <result column="pd_name" property="pdName" jdbcType="VARCHAR" />
+    
+       <result column="qstn_count0" property="qstnCount0" jdbcType="INTEGER" />
+    <result column="qstn_count1" property="qstnCount1" jdbcType="INTEGER" />
+    <result column="qstn_count2" property="qstnCount2" jdbcType="INTEGER" />
+    <result column="qstn_count3" property="qstnCount3" jdbcType="INTEGER" />
+    <result column="qstn_count4" property="qstnCount4" jdbcType="INTEGER" />
+    <result column="qstn_test0" property="qstnTest0" jdbcType="INTEGER" />
+    <result column="qstn_test1" property="qstnTest1" jdbcType="INTEGER" />
+    <result column="qstn_test2" property="qstnTest2" jdbcType="INTEGER" />
+    <result column="qstn_test3" property="qstnTest3" jdbcType="INTEGER" />
+    <result column="qstn_test4" property="qstnTest4" jdbcType="INTEGER" />
+    
   </resultMap>
   <sql id="Base_Column_List" >
     crse_id, pd_id, crse_name, crse_info, crse_num
+    , qstn_count0, qstn_count1, qstn_count2, 
+    qstn_count3, qstn_count4, qstn_test0, qstn_test1, qstn_test2, qstn_test3, qstn_test4
   </sql>
   <select id="query" resultMap="BaseResultMap"  >
     select 
    crse_id, crse.pd_id, crse_name, crse_info, crse_num
+   , qstn_count0, qstn_count1, qstn_count2, 
+    qstn_count3, qstn_count4, qstn_test0, qstn_test1, qstn_test2, qstn_test3, qstn_test4
    , pd.pd_name
     from study_course crse left  join study_period pd  on crse.pd_id = pd.pd_id
    	order by crse_num
@@ -32,9 +48,17 @@
   </delete>
   <insert id="insert" parameterType="com.yuzo.question.entity.StudyCourse" >
     insert into study_course (crse_id, pd_id, crse_name, 
-      crse_info, crse_num)
+      crse_info, crse_num, qstn_count0, 
+      qstn_count1, qstn_count2, qstn_count3, 
+      qstn_count4, qstn_test0, qstn_test1, 
+      qstn_test2, qstn_test3, qstn_test4
+      )
     values (#{crseId,jdbcType=VARCHAR}, #{pdId,jdbcType=VARCHAR}, #{crseName,jdbcType=VARCHAR}, 
-      #{crseInfo,jdbcType=VARCHAR}, #{crseNum,jdbcType=VARCHAR})
+      #{crseInfo,jdbcType=VARCHAR}, #{crseNum,jdbcType=VARCHAR}, #{qstnCount0,jdbcType=INTEGER}, 
+      #{qstnCount1,jdbcType=INTEGER}, #{qstnCount2,jdbcType=INTEGER}, #{qstnCount3,jdbcType=INTEGER}, 
+      #{qstnCount4,jdbcType=INTEGER}, #{qstnTest0,jdbcType=INTEGER}, #{qstnTest1,jdbcType=INTEGER}, 
+      #{qstnTest2,jdbcType=INTEGER}, #{qstnTest3,jdbcType=INTEGER}, #{qstnTest4,jdbcType=INTEGER}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.yuzo.question.entity.StudyCourse" >
     insert into study_course
@@ -54,6 +78,36 @@
       <if test="crseNum != null" >
         crse_num,
       </if>
+      <if test="qstnCount0 != null" >
+        qstn_count0,
+      </if>
+      <if test="qstnCount1 != null" >
+        qstn_count1,
+      </if>
+      <if test="qstnCount2 != null" >
+        qstn_count2,
+      </if>
+      <if test="qstnCount3 != null" >
+        qstn_count3,
+      </if>
+      <if test="qstnCount4 != null" >
+        qstn_count4,
+      </if>
+      <if test="qstnTest0 != null" >
+        qstn_test0,
+      </if>
+      <if test="qstnTest1 != null" >
+        qstn_test1,
+      </if>
+      <if test="qstnTest2 != null" >
+        qstn_test2,
+      </if>
+      <if test="qstnTest3 != null" >
+        qstn_test3,
+      </if>
+      <if test="qstnTest4 != null" >
+        qstn_test4,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="crseId != null" >
@@ -70,6 +124,36 @@
       </if>
       <if test="crseNum != null" >
         #{crseNum,jdbcType=VARCHAR},
+      </if>
+      <if test="qstnCount0 != null" >
+        #{qstnCount0,jdbcType=INTEGER},
+      </if>
+      <if test="qstnCount1 != null" >
+        #{qstnCount1,jdbcType=INTEGER},
+      </if>
+      <if test="qstnCount2 != null" >
+        #{qstnCount2,jdbcType=INTEGER},
+      </if>
+      <if test="qstnCount3 != null" >
+        #{qstnCount3,jdbcType=INTEGER},
+      </if>
+      <if test="qstnCount4 != null" >
+        #{qstnCount4,jdbcType=INTEGER},
+      </if>
+      <if test="qstnTest0 != null" >
+        #{qstnTest0,jdbcType=INTEGER},
+      </if>
+      <if test="qstnTest1 != null" >
+        #{qstnTest1,jdbcType=INTEGER},
+      </if>
+      <if test="qstnTest2 != null" >
+        #{qstnTest2,jdbcType=INTEGER},
+      </if>
+      <if test="qstnTest3 != null" >
+        #{qstnTest3,jdbcType=INTEGER},
+      </if>
+      <if test="qstnTest4 != null" >
+        #{qstnTest4,jdbcType=INTEGER},
       </if>
     </trim>
   </insert>
@@ -88,6 +172,36 @@
       <if test="crseNum != null" >
         crse_num = #{crseNum,jdbcType=VARCHAR},
       </if>
+      <if test="qstnCount0 != null" >
+        qstn_count0 = #{qstnCount0,jdbcType=INTEGER},
+      </if>
+      <if test="qstnCount1 != null" >
+        qstn_count1 = #{qstnCount1,jdbcType=INTEGER},
+      </if>
+      <if test="qstnCount2 != null" >
+        qstn_count2 = #{qstnCount2,jdbcType=INTEGER},
+      </if>
+      <if test="qstnCount3 != null" >
+        qstn_count3 = #{qstnCount3,jdbcType=INTEGER},
+      </if>
+      <if test="qstnCount4 != null" >
+        qstn_count4 = #{qstnCount4,jdbcType=INTEGER},
+      </if>
+      <if test="qstnTest0 != null" >
+        qstn_test0 = #{qstnTest0,jdbcType=INTEGER},
+      </if>
+      <if test="qstnTest1 != null" >
+        qstn_test1 = #{qstnTest1,jdbcType=INTEGER},
+      </if>
+      <if test="qstnTest2 != null" >
+        qstn_test2 = #{qstnTest2,jdbcType=INTEGER},
+      </if>
+      <if test="qstnTest3 != null" >
+        qstn_test3 = #{qstnTest3,jdbcType=INTEGER},
+      </if>
+      <if test="qstnTest4 != null" >
+        qstn_test4 = #{qstnTest4,jdbcType=INTEGER},
+      </if>
     </set>
     where crse_id = #{crseId,jdbcType=VARCHAR}
   </update>
@@ -96,7 +210,17 @@
     set pd_id = #{pdId,jdbcType=VARCHAR},
       crse_name = #{crseName,jdbcType=VARCHAR},
       crse_info = #{crseInfo,jdbcType=VARCHAR},
-      crse_num = #{crseNum,jdbcType=VARCHAR}
+      crse_num = #{crseNum,jdbcType=VARCHAR},
+      qstn_count0 = #{qstnCount0,jdbcType=INTEGER},
+      qstn_count1 = #{qstnCount1,jdbcType=INTEGER},
+      qstn_count2 = #{qstnCount2,jdbcType=INTEGER},
+      qstn_count3 = #{qstnCount3,jdbcType=INTEGER},
+      qstn_count4 = #{qstnCount4,jdbcType=INTEGER},
+      qstn_test0 = #{qstnTest0,jdbcType=INTEGER},
+      qstn_test1 = #{qstnTest1,jdbcType=INTEGER},
+      qstn_test2 = #{qstnTest2,jdbcType=INTEGER},
+      qstn_test3 = #{qstnTest3,jdbcType=INTEGER},
+      qstn_test4 = #{qstnTest4,jdbcType=INTEGER}
     where crse_id = #{crseId,jdbcType=VARCHAR}
   </update>
 </mapper>

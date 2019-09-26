@@ -123,7 +123,7 @@
 						<table class="table table-bordered  table-striped">
 							<tr>
 								<th>序号</th>
-								<th>全选</th>
+								<th><input type="checkbox"   onclick="allCheck(this)" >全选</th>
 								<th >试题内容</th>
 								<th>试题类型</th>
 							
@@ -170,6 +170,12 @@
 
 
 <script type="text/javascript">
+
+	function allCheck(all){
+		$("[name=ids]").prop("checked", $(all).prop("checked"));
+	}
+
+
 
 
 	function selectedQstn(){
