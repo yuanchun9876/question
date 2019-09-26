@@ -64,6 +64,11 @@
         				<th>课程名</th>     				
         				<th>课程所属</th>
         				<th>课程序号</th>
+        				<th><button class="btn btn-danger btn-xs">0</button></th>
+        				<th><button class="btn btn-danger btn-xs">1</button></th>
+        				<th><button class="btn btn-danger btn-xs">2</button></th>
+        				<th><button class="btn btn-danger btn-xs">3</button></th>
+        				<th><button class="btn btn-danger btn-xs">4</button></th>
 						<th>操作</th>
         			</tr>
         			<form name="delForm"  method="post"  action="#"  th:action="@{/stdycrse/dels}"  >    
@@ -74,11 +79,18 @@
 	       				<td th:text="${row.crseName}" >JavaSE</td>
 	       				<td th:text="${row.pdName}">1</td>
 	       				<td th:text="${row.crseNum}">1</td>
+	       				
+	       				<td th:text="${row.qstnCount0}">1</td>
+	       				<td th:text="${row.qstnCount1}">1</td>
+	       				<td th:text="${row.qstnCount2}">1</td>
+	       				<td th:text="${row.qstnCount3}">1</td>
+	       				<td th:text="${row.qstnCount4}">1</td>
 	  
 						<td>
 							<button type="button" class="btn btn-primary btn-sm"  th:onclick="editpage([[${row.crseId}]])"     onclick="javascript:editpage('1')"    >修改</button>
 							<button type="button" class="btn btn-info btn-sm"  th:onclick="setsctnpage([[${row.crseId}]])"     onclick="javascript:editpage('1')"    >设置知识</button>
 							<button type="button" class="btn btn-warning btn-sm"  th:onclick="setqstnpage([[${row.crseId}]])"     onclick="javascript:editpage('1')"    >设置训练</button>
+							<button type="button" class="btn btn-danger btn-sm"  th:onclick="showqstnpage([[${row.crseId}]])"     onclick="javascript:editpage('1')"    >查看试题</button>
 						</td>
        				</tr>	       			  		
         		</tbody>
@@ -100,6 +112,10 @@
 </body>
 	
 <script type="text/javascript">
+
+	function showqstnpage(crseId){
+		window.location.href="/stdycrse/showqstnpage?crseId=" + crseId; 
+	}
 
 
 	function dels(){

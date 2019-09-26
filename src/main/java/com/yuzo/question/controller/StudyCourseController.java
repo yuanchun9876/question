@@ -1,6 +1,7 @@
 package com.yuzo.question.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.yuzo.question.entity.Question;
 import com.yuzo.question.entity.StudyCourse;
 import com.yuzo.question.entity.StudyCourseQuestion;
 import com.yuzo.question.entity.StudyPeriod;
@@ -111,6 +113,53 @@ public class StudyCourseController {
 		model.addAttribute("scqList", scqList);	
 		
 		return "stdycrse/set_qstn_crse";
+	}
+	
+	@RequestMapping("/showqstnpage")
+	public String showqstnpage(String crseId, Model model) {
+		
+		StudyCourse crse = stdycrseService.queryById(crseId);
+		model.addAttribute("crse", crse);	
+		
+		List<StudyCourseQuestion> scqList = stdycrseService.queryScqByCrseId(crseId);
+		List<Question> qstnList0 = new ArrayList<>();
+		List<Question> qstnList2 = new ArrayList<>();
+		List<Question> qstnList4 = new ArrayList<>();
+		for (StudyCourseQuestion scq : scqList) {
+			Question qstn = stdycrseService.queryQstnById(scq.getQstnId());
+			switch (qstn.getQstnTypeId()) {
+			case "0":
+				qstnList0.add(qstn);
+				break;
+			case "1":
+				
+				break;
+			case "2":
+				qstnList2.add(qstn);;
+				break;
+			case "3":
+				
+				break;
+			case "4":
+				qstnList4.add(qstn);;
+				break;
+			default:
+				break;
+			}
+		}
+		
+		if(qstnList0!=null && qstnList0.size()>0) {
+			List<Question> ql0 = stdycrseService.addAnswerByQstn(qstnList0);
+			model.addAttribute("qstnList0", ql0);
+		}
+		if(qstnList2!=null && qstnList2.size()>0) {
+			model.addAttribute("qstnList2", qstnList2);
+		}
+		if(qstnList4!=null && qstnList4.size()>0) {
+			model.addAttribute("qstnList4", qstnList4);
+		}
+		
+		return "stdycrse/show_qstn_crse";
 	}
 	
 	@RequestMapping("/setqstnSave")

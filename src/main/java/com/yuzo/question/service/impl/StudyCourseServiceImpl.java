@@ -1,6 +1,7 @@
 package com.yuzo.question.service.impl;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -9,6 +10,7 @@ import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.yuzo.question.entity.Answer;
 import com.yuzo.question.entity.Question;
 import com.yuzo.question.entity.StudyCourse;
 import com.yuzo.question.entity.StudyCourseQuestion;
@@ -17,6 +19,7 @@ import com.yuzo.question.entity.StudyPeriod;
 import com.yuzo.question.entity.SubjSection;
 import com.yuzo.question.entity.SubjUnit;
 import com.yuzo.question.entity.SubjectCourse;
+import com.yuzo.question.mapper.AnswerMapper;
 import com.yuzo.question.mapper.QuestionMapper;
 import com.yuzo.question.mapper.StudyCourseMapper;
 import com.yuzo.question.mapper.StudyCourseQuestionMapper;
@@ -46,6 +49,9 @@ public class StudyCourseServiceImpl implements IStudyCourseService {
 	
 	@Autowired
 	private QuestionMapper qstnMapper;
+	
+	@Autowired
+	private AnswerMapper ansMapper;
 	
 	@Autowired
 	private StudyCourseSectionMapper crseSctnMapper;
@@ -134,7 +140,11 @@ public class StudyCourseServiceImpl implements IStudyCourseService {
 		int delCount = crseQstnMapper.delsByCrseId(crseId);
 		
 		Set<String> qstnIds = new HashSet<>(Arrays.asList(qstns));
-		
+		int q0=0;
+		int q1=0;
+		int q2=0;
+		int q3=0;
+		int q4=0;
 		int count = 0;
 		for (String qstnId : qstnIds) {
 			StudyCourseQuestion scq = new StudyCourseQuestion();
@@ -144,8 +154,34 @@ public class StudyCourseServiceImpl implements IStudyCourseService {
 			Question qstn = qstnMapper.selectByPrimaryKey(qstnId);
 			scq.setQstnTypeId(qstn.getQstnTypeId());
 			scq.setSubjSctnId(qstn.getSubjSctnId());
+			switch (qstn.getQstnTypeId()) {
+			case "0":
+				q0++;
+				break;
+			case "1":
+				q1++;
+				break;
+			case "2":
+				q2++;
+				break;
+			case "3":
+				q3++;
+				break;
+			case "4":
+				q4++;
+				break;
+			default:
+				break;
+			}
 			count += crseQstnMapper.insertSelective(scq);
 		}
+		StudyCourse crse = mapper.selectByPrimaryKey(crseId);
+		crse.setQstnCount0(q0);
+		crse.setQstnCount1(q1);
+		crse.setQstnCount2(q2);
+		crse.setQstnCount3(q3);
+		crse.setQstnCount4(q4);
+		mapper.updateByPrimaryKeySelective(crse);
 		return count;
 	}
 
@@ -153,6 +189,23 @@ public class StudyCourseServiceImpl implements IStudyCourseService {
 	public List<StudyCourseQuestion> queryScqByCrseId(String crseId) {
 		// TODO Auto-generated method stub
 		return crseQstnMapper.queryScqByCrseId(crseId) ;
+	}
+
+	@Override
+	public Question queryQstnById(String qstnId) {
+		// TODO Auto-generated method stub
+		return qstnMapper.selectByPrimaryKey(qstnId);
+	}
+
+	@Override
+	public List<Question> addAnswerByQstn(List<Question> qstnList) {
+		// TODO Auto-generated method stub
+		for (Question question : qstnList) {
+			List<Answer> ansList = ansMapper.queryByQstnId(question.getQstnId());
+			Collections.shuffle(ansList);	
+			question.setAnsList(ansList);
+		}
+		return qstnList;
 	}
 
 }
