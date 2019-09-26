@@ -41,4 +41,14 @@ public interface IStudyCourseService {
 
 	List<Question> addAnswerByQstn(List<Question> qstnList0);
 
+	SubjUnit queryUnitBySctnId(String subjSctnId);
+
+	Integer totalUnitCount(String crseId, String subjUnitId);
+
+	SubjUnit queryUnitById(String unitId);
+
+	List<SubjSection> querySctnsByUnit(String unitId);
+
+	Integer totalSctnCount(String crseId, String subjSctnId);
+
 }

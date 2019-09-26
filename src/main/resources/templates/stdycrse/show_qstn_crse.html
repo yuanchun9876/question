@@ -68,15 +68,18 @@
 			<div class="content-wrapper">
 				<!-- Content Header (Page header) -->
 				<section class="content-header">
-					<h1>
-          				课程试题
-			        </h1>
-			       <ol class="breadcrumb">
-			       		<li>
-							<a th:href="@{/dashboard}"><i class="glyphicon glyphicon-globe"></i>导航</a>
-						</li>
-			          <li class="active"><a href="#">课程试题</a></li>
-			        </ol>
+				 <h1 th:text="${crse.crseName}">
+		         	测试方案查询
+		        </h1>
+
+					  <div class="box-header clearfix">
+						
+						<div class="col-sm-12">
+							<div id="mainUnit" style="width:100%;height:420px;"></div>
+						</div>
+					
+						
+		        	</div>
 				</section>
 
 				<!-- Main content -->
@@ -193,7 +196,7 @@
 		</div>
 	
 		<div th:replace="common/js :: commonjs"></div>
-		 
+		 <script    th:src="@{/plugins/echarts-2.2.7/build/dist/echarts-all.js}"  type="text/javascript" charset="utf-8"></script>
 	</body>
 	
 	<script type="text/javascript">
@@ -205,7 +208,103 @@
 		      increaseArea: '20%' /* optional */
 		    });
 		  });
+	 	
+	 	$(function(){
+			var url = "/stdycrse/ajaxCharsPlanMcUnit";
+			$.post(url,{"crseId":"[[${crse.crseId}]]"},function(resp){
+				console.log(resp);
+	
+						                    
+					                    
 
+				var myChart = echarts.init(document.getElementById('mainUnit'),"default");
+						option = {
+							    tooltip : {
+							        trigger: 'item',
+							        formatter: "{a} <br/>{b} : {c} ({d}%)"
+							    },
+							    legend: {
+							        orient : 'vertical',
+							        x : 'left',
+							        data:resp.titles
+							    },
+							    toolbox: {
+							        show : true,
+							        feature : {
+							            mark : {show: true},
+							            dataView : {show: true, readOnly: false},
+							            magicType : {
+							                show: true, 
+							                type: ['pie', 'funnel']
+							            },
+							            restore : {show: true},
+							            saveAsImage : {show: true}
+							        }
+							    },
+							    calculable : false,
+							    series : [
+							        {
+							            name:'知识章',
+							            type:'pie',
+							            selectedMode: 'single',
+							            radius : [0, 70],
+							            
+							            // for funnel
+							            x: '20%',
+							            width: '40%',
+							            funnelAlign: 'right',
+							            max: 1548,
+							            
+							            itemStyle : {
+							                normal : {
+							                    label : {
+							                        position : 'inner'
+							                    },
+							                    labelLine : {
+							                        show : false
+							                    }
+							                }
+							            },
+							            data:resp.unitList
+							        },
+							        {
+							            name:'知识节',
+							            type:'pie',
+							            radius : [100, 140],
+							            
+							            // for funnel
+							            x: '60%',
+							            width: '35%',
+							            funnelAlign: 'left',
+							            max: 1048,
+							            
+							            data:resp.sctnList
+							        }
+							    ]
+							};
+							var ecConfig = echarts.config;
+							//var ecConfig = require('echarts/config');
+							myChart.on(ecConfig.EVENT.PIE_SELECTED, function (param){
+							    var selected = param.selected;
+							    var serie;
+							    var str = '当前选择： ';
+							    for (var idx in selected) {
+							        serie = option.series[idx];
+							        for (var i = 0, l = serie.data.length; i < l; i++) {
+							            if (selected[idx][i]) {
+							                str += '【系列' + idx + '】' + serie.name + ' : ' + 
+							                       '【数据' + i + '】' + serie.data[i].name + ' ';
+							            }
+							        }
+							    }
+							    document.getElementById('wrong-message').innerHTML = str;
+							})
+							                    
+				// 使用刚指定的配置项和数据显示图表。
+				myChart.setOption(option);
+			})
+
+		});
 		
 	</script>
 

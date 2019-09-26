@@ -61,6 +61,7 @@ public class StudyCourseServiceImpl implements IStudyCourseService {
 	
 	
 	
+	
 	@Override
 	public List<StudyCourse> queryAll() {
 		// TODO Auto-generated method stub
@@ -206,6 +207,36 @@ public class StudyCourseServiceImpl implements IStudyCourseService {
 			question.setAnsList(ansList);
 		}
 		return qstnList;
+	}
+
+	@Override
+	public SubjUnit queryUnitBySctnId(String subjSctnId) {
+		// TODO Auto-generated method stub
+		return unitMapper.queryUnitBySctnId(subjSctnId);
+	}
+
+	@Override
+	public Integer totalUnitCount(String crseId, String subjUnitId) {
+		// TODO Auto-generated method stub
+		return crseQstnMapper.totalUnitCount(crseId, subjUnitId);
+	}
+
+	@Override
+	public SubjUnit queryUnitById(String unitId) {
+		// TODO Auto-generated method stub
+		return unitMapper.selectByPrimaryKey(unitId);
+	}
+
+	@Override
+	public List<SubjSection> querySctnsByUnit(String unitId) {
+		// TODO Auto-generated method stub
+		return sctnMapper.queryByUnit(unitId);
+	}
+
+	@Override
+	public Integer totalSctnCount(String crseId, String subjSctnId) {
+		// TODO Auto-generated method stub
+		return crseQstnMapper.totalSctnCount(crseId, subjSctnId);
 	}
 
 }

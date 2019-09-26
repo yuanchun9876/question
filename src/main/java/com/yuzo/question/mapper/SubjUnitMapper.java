@@ -33,4 +33,6 @@ public interface SubjUnitMapper {
 	List<SubjUnit> queryPage(SubjUnitPage page);
 
 	List<SubjUnit> queryByCode(@Param("unitCode")String unitCode, @Param("subjId")String subjId);
+
+	SubjUnit queryUnitBySctnId(String subjSctnId);
 }

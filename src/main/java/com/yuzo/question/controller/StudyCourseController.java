@@ -3,7 +3,11 @@ package com.yuzo.question.controller;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import java.util.UUID;
 
 import javax.servlet.ServletContext;
@@ -27,6 +31,7 @@ import com.yuzo.question.entity.SubjectCourse;
 import com.yuzo.question.entity.SysMenu;
 import com.yuzo.question.entity.SysRole;
 import com.yuzo.question.entity.Teacher;
+import com.yuzo.question.entity.UserAnswerList;
 import com.yuzo.question.service.IStudyCourseService;
 import com.yuzo.question.service.ISubjUnitService;
 import com.yuzo.question.service.ISysRoleService;
@@ -161,6 +166,89 @@ public class StudyCourseController {
 		
 		return "stdycrse/show_qstn_crse";
 	}
+	
+	@RequestMapping("/ajaxCharsPlanMcUnit")
+	@ResponseBody
+	public Map<String, Object> ajaxCharsPlanMcUnit(String crseId, Model model) {
+		
+		
+		Map<String, Object> map = new HashMap<>();
+		//testPlanService.charsPlanMc(tpId, mcId);
+		List<StudyCourseQuestion> scqList = stdycrseService.queryScqByCrseId(crseId);
+		
+		// 知识章
+		Set<String> unitIds = new HashSet<>();
+		// 知识节
+		Set<String> sctnIds = new HashSet<>();
+		
+		for (StudyCourseQuestion scq : scqList) {
+			//Question qstn = stdycrseService.queryQstnById(scq.getQstnId());
+			SubjUnit unit = stdycrseService.queryUnitBySctnId(scq.getSubjSctnId());
+			unitIds.add(unit.getSubjUnitId());
+		}
+		System.out.println(unitIds.size());
+		
+		String[] unitTitles = new String[unitIds.size()];
+		Integer[] unitCounts = new Integer[unitIds.size()];
+		
+		List<String> sctnTitles = new ArrayList<>();
+		List<Integer> sctnCounts = new  ArrayList<>();
+		
+		List<Map<String, Object>> unitList = new ArrayList<>();
+		List<Map<String, Object>> sctnList = new ArrayList<>();
+		
+		int i = 0;
+		for (String unitId : unitIds) {
+			// 知识章
+			Map<String, Object> unitMap = new HashMap<>();			
+			SubjUnit unit = stdycrseService.queryUnitById(unitId);		
+			
+			unitTitles[i] = unit.getSubjUnitTitle();
+			unitMap.put("name", unit.getSubjUnitTitle());
+
+			unitCounts[i] = stdycrseService.totalUnitCount(crseId, unit.getSubjUnitId());		
+			unitMap.put("value", stdycrseService.totalUnitCount(crseId, unit.getSubjUnitId()));
+			
+			unitList.add(unitMap);
+			i++;
+			
+			// 知识节
+			List<SubjSection> sctns = stdycrseService.querySctnsByUnit(unitId);
+			for (SubjSection sctn : sctns) {
+				Integer sctnCount = stdycrseService.totalSctnCount(crseId, sctn.getSubjSctnId());
+				if(sctnCount>0) {
+					Map<String, Object> sctnMap = new HashMap<>();	
+					sctnTitles.add(sctn.getSubjSctnTitle());
+					sctnCounts.add(sctnCount);
+					sctnMap.put("name", sctn.getSubjSctnTitle());
+					sctnMap.put("value", sctnCount);
+					sctnList.add(sctnMap);
+				}
+			}
+		}
+		
+		
+		map.put("sctnList", sctnList);
+		map.put("unitList", unitList);
+		//map.put("unitCounts", unitCounts);
+		
+		String[] titls = new String[unitTitles.length + sctnTitles.size()];
+		for(int j=0; j<unitTitles.length; j++) {
+			titls[j]=unitTitles[j];
+		}
+		
+		for(int j=unitTitles.length; j<(unitTitles.length + sctnTitles.size()); j++) {
+			titls[j]=sctnTitles.get(j-unitTitles.length);
+		}
+		
+		map.put("titles", titls);
+		
+		System.out.println(Arrays.toString(titls));
+					
+		return map;
+	}
+	
+	
 	
 	@RequestMapping("/setqstnSave")
 	public String setqstnSave(String crseId, String[] qstns, Model model) {		
