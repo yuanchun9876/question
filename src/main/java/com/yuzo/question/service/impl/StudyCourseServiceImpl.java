@@ -147,11 +147,14 @@ public class StudyCourseServiceImpl implements IStudyCourseService {
 		int q3=0;
 		int q4=0;
 		int count = 0;
+		int i=0;
+		int flags = 0;
 		for (String qstnId : qstnIds) {
 			StudyCourseQuestion scq = new StudyCourseQuestion();
 			scq.setCrseQstnId(UUID.randomUUID().toString());
 			scq.setCrseId(crseId);
-			scq.setQstnId(qstnId);
+			scq.setQstnId(qstnId);		
+			scq.setCrseQstnFlag("false");
 			Question qstn = qstnMapper.selectByPrimaryKey(qstnId);
 			scq.setQstnTypeId(qstn.getQstnTypeId());
 			scq.setSubjSctnId(qstn.getSubjSctnId());
@@ -176,6 +179,7 @@ public class StudyCourseServiceImpl implements IStudyCourseService {
 			}
 			count += crseQstnMapper.insertSelective(scq);
 		}
+		System.out.println("flags:" + flags);
 		StudyCourse crse = mapper.selectByPrimaryKey(crseId);
 		crse.setQstnCount0(q0);
 		crse.setQstnCount1(q1);
@@ -237,6 +241,31 @@ public class StudyCourseServiceImpl implements IStudyCourseService {
 	public Integer totalSctnCount(String crseId, String subjSctnId) {
 		// TODO Auto-generated method stub
 		return crseQstnMapper.totalSctnCount(crseId, subjSctnId);
+	}
+
+
+	@Override
+	public int setCrseQstnFlag(String crseId, String[] qstns, String[] qstnFlags) {
+		// TODO Auto-generated method stub
+	    //int delCount = crseQstnMapper.delsByCrseId(crseId);
+			
+		int flags = 0;
+		int count = 0;
+		for (int i=0; i< qstns.length; i++) {
+			StudyCourseQuestion scq = crseQstnMapper.selectByPrimaryKey(qstns[i]);
+			
+			if("checked".equals(qstnFlags[i])) {
+				flags++;
+			}
+			scq.setCrseQstnFlag(qstnFlags[i]);
+
+			count += crseQstnMapper.updateByPrimaryKeySelective(scq);
+		}
+		System.out.println("flags:" + flags);
+		StudyCourse crse = mapper.selectByPrimaryKey(crseId);
+		crse.setQstnFlag(flags);
+		mapper.updateByPrimaryKeySelective(crse);
+		return count;
 	}
 
 }

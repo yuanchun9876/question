@@ -119,6 +119,17 @@ public class StudyCourseController {
 		
 		return "stdycrse/set_qstn_crse";
 	}
+	@RequestMapping("/setqstnflag")
+	public String setqstnflag(String crseId, Model model) {
+		
+		StudyCourse crse = stdycrseService.queryById(crseId);
+		model.addAttribute("crse", crse);	
+		
+		List<StudyCourseQuestion> scqList = stdycrseService.queryScqByCrseId(crseId);
+		model.addAttribute("scqList", scqList);	
+		
+		return "stdycrse/qstn_flag_crse";
+	}
 	
 	@RequestMapping("/showqstnpage")
 	public String showqstnpage(String crseId, Model model) {
@@ -252,7 +263,12 @@ public class StudyCourseController {
 	
 	@RequestMapping("/setqstnSave")
 	public String setqstnSave(String crseId, String[] qstns, Model model) {		
-		int count = stdycrseService.setCrseQstn(crseId, qstns);			
+		int count = stdycrseService.setCrseQstn(crseId, qstns );			
+		return "redirect:query";
+	}
+	@RequestMapping("/qstnflagSave")
+	public String qstnflagSave(String crseId, String[] qstns,String[] qstnFlags, Model model) {		
+		int count = stdycrseService.setCrseQstnFlag(crseId, qstns, qstnFlags );			
 		return "redirect:query";
 	}
 

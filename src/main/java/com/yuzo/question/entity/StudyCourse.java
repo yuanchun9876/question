@@ -35,8 +35,9 @@ public class StudyCourse {
 
     private Integer qstnTest4;
 
-
-
+    //qstn_flag
+    private Integer qstnFlag;
+    
 	@Override
 	public String toString() {
 		return "StudyCourse [crseId=" + crseId + ", pdId=" + pdId + ", crseName=" + crseName + ", crseInfo=" + crseInfo
@@ -172,6 +173,14 @@ public class StudyCourse {
 
 	public void setQstnTest4(Integer qstnTest4) {
 		this.qstnTest4 = qstnTest4;
+	}
+
+	public Integer getQstnFlag() {
+		return qstnFlag;
+	}
+
+	public void setQstnFlag(Integer qstnFlag) {
+		this.qstnFlag = qstnFlag;
 	}
     
     

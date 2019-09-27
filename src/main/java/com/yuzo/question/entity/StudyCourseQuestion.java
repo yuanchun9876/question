@@ -1,5 +1,6 @@
 package com.yuzo.question.entity;
 
+// crse_qstn_flag
 public class StudyCourseQuestion {
     private String crseQstnId;
 
@@ -14,6 +15,8 @@ public class StudyCourseQuestion {
     private String qstnCode;
     private String qstnTypeName;
     private String subjSctnTitle;
+    
+    private String crseQstnFlag;
 
     public String getCrseQstnId() {
         return crseQstnId;
@@ -77,6 +80,14 @@ public class StudyCourseQuestion {
 
 	public void setSubjSctnTitle(String subjSctnTitle) {
 		this.subjSctnTitle = subjSctnTitle;
+	}
+
+	public String getCrseQstnFlag() {
+		return crseQstnFlag;
+	}
+
+	public void setCrseQstnFlag(String crseQstnFlag) {
+		this.crseQstnFlag = crseQstnFlag;
 	}
     
     

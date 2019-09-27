@@ -51,4 +51,6 @@ public interface IStudyCourseService {
 
 	Integer totalSctnCount(String crseId, String subjSctnId);
 
+	int setCrseQstnFlag(String crseId, String[] qstns, String[] qstnFlags);
+
 }

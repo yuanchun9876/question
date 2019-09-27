@@ -28,14 +28,14 @@
 				<!-- Content Header (Page header) -->
 				<section class="content-header">
 					<h1>
-          				设置课程相关试题
+          				设置课程试题重点
 			        </h1>
 			       <ol class="breadcrumb">
 						<li>
 							<a th:href="@{/dashboard}"><i class="glyphicon glyphicon-globe"></i>导航</a>
 						</li>
 						<li class="active">
-							<a href="#">设置课程相关试题</a>
+							<a href="#">设置课程试题重点</a>
 						</li>
 					</ol>
 				</section>
@@ -43,7 +43,7 @@
 				<!-- Main content -->
 				<section class="content">
 					<div class="row">
-						<form class="form form-horizontal" method="post"   th:object="${crse}"   th:action="@{/stdycrse/setqstnSave}"  >
+						<form class="form form-horizontal" method="post"   th:object="${crse}"   th:action="@{/stdycrse/qstnflagSave}"  >
 							<input type="hidden" name="crseId"  th:field="*{crseId}"  >
 							<!-- left column -->
 							<div class="col-md-10 col-md-offset-1">
@@ -73,17 +73,16 @@
 							        				<th>试题代号</th>     				
 							        				<th>所属节</th>
 							        				<th>试题类型</th>
-							        			
 													<th>操作</th>
 							        			</tr>
 							        			<tbody id="tb" >
 							        				<tr th:each="row,i:${scqList}"   >	
-							        					<td><input readOnly  th:value="${row.qstnId}" name="qstns" ></td>						       
+							        					<td><input readOnly  th:value="${row.crseQstnId}" name="qstns" ></td>						       
 									       				<td th:text="${row.qstnCode}" ></td>
 									       				<td th:text="${row.subjSctnTitle}">1</td>
 									       				<td th:text="${row.qstnTypeName}">1</td>
-									       			
-									       				<td ><button type="button" class="btn btn-danger btn-xs" onclick="delQstn(this)" >取消</button></td>
+									       				<td ><input type="checkbox"   class='flagCheck'  th:checked="${row.crseQstnFlag}"    ><input name='qstnFlags'  type="hidden"  th:value="${row.crseQstnFlag}" ></td>
+									       				
 							        				</tr>
 							        			</tbody>
 											</table>
@@ -93,7 +92,7 @@
 									</div>						
 									<!-- /.box-body -->
 									<div class="box-footer">
-										<button type="button" class="btn btn-danger" th:onclick="selectQstn([[${crseId}]])" >试题</button>
+										
 										<button type="submit" class="btn btn-info pull-right">提交</button>
 									</div>
 									<!-- /.box-footer -->
@@ -115,60 +114,26 @@
 	</body>
 	
 	<script type="text/javascript">
+		$(function(){
+			
+			$(".flagCheck").click(function(){
+				$(this).next()
+				if($(this).prop("checked")){
+					$(this).next().val("checked");
+				}else{
+					$(this).next().val("false");
+				}
+				
+			});
+		});
+
+	
+		
+	
+
+		
 		
 
-		//清空
-		function selectQstn(crseId) {
-			 bootbox.dialog({
-				  // dialog的内容
-				  message: "<iframe src='/qstn/selectQstn' style='width:100%;height:429px;border:0 solid;'></iframe>",
-				   
-	
-				  // 是否显示此dialog，默认true
-				  show: true,
-	
-				     // 显示尺寸，可选 small  /large
-				 size: "large",
-	
-				  // 是否显示body的遮罩，默认true
-				  backdrop: true,
-				   
-				  // 是否显示关闭按钮，默认true
-				  closeButton: true,
-				   
-				  // 是否动画弹出dialog，IE10以下版本不支持
-				  animate: true,
-				   
-				  // dialog的类名
-				  className: "my-modal",
-				   
-				});
-		}
-		
-	
-		function createQstnTable(qstns){
-			bootbox.hideAll();
-			//console.log("__>" + qstns);
-			$.each(qstns, function(i,item){
-				var qqs = item.split("#");
-				console.log(qqs);
-				var tds = "<tr>"
-					tds += "<td><input readOnly  value='" + qqs[0] +  "' name='qstns'></td>"
-					tds += "<td>" + qqs[2] + "</td>"
-					tds += "<td>" + qqs[3] + "</td>"
-					tds += "<td>" + qqs[1] + "</td>"
-				
-					tds += "<td><button type=\"button\" class=\"btn btn-danger btn-xs\" onclick=\"delQstn(this)\"  >取消</button></td>"
-					tds += "</tr>"
-				$(tds).appendTo("#tb");	
-			} );
-		
-		}
-		
-		
-		function delQstn(btn){
-			$(btn).closest("tr").remove();
-		}
 		
 	</script>
 
