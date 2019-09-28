@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yuzo.question.mapper.StuCrseTestMapper" >
+  <resultMap id="BaseResultMap" type="com.yuzo.question.entity.StuCrseTest" >
+    <id column="sct_id" property="sctId" jdbcType="VARCHAR" />
+    <result column="user_id" property="userId" jdbcType="VARCHAR" />
+    <result column="sct_time" property="sctTime" jdbcType="TIMESTAMP" />
+    <result column="crse_id" property="crseId" jdbcType="VARCHAR" />
+    <result column="sct_total" property="sctTotal" jdbcType="INTEGER" />
+    <result column="sct_num" property="sctNum" jdbcType="INTEGER" />
+    <result column="sct_len" property="sctLen" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    sct_id, user_id, sct_time, crse_id, sct_total, sct_num, sct_len
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from stu_crse_test
+    where sct_id = #{sctId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from stu_crse_test
+    where sct_id = #{sctId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.yuzo.question.entity.StuCrseTest" >
+    insert into stu_crse_test (sct_id, user_id, sct_time, 
+      crse_id, sct_total, sct_num, 
+      sct_len)
+    values (#{sctId,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR}, #{sctTime,jdbcType=TIMESTAMP}, 
+      #{crseId,jdbcType=VARCHAR}, #{sctTotal,jdbcType=INTEGER}, #{sctNum,jdbcType=INTEGER}, 
+      #{sctLen,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.yuzo.question.entity.StuCrseTest" >
+    insert into stu_crse_test
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="sctId != null" >
+        sct_id,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="sctTime != null" >
+        sct_time,
+      </if>
+      <if test="crseId != null" >
+        crse_id,
+      </if>
+      <if test="sctTotal != null" >
+        sct_total,
+      </if>
+      <if test="sctNum != null" >
+        sct_num,
+      </if>
+      <if test="sctLen != null" >
+        sct_len,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="sctId != null" >
+        #{sctId,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="sctTime != null" >
+        #{sctTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="crseId != null" >
+        #{crseId,jdbcType=VARCHAR},
+      </if>
+      <if test="sctTotal != null" >
+        #{sctTotal,jdbcType=INTEGER},
+      </if>
+      <if test="sctNum != null" >
+        #{sctNum,jdbcType=INTEGER},
+      </if>
+      <if test="sctLen != null" >
+        #{sctLen,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.yuzo.question.entity.StuCrseTest" >
+    update stu_crse_test
+    <set >
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="sctTime != null" >
+        sct_time = #{sctTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="crseId != null" >
+        crse_id = #{crseId,jdbcType=VARCHAR},
+      </if>
+      <if test="sctTotal != null" >
+        sct_total = #{sctTotal,jdbcType=INTEGER},
+      </if>
+      <if test="sctNum != null" >
+        sct_num = #{sctNum,jdbcType=INTEGER},
+      </if>
+      <if test="sctLen != null" >
+        sct_len = #{sctLen,jdbcType=INTEGER},
+      </if>
+    </set>
+    where sct_id = #{sctId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.yuzo.question.entity.StuCrseTest" >
+    update stu_crse_test
+    set user_id = #{userId,jdbcType=VARCHAR},
+      sct_time = #{sctTime,jdbcType=TIMESTAMP},
+      crse_id = #{crseId,jdbcType=VARCHAR},
+      sct_total = #{sctTotal,jdbcType=INTEGER},
+      sct_num = #{sctNum,jdbcType=INTEGER},
+      sct_len = #{sctLen,jdbcType=INTEGER}
+    where sct_id = #{sctId,jdbcType=VARCHAR}
+  </update>
+</mapper>

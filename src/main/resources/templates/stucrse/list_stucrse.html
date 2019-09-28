@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>查询页面</title>
+  <!-- Tell the browser to be responsive to screen width -->
+  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+ 
+  <include th:replace="common/css :: commoncss"/>
+
+	<style type="text/css">
+	 	.content-wrapper {
+				margin-left: 0px;
+		}
+		.qstnTitle img{display: none;}
+		
+		@media only screen and (max-width: 768px) {
+			.box-header{
+				flex-direction: column;
+			}
+			.box-header .box-search{
+				margin: 10px auto;
+			}
+		}
+	</style>
+</head>
+<body class="hold-transition skin-blue sidebar-mini">
+<div class="wrapper">
+
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+      <!-- Content Header (Page header) -->
+      <section class="content-header">
+        <h1>
+         	课程查询
+        </h1>
+        <ol class="breadcrumb">
+        <li>
+			<a th:href="@{/dashboard}"><i class="glyphicon glyphicon-globe"></i>导航</a>
+		</li>
+          <li class="active"><a href="#">课程查询</a></li>
+        </ol>
+      </section>
+  
+      <!-- Main content -->
+     
+     	 <section class="content">
+        <div class="box">
+         <form name="infoForm" id="queryForm" method="post" >
+        	<div class="box-header clearfix">
+				<div class="box-search btn-group">
+				
+				</div>
+        	</div>
+        	</form>
+        	<!-- /.box-header -->
+        	<div class="box-body no-padding">
+        		<table class="table table-striped">
+        			<tr>
+        				<th>序号</th>
+        				<th>全选</th>
+        				<th>课程名</th>     				
+        				<th>课程所属</th>
+        				<th>课程序号</th>
+        			
+						<th>操作</th>
+        			</tr>
+        			<form name="delForm"  method="post"  action="#"  th:action="@{/stdycrse/dels}"  >    
+        			<tbody th:remove="all-but-first" >       			  	
+        			<tr  th:each="row,i:${list}" >
+	        			<td th:text="${i.count }">1</td>
+	        			<td ><input type="checkbox" name="ids"  value="1"    th:value="${row.crseId}"  ></td>
+	       				<td th:text="${row.crseName}" >JavaSE</td>
+	       				<td th:text="${row.pdName}">1</td>
+	       				<td th:text="${row.crseNum}">1</td>
+	       				
+	       			
+	  
+						<td>
+						
+							<button type="button" class="btn btn-info btn-sm"  th:onclick="openCrseQstnPage([[${row.crseId}]])"     onclick="javascript:editpage('1')"    >打开测试</button>
+							<button type="button" class="btn btn-warning btn-sm"  th:onclick="setqstnpage([[${row.crseId}]])"     onclick="javascript:editpage('1')"    >设置训练</button>
+							<button type="button" class="btn  btn-sm"  th:onclick="setqstnflag([[${row.crseId}]])"     onclick="javascript:editpage('1')"    >设置重点</button>
+							<button type="button" class="btn btn-danger btn-sm"  th:onclick="showqstnpage([[${row.crseId}]])"     onclick="javascript:editpage('1')"    >查看试题</button>
+						</td>
+       				</tr>	       			  		
+        		</tbody>
+        		</form>
+        		</table>
+        	</div>
+<!--         	/.box-body -->
+			
+<!-- 		/. box-footer -->
+        </div>
+        <!-- /.row -->
+      </section>
+      <!-- /.content -->
+    </div>
+
+</div>
+<!-- ./wrapper -->
+<div th:replace="common/js :: commonjs"></div>
+</body>
+	
+<script type="text/javascript">
+
+	function openCrseQstnPage(crseId){
+		window.location.href="/stucrse/openCrseQstnPage?crseId=" + crseId; 
+	}
+	
+	
+	function setqstnflag(crseId){
+		window.location.href="/stdycrse/setqstnflag?crseId=" + crseId; 
+	}
+
+
+
+	function setsctnpage(id){
+		//console.log(id);
+		location.href = "/stdycrse/setsctnpage?crseId=" + id; 
+	}
+	function setqstnpage(id){
+		//console.log(id);
+		location.href = "/stdycrse/setqstnpage?crseId=" + id; 
+	}
+	
+
+
+</script>
+
+</html>

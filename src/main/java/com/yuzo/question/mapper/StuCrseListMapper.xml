@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yuzo.question.mapper.StuCrseListMapper" >
+  <resultMap id="BaseResultMap" type="com.yuzo.question.entity.StuCrseList" >
+    <id column="scl_id" property="sclId" jdbcType="VARCHAR" />
+    <result column="sct_id" property="sctId" jdbcType="VARCHAR" />
+    <result column="QSTN_ID" property="qstnId" jdbcType="VARCHAR" />
+    <result column="scl_content" property="sclContent" jdbcType="VARCHAR" />
+    <result column="scl_result" property="sclResult" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    scl_id, sct_id, QSTN_ID, scl_content, scl_result
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from stu_crse_list
+    where scl_id = #{sclId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from stu_crse_list
+    where scl_id = #{sclId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.yuzo.question.entity.StuCrseList" >
+    insert into stu_crse_list (scl_id, sct_id, QSTN_ID, 
+      scl_content, scl_result)
+    values (#{sclId,jdbcType=VARCHAR}, #{sctId,jdbcType=VARCHAR}, #{qstnId,jdbcType=VARCHAR}, 
+      #{sclContent,jdbcType=VARCHAR}, #{sclResult,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.yuzo.question.entity.StuCrseList" >
+    insert into stu_crse_list
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="sclId != null" >
+        scl_id,
+      </if>
+      <if test="sctId != null" >
+        sct_id,
+      </if>
+      <if test="qstnId != null" >
+        QSTN_ID,
+      </if>
+      <if test="sclContent != null" >
+        scl_content,
+      </if>
+      <if test="sclResult != null" >
+        scl_result,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="sclId != null" >
+        #{sclId,jdbcType=VARCHAR},
+      </if>
+      <if test="sctId != null" >
+        #{sctId,jdbcType=VARCHAR},
+      </if>
+      <if test="qstnId != null" >
+        #{qstnId,jdbcType=VARCHAR},
+      </if>
+      <if test="sclContent != null" >
+        #{sclContent,jdbcType=VARCHAR},
+      </if>
+      <if test="sclResult != null" >
+        #{sclResult,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.yuzo.question.entity.StuCrseList" >
+    update stu_crse_list
+    <set >
+      <if test="sctId != null" >
+        sct_id = #{sctId,jdbcType=VARCHAR},
+      </if>
+      <if test="qstnId != null" >
+        QSTN_ID = #{qstnId,jdbcType=VARCHAR},
+      </if>
+      <if test="sclContent != null" >
+        scl_content = #{sclContent,jdbcType=VARCHAR},
+      </if>
+      <if test="sclResult != null" >
+        scl_result = #{sclResult,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where scl_id = #{sclId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.yuzo.question.entity.StuCrseList" >
+    update stu_crse_list
+    set sct_id = #{sctId,jdbcType=VARCHAR},
+      QSTN_ID = #{qstnId,jdbcType=VARCHAR},
+      scl_content = #{sclContent,jdbcType=VARCHAR},
+      scl_result = #{sclResult,jdbcType=VARCHAR}
+    where scl_id = #{sclId,jdbcType=VARCHAR}
+  </update>
+</mapper>
