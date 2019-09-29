@@ -7,16 +7,76 @@
     <result column="QSTN_ID" property="qstnId" jdbcType="VARCHAR" />
     <result column="scl_content" property="sclContent" jdbcType="VARCHAR" />
     <result column="scl_result" property="sclResult" jdbcType="VARCHAR" />
+    
+    <result column="QSTN_TITLE" property="qstnTitle" jdbcType="VARCHAR" />
+    <result column="QSTN_CODE" property="qstnCode" jdbcType="VARCHAR" />
+    <result column="SUBJ_SCTN_ID" property="subjSctnId" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
     scl_id, sct_id, QSTN_ID, scl_content, scl_result
   </sql>
+  
+  <select id="queryByCrseAndUser" resultMap="BaseResultMap"  >
+    select 
+     scl_id, scl.sct_id, scl.QSTN_ID, scl_content, scl_result
+     , qstn.QSTN_TITLE, qstn.QSTN_CODE
+     , qstn.SUBJ_SCTN_ID, sctn.SUBJ_SCTN_TITLE
+    from stu_crse_list  scl 
+    	left join question qstn  on scl.QSTN_ID = qstn.QSTN_ID
+    	left join subj_section sctn  on sctn.SUBJ_SCTN_ID = qstn.SUBJ_SCTN_ID
+    	left join stu_crse_test sct on sct.sct_id = scl.sct_id
+    
+    where sct.crse_id = #{crseId,jdbcType=VARCHAR}  and  sct.user_id = #{userId,jdbcType=VARCHAR}
+   
+  </select>
+  
+  <select id="queryCountByCrseAndUser" resultType="map"  >
+    select 
+	 count(*) qstn_count
+     , qstn.SUBJ_SCTN_ID, sctn.SUBJ_SCTN_TITLE
+    from stu_crse_list  scl 
+    	left join question qstn  on scl.QSTN_ID = qstn.QSTN_ID
+    	left join subj_section sctn  on sctn.SUBJ_SCTN_ID = qstn.SUBJ_SCTN_ID
+    	left join stu_crse_test sct on sct.sct_id = scl.sct_id
+    
+    where sct.crse_id = #{crseId,jdbcType=VARCHAR}  and  sct.user_id = #{userId,jdbcType=VARCHAR}
+    group by qstn.SUBJ_SCTN_ID, sctn.SUBJ_SCTN_TITLE
+   
+  </select>
+  
+  <select id="totalSctnYes" resultType="int"  >
+    select 
+	 count(*) 
+     
+    from stu_crse_list  scl 
+    	left join question qstn  on scl.QSTN_ID = qstn.QSTN_ID
+    	left join subj_section sctn  on sctn.SUBJ_SCTN_ID = qstn.SUBJ_SCTN_ID
+    	left join stu_crse_test sct on sct.sct_id = scl.sct_id
+    
+    where sct.crse_id = #{crseId,jdbcType=VARCHAR}  and  sct.user_id = #{userId,jdbcType=VARCHAR}
+    	and scl_result != '0'  and qstn.SUBJ_SCTN_ID = #{sctnId,jdbcType=VARCHAR}
+   
+   
+  </select>
+  
+  <select id="queryStuCrseListByType" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+     scl_id, sct_id, scl.QSTN_ID, scl_content, scl_result
+     ,qstn.QSTN_TITLE, qstn.QSTN_CODE, qstn.SUBJ_SCTN_ID
+    from stu_crse_list  scl left join question qstn  on scl.QSTN_ID = qstn.QSTN_ID
+    where sct_id = #{sctId,jdbcType=VARCHAR}  and  qstn.QSTN_TYPE_ID = #{type,jdbcType=VARCHAR}
+    order by  qstn.QSTN_CODE
+  </select>
+  
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
     from stu_crse_list
     where scl_id = #{sclId,jdbcType=VARCHAR}
   </select>
+  
+  
+  
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
     delete from stu_crse_list
     where scl_id = #{sclId,jdbcType=VARCHAR}

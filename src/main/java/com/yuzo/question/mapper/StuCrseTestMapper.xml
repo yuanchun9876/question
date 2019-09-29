@@ -9,6 +9,9 @@
     <result column="sct_total" property="sctTotal" jdbcType="INTEGER" />
     <result column="sct_num" property="sctNum" jdbcType="INTEGER" />
     <result column="sct_len" property="sctLen" jdbcType="INTEGER" />
+    
+     <result column="crse_name" property="crseName" jdbcType="VARCHAR" />
+    
   </resultMap>
   <sql id="Base_Column_List" >
     sct_id, user_id, sct_time, crse_id, sct_total, sct_num, sct_len
@@ -21,12 +24,27 @@
     where user_id = #{userId,jdbcType=VARCHAR} and crse_id = #{crseId,jdbcType=VARCHAR} 
   </select>
   
+  <select id="querySctByCrseAndUser" resultMap="BaseResultMap" >
+    select 
+    sct_id, user_id, sct_time,  sct.crse_id, sct_total, sct_num, sct_len
+   , crse.crse_name
+    from stu_crse_test sct left join study_course crse on sct.crse_id = crse.crse_id
+    
+    where user_id = #{userId,jdbcType=VARCHAR} and sct.crse_id = #{crseId,jdbcType=VARCHAR} 
+    order by sct_num 
+  </select>
+  
+
+  
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
-    <include refid="Base_Column_List" />
-    from stu_crse_test
+    sct_id, user_id, sct_time, sct.crse_id, sct_total, sct_num, sct_len
+    , crse.crse_name
+    from stu_crse_test sct left join study_course crse on sct.crse_id = crse.crse_id
     where sct_id = #{sctId,jdbcType=VARCHAR}
   </select>
+  
+  
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
     delete from stu_crse_test
     where sct_id = #{sctId,jdbcType=VARCHAR}

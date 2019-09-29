@@ -24,6 +24,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.yuzo.question.entity.Question;
+import com.yuzo.question.entity.StuCrseList;
+import com.yuzo.question.entity.StuCrseTest;
 import com.yuzo.question.entity.StudyCourse;
 import com.yuzo.question.entity.StudyCourseQuestion;
 import com.yuzo.question.entity.StudyPeriod;
@@ -55,6 +57,109 @@ public class StuCrseController {
 		List<StudyCourse> list = stuCrseService.queryStudyCourse();
 		model.addAttribute("list", list);
 		return "stucrse/list_stucrse";
+	}
+	
+	@RequestMapping("ajaxCharsCrse")
+	@ResponseBody
+	public Map<String, Object> ajaxCharsCrse(String crseId, HttpServletRequest request) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		SysUser user = (SysUser) request.getSession().getAttribute("user");
+		List<StuCrseTest> list = stuCrseService.querySctByCrseId(crseId, user.getUserId());
+		StudyCourse crse = stuCrseService.queryCrseById(crseId);
+		map.put("crseName", crse.getCrseName());
+		String[] sctNums = new String[list.size()];
+		Integer[] sctTotals = new Integer[list.size()];
+		for (int i = 0; i < list.size(); i++) {
+			StuCrseTest sct = list.get(i);
+			sctNums[i] = "第" + sct.getSctNum() + "次";
+			sctTotals[i] = sct.getSctTotal();
+		}
+		map.put("sctNums", sctNums);
+		map.put("sctTotals", sctTotals);
+				
+		return map;
+		
+	}
+	@RequestMapping("ajaxCharsCrseBySctn")
+	@ResponseBody
+	public Map<String, Object> ajaxCharsCrseBySctn(String crseId, HttpServletRequest request) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		SysUser user = (SysUser) request.getSession().getAttribute("user");
+		
+//		List<StuCrseTest> sctList = stuCrseService.querySctByCrseId(crseId, user.getUserId());
+//		
+//		List<StuCrseList> sclList = stuCrseService.querySclByCrseAndUser(crseId, user.getUserId());
+		
+		List<Map<String, Object>> sclCountList = stuCrseService.querySclCountByCrseAndUser(crseId, user.getUserId());
+		// qstn_count,SUBJ_SCTN_ID,SUBJ_SCTN_TITLE
+		System.out.println(sclCountList);
+		// 知识节
+		Integer[] sctn_yes = new Integer[sclCountList.size()];
+		Integer[] sctn_count = new Integer[sclCountList.size()];
+		List<Map<String, Object>> sctnList = new ArrayList<>();
+		List<Map<String, Object>> cList = new ArrayList<>();
+	
+		
+		for (int i=0; i<sclCountList.size(); i++) {
+			Map<String, Object> countMap = sclCountList.get(i);
+			Map<String, Object> cMap = new HashMap<>();
+			
+			sctn_yes[i] = stuCrseService.totalSctnYes(crseId, user.getUserId(), countMap.get("SUBJ_SCTN_ID").toString());
+			
+			sctn_count[i] = Integer.parseInt(countMap.get("qstn_count").toString());
+			cMap.put("text",countMap.get("SUBJ_SCTN_TITLE").toString());
+			cMap.put("max",Integer.parseInt(countMap.get("qstn_count").toString()));
+			cList.add(cMap);
+		}
+		
+		System.out.println(sctnList);
+		map.put("sctnList", sctnList);
+		map.put("sctn_yes", sctn_yes);
+		map.put("sctn_count", sctn_count);
+		map.put("cList", cList);
+		
+		return map;
+		
+	}
+	
+	@RequestMapping("showQstnPage")
+	public String showQstnPage(String sctId, Model model) {
+		
+		StuCrseTest sct = stuCrseService.queryById(sctId);
+		model.addAttribute("sct", sct);
+		
+		List<StuCrseList> sclList0 = stuCrseService.queryStuCrseListByType(sctId, "0");		
+		if(sclList0!=null && sclList0.size()>0) {
+			System.out.println("sclList0:" + sclList0);
+			sclList0 = stuCrseService.addAnswerByQstnForScl0(sclList0);
+			model.addAttribute("sclList0", sclList0);
+		}
+		
+		List<StuCrseList> sclList2 = stuCrseService.queryStuCrseListByType(sctId, "2");
+		if(sclList2!=null && sclList2.size()>0) {
+			sclList2 = stuCrseService.addAnswerByQstnForScl2(sclList2);
+			model.addAttribute("sclList2", sclList2);
+		}
+		
+		
+		return "stucrse/show_crse_test";
+	}
+	
+	@RequestMapping("showCrseQstnPage")
+	public String showCrseQstnPage(String crseId, HttpServletRequest request, Model model) {
+		
+		StudyCourse crse = stuCrseService.queryCrseById(crseId);
+		model.addAttribute("crse", crse);
+
+		SysUser user = (SysUser) request.getSession().getAttribute("user");
+//		System.out.println(user);
+		
+		List<StuCrseTest> list = stuCrseService.queryStuCrseTest(crseId, user.getUserId());
+		model.addAttribute("list", list);
+		
+		return "stucrse/show_stucrsetest";
 	}
 	
 	

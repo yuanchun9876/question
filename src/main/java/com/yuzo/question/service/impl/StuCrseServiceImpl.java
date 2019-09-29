@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
 
@@ -272,5 +273,101 @@ public class StuCrseServiceImpl implements IStuCrseService {
 		}
 		
 		
+	}
+
+
+
+
+	@Override
+	public List<StuCrseTest> queryStuCrseTest(String crseId, String userId) {
+		// TODO Auto-generated method stub
+		System.out.println(crseId + ":" + userId);
+		return sctMapper.querySctByCrseAndUser(crseId, userId);
+	}
+
+
+
+
+	@Override
+	public List<StuCrseList> queryStuCrseListByType(String sctId, String type) {
+		// TODO Auto-generated method stub
+		return sclMapper.queryStuCrseListByType(sctId, type);
+	}
+
+
+
+
+	@Override
+	public List<StuCrseList> addAnswerByQstnForScl0(List<StuCrseList> sclList0) {
+		// TODO Auto-generated method stub
+		for (StuCrseList scl : sclList0) {
+			List<Answer> ansList = ansMapper.queryByQstnId(scl.getQstnId());
+			scl.setAnsList(ansList);
+			if (scl.getSclContent()!=null  &&  !"".equals(scl.getSclContent())) {
+				Answer ans = ansMapper.selectByPrimaryKey(scl.getSclContent());
+				System.out.println("ans.getAnsContent():" + ans.getAnsContent());
+				scl.setAnsContent(ans.getAnsContent());
+			} else {
+				scl.setAnsContent("");
+			}
+			
+		}
+		return sclList0;
+	}
+
+
+
+
+	@Override
+	public List<StuCrseList> addAnswerByQstnForScl2(List<StuCrseList> sclList2) {
+		// TODO Auto-generated method stub
+		for (StuCrseList scl : sclList2) {
+			List<Answer> ansList = ansMapper.queryByQstnId(scl.getQstnId());
+			scl.setAnsList(ansList);	
+		}
+		return sclList2;
+	}
+
+
+
+
+	@Override
+	public StuCrseTest queryById(String sctId) {
+		// TODO Auto-generated method stub
+		return sctMapper.selectByPrimaryKey(sctId);
+	}
+
+
+
+
+	@Override
+	public List<StuCrseTest> querySctByCrseId(String crseId, String userId) {
+		// TODO Auto-generated method stub
+		return sctMapper.querySctByCrseAndUser(crseId, userId);
+	}
+
+
+
+
+	@Override
+	public List<StuCrseList> querySclByCrseAndUser(String crseId, String userId) {
+		// TODO Auto-generated method stub
+		return sclMapper.queryByCrseAndUser(crseId, userId);
+	}
+
+
+
+
+	@Override
+	public List<Map<String, Object>> querySclCountByCrseAndUser(String crseId, String userId) {
+		// TODO Auto-generated method stub
+		return sclMapper.queryCountByCrseAndUser(crseId, userId);
+	}
+
+
+	@Override
+	public Integer totalSctnYes(String crseId, String userId, String sctnId) {
+		// TODO Auto-generated method stub
+		return sclMapper.totalSctnYes( crseId, userId, sctnId);
 	}
 }

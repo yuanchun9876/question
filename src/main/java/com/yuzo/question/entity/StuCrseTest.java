@@ -16,6 +16,9 @@ public class StuCrseTest {
     private Integer sctNum;
 
     private Integer sctLen;
+    
+    private String crseName;
+    
 
     public String getSctId() {
         return sctId;
@@ -72,4 +75,13 @@ public class StuCrseTest {
     public void setSctLen(Integer sctLen) {
         this.sctLen = sctLen;
     }
+
+	public String getCrseName() {
+		return crseName;
+	}
+
+	public void setCrseName(String crseName) {
+		this.crseName = crseName;
+	}
+    
 }

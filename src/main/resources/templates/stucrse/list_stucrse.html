@@ -80,8 +80,7 @@
 						<td>
 						
 							<button type="button" class="btn btn-info btn-sm"  th:onclick="openCrseQstnPage([[${row.crseId}]])"     onclick="javascript:editpage('1')"    >打开测试</button>
-							<button type="button" class="btn btn-warning btn-sm"  th:onclick="setqstnpage([[${row.crseId}]])"     onclick="javascript:editpage('1')"    >个人分析</button>
-							<button type="button" class="btn btn-danger btn-sm"  th:onclick="showqstnpage([[${row.crseId}]])"     onclick="javascript:editpage('1')"    >查看成绩</button>
+							<button type="button" class="btn btn-danger btn-sm"  th:onclick="showCrseQstnPage([[${row.crseId}]])"     onclick="javascript:editpage('1')"    >查看成绩</button>
 						</td>
        				</tr>	       			  		
         		</tbody>
@@ -109,21 +108,10 @@
 	}
 	
 	
-	function setqstnflag(crseId){
-		window.location.href="/stdycrse/setqstnflag?crseId=" + crseId; 
+	function showCrseQstnPage(crseId){
+		window.location.href="/stucrse/showCrseQstnPage?crseId=" + crseId; 
 	}
 
-
-
-	function setsctnpage(id){
-		//console.log(id);
-		location.href = "/stdycrse/setsctnpage?crseId=" + id; 
-	}
-	function setqstnpage(id){
-		//console.log(id);
-		location.href = "/stdycrse/setqstnpage?crseId=" + id; 
-	}
-	
 
 
 </script>

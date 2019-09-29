@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>查询页面</title>
+  <!-- Tell the browser to be responsive to screen width -->
+  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+ 
+  <include th:replace="common/css :: commoncss"/>
+
+	<style type="text/css">
+	 	.content-wrapper {
+				margin-left: 0px;
+		}
+		.qstnTitle img{display: none;}
+		
+		@media only screen and (max-width: 768px) {
+			.box-header{
+				flex-direction: column;
+			}
+			.box-header .box-search{
+				margin: 10px auto;
+			}
+		}
+	</style>
+</head>
+<body class="hold-transition skin-blue sidebar-mini">
+<div class="wrapper">
+
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+      <!-- Content Header (Page header) -->
+      <section class="content-header">
+        <h1>
+         	试题统计
+        </h1>
+        <ol class="breadcrumb">
+        <li>
+			<a th:href="@{/dashboard}"><i class="glyphicon glyphicon-globe"></i>导航</a>
+		</li>
+          <li class="active"><a href="#">试题统计</a></li>
+        </ol>
+      </section>
+  
+      <!-- Main content -->
+     
+     	 <section class="content">
+        <div class="box">
+         <form name="infoForm" id="queryForm" method="post" >
+        	<div class="box-header clearfix">
+				
+				<div class="col-sm-6">
+					<div id="mainUnit" style="width:100%;height:320px;"></div>
+				</div>
+			
+				<div class="col-sm-6">
+					<div id="mainSctn" style="width:100%;height:320px;"></div>
+				</div>
+        	</div>
+        	</form>
+        	<!-- /.box-header -->
+        	<div class="box-body no-padding">
+        		<table class="table table-striped">
+        			<tr>
+        				<th>序号</th>      				
+        				<th>时间</th>     				
+        				<th>序号</th>
+        				<th>用时</th>     				
+        				<th>成绩</th>
+						<th>操作</th>
+        			</tr>
+        			
+        		<tbody th:remove="all-but-first" >       			  	
+        			<tr  th:each="row,i:${list}" >
+	        			<td th:text="${i.count }">1</td>	        			
+	       				<td th:text="${#dates.format(row.sctTime, 'yyyy-MM-dd HH:mm:ss')}" >JavaSE</td>
+	       				<td th:text="${row.sctNum}" >JavaSE</td>
+	       				<td th:text="${row.sctLen}" >JavaSE</td>
+	       				<td th:text="${row.sctTotal}">1</td>
+						<td>
+							<button type="button" class="btn btn-sm"  th:onclick="showpage([[${row.sctId}]])"     onclick="javascript:editpage('1')"    >查看</button>
+						</td>
+       				</tr>	       			  		
+        		</tbody>
+        		
+        		</table>
+        	</div>
+<!--         	/.box-body -->
+			
+<!-- 		/. box-footer -->
+        </div>
+        <!-- /.row -->
+      </section>
+      <!-- /.content -->
+    </div>
+
+</div>
+<!-- ./wrapper -->
+<div th:replace="common/js :: commonjs"></div>
+<script    th:src="@{/plugins/echarts-2.2.7/build/dist/echarts-all.js}"  type="text/javascript" charset="utf-8"></script>
+</body>
+	
+<script type="text/javascript">
+
+	function showpage(id){
+		//console.log(id);
+		location.href = "/stucrse/showQstnPage?sctId=" + id ; 
+	}
+	
+	$(function(){
+		
+		var url1 = "/stucrse/ajaxCharsCrse";
+		$.post(url1,{"crseId":"[[${crse.crseId}]]"},function(resp){
+			 option1 = {
+					    title : {
+					        text: resp.crseName + '得分',
+					        subtext: '每次测试得分'
+					    },
+					    tooltip : {
+					        trigger: 'axis'
+					    },
+					    legend: {
+					        data:['得分']
+					    },
+					    toolbox: {
+					        show : true,
+					        feature : {
+					            mark : {show: true},
+					            dataView : {show: true, readOnly: false},
+					            magicType : {show: true, type: ['line', 'bar']},
+					            restore : {show: true},
+					            saveAsImage : {show: true}
+					        }
+					    },
+					    calculable : true,
+					    xAxis : [
+					        {
+					            type : 'category',
+					            boundaryGap : false,
+					            data : resp.sctNums
+					        }
+					    ],
+					    yAxis : [
+					        {
+					            type : 'value',
+					        }
+					    ],
+					    series : [
+					       
+					        {
+					            name:'得分',
+					            type:'bar',
+					            itemStyle: {
+					                normal: {                   // 系列级个性化，横向渐变填充
+					                    
+					                    label : {
+					                        show : true,
+					                        textStyle : {
+					                            fontSize : '20',
+					                            fontFamily : '微软雅黑'
+					                        }
+					                    }
+					                }
+					            },
+					            data: resp.sctTotals,
+					            markPoint : {
+					                data : [
+					                 
+					                ]
+					            },
+					            markLine : {
+					                data : [
+					                    {type : 'average', name: '平均值'}
+					                ]
+					            }
+					        }
+					    ]
+					};
+				                    
+
+			var myChart1 = echarts.init(document.getElementById('mainUnit'),"default");
+			// 使用刚指定的配置项和数据显示图表。
+			myChart1.setOption(option1);
+		})
+
+		
+		
+		var url2 = "/stucrse/ajaxCharsCrseBySctn";
+		$.post(url2,{"crseId":"[[${crse.crseId}]]"},function(resp){
+			option2 = {
+					   title : {
+					        text: '知识节统计'
+					    },
+					    tooltip : {
+					        trigger: 'axis'
+					    },
+					    legend: {
+					        x : 'right',
+					        data:['总题数','正确数']
+					    },
+					   
+					    calculable : true,
+					    polar : [
+					        {
+					            indicator : resp.cList,
+					            radius : 130
+					        }
+					    ],
+					    series : [
+					        {
+					            name: '知识节统计',
+					            type: 'radar',
+					            itemStyle: {
+					                normal: {
+					                    areaStyle: {
+					                        type: 'default'
+					                    }
+					                }
+					            },
+					            data : [
+					                {
+					                    value : resp.sctn_count,
+					                    name : '总题数'
+					                },
+					                {
+					                    value : resp.sctn_yes,
+					                    name : '正确数'
+					                }
+					            ]
+					        }
+					    ]
+				};
+				                    
+
+			var myChart2 = echarts.init(document.getElementById('mainSctn'),"default");
+			// 使用刚指定的配置项和数据显示图表。
+			myChart2.setOption(option2);
+		})
+
+		
+		/**/
+	});
+
+
+</script>
+
+</html>
