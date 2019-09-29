@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<script src="../js/jquery-2.2.4.min.js" type="text/javascript" charset="utf-8"></script>
+	</head>
+	<body>
+		<div id="ddd"></div>
+	</body>
+	<script type="text/javascript">
+		
+		var fen2 = 0;
+		var fen1 = 0;
+		var miao2 = 0;
+		var miao1 = 0;
+		
+		function dingshi(){
+			
+			if(miao1 == 9){
+				miao1 = 0;
+				if(miao2 == 5 ){
+					miao2 = 0;
+					if(fen1 == 9){
+						fen1 = 0;
+						if(fen2 == 5 ){
+							fen2 = 0;
+						}else{
+							fen2++;
+						}
+					}else{
+						fen1++;
+					}
+				}else{
+					miao2++;
+				}
+			}else{
+				miao1++;
+			}
+			var dd = "";
+				dd += "<img src='../img/数字图片/" + fen2 + ".gif'>"
+				dd += "<img src='../img/数字图片/" + fen1 + ".gif'>"
+				dd += "<img src='../img/数字图片/冒号.gif'>"
+				dd += "<img src='../img/数字图片/" + miao2 + ".gif'>"
+				dd += "<img src='../img/数字图片/" + miao1 + ".gif'>"
+			$("#ddd").html(dd);		
+		}
+		
+		window.setInterval("dingshi()",1000);
+		
+	</script>
+</html>

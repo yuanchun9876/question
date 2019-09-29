@@ -32,4 +32,6 @@ public interface QuestionMapper {
 	List<Question> queryQuesByParams(@Param("qstnTypeId")String qstnTypeId, @Param("qstnFromTypeId")String qstnFromTypeId, @Param("subjSctnId")String subjSctnId);
 
 	List<Question> selectAll();
+
+	List<Question> queryQstnByCrse(@Param("crseId")String crseId, @Param("type")String type, @Param("flag")String flag );
 }

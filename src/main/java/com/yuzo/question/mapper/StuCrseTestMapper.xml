@@ -13,6 +13,14 @@
   <sql id="Base_Column_List" >
     sct_id, user_id, sct_time, crse_id, sct_total, sct_num, sct_len
   </sql>
+  
+  <select id="querySctMaxNum" resultType="int"  >
+    select 
+   	max(sct_num)
+    from stu_crse_test
+    where user_id = #{userId,jdbcType=VARCHAR} and crse_id = #{crseId,jdbcType=VARCHAR} 
+  </select>
+  
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />

@@ -1,5 +1,7 @@
 package com.yuzo.question.mapper;
 
+import org.apache.ibatis.annotations.Param;
+
 import com.yuzo.question.entity.StuCrseTest;
 
 public interface StuCrseTestMapper {
@@ -14,4 +16,6 @@ public interface StuCrseTestMapper {
     int updateByPrimaryKeySelective(StuCrseTest record);
 
     int updateByPrimaryKey(StuCrseTest record);
+
+	Integer querySctMaxNum(@Param("crseId")String crseId,@Param("userId")String userId);
 }
