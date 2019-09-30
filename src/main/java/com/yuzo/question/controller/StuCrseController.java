@@ -303,67 +303,23 @@ public class StuCrseController {
 
 	
 	@RequestMapping("/answerSave")
-	public String answerSave(String crseId, String[] qstns0,String[] ans0, String[] qstns2,String[] ans2, String[] qstns4,String[] ans4, HttpServletRequest request, Model model) {
+	public String answerSave(String crseId,Integer sctlen, String[] qstns0,String[] ans0, String[] qstns2,String[] ans2, String[] qstns4,String[] ans4, HttpServletRequest request, Model model) {
 		
-		System.out.println(Arrays.toString(qstns0));
-		System.out.println(Arrays.toString(ans0));
-		System.out.println(Arrays.toString(qstns2));
-		System.out.println(Arrays.toString(ans2));
-		System.out.println("crseId:" + crseId);
+//		System.out.println(Arrays.toString(qstns0));
+//		System.out.println(Arrays.toString(ans0));
+//		System.out.println(Arrays.toString(qstns2));
+//		System.out.println(Arrays.toString(ans2));
+//		System.out.println("crseId:" + crseId);
+		System.out.println("sctlen:" + sctlen);
 			
 		SysUser user = (SysUser) request.getSession().getAttribute("user");
 		
-		stuCrseService.saveAnswer(user, crseId, qstns0, ans0, qstns2, ans2);
-//		
-//		if ("3".equals(tpType)) {
-//			return "redirect:userplanlist3";
-//		} else {
-//			return "redirect:userplanlist0";
-//		}
+		stuCrseService.saveAnswer(user,sctlen, crseId, qstns0, ans0, qstns2, ans2);	
+
 		return "redirect:query";
 	}
 	
-//	@RequestMapping("addSave")
-//	public String addSave(StudyCourse crse) {
-//
-//		crse.setCrseId(UUID.randomUUID().toString());
-//	
-//		int count = stuCrseService.save(crse);
-//		
-//		System.out.println("role:" + count);
-//		
-//		return "redirect:query";
-//	}
-//	
-//	@RequestMapping("/editPage")
-//	public String editPage(String crseId,HttpSession session, Model model) {
-//		
-//		StudyCourse crse = stuCrseService.queryById(crseId);
-//		model.addAttribute("crse", crse);	
-//		
-//		List<StudyPeriod> pdList = stdycrseService.queryPeriod();
-//		model.addAttribute("pdList", pdList);
-//	
-//		return "stdycrse/edit_crse";
-//	}
-//	
-//
-//
-//	@RequestMapping("/editSave")
-//	public String editSave(StudyCourse crse) {		
-//		
-//		int count = stuCrseService.update(crse);
-//		System.out.println("role:" + count);
-//		return "redirect:query";
-//	}
-//	
-//	@RequestMapping("/dels")
-//	public String dels(String[] ids) {		
-//		System.out.println("ids:" + Arrays.toString(ids));
-//		int count = stuCrseService.dels(ids);
-//		System.out.println("dels:" + count);
-//		return "redirect:query";
-//	}
+
 }
 
 

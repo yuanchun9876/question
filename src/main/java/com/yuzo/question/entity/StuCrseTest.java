@@ -71,6 +71,13 @@ public class StuCrseTest {
     public Integer getSctLen() {
         return sctLen;
     }
+    public String getSctTimeLen() {
+    	String time = "";
+    	if(this.sctLen !=null  &&  this.sctLen >= 0) {
+    		time = this.sctLen/60 + " : " + this.sctLen%60;
+    	}  	
+    	return time;
+    }
 
     public void setSctLen(Integer sctLen) {
         this.sctLen = sctLen;

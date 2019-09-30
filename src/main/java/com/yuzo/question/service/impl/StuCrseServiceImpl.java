@@ -121,7 +121,7 @@ public class StuCrseServiceImpl implements IStuCrseService {
 
 
 	@Override
-	public void saveAnswer(SysUser user, String crseId, String[] qstns0, String[] ans0, String[] qstns2,String[] ans2) {
+	public void saveAnswer(SysUser user, Integer sctlen, String crseId, String[] qstns0, String[] ans0, String[] qstns2,String[] ans2) {
 		
 		StudyCourse crse = crseMapper.selectByPrimaryKey(crseId);
 		
@@ -140,7 +140,7 @@ public class StuCrseServiceImpl implements IStuCrseService {
 		sct.setUserId(user.getUserId());
 		sct.setSctTime(new Date());
 		// 时长
-		
+		sct.setSctLen(sctlen);
 		
 		// 序号
 		Integer maxNum = sctMapper.querySctMaxNum(crseId, user.getUserId());
@@ -360,7 +360,7 @@ public class StuCrseServiceImpl implements IStuCrseService {
 	@Override
 	public List<Map<String, Object>> querySclCountByCrseAndUser(String crseId, String userId) {
 		// TODO Auto-generated method stub
-		return sclMapper.queryCountByCrseAndUser(crseId, userId);
+		return sclMapper.querySclCountByCrseAndUser(crseId, userId);
 	}
 
 

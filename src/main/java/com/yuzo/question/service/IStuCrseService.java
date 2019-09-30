@@ -20,7 +20,7 @@ public interface IStuCrseService {
 
 	List<Question> addAnswerByQstn(List<Question> qsListFlag0);
 
-	void saveAnswer(SysUser user, String crseId, String[] qstns0, String[] ans0, String[] qstns2, String[] ans2);
+	void saveAnswer(SysUser user, Integer sctlen, String crseId, String[] qstns0, String[] ans0, String[] qstns2, String[] ans2);
 
 	List<StuCrseTest> queryStuCrseTest(String crseId, String userId);
 

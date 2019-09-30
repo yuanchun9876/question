@@ -24,7 +24,7 @@ public interface StuCrseListMapper {
 
 	List<StuCrseList> queryByCrseAndUser(@Param("crseId")String crseId, @Param("userId")String userId);
 	
-	List<Map<String, Object>> queryCountByCrseAndUser(@Param("crseId")String crseId, @Param("userId")String userId);
+	List<Map<String, Object>> querySclCountByCrseAndUser(@Param("crseId")String crseId, @Param("userId")String userId);
 
 	Integer totalSctnYes(@Param("crseId")String crseId, @Param("userId")String userId, @Param("sctnId")String sctnId);
 
@@ -39,6 +39,8 @@ public interface StuCrseListMapper {
 
 	List<StuCrseList> queryByCrseAndMc(@Param("crseId")String crseId, @Param("mcId")String mcId);
 	
+	
+	
 
 	List<String> queryUnitIdsByCrseAndMc(@Param("crseId")String crseId, @Param("mcId")String mcId);
 	
@@ -49,6 +51,8 @@ public interface StuCrseListMapper {
 	Integer totalUnitNo(@Param("crseId")String crseId, @Param("mcId")String mcId,  @Param("unitId")String unitId);
 	
 
+	
+	
 	List<String> querySctnIdsByCrseAndMc(@Param("crseId")String crseId, @Param("mcId")String mcId);
 
 	Integer totalSctnCount(@Param("crseId")String crseId, @Param("mcId")String mcId, @Param("sctnId")String sctnId);

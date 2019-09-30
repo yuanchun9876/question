@@ -181,7 +181,20 @@
     	  		   
   </select>
   
-  <!-- count   -->
+  <!-- count querySclCountByCrseAndUser  -->
+  <select id="querySclCountByCrseAndUser"  resultType="map"  >
+    select 
+    count(*) qstn_count,sctn.SUBJ_SCTN_ID,sctn.SUBJ_SCTN_TITLE
+    from stu_crse_list  scl    	
+    	left join stu_crse_test sct on sct.sct_id = scl.sct_id   	
+    	LEFT JOIN question qstn ON qstn.QSTN_ID = scl.QSTN_ID
+    	LEFT JOIN subj_section  sctn  ON sctn.SUBJ_SCTN_ID = qstn.SUBJ_SCTN_ID    
+    where sct.crse_id = #{crseId,jdbcType=VARCHAR} and sct.user_id = #{userId,jdbcType=VARCHAR}
+    group by sctn.SUBJ_SCTN_ID,sctn.SUBJ_SCTN_TITLE 
+    		   
+  </select>
+  
+  <!-- count  -->
   <select id="queryCountByCrseAndUser"  resultType="int"  >
     select 
     count(*)
@@ -230,8 +243,7 @@
     
     where sct.crse_id = #{crseId,jdbcType=VARCHAR}  and  sct.user_id = #{userId,jdbcType=VARCHAR}
     	and scl_result != '0'  and qstn.SUBJ_SCTN_ID = #{sctnId,jdbcType=VARCHAR}
-   
-   
+      
   </select>
   
   <select id="queryStuCrseListByType" resultMap="BaseResultMap" parameterType="java.lang.String" >

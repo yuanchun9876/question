@@ -76,7 +76,7 @@
 	        			<td th:text="${i.count }">1</td>	        			
 	       				<td th:text="${#dates.format(row.sctTime, 'yyyy-MM-dd HH:mm:ss')}" >JavaSE</td>
 	       				<td th:text="${row.sctNum}" >JavaSE</td>
-	       				<td th:text="${row.sctLen}" >JavaSE</td>
+	       				<td th:text="${row.sctTimeLen}" >JavaSE</td>
 	       				<td th:text="${row.sctTotal}">1</td>
 						<td>
 							<button type="button" class="btn btn-sm"  th:onclick="showpage([[${row.sctId}]])"     onclick="javascript:editpage('1')"    >查看</button>
