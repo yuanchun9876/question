@@ -19,7 +19,10 @@ import com.yuzo.question.entity.Question;
 import com.yuzo.question.entity.StuCrseList;
 import com.yuzo.question.entity.StuCrseTest;
 import com.yuzo.question.entity.StudyCourse;
+import com.yuzo.question.entity.SubjSection;
+import com.yuzo.question.entity.SubjUnit;
 import com.yuzo.question.entity.SysUser;
+import com.yuzo.question.entity.UserAnswerList;
 import com.yuzo.question.mapper.AnswerMapper;
 import com.yuzo.question.mapper.QuestionMapper;
 import com.yuzo.question.mapper.StuCrseListMapper;
@@ -443,5 +446,143 @@ public class StuCrseServiceImpl implements IStuCrseService {
 		}); // 排序
 		
 		return list;
+	}
+
+
+
+
+	@Override
+	public Question queryQstnById(String qstnId) {
+		// TODO Auto-generated method stub
+		return qstnMapper.selectByPrimaryKey(qstnId);
+	}
+
+
+
+
+	@Override
+	public List<Answer> queryByQstnId(String qstnId) {
+		// TODO Auto-generated method stub
+		return ansMapper.queryByQstnId(qstnId);
+	}
+
+
+
+
+	@Override
+	public List<StuCrseList> totalUal(String crseId, String mcId, String qstnId) {
+		// TODO Auto-generated method stub
+		List<StuCrseList> list = sclMapper.queryByCrseAndMcAndQstn(crseId, mcId, qstnId);
+		for (StuCrseList scl : list) {
+			if ("0".equals(scl.getQstnTypeId())) {
+				if (scl.getSclContent()==null  ||  "".equals(scl.getSclContent().trim())) {
+					scl.setAnsContent("");
+				} else {
+					Answer ans = ansMapper.selectByPrimaryKey(scl.getSclContent().trim());
+					scl.setAnsContent(ans.getAnsContent());
+				}
+				
+			} else {
+				scl.setAnsContent(scl.getSclContent().trim());
+			}
+		}
+		
+		return list;
+	}
+
+
+
+
+	@Override
+	public Map<String, Object> querySclsByCrseAndMc(String crseId, String mcId) {
+		// TODO Auto-generated method stub
+		Map<String, Object> map = new HashMap<String, Object>();
+		List<String> unitIds = sclMapper.queryUnitIdsByCrseAndMc(crseId, mcId);
+
+		String[] unitTitles = new String[unitIds.size()];
+		Integer[] unit_yes = new Integer[unitIds.size()];
+		Integer[] unit_no = new Integer[unitIds.size()];
+		// 知识章
+		List<Map<String, Object>> unitList = new ArrayList<>();
+		int i = 0;
+		for (String unitId : unitIds) {
+			
+			Map<String, Object> unitMap = new HashMap<>();
+			SubjUnit unit = unitMapper.selectByPrimaryKey(unitId);	
+			
+			unitMap.put("unitId", unit.getSubjUnitId());
+			unitMap.put("unitTitle", unit.getSubjUnitTitle());
+			unitMap.put("unitCode", unit.getSubjUnitCode());
+			unitTitles[i] = unit.getSubjUnitTitle();
+			
+			Integer unit_count = sclMapper.totalUnitCount(crseId, mcId, unitId);
+			unitMap.put("unit_count", unit_count);
+			
+			Integer unitYes = sclMapper.totalUnitYes(crseId, mcId, unitId);
+			unitMap.put("unit_yes", unitYes);
+			unit_yes[i] = unitYes;
+			Integer unitNo = sclMapper.totalUnitNo(crseId, mcId, unitId);
+			unitMap.put("unit_no", unitNo);
+			unit_no[i] = unitNo;
+			
+			unitList.add(unitMap);
+			i++;
+		}
+		System.out.println(unitList);
+		map.put("unitList", unitList);
+		map.put("unitTitles", unitTitles);
+		map.put("unit_yes", unit_yes);
+		map.put("unit_no", unit_no);
+		
+		return map;
+	}
+
+
+
+
+	@Override
+	public Map<String, Object> querySctnsByCrseAndMc(String crseId, String mcId) {
+		// TODO Auto-generated method stub
+		Map<String, Object> map = new HashMap<>();
+		//testPlanService.charsPlanMc(tpId, mcId);
+		List<String> sctnIds = sclMapper.querySctnIdsByCrseAndMc(crseId, mcId);
+		
+		
+		// 知识节
+		Integer[] sctn_yes = new Integer[sctnIds.size()];
+		Integer[] sctn_count = new Integer[sctnIds.size()];
+		List<Map<String, Object>> sctnList = new ArrayList<>();
+		List<Map<String, Object>> cList = new ArrayList<>();
+		int i = 0;
+		for (String sctnId : sctnIds) {
+			Map<String, Object> sctnMap = new HashMap<>();
+			Map<String, Object> cMap = new HashMap<>();
+			SubjSection sctn = sctnMapper.selectByPrimaryKey(sctnId);	
+			
+			sctnMap.put("sctnId", sctn.getSubjSctnId());
+			sctnMap.put("sctnTitle", sctn.getSubjSctnTitle());
+			sctnMap.put("sctnCode", sctn.getSubjSctnCode());
+			cMap.put("text",sctn.getSubjSctnTitle());
+			Integer sctnCount = sclMapper.totalSctnCount(crseId, mcId, sctnId);
+			sctnMap.put("sctn_count", sctnCount);
+			cMap.put("max", sctnCount);			
+			sctn_count[i] = sctnCount;
+			
+			Integer sctnYes = sclMapper.totalSctnYesByMc(crseId, mcId, sctnId);			
+			sctnMap.put("sctn_yes", sctnYes);
+			Integer sctnNo = sclMapper.totalSctnNo(crseId, mcId, sctnId);
+			sctnMap.put("sctn_no", sctnNo);
+			sctn_yes[i] = sctnYes;
+			sctnList.add(sctnMap);
+			cList.add(cMap);
+			i++;
+		}
+		System.out.println(sctnList);
+		map.put("sctnList", sctnList);
+		map.put("sctn_yes", sctn_yes);
+		map.put("sctn_count", sctn_count);
+		map.put("cList", cList);
+		
+		return map;
 	}
 }

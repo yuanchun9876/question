@@ -109,13 +109,13 @@
 
 	function showpage(id){
 		//console.log(id);
-		location.href = "/testplan/showQstnPage?qstnId=" + id + "&tpId=[[${tpId}]]" ; 
+		location.href = "/stucrse/showAnsPage?qstnId=" + id + "&crseId=[[${crseId}]]&mcId=[[${mcId}]]" ; 
 	}
 	
 	$(function(){
-	/*
-		var url1 = "/testplan/ajaxCharsPlanMcUnit";
-		$.post(url1,{"tpId":"[[${tpId}]]","mcId":"[[${mcId}]]"},function(resp){
+	
+		var url1 = "/stucrse/ajaxCharsPlanMcUnit";
+		$.post(url1,{"crseId":"[[${crseId}]]","mcId":"[[${mcId}]]"},function(resp){
 			option1 = {
 				    title : {
 				        text: '知识章统计'
@@ -207,8 +207,8 @@
 
 		
 		
-		var url2 = "/testplan/ajaxCharsPlanMcSctn";
-		$.post(url2,{"tpId":"[[${tpId}]]","mcId":"[[${mcId}]]"},function(resp){
+		var url2 = "/stucrse/ajaxCharsPlanMcSctn";
+		$.post(url2,{"crseId":"[[${crseId}]]","mcId":"[[${mcId}]]"},function(resp){
 			option2 = {
 					   title : {
 					        text: '知识节统计'
@@ -259,7 +259,7 @@
 			myChart2.setOption(option2);
 		})
 
-		*/
+		/**/
 		
 	});
 

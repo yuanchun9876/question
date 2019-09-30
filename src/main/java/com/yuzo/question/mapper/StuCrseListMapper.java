@@ -34,4 +34,26 @@ public interface StuCrseListMapper {
 	Integer queryYesCountByCrseAndUser(@Param("crseId")String crseId, @Param("qstnId")String qstnId, @Param("mcId")String mcId);
 
 	Integer queryNoCountByCrseAndUser(@Param("crseId")String crseId, @Param("qstnId")String qstnId, @Param("mcId")String mcId);
+
+	List<StuCrseList> queryByCrseAndMcAndQstn(@Param("crseId")String crseId, @Param("mcId")String mcId,  @Param("qstnId")String qstnId);
+
+	List<StuCrseList> queryByCrseAndMc(@Param("crseId")String crseId, @Param("mcId")String mcId);
+	
+
+	List<String> queryUnitIdsByCrseAndMc(@Param("crseId")String crseId, @Param("mcId")String mcId);
+	
+	Integer totalUnitCount(@Param("crseId")String crseId, @Param("mcId")String mcId, @Param("unitId")String unitId);
+
+	Integer totalUnitYes(@Param("crseId")String crseId, @Param("mcId")String mcId,  @Param("unitId")String unitId);
+
+	Integer totalUnitNo(@Param("crseId")String crseId, @Param("mcId")String mcId,  @Param("unitId")String unitId);
+	
+
+	List<String> querySctnIdsByCrseAndMc(@Param("crseId")String crseId, @Param("mcId")String mcId);
+
+	Integer totalSctnCount(@Param("crseId")String crseId, @Param("mcId")String mcId, @Param("sctnId")String sctnId);
+
+	Integer totalSctnYesByMc(@Param("crseId")String crseId, @Param("mcId")String mcId, @Param("sctnId")String sctnId);
+
+	Integer totalSctnNo(@Param("crseId")String crseId, @Param("mcId")String mcId, @Param("sctnId")String sctnId);
 }

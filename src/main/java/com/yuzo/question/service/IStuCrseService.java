@@ -3,6 +3,7 @@ package com.yuzo.question.service;
 import java.util.List;
 import java.util.Map;
 
+import com.yuzo.question.entity.Answer;
 import com.yuzo.question.entity.Question;
 import com.yuzo.question.entity.StuCrseList;
 import com.yuzo.question.entity.StuCrseTest;
@@ -40,5 +41,15 @@ public interface IStuCrseService {
 	Integer totalSctnYes(String crseId, String userId, String string);
 
 	List<Map<String, Object>> queryMcSclList(String crseId, String mcId);
+
+	Question queryQstnById(String qstnId);
+
+	List<Answer> queryByQstnId(String qstnId);
+
+	List<StuCrseList> totalUal(String crseId, String mcId, String qstnId);
+
+	Map<String, Object> querySclsByCrseAndMc(String crseId, String mcId);
+
+	Map<String, Object> querySctnsByCrseAndMc(String crseId, String mcId);
 
 }

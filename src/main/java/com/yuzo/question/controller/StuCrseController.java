@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.yuzo.question.entity.Answer;
 import com.yuzo.question.entity.Question;
 import com.yuzo.question.entity.StuCrseList;
 import com.yuzo.question.entity.StuCrseTest;
@@ -59,8 +60,49 @@ public class StuCrseController {
 		return "stucrse/list_stucrse";
 	}
 	
+	@RequestMapping("/ajaxCharsPlanMcUnit")
+	@ResponseBody
+	public Map<String, Object> ajaxCharsPlanMcUnit(String crseId,String mcId, Model model) {
+		System.out.println(crseId + ":" + mcId);
+
+		Map<String, Object> map = stuCrseService.querySclsByCrseAndMc(crseId, mcId);
+	
+		return map;
+	}
+	
+	@RequestMapping("/ajaxCharsPlanMcSctn")
+	@ResponseBody
+	public Map<String, Object> ajaxCharsPlanMcSctn(String crseId,String mcId, Model model) {
+		System.out.println(crseId + ":" + mcId);
+		
+		Map<String, Object> map = stuCrseService.querySctnsByCrseAndMc(crseId, mcId);
+		
+		
+		return map;
+	}
+	
+	@RequestMapping("showAnsPage")
+	public String showQstnPage(String crseId, String mcId, String qstnId, Model model) {
+		
+		Question qstn = stuCrseService.queryQstnById(qstnId);
+		model.addAttribute("qstn", qstn);		
+		List<Answer> ansList = stuCrseService.queryByQstnId(qstnId);
+		System.out.println(ansList);
+		model.addAttribute("list", ansList);	
+		
+		List<StuCrseList> sclList = stuCrseService.totalUal(crseId, mcId, qstnId);
+		System.out.println(sclList);
+		model.addAttribute("sclList", sclList);	
+		
+		
+		return "stucrse/show_crse_qstn";
+	}
+	
 	@RequestMapping("charsCrseMc")
 	public String charsCrseMc(String crseId, String mcId, Model model) {
+		
+		model.addAttribute("crseId", crseId);
+		model.addAttribute("mcId", mcId);
 		
 		List<Map<String, Object>> mcSclList = stuCrseService.queryMcSclList(crseId, mcId);
 		System.out.println(mcSclList);

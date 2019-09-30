@@ -9,8 +9,11 @@
     <result column="scl_result" property="sclResult" jdbcType="VARCHAR" />
     
     <result column="QSTN_TITLE" property="qstnTitle" jdbcType="VARCHAR" />
+    <result column="QSTN_TYPE_ID" property="qstnTypeId" jdbcType="VARCHAR" />
     <result column="QSTN_CODE" property="qstnCode" jdbcType="VARCHAR" />
     <result column="SUBJ_SCTN_ID" property="subjSctnId" jdbcType="VARCHAR" />
+    <result column="nick_name" property="nickName" jdbcType="VARCHAR" />
+    
   </resultMap>
   <sql id="Base_Column_List" >
     scl_id, sct_id, QSTN_ID, scl_content, scl_result
@@ -28,6 +31,154 @@
     
     where sct.crse_id = #{crseId,jdbcType=VARCHAR}  and  sct.user_id = #{userId,jdbcType=VARCHAR}
    
+  </select>
+ 
+ 
+  
+  
+   <!-- list<sctn>   -->
+  <select id="querySctnIdsByCrseAndMc"   resultType="string" >
+  
+       SELECT 
+    	qstn.SUBJ_SCTN_ID
+    	
+    FROM stu_crse_list  scl    	
+    	LEFT JOIN stu_crse_test sct ON sct.sct_id = scl.sct_id
+    	LEFT JOIN user_class_history uch ON uch.user_id = sct.user_id  
+   
+    	LEFT JOIN question qstn ON qstn.QSTN_ID = scl.QSTN_ID
+
+    	
+    where sct.crse_id = #{crseId,jdbcType=VARCHAR} 
+    	 and  uch.mc_id = #{mcId,jdbcType=VARCHAR}  and uch.uc_state = '1'  
+     GROUP BY qstn.SUBJ_SCTN_ID	  		   
+  </select>
+  
+  
+  <!-- totalSctnCount   -->
+  <select id="totalSctnCount"   resultType="int" >
+  
+    SELECT  count(*)    	
+    FROM stu_crse_list  scl    	
+    	LEFT JOIN stu_crse_test sct ON sct.sct_id = scl.sct_id
+    	LEFT JOIN user_class_history uch ON uch.user_id = sct.user_id     
+    	LEFT JOIN question qstn ON qstn.QSTN_ID = scl.QSTN_ID
+    	LEFT JOIN subj_section  sctn  ON sctn.SUBJ_SCTN_ID = qstn.SUBJ_SCTN_ID   	
+    where sct.crse_id = #{crseId,jdbcType=VARCHAR}  and qstn.SUBJ_SCTN_ID = #{sctnId,jdbcType=VARCHAR}
+    	 and  uch.mc_id = #{mcId,jdbcType=VARCHAR}  and uch.uc_state = '1'  
+     		   
+  </select>
+  
+  <!-- totalSctnYesByMc   -->
+  <select id="totalSctnYesByMc"   resultType="int" >
+  
+    SELECT  count(*)    	
+    FROM stu_crse_list  scl    	
+    	LEFT JOIN stu_crse_test sct ON sct.sct_id = scl.sct_id
+    	LEFT JOIN user_class_history uch ON uch.user_id = sct.user_id     
+    	LEFT JOIN question qstn ON qstn.QSTN_ID = scl.QSTN_ID
+    	LEFT JOIN subj_section  sctn  ON sctn.SUBJ_SCTN_ID = qstn.SUBJ_SCTN_ID   	
+    where sct.crse_id = #{crseId,jdbcType=VARCHAR}  and qstn.SUBJ_SCTN_ID = #{sctnId,jdbcType=VARCHAR}
+    	 and uch.mc_id = #{mcId,jdbcType=VARCHAR}  and uch.uc_state = '1'  
+    	 and scl.scl_result != '0'
+     		   
+  </select>
+  
+  <!-- totalSctnNo   -->
+  <select id="totalSctnNo"   resultType="int" >
+  
+    SELECT  count(*)    	
+    FROM stu_crse_list  scl    	
+    	LEFT JOIN stu_crse_test sct ON sct.sct_id = scl.sct_id
+    	LEFT JOIN user_class_history uch ON uch.user_id = sct.user_id     
+    	LEFT JOIN question qstn ON qstn.QSTN_ID = scl.QSTN_ID
+    	LEFT JOIN subj_section  sctn  ON sctn.SUBJ_SCTN_ID = qstn.SUBJ_SCTN_ID   	
+    where sct.crse_id = #{crseId,jdbcType=VARCHAR}  and qstn.SUBJ_SCTN_ID = #{sctnId,jdbcType=VARCHAR}
+    	 and  uch.mc_id = #{mcId,jdbcType=VARCHAR}  and uch.uc_state = '1'  
+     	 and scl.scl_result = '0'	   
+  </select>
+  
+  
+  
+  
+  
+  <!-- list<unit>   -->
+  <select id="queryUnitIdsByCrseAndMc"   resultType="string" >
+  
+       SELECT 
+    	sctn.SUBJ_UNIT_ID
+    	
+    FROM stu_crse_list  scl    	
+    	LEFT JOIN stu_crse_test sct ON sct.sct_id = scl.sct_id
+    	LEFT JOIN user_class_history uch ON uch.user_id = sct.user_id  
+   
+    	LEFT JOIN question qstn ON qstn.QSTN_ID = scl.QSTN_ID
+    	LEFT JOIN subj_section  sctn  ON sctn.SUBJ_SCTN_ID = qstn.SUBJ_SCTN_ID
+    	
+    where sct.crse_id = #{crseId,jdbcType=VARCHAR} 
+    	 and  uch.mc_id = #{mcId,jdbcType=VARCHAR}  and uch.uc_state = '1'  
+     GROUP BY sctn.SUBJ_UNIT_ID	  		   
+  </select>
+  
+  
+  <!-- totalUnitCount   -->
+  <select id="totalUnitCount"   resultType="int" >
+  
+    SELECT  count(*)    	
+    FROM stu_crse_list  scl    	
+    	LEFT JOIN stu_crse_test sct ON sct.sct_id = scl.sct_id
+    	LEFT JOIN user_class_history uch ON uch.user_id = sct.user_id     
+    	LEFT JOIN question qstn ON qstn.QSTN_ID = scl.QSTN_ID
+    	LEFT JOIN subj_section  sctn  ON sctn.SUBJ_SCTN_ID = qstn.SUBJ_SCTN_ID   	
+    where sct.crse_id = #{crseId,jdbcType=VARCHAR}  and sctn.SUBJ_UNIT_ID = #{unitId,jdbcType=VARCHAR}
+    	 and  uch.mc_id = #{mcId,jdbcType=VARCHAR}  and uch.uc_state = '1'  
+     		   
+  </select>
+  
+  <!-- totalUnitYes   -->
+  <select id="totalUnitYes"   resultType="int" >
+  
+    SELECT  count(*)    	
+    FROM stu_crse_list  scl    	
+    	LEFT JOIN stu_crse_test sct ON sct.sct_id = scl.sct_id
+    	LEFT JOIN user_class_history uch ON uch.user_id = sct.user_id     
+    	LEFT JOIN question qstn ON qstn.QSTN_ID = scl.QSTN_ID
+    	LEFT JOIN subj_section  sctn  ON sctn.SUBJ_SCTN_ID = qstn.SUBJ_SCTN_ID   	
+    where sct.crse_id = #{crseId,jdbcType=VARCHAR}  and sctn.SUBJ_UNIT_ID = #{unitId,jdbcType=VARCHAR}
+    	 and uch.mc_id = #{mcId,jdbcType=VARCHAR}  and uch.uc_state = '1'  
+    	 and scl.scl_result != '0'
+     		   
+  </select>
+  
+  <!-- totalUnitNo   -->
+  <select id="totalUnitNo"   resultType="int" >
+  
+    SELECT  count(*)    	
+    FROM stu_crse_list  scl    	
+    	LEFT JOIN stu_crse_test sct ON sct.sct_id = scl.sct_id
+    	LEFT JOIN user_class_history uch ON uch.user_id = sct.user_id     
+    	LEFT JOIN question qstn ON qstn.QSTN_ID = scl.QSTN_ID
+    	LEFT JOIN subj_section  sctn  ON sctn.SUBJ_SCTN_ID = qstn.SUBJ_SCTN_ID   	
+    where sct.crse_id = #{crseId,jdbcType=VARCHAR}  and sctn.SUBJ_UNIT_ID = #{unitId,jdbcType=VARCHAR}
+    	 and  uch.mc_id = #{mcId,jdbcType=VARCHAR}  and uch.uc_state = '1'  
+     	 and scl.scl_result = '0'	   
+  </select>
+
+  
+  <!-- list   -->
+  <select id="queryByCrseAndMc"   resultMap="BaseResultMap" >
+  
+    select 
+    	scl_id, scl.sct_id, scl.QSTN_ID, scl_content, scl_result
+    	, u.nick_name , qstn.QSTN_TYPE_ID 
+    from stu_crse_list  scl    	
+    	left join stu_crse_test sct on sct.sct_id = scl.sct_id
+    	left join user_class_history uch on uch.user_id = sct.user_id  
+    	left join sys_user u  on u.user_id =   sct.user_id  
+    	left join question qstn on qstn.QSTN_ID = scl.QSTN_ID
+    where sct.crse_id = #{crseId,jdbcType=VARCHAR} and scl.QSTN_ID = #{qstnId,jdbcType=VARCHAR}  
+    	 and  uch.mc_id = #{mcId,jdbcType=VARCHAR}  and uch.uc_state = '1'  
+    	  		   
   </select>
   
   <!-- count   -->

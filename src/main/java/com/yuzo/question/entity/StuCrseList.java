@@ -15,8 +15,12 @@ public class StuCrseList {
     
     
     private String qstnTitle;
+    private String qstnTypeId;
+    
     private String qstnCode;
     private String subjSctnId;
+    
+    private String nickName;
     
     
     private String ansContent;
@@ -24,8 +28,12 @@ public class StuCrseList {
     private List<Answer> ansList;
     
     
+    
+    
 
-    public String getSclId() {
+   
+
+	public String getSclId() {
         return sclId;
     }
 
@@ -103,6 +111,22 @@ public class StuCrseList {
 
 	public void setAnsContent(String ansContent) {
 		this.ansContent = ansContent;
+	}
+
+	public String getNickName() {
+		return nickName;
+	}
+
+	public void setNickName(String nickName) {
+		this.nickName = nickName;
+	}
+
+	public String getQstnTypeId() {
+		return qstnTypeId;
+	}
+
+	public void setQstnTypeId(String qstnTypeId) {
+		this.qstnTypeId = qstnTypeId;
 	}
     
     
