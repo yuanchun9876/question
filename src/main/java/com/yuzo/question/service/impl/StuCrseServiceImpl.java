@@ -1,8 +1,10 @@
 package com.yuzo.question.service.impl;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -17,16 +19,7 @@ import com.yuzo.question.entity.Question;
 import com.yuzo.question.entity.StuCrseList;
 import com.yuzo.question.entity.StuCrseTest;
 import com.yuzo.question.entity.StudyCourse;
-import com.yuzo.question.entity.StudyCourseQuestion;
-import com.yuzo.question.entity.StudyCourseSection;
-import com.yuzo.question.entity.StudyPeriod;
-import com.yuzo.question.entity.SubjSection;
-import com.yuzo.question.entity.SubjUnit;
-import com.yuzo.question.entity.SubjectCourse;
 import com.yuzo.question.entity.SysUser;
-import com.yuzo.question.entity.TestPlanDetailed;
-import com.yuzo.question.entity.UserAnswerList;
-import com.yuzo.question.entity.UserTestList;
 import com.yuzo.question.mapper.AnswerMapper;
 import com.yuzo.question.mapper.QuestionMapper;
 import com.yuzo.question.mapper.StuCrseListMapper;
@@ -38,8 +31,8 @@ import com.yuzo.question.mapper.StudyPeriodMapper;
 import com.yuzo.question.mapper.SubjSectionMapper;
 import com.yuzo.question.mapper.SubjUnitMapper;
 import com.yuzo.question.mapper.SubjectCourseMapper;
+import com.yuzo.question.mapper.SysUserMapper;
 import com.yuzo.question.service.IStuCrseService;
-import com.yuzo.question.service.IStudyCourseService;
 
 @Service
 public class StuCrseServiceImpl implements IStuCrseService {
@@ -78,6 +71,9 @@ public class StuCrseServiceImpl implements IStuCrseService {
 	
 	@Autowired
 	private StuCrseListMapper sclMapper;
+	
+	@Autowired
+	private SysUserMapper userMapper;
 	
 	
 	@Override
@@ -369,5 +365,83 @@ public class StuCrseServiceImpl implements IStuCrseService {
 	public Integer totalSctnYes(String crseId, String userId, String sctnId) {
 		// TODO Auto-generated method stub
 		return sclMapper.totalSctnYes( crseId, userId, sctnId);
+	}
+
+
+
+	@Override
+	public List<Map<String, Object>> queryMcSclList(String crseId, String mcId) {
+		// TODO Auto-generated method stub
+		List<SysUser> userList = userMapper.queryByMcId(mcId);
+		
+		Set<String> qstnIds = new HashSet<>();
+//		List<StuCrseList> list = new ArrayList<>();
+		for (SysUser sysUser : userList) {
+			List<StuCrseList> sclList = sclMapper.queryByCrseAndUser(crseId, sysUser.getUserId());
+//			list.addAll(sclList);
+			for (StuCrseList stuCrseList : sclList) {
+				qstnIds.add(stuCrseList.getQstnId());
+			}
+		}
+		
+		List<Map<String, Object>> list = new ArrayList<>();
+		// qstnId
+		// qstnTitle
+		// sctnId
+		// sctnTitle
+		// qstnCount
+		// qstn_yes
+		// qstn_no
+		for (String qstnId : qstnIds) {
+			Map<String, Object> map = new HashMap<>();
+			map.put("qstnId", qstnId);
+			Question qstn = qstnMapper.selectByPrimaryKey(qstnId);
+			map.put("qstnTitle", qstn.getQstnTitle());
+			map.put("qstnCode", qstn.getQstnCode());
+			map.put("sctnId", qstn.getSubjSctnId());
+			map.put("sctnTitle", qstn.getSubjSctnTitle());
+			
+			Integer qstnCount = sclMapper.queryCountByCrseAndUser(crseId, qstnId, mcId);
+			System.out.println("qstnCount:" + qstnCount);
+			map.put("qstnCount", qstnCount);
+			
+			Integer qstn_yes = sclMapper.queryYesCountByCrseAndUser(crseId, qstnId, mcId);
+			System.out.println("qstn_yes:" + qstn_yes);
+			map.put("qstn_yes", qstn_yes);
+			
+			Integer qstn_no = sclMapper.queryNoCountByCrseAndUser(crseId, qstnId, mcId);
+			System.out.println("qstn_no:" + qstn_no);
+			map.put("qstn_no", qstn_no);
+			
+			int yes_count =  (int) Math.round(qstn_yes/1.0/qstnCount*100);			
+			map.put("qstn_yes_count", yes_count);
+			if (yes_count >= 80 ) {
+				map.put("qstn_ratio", "<button type=\"button\" class=\"btn btn-primary btn-xs\">" + yes_count + "%</button>");
+			} else if (yes_count >= 60  &&  yes_count < 80) {
+				map.put("qstn_ratio", "<button type=\"button\" class=\"btn btn-info btn-xs\">" + yes_count + "%</button>");
+			} else if (yes_count >= 30  &&  yes_count < 60) {
+				map.put("qstn_ratio", "<button type=\"button\" class=\"btn btn-warning btn-xs\">" + yes_count + "%</button>");
+			} else {
+				map.put("qstn_ratio", "<button type=\"button\" class=\"btn btn-danger btn-xs\">" + yes_count + "%</button>");
+			}
+			
+			list.add(map);
+		}
+		
+		
+		Collections.sort(list, new Comparator<Map>() {
+			@Override
+			public int compare(Map u1, Map u2) {
+				int diff = (int)u1.get("qstn_yes_count") - (int)u2.get("qstn_yes_count");
+				if (diff > 0) {
+					return 1;
+				} else if (diff < 0) {
+					return -1;
+				}
+				return 0; // 相等为0
+			}
+		}); // 排序
+		
+		return list;
 	}
 }

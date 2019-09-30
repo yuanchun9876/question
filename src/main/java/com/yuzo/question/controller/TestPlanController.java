@@ -554,7 +554,7 @@ public class TestPlanController {
 				}
 				return 0; // 相等为0
 			}
-		}); // 按年龄排序
+		}); // 排序
 
 		model.addAttribute("qstnList", qstnList);
 		

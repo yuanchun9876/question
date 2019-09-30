@@ -23,6 +23,7 @@ import com.github.pagehelper.PageInfo;
 import com.yuzo.question.entity.QstnFromType;
 import com.yuzo.question.entity.Question;
 import com.yuzo.question.entity.QuestionType;
+import com.yuzo.question.entity.StudyCourse;
 import com.yuzo.question.entity.SubjSection;
 import com.yuzo.question.entity.SubjUnit;
 import com.yuzo.question.entity.SubjectCourse;
@@ -65,6 +66,10 @@ public class UserReplyController {
 		List<UserMyclass> mclist = userReplyService.querymc();
 		System.out.println(mclist);
 		model.addAttribute("mclist", mclist);	
+		
+		List<StudyCourse> crselist = userReplyService.queryCrse();
+		System.out.println(crselist);
+		model.addAttribute("crselist", crselist);
 		
 		return "userreply/set_tp_reply";
 	}

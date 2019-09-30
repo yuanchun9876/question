@@ -3,6 +3,7 @@ package com.yuzo.question.service;
 import java.util.List;
 
 import com.yuzo.question.entity.Question;
+import com.yuzo.question.entity.StudyCourse;
 import com.yuzo.question.entity.TestPlan;
 import com.yuzo.question.entity.UserMyclass;
 
@@ -17,5 +18,7 @@ public interface IUserReplyService {
 	UserMyclass queryMcById(String mcId);
 
 	void updatePoints(String qstnId, String replyType, String userId);
+
+	List<StudyCourse> queryCrse();
 
 }

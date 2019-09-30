@@ -30,18 +30,42 @@
    
   </select>
   
-  <select id="queryCountByCrseAndUser" resultType="map"  >
+  <!-- count   -->
+  <select id="queryCountByCrseAndUser"  resultType="int"  >
     select 
-	 count(*) qstn_count
-     , qstn.SUBJ_SCTN_ID, sctn.SUBJ_SCTN_TITLE
-    from stu_crse_list  scl 
-    	left join question qstn  on scl.QSTN_ID = qstn.QSTN_ID
-    	left join subj_section sctn  on sctn.SUBJ_SCTN_ID = qstn.SUBJ_SCTN_ID
+    count(*)
+    from stu_crse_list  scl    	
     	left join stu_crse_test sct on sct.sct_id = scl.sct_id
-    
-    where sct.crse_id = #{crseId,jdbcType=VARCHAR}  and  sct.user_id = #{userId,jdbcType=VARCHAR}
-    group by qstn.SUBJ_SCTN_ID, sctn.SUBJ_SCTN_TITLE
+    	left join user_class_history uch on uch.user_id = sct.user_id   
+    where sct.crse_id = #{crseId,jdbcType=VARCHAR} and scl.QSTN_ID = #{qstnId,jdbcType=VARCHAR}
+    	 and  uch.mc_id = #{mcId,jdbcType=VARCHAR}  and uch.uc_state = '1'
+    		   
+  </select>
+  
+  <!-- yes   -->
+  <select id="queryYesCountByCrseAndUser"  resultType="int"  >
+    select 
+    count(*)
+    from stu_crse_list  scl    	
+    	left join stu_crse_test sct on sct.sct_id = scl.sct_id
+    	left join user_class_history uch on uch.user_id = sct.user_id   
+    where sct.crse_id = #{crseId,jdbcType=VARCHAR} and scl.QSTN_ID = #{qstnId,jdbcType=VARCHAR}
+    	 and  uch.mc_id = #{mcId,jdbcType=VARCHAR}  and uch.uc_state = '1'
+    	 and scl.scl_result != '0'
    
+  </select>
+  
+  <!-- no   -->
+  <select id="queryNoCountByCrseAndUser" resultType="int"  >
+    
+     select 
+    count(*)
+    from stu_crse_list  scl    	
+    	left join stu_crse_test sct on sct.sct_id = scl.sct_id
+    	left join user_class_history uch on uch.user_id = sct.user_id   
+    where sct.crse_id = #{crseId,jdbcType=VARCHAR} and scl.QSTN_ID = #{qstnId,jdbcType=VARCHAR}
+    	 and  uch.mc_id = #{mcId,jdbcType=VARCHAR}  and uch.uc_state = '1'
+    	 and scl.scl_result = '0'   
   </select>
   
   <select id="totalSctnYes" resultType="int"  >

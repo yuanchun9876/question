@@ -8,12 +8,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.yuzo.question.entity.Question;
+import com.yuzo.question.entity.StudyCourse;
 import com.yuzo.question.entity.SysUser;
 import com.yuzo.question.entity.TestPlan;
 import com.yuzo.question.entity.UserClassHistory;
 import com.yuzo.question.entity.UserMyclass;
 import com.yuzo.question.entity.UserReplyList;
 import com.yuzo.question.mapper.QuestionMapper;
+import com.yuzo.question.mapper.StudyCourseMapper;
 import com.yuzo.question.mapper.SysUserMapper;
 import com.yuzo.question.mapper.TestPlanMapper;
 import com.yuzo.question.mapper.UserClassHistoryMapper;
@@ -41,6 +43,9 @@ public class UserReplyServiceImpl implements IUserReplyService{
 	
 	@Autowired
 	private UserClassHistoryMapper ucMapper;
+	
+	@Autowired
+	private StudyCourseMapper crseMapper;
 	
 	@Override
 	public List<TestPlan> querytp() {
@@ -120,6 +125,12 @@ public class UserReplyServiceImpl implements IUserReplyService{
 				urMapper.insertSelective(ur2);
 			}
 		}
+	}
+
+	@Override
+	public List<StudyCourse> queryCrse() {
+		// TODO Auto-generated method stub
+		return crseMapper.query();
 	}
 
 	

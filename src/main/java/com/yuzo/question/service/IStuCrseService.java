@@ -39,4 +39,6 @@ public interface IStuCrseService {
 
 	Integer totalSctnYes(String crseId, String userId, String string);
 
+	List<Map<String, Object>> queryMcSclList(String crseId, String mcId);
+
 }

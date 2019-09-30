@@ -59,6 +59,20 @@ public class StuCrseController {
 		return "stucrse/list_stucrse";
 	}
 	
+	@RequestMapping("charsCrseMc")
+	public String charsCrseMc(String crseId, String mcId, Model model) {
+		
+		List<Map<String, Object>> mcSclList = stuCrseService.queryMcSclList(crseId, mcId);
+		System.out.println(mcSclList);
+		model.addAttribute("mcSclList", mcSclList);
+		
+
+		return "stucrse/chars_crse_mc";
+	}
+	
+	
+	
+	
 	@RequestMapping("ajaxCharsCrse")
 	@ResponseBody
 	public Map<String, Object> ajaxCharsCrse(String crseId, HttpServletRequest request) {
