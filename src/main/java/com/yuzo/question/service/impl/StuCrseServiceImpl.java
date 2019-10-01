@@ -623,4 +623,29 @@ public class StuCrseServiceImpl implements IStuCrseService {
 		// TODO Auto-generated method stub
 		return slMapper.selectByPrimaryKey(userId);
 	}
+
+
+
+
+	@Override
+	public List<StuLevel> querySlsByMcId(String mcId) {
+		// TODO Auto-generated method stub
+		List<StuLevel> slList = new ArrayList<>();
+		List<SysUser> list = userMapper.queryByMcId(mcId);
+		
+		for (SysUser sysUser : list) {
+			StuLevel sl = slMapper.selectByPrimaryKey(sysUser.getUserId());
+			if(sl == null ) {
+				
+				sl = new StuLevel();
+				sl.setNickName(sysUser.getNickName());
+				sl.setUserCrseLevel("");
+				sl.setUserId(sysUser.getUserId());
+				sl.setUserName(sysUser.getUserName());
+			}
+			slList.add(sl);
+		}
+		
+		return slList;
+	}
 }

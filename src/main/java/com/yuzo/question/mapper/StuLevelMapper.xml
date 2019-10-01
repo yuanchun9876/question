@@ -7,6 +7,7 @@
       <result column="user_name" property="userName" jdbcType="VARCHAR" />
     <result column="nick_name" property="nickName" jdbcType="VARCHAR" />
      <result column="crse_num" property="crseNum" jdbcType="VARCHAR" />
+      <result column="crse_name" property="crseName" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
     user_id, user_crse_level
@@ -15,7 +16,7 @@
   
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
-    sl.user_id, user_crse_level,  u.user_name,  u.nick_name , crse.crse_num
+    sl.user_id, user_crse_level,  u.user_name,  u.nick_name , crse.crse_num , crse.crse_name
     from stu_level  sl  
     	left join sys_user u  on u.user_id = sl.user_id
      	left join study_course crse  on sl.user_crse_level = crse.crse_id

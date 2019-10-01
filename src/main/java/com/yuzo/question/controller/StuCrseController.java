@@ -76,6 +76,19 @@ public class StuCrseController {
 		return "stucrse/list_stucrse";
 	}
 	
+	@RequestMapping("doSubCrse")
+	public String doSubCrse(String mcId, Model model) {
+		
+		List<StuLevel> list = stuCrseService.querySlsByMcId(mcId);
+		model.addAttribute("list", list);
+		
+	
+		
+		return "stucrse/list_mc_level";
+	}
+	
+	
+	
 	@RequestMapping("/ajaxCharsPlanMcUnit")
 	@ResponseBody
 	public Map<String, Object> ajaxCharsPlanMcUnit(String crseId,String mcId, Model model) {
@@ -220,15 +233,22 @@ public class StuCrseController {
 	}
 	
 	@RequestMapping("showCrseQstnPage")
-	public String showCrseQstnPage(String crseId, HttpServletRequest request, Model model) {
+	public String showCrseQstnPage(String crseId, String userId, HttpServletRequest request, Model model) {
 		
 		StudyCourse crse = stuCrseService.queryCrseById(crseId);
 		model.addAttribute("crse", crse);
+		System.out.println("userId:" + userId);
+		if(userId==null) {
 
-		SysUser user = (SysUser) request.getSession().getAttribute("user");
+			SysUser user = (SysUser) request.getSession().getAttribute("user");
+			userId = user.getUserId();
+		}
+		
 //		System.out.println(user);
 		
-		List<StuCrseTest> list = stuCrseService.queryStuCrseTest(crseId, user.getUserId());
+		List<StuCrseTest> list = stuCrseService.queryStuCrseTest(crseId, userId);
+		System.out.println("list:" + list);
+		
 		model.addAttribute("list", list);
 		
 		return "stucrse/show_stucrsetest";

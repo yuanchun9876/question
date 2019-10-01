@@ -51,6 +51,7 @@
 											<button type="button" class="btn btn-info pull-right" onclick="doSubPoints()">积分</button>
 											<button type="button" class="btn btn-success pull-right" onclick="doSubPlan()">考试</button>
 											<button type="button" class="btn btn-primary pull-right" onclick="doSub()">作业</button>
+											<button type="button" class="btn btn-danger pull-right" onclick="doSubCrse()">课程</button>
 											
 										</div>
 									</div>
@@ -91,6 +92,9 @@
 	</body>
 	
 	<script type="text/javascript">
+		function doSubCrse(){			
+			location.href="/stucrse/doSubCrse?mcId=" + $("#mcId").val();
+		}
 		function doSub(){			
 			location.href="/worklist/queryWlByMc?mcId=" + $("#mcId").val();
 		}
