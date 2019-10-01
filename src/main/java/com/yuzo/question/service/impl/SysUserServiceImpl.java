@@ -15,12 +15,16 @@ import org.springframework.stereotype.Service;
 import com.alibaba.fastjson.JSONObject;
 import com.aliyuncs.dysmsapi.model.v20170525.SendSmsResponse;
 import com.aliyuncs.exceptions.ClientException;
+import com.yuzo.question.entity.StuLevel;
+import com.yuzo.question.entity.StudyCourse;
 import com.yuzo.question.entity.SysRole;
 import com.yuzo.question.entity.SysUser;
 import com.yuzo.question.entity.SysUserRole;
 import com.yuzo.question.entity.UserClassHistory;
 import com.yuzo.question.entity.UserMyclass;
 import com.yuzo.question.entity.UserTeam;
+import com.yuzo.question.mapper.StuLevelMapper;
+import com.yuzo.question.mapper.StudyCourseMapper;
 import com.yuzo.question.mapper.SysRoleMapper;
 import com.yuzo.question.mapper.SysUserMapper;
 import com.yuzo.question.mapper.SysUserRoleMapper;
@@ -36,6 +40,12 @@ public class SysUserServiceImpl implements ISysUserService {
 	
 	@Autowired
 	private UserTeamMapper tmMapper;
+	
+	@Autowired
+	private StuLevelMapper slMapper;
+	
+	@Autowired
+	private StudyCourseMapper crseMapper;
 	
 	@Autowired
 	private SysUserMapper mapper;
@@ -358,5 +368,24 @@ public class SysUserServiceImpl implements ISysUserService {
 		SysUser user = this.queryById(userId);
 		user.setUserState("1");
 		return mapper.updateByPrimaryKeySelective(user);
+	}
+
+	@Override
+	public List<StudyCourse> queryCrse() {
+		// TODO Auto-generated method stub
+		return crseMapper.query();
+	}
+
+	@Override
+	public int saveSl(StuLevel sl) {
+		// TODO Auto-generated method stub
+		slMapper.deleteByPrimaryKey(sl.getUserId());
+		return slMapper.insertSelective(sl);
+	}
+	
+	@Override
+	public StuLevel querySlById(String userId) {
+		// TODO Auto-generated method stub
+		return slMapper.selectByPrimaryKey(userId);
 	}
 }

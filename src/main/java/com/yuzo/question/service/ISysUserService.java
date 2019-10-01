@@ -5,6 +5,8 @@ import java.util.List;
 import javax.servlet.http.HttpSession;
 
 import com.alibaba.fastjson.JSONObject;
+import com.yuzo.question.entity.StuLevel;
+import com.yuzo.question.entity.StudyCourse;
 import com.yuzo.question.entity.SysRole;
 import com.yuzo.question.entity.SysUser;
 import com.yuzo.question.entity.SysUserRole;
@@ -53,6 +55,12 @@ public interface ISysUserService {
 	JSONObject registerUser(SysUser user, HttpSession session);
 
 	int setName(String userId);
+
+	List<StudyCourse> queryCrse();
+
+	int saveSl(StuLevel sl);
+
+	StuLevel querySlById(String userId);
 
 
 

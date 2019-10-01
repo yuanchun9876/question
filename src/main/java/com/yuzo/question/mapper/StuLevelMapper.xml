@@ -4,15 +4,17 @@
   <resultMap id="BaseResultMap" type="com.yuzo.question.entity.StuLevel" >
     <id column="user_id" property="userId" jdbcType="VARCHAR" />
     <result column="user_crse_level" property="userCrseLevel" jdbcType="VARCHAR" />
+      <result column="user_name" property="userName" jdbcType="VARCHAR" />
+    <result column="nick_name" property="nickName" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
     user_id, user_crse_level
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
-    <include refid="Base_Column_List" />
-    from stu_level
-    where user_id = #{userId,jdbcType=VARCHAR}
+    sl.user_id, user_crse_level,  u.user_name,  u.nick_name
+    from stu_level  sl  left join sys_user u  on u.user_id = sl.user_id
+    where sl.user_id = #{userId,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
     delete from stu_level

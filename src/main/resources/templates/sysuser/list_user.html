@@ -110,10 +110,11 @@
 	       				<td th:text="${row.userState}" >0</td>	       				
 						<td>
 							<button type="button" class="btn btn-primary btn-sm"  th:onclick="editpage([[${row.userId}]])"     onclick="javascript:editpage('1')"    >修改</button>
-							<button type="button" class="btn btn-warning btn-sm"  th:onclick="setName([[${row.userId}]])"     onclick="javascript:editpage('1')"    >姓名确认</button>
-							<button type="button" class="btn btn-success btn-sm"  th:onclick="rolepage([[${row.userId}]])"     onclick="javascript:editpage('1')"    >设置角色</button>
-							<button type="button" class="btn btn-danger btn-sm"  th:onclick="updatemc([[${row.userId}]])"     onclick="javascript:editpage('1')"    >调整班级</button>
-							<button type="button" class="btn btn-info btn-sm"  th:onclick="updatetm([[${row.userId}]])"     onclick="javascript:editpage('1')"    >调整团队</button>
+							<button type="button" class="btn btn-warning btn-sm"  th:onclick="setName([[${row.userId}]])"     onclick="javascript:editpage('1')"    >姓名</button>
+							<button type="button" class="btn btn-success btn-sm"  th:onclick="rolepage([[${row.userId}]])"     onclick="javascript:editpage('1')"    >角色</button>
+							<button type="button" class="btn btn-danger btn-sm"  th:onclick="updatemc([[${row.userId}]])"     onclick="javascript:editpage('1')"    >班级</button>
+							<button type="button" class="btn btn-info btn-sm"  th:onclick="updatetm([[${row.userId}]])"     onclick="javascript:editpage('1')"    >团队</button>
+							<button type="button" class="btn btn-sm"  th:onclick="setlevel([[${row.userId}]])"     onclick="javascript:editpage('1')"    >起点</button>
 						</td>
        				</tr>	       			  		
         		</tbody>
@@ -135,6 +136,10 @@
 	
 <script type="text/javascript">
 
+	function setlevel(userId){
+		window.location.href = "/sysuser/setlevel?userId=" + userId;
+	}
+	
 	function updatemc(userId){
 		window.location.href = "/sysuser/updatemc?userId=" + userId;
 	}

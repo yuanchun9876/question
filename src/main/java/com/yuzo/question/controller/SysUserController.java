@@ -19,6 +19,8 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.yuzo.question.entity.StuLevel;
+import com.yuzo.question.entity.StudyCourse;
 import com.yuzo.question.entity.SubjUnit;
 import com.yuzo.question.entity.SysRole;
 import com.yuzo.question.entity.SysUser;
@@ -141,6 +143,37 @@ public class SysUserController {
 		
 		int count = userService.setName(userId);
 
+		return "redirect:query";
+	}
+	
+	@RequestMapping("/sysuser/setlevel")
+	public String setlevel(String userId, Model model) {
+		
+		StuLevel user = userService.querySlById(userId);
+		System.out.println(user);
+		if(user == null ) {
+			SysUser u = userService.queryById(userId);
+			user = new StuLevel();
+			user.setNickName(u.getNickName());
+			user.setUserCrseLevel("");
+			user.setUserId(u.getUserId());
+			user.setUserName(u.getUserName());
+		}
+		model.addAttribute("user", user);
+		
+		
+		List<StudyCourse> crseList = userService.queryCrse();
+		//System.out.println(user);
+		model.addAttribute("crseList", crseList);
+		
+		return "sysuser/set_user_level";
+	}
+	
+	
+	@RequestMapping("/sysuser/saveUserLevel")
+	public String saveUserLevel(StuLevel sl ) {
+		
+		int count = userService.saveSl(sl);	
 		return "redirect:query";
 	}
 	
