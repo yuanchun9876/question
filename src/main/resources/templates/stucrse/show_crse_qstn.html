@@ -102,7 +102,7 @@
 			        			 
 								  <td class="qstnTitle"  th:text="${scl.nickName}" >${qstn.qstnTitle }</td>
 								 
-								  <td  th:text="${scl.ansContent}" >${qstn.qstnTypeId }</td>
+								  <td  th:utext="${scl.ansContent}" >${qstn.qstnTypeId }</td>
 								   <td  th:utext="${scl.sclResult eq '0'?'<font color=red ><b><i>错误X</i></b></font>':'<font color=green >正确</font>'}" >${qstn.qstnTypeId }</td>
 								
 								</tr>	

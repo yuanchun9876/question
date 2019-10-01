@@ -19,6 +19,10 @@
     scl_id, sct_id, QSTN_ID, scl_content, scl_result
   </sql>
   
+  
+  
+  
+  
   <select id="queryByCrseAndUser" resultMap="BaseResultMap"  >
     select 
      scl_id, scl.sct_id, scl.QSTN_ID, scl_content, scl_result
@@ -33,7 +37,23 @@
    
   </select>
  
- 
+   <!-- yes   -->
+  <select id="queryByCrseAndMcAndQstn"  resultMap="BaseResultMap"  >
+    select 
+       scl_id, scl.sct_id, scl.QSTN_ID, scl_content, scl_result
+     , qstn.QSTN_TITLE, qstn.QSTN_CODE
+     , qstn.SUBJ_SCTN_ID, sctn.SUBJ_SCTN_TITLE
+     , u.nick_name , qstn.QSTN_TYPE_ID
+    from stu_crse_list  scl    	
+    	left join stu_crse_test sct on sct.sct_id = scl.sct_id
+    	left join user_class_history uch on uch.user_id = sct.user_id   
+    	LEFT JOIN question qstn ON qstn.QSTN_ID = scl.QSTN_ID
+    	LEFT JOIN subj_section  sctn  ON sctn.SUBJ_SCTN_ID = qstn.SUBJ_SCTN_ID  
+    	left join sys_user u  on sct.user_id = u.user_id
+    where sct.crse_id = #{crseId,jdbcType=VARCHAR} and scl.QSTN_ID = #{qstnId,jdbcType=VARCHAR}
+    	 and  uch.mc_id = #{mcId,jdbcType=VARCHAR}  and uch.uc_state = '1'
+    	  
+  </select>
   
   
    <!-- list<sctn>   -->
