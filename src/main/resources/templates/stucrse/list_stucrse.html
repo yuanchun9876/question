@@ -33,7 +33,7 @@
       <!-- Content Header (Page header) -->
       <section class="content-header">
         <h1>
-         	课程查询
+         	课程查询 &nbsp;&nbsp;&nbsp;&nbsp; 连续3次80分已上解锁下一关
         </h1>
         <ol class="breadcrumb">
         <li>
@@ -77,10 +77,10 @@
 	       				
 	       			
 	  
-						<td>
+						<td  th:if="${row.crseNum  <= user.crseNum}" >
 						
-							<button type="button" class="btn btn-info btn-sm"  th:onclick="openCrseQstnPage([[${row.crseId}]])"     onclick="javascript:editpage('1')"    >打开测试</button>
-							<button type="button" class="btn btn-danger btn-sm"  th:onclick="showCrseQstnPage([[${row.crseId}]])"     onclick="javascript:editpage('1')"    >查看成绩</button>
+							<button type="button"  th:if="${row.crseNum  <= user.crseNum}"   class="btn btn-info btn-sm"  th:onclick="openCrseQstnPage([[${row.crseId}]])"     onclick="javascript:editpage('1')"    >打开测试</button>
+							<button type="button"  th:if="${row.crseNum  <= user.crseNum}"   class="btn btn-danger btn-sm"  th:onclick="showCrseQstnPage([[${row.crseId}]])"     onclick="javascript:editpage('1')"    >查看成绩</button>
 						</td>
        				</tr>	       			  		
         		</tbody>

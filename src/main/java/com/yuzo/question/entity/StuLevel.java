@@ -10,12 +10,16 @@ public class StuLevel {
 
     private String nickName;
     
+    private String crseNum;
+    
     
 
-    @Override
+
+
+	@Override
 	public String toString() {
 		return "StuLevel [userId=" + userId + ", userCrseLevel=" + userCrseLevel + ", userName=" + userName
-				+ ", nickName=" + nickName + "]";
+				+ ", nickName=" + nickName + ", crseNum=" + crseNum + "]";
 	}
 
 	public String getUserId() {
@@ -49,6 +53,15 @@ public class StuLevel {
 	public void setNickName(String nickName) {
 		this.nickName = nickName;
 	}
+
+	public String getCrseNum() {
+		return crseNum;
+	}
+
+	public void setCrseNum(String crseNum) {
+		this.crseNum = crseNum;
+	}
     
+	
     
 }

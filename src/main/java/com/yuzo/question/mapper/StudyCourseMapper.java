@@ -18,4 +18,6 @@ public interface StudyCourseMapper {
     int updateByPrimaryKey(StudyCourse record);
 
 	List<StudyCourse> query();
+
+	List<StudyCourse> queryNextByNum(String crseNum);
 }

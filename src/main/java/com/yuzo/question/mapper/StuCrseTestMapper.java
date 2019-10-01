@@ -23,4 +23,6 @@ public interface StuCrseTestMapper {
 
 	List<StuCrseTest> querySctByCrseAndUser(@Param("crseId")String crseId, @Param("userId")String userId);
 
+	Integer queryTotalBy(@Param("crseId")String crseId, @Param("userId")String userId, @Param("num")int num);
+
 }

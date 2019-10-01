@@ -19,8 +19,18 @@ public class StuCrseTest {
     
     private String crseName;
     
+    
+    
+    
 
-    public String getSctId() {
+    @Override
+	public String toString() {
+		return "StuCrseTest [sctId=" + sctId + ", userId=" + userId + ", sctTime=" + sctTime + ", crseId=" + crseId
+				+ ", sctTotal=" + sctTotal + ", sctNum=" + sctNum + ", sctLen=" + sctLen + ", crseName=" + crseName
+				+ "]";
+	}
+
+	public String getSctId() {
         return sctId;
     }
 

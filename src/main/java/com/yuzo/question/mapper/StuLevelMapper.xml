@@ -6,16 +6,22 @@
     <result column="user_crse_level" property="userCrseLevel" jdbcType="VARCHAR" />
       <result column="user_name" property="userName" jdbcType="VARCHAR" />
     <result column="nick_name" property="nickName" jdbcType="VARCHAR" />
+     <result column="crse_num" property="crseNum" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
     user_id, user_crse_level
   </sql>
+
+  
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
-    sl.user_id, user_crse_level,  u.user_name,  u.nick_name
-    from stu_level  sl  left join sys_user u  on u.user_id = sl.user_id
+    sl.user_id, user_crse_level,  u.user_name,  u.nick_name , crse.crse_num
+    from stu_level  sl  
+    	left join sys_user u  on u.user_id = sl.user_id
+     	left join study_course crse  on sl.user_crse_level = crse.crse_id
     where sl.user_id = #{userId,jdbcType=VARCHAR}
   </select>
+  
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
     delete from stu_level
     where user_id = #{userId,jdbcType=VARCHAR}
@@ -33,6 +39,7 @@
       <if test="userCrseLevel != null" >
         user_crse_level,
       </if>
+
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="userId != null" >
@@ -41,6 +48,7 @@
       <if test="userCrseLevel != null" >
         #{userCrseLevel,jdbcType=VARCHAR},
       </if>
+      
     </trim>
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="com.yuzo.question.entity.StuLevel" >

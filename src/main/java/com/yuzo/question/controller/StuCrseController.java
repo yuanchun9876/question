@@ -27,6 +27,7 @@ import com.yuzo.question.entity.Answer;
 import com.yuzo.question.entity.Question;
 import com.yuzo.question.entity.StuCrseList;
 import com.yuzo.question.entity.StuCrseTest;
+import com.yuzo.question.entity.StuLevel;
 import com.yuzo.question.entity.StudyCourse;
 import com.yuzo.question.entity.StudyCourseQuestion;
 import com.yuzo.question.entity.StudyPeriod;
@@ -53,10 +54,25 @@ public class StuCrseController {
 	private IStuCrseService  stuCrseService;
 	
 	@RequestMapping("query")
-	public String query(Model model) {
+	public String query(Model model, HttpServletRequest request) {
 		
 		List<StudyCourse> list = stuCrseService.queryStudyCourse();
 		model.addAttribute("list", list);
+		
+		SysUser u = (SysUser) request.getSession().getAttribute("user");
+		
+		StuLevel user = stuCrseService.querySlById(u.getUserId());
+		System.out.println(user);
+		if(user == null ) {
+			
+			user = new StuLevel();
+			user.setNickName(u.getNickName());
+			user.setUserCrseLevel("");
+			user.setUserId(u.getUserId());
+			user.setUserName(u.getUserName());
+		}
+		model.addAttribute("user", user);
+		
 		return "stucrse/list_stucrse";
 	}
 	

@@ -24,6 +24,14 @@
     where user_id = #{userId,jdbcType=VARCHAR} and crse_id = #{crseId,jdbcType=VARCHAR} 
   </select>
   
+  <select id="queryTotalBy" resultType="int" >
+    select 
+    sct_total
+    from stu_crse_test sct left join study_course crse on sct.crse_id = crse.crse_id   
+    where user_id = #{userId,jdbcType=VARCHAR} and sct.crse_id = #{crseId,jdbcType=VARCHAR} 
+   			and sct_num = #{num}
+  </select>
+  
   <select id="querySctByCrseAndUser" resultMap="BaseResultMap" >
     select 
     sct_id, user_id, sct_time,  sct.crse_id, sct_total, sct_num, sct_len

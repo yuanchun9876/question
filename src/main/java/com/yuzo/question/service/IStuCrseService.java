@@ -7,6 +7,7 @@ import com.yuzo.question.entity.Answer;
 import com.yuzo.question.entity.Question;
 import com.yuzo.question.entity.StuCrseList;
 import com.yuzo.question.entity.StuCrseTest;
+import com.yuzo.question.entity.StuLevel;
 import com.yuzo.question.entity.StudyCourse;
 import com.yuzo.question.entity.SysUser;
 
@@ -51,5 +52,7 @@ public interface IStuCrseService {
 	Map<String, Object> querySclsByCrseAndMc(String crseId, String mcId);
 
 	Map<String, Object> querySctnsByCrseAndMc(String crseId, String mcId);
+
+	StuLevel querySlById(String userId);
 
 }

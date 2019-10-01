@@ -18,6 +18,7 @@ import com.yuzo.question.entity.Answer;
 import com.yuzo.question.entity.Question;
 import com.yuzo.question.entity.StuCrseList;
 import com.yuzo.question.entity.StuCrseTest;
+import com.yuzo.question.entity.StuLevel;
 import com.yuzo.question.entity.StudyCourse;
 import com.yuzo.question.entity.SubjSection;
 import com.yuzo.question.entity.SubjUnit;
@@ -27,6 +28,7 @@ import com.yuzo.question.mapper.AnswerMapper;
 import com.yuzo.question.mapper.QuestionMapper;
 import com.yuzo.question.mapper.StuCrseListMapper;
 import com.yuzo.question.mapper.StuCrseTestMapper;
+import com.yuzo.question.mapper.StuLevelMapper;
 import com.yuzo.question.mapper.StudyCourseMapper;
 import com.yuzo.question.mapper.StudyCourseQuestionMapper;
 import com.yuzo.question.mapper.StudyCourseSectionMapper;
@@ -77,6 +79,9 @@ public class StuCrseServiceImpl implements IStuCrseService {
 	
 	@Autowired
 	private SysUserMapper userMapper;
+	
+	@Autowired
+	private StuLevelMapper slMapper;
 	
 	
 	@Override
@@ -208,6 +213,30 @@ public class StuCrseServiceImpl implements IStuCrseService {
 		
 		sct.setSctTotal(total);
 		sctMapper.updateByPrimaryKeySelective(sct);
+		
+		// 判断 是否可以解锁下一关  153 182  207 215
+		System.out.println("当前记录：" + sct);
+		
+		
+		if (sct.getSctNum()>=3) {
+			Integer total2 = sctMapper.queryTotalBy(sct.getCrseId(), sct.getUserId(), sct.getSctNum()-1);
+			System.out.println("total2:" + total2);
+			Integer total3 = sctMapper.queryTotalBy(sct.getCrseId(), sct.getUserId(), sct.getSctNum()-2);
+			System.out.println("total3:" + total3);
+			if(sct.getSctTotal()>=80   &&  total2 >=80  && total3>=80) {
+				// 可以升级
+				StuLevel sl = new StuLevel();//slMapper.selectByPrimaryKey(sct.getUserId());
+				List<StudyCourse> nextCrseList = crseMapper.queryNextByNum(crse.getCrseNum());
+				
+				StudyCourse nextCrse = nextCrseList.get(0);
+				System.out.println("nextCrse:" + nextCrse);
+				sl.setUserId(sct.getUserId());
+				sl.setUserCrseLevel(nextCrse.getCrseId());
+				slMapper.updateByPrimaryKeySelective(sl);
+				
+			}
+			
+		} 
 		
 	}
 
@@ -584,5 +613,14 @@ public class StuCrseServiceImpl implements IStuCrseService {
 		map.put("cList", cList);
 		
 		return map;
+	}
+
+
+
+
+	@Override
+	public StuLevel querySlById(String userId) {
+		// TODO Auto-generated method stub
+		return slMapper.selectByPrimaryKey(userId);
 	}
 }
