@@ -76,7 +76,7 @@
 							<div class="box-search">
 								<div class="input-group">
 									<span class="input-group-addon" style="background: #EEEEEE;">科目单元</span>
-									<select class="form-control" name="subjId"  onchange="selectSubj(this.value)"  th:field="*{subjId}"  >
+									<select class="form-control" name="subjId"  onclick="selectSubj(this.value)"  onchange="selectSubj(this.value)"  th:field="*{subjId}"  >
 										<option value="">请选择</option>
 										<option  th:value = "${subj.subjId }"   th:each="subj,i:${subjList}"   th:text="${subj.subjTitle }"  >科目单元</option>
 									</select>
@@ -85,9 +85,9 @@
 							<div class="box-search">
 								<div class="input-group">
 									<span class="input-group-addon" style="background: #EEEEEE;">知识章</span>
-									<select class="form-control" name="unitId"  onchange="selectUnit(this.value)"  id="unitSelect"  th:field="*{unitId}"   >
+									<select class="form-control" name="unitId"  onclick="selectUnit(this.value)" onchange="selectUnit(this.value)"  id="unitSelect"  th:field="*{unitId}"   >
 										<option value="">请选择</option>									
-										<option  th:value = "${unit.subjUnitId}"   th:each="unit,i:${subjUnitList}"   th:text="${unit.subjUnitTitle }"  >知识章</option>
+										<option  th:value = "${unit.subjUnitId}"   th:each="unit,i:${subjUnitList}"   th:text="${unit.subjUnitTitle + '(' + unit.unitCount + ')' }"  >知识章</option>
 									</select>
 								</div>
 							</div>
@@ -96,7 +96,7 @@
 									<span class="input-group-addon" style="background: #EEEEEE;">知识节</span>
 									<select class="form-control" name="subjSctnId"  id="sctnSelect"   th:field="*{subjSctnId}"   >
 										<option value="">请选择</option>
-										<option  th:value = "${subjSctn.subjSctnId }"   th:each="subjSctn,i:${subjSctnList}"   th:text="${subjSctn.subjSctnTitle}" >知识节</option>
+										<option  th:value = "${subjSctn.subjSctnId }"   th:each="subjSctn,i:${subjSctnList}"   th:text="${subjSctn.subjSctnTitle + '(' + subjSctn.sctnCount + ')'}" >知识节</option>
 									</select>
 								</div>
 							</div>
@@ -203,7 +203,7 @@
 			$("#unitSelect").empty();
 			$("<option value=''>请选择</option>").appendTo("#unitSelect");
 			$.each(resp, function(i, item){
-				$("<option value='" + item.subjUnitId + "'>" + item.subjUnitNum + "." + item.subjUnitTitle + "</option>").appendTo("#unitSelect");
+				$("<option value='" + item.subjUnitId + "'>" + item.subjUnitTitle + "(" + item.unitCount + ")</option>").appendTo("#unitSelect");
 			});
 			if(resp.length > 0){
 				selectUnit(resp[0].subjUnitId);
@@ -220,7 +220,7 @@
 			$("#sctnSelect").empty();
 			$("<option value=''>请选择</option>").appendTo("#sctnSelect");
 			$.each(resp, function(i, item){
-				$("<option value='" + item.subjSctnId + "'>" + item.subjSctnNum + "." + item.subjSctnTitle + "</option>").appendTo("#sctnSelect");
+				$("<option value='" + item.subjSctnId + "'>" + item.subjSctnTitle + "(" + item.sctnCount + ")</option>").appendTo("#sctnSelect");
 			});
 		});
 	}

@@ -129,13 +129,19 @@ public class StuCrseServiceImpl implements IStuCrseService {
 	public void saveAnswer(SysUser user, Integer sctlen, String crseId, String[] qstns0, String[] ans0, String[] qstns2,String[] ans2) {
 		
 		StudyCourse crse = crseMapper.selectByPrimaryKey(crseId);
+		int points0 = 0;
+		int points2 = 0;
 		
-		int points0 = 5;
-		int points2 = 5;
+		int sum = crse.getQstnTest0() + crse.getQstnTest1() + crse.getQstnTest2() + crse.getQstnTest3() + crse.getQstnTest4();
+		if (sum!=0) {			
+			points0 = 100/sum;
+			points2 = 100/sum;
+		} else {
+			points0 = 5;
+			points2 = 5;
+		}
+		
 
-		
-		
-		
 		int total = 0;
 		
 		StuCrseTest sct = new StuCrseTest();

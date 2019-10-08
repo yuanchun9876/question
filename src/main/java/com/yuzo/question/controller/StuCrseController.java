@@ -261,16 +261,17 @@ public class StuCrseController {
 		model.addAttribute("crse", crse);
 		int flag = crse.getQstnFlag();
 		
-		int qc0 = crse.getQstnCount0();		
+		int qc0 = crse.getQstnTest0();		
 		//int qc1 = crse.getQstnCount1();		
-		int qc2 = crse.getQstnCount2();		
+		int qc2 = crse.getQstnTest2();		
 		//int qc3 = crse.getQstnCount3();		
 		//int qc4 = crse.getQstnCount4();	
 		
 		System.out.println("sum-qc0:" + qc0 );
 		System.out.println("sum-qc2:" + qc2 );
 		
-		int sum = 20;
+		int sum = crse.getQstnTest0() + crse.getQstnTest1() + crse.getQstnTest2() + crse.getQstnTest3() + crse.getQstnTest4();
+		
 		int q0size = 0;
 		int q2size = 0;
 		
@@ -289,7 +290,10 @@ public class StuCrseController {
 		//List<Question> qsListNotFlag4 = stuCrseService.queryQstnFlag(crseId, "4", "false");
 		
 		if (qsListFlag0 != null &&  qsListFlag0.size()>0) {
-			q0size = (int) (Math.random()*(qc0-qsListFlag0.size() + 1 ));
+			do {
+				q0size = (int) (Math.random()*(qc0-qsListFlag0.size() + 1 ));
+			} while ( q0size + crse.getQstnCount2() < sum );
+			
 			
 			
 			
@@ -309,7 +313,12 @@ public class StuCrseController {
 			
 			
 		} else {
-			q0size = (int) (Math.random()*(qc0 + 1));
+			
+			do {
+				q0size = (int) (Math.random()*(qc0 + 1));
+			} while ( q0size + crse.getQstnCount2() < sum );
+			
+			
 			if (qsListFlag2!=null  &&  qsListFlag2.size() >0) {
 				q2size = sum - qsListFlag2.size() - qsListFlag0.size() - q0size;
 				
