@@ -9,6 +9,13 @@
   <sql id="Base_Column_List" >
     crse_sctn_id, crse_id, SUBJ_SCTN_ID
   </sql>
+  <select id="queryByCrseId" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from study_course_section
+    where crse_id = #{value,jdbcType=VARCHAR}
+  </select>
+  
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />

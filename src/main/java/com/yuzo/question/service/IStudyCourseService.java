@@ -53,4 +53,6 @@ public interface IStudyCourseService {
 
 	int setCrseQstnFlag(String crseId, String[] qstns, String[] qstnFlags);
 
+	List<StudyCourseQuestion> queryScqByCrseIdForSctn(String crseId);
+
 }

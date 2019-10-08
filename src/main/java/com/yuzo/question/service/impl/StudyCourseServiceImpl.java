@@ -1,5 +1,6 @@
 package com.yuzo.question.service.impl;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
@@ -28,6 +29,7 @@ import com.yuzo.question.mapper.StudyPeriodMapper;
 import com.yuzo.question.mapper.SubjSectionMapper;
 import com.yuzo.question.mapper.SubjUnitMapper;
 import com.yuzo.question.mapper.SubjectCourseMapper;
+import com.yuzo.question.page.QuestionPage;
 import com.yuzo.question.service.IStudyCourseService;
 
 @Service
@@ -266,6 +268,30 @@ public class StudyCourseServiceImpl implements IStudyCourseService {
 		crse.setQstnFlag(flags);
 		mapper.updateByPrimaryKeySelective(crse);
 		return count;
+	}
+
+	@Override
+	public List<StudyCourseQuestion> queryScqByCrseIdForSctn(String crseId) {
+		// TODO Auto-generated method stub
+		List<StudyCourseSection> csList = crseSctnMapper.queryByCrseId(crseId);
+		List<StudyCourseQuestion> list = new ArrayList<>();
+		for (StudyCourseSection scs : csList) {
+			
+			QuestionPage page = new QuestionPage();
+			page.setSubjSctnId(scs.getSubjSctnId());
+			List<Question> qstnList = qstnMapper.queryAll(page );
+			for (Question question : qstnList) {
+				StudyCourseQuestion scq = new StudyCourseQuestion();
+				scq.setCrseId(crseId);
+				scq.setQstnId(question.getQstnId());
+				scq.setQstnCode(question.getQstnCode());
+				scq.setQstnTypeName(question.getQstnTypeName());
+				scq.setSubjSctnTitle(question.getSubjSctnTitle());
+				list.add(scq);
+			}	
+		}
+		
+		return list;
 	}
 
 }

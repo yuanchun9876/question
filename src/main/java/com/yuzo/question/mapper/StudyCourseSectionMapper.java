@@ -1,5 +1,7 @@
 package com.yuzo.question.mapper;
 
+import java.util.List;
+
 import com.yuzo.question.entity.StudyCourseSection;
 
 public interface StudyCourseSectionMapper {
@@ -16,4 +18,6 @@ public interface StudyCourseSectionMapper {
     int updateByPrimaryKey(StudyCourseSection record);
 
 	int delsByCrseId(String crseId);
+
+	List<StudyCourseSection> queryByCrseId(String crseId);
 }

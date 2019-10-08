@@ -16,13 +16,15 @@ public class QuestionPage {
 	@Override
 	public String toString() {
 		return "QuestionPage [pageNum=" + pageNum + ", pageSize=" + pageSize + ", qstnTypeId=" + qstnTypeId
-				+ ", qstnFromTypeId=" + qstnFromTypeId + ", subjId=" + subjId + ", unitId=" + unitId  + ", qstnTitle=" + qstnTitle + ", subjSctnId="
-				+ subjSctnId + "]";
+				+ ", qstnFromTypeId=" + qstnFromTypeId + ", subjId=" + subjId + ", unitId=" + unitId + ", subjSctnId="
+				+ subjSctnId + ", qstnCode=" + qstnCode + ", qstnTitle=" + qstnTitle + "]";
 	}
+
 	
 	public Integer getPageNum() {
 		return pageNum;
 	}
+
 	public void setPageNum(Integer pageNum) {
 		this.pageNum = pageNum;
 	}

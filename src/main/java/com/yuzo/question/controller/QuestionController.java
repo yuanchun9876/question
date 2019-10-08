@@ -90,7 +90,7 @@ public class QuestionController {
 			BeanUtils.copyProperties(new QuestionPage(), page);
 		}
 		//	
-		System.out.println("page: " + page);
+		System.out.println("selectQstn:page: " + page);
 		
 		model.addAttribute("page", page);
 		

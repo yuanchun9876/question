@@ -115,7 +115,14 @@ public class StudyCourseController {
 		model.addAttribute("crse", crse);	
 		
 		List<StudyCourseQuestion> scqList = stdycrseService.queryScqByCrseId(crseId);
-		model.addAttribute("scqList", scqList);	
+		if (scqList!=null && scqList.size()>0) {
+			model.addAttribute("scqList", scqList);	
+		} else {
+			scqList = stdycrseService.queryScqByCrseIdForSctn(crseId);
+			model.addAttribute("scqList", scqList);	
+		}
+		
+		
 		
 		return "stdycrse/set_qstn_crse";
 	}
