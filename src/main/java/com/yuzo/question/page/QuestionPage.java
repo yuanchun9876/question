@@ -86,7 +86,7 @@ public class QuestionPage {
 	}
 
 	public String getQstnCode() {
-		return qstnCode;
+		return qstnCode.trim();
 	}
 
 	public void setQstnCode(String qstnCode) {
