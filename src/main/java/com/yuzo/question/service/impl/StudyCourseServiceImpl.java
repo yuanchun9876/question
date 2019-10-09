@@ -277,9 +277,8 @@ public class StudyCourseServiceImpl implements IStudyCourseService {
 		List<StudyCourseQuestion> list = new ArrayList<>();
 		for (StudyCourseSection scs : csList) {
 			
-			QuestionPage page = new QuestionPage();
-			page.setSubjSctnId(scs.getSubjSctnId());
-			List<Question> qstnList = qstnMapper.queryAll(page );
+
+			List<Question> qstnList = qstnMapper.queryBySctnId(scs.getSubjSctnId() );
 			for (Question question : qstnList) {
 				StudyCourseQuestion scq = new StudyCourseQuestion();
 				scq.setCrseId(crseId);

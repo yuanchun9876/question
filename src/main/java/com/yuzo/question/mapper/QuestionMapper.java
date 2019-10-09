@@ -34,4 +34,7 @@ public interface QuestionMapper {
 	List<Question> selectAll();
 
 	List<Question> queryQstnByCrse(@Param("crseId")String crseId, @Param("type")String type, @Param("flag")String flag );
+
+
+	List<Question> queryBySctnId(String subjSctnId);
 }
