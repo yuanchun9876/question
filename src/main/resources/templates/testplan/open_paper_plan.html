@@ -68,21 +68,20 @@
 			<div class="content-wrapper">
 				<!-- Content Header (Page header) -->
 				<section class="content-header">
-					<h1>
-          				试卷页面
+					<h1  th:text="${'试卷页面         答题时长为' + plan.tpTotal + '分钟'}">
+          				试卷页面&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 答题时长为 20 分钟
 			        </h1>
 			       <ol class="breadcrumb">
 			       		<li>
-							<a th:href="@{/dashboard}"><i class="glyphicon glyphicon-globe"></i>导航</a>
+							<div id="ddd"  style="font-size: large;position: fixed;right: 10px;top: 5px;"></div>
 						</li>
-			          <li class="active"><a href="#">试卷页面</a></li>
 			        </ol>
 				</section>
 
 				<!-- Main content -->
 				<section class="content">
 					<div class="row">
-						<form class="form form-horizontal" method="post"   onkeydown="if(event.keyCode==13)return false;"    th:action="@{/testplan/answerSave}"  onsubmit="return(doSub())"  >
+						<form class="form form-horizontal" method="post"   name="form1"   onkeydown="if(event.keyCode==13)return false;"    th:action="@{/testplan/answerSave}"  onsubmit="return(doSub())"  >
 							<input  type="hidden"  name="tpId"  th:value="${plan.tpId}" >
 							<input  type="hidden"  name="tpType"  th:value="${plan.tpType}" >
 							<!-- left column -->
@@ -203,6 +202,53 @@
 	
 	<script type="text/javascript">
 		
+	var fen2 = 0;
+	var fen1 = 0;
+	var miao2 = 0;
+	var miao1 = 0;
+	var maxFen2 = parseInt([[${plan.tpTotal/10}]]);
+	//alert(maxFen2);
+	function dingshi(){
+		
+		if(miao1 == 9){
+			miao1 = 0;
+			if(miao2 == 5 ){
+				miao2 = 0;
+				if(fen1 == 9){
+					fen1 = 0;
+					if(fen2 >= maxFen2-1 ){
+						//fen2 = 0;
+						document.form1.submit();
+					}else{
+						fen2++;
+						if(fen2 >= maxFen2){
+							document.form1.submit();
+						}
+					}
+				}else{
+					fen1++;
+				}
+			}else{
+				miao2++;
+			}
+		}else{
+			miao1++;
+		}
+		var dd = "";
+			dd += "<b>" + fen2 + "</b>"
+			dd += "<b>" + fen1 + "</b>"
+			dd += "<b>:</b>"
+			dd += "<b>" + miao2 + "</b>"
+			dd += "<b>" + miao1 + "</b>"
+		if(fen2==1 && fen1==5 ){
+			$("#ddd").html("<font color='red' ><b>用时</b>&nbsp;&nbsp;&nbsp;" + dd +"</font>");		
+		}else{
+			$("#ddd").html("<b>用时</b>&nbsp;&nbsp;&nbsp;" + dd);		
+		}
+		
+	}
+	window.setInterval("dingshi()",1000);// 计时定时 
+	
 		window.setInterval("xintiao()", 1000*60*10);// 10分钟一次心跳
 		function xintiao(){
 			var url = "/testplan/xintiao";

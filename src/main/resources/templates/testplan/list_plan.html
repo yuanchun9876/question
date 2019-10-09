@@ -61,8 +61,8 @@
         				<th>序号</th>
         				<th>全选</th>
         				<th>方案名称</th>     				
-        				<th>开始时间</th>
-        				<th>结束时间</th>
+        				<th>时长</th>
+        				<th>类型</th>
         				<th>类型</th>
         				
 						<th>操作</th>
@@ -74,7 +74,7 @@
         			  <td  th:text="${i.count }" >1</td>
         			  <td ><input type="checkbox" name="ids" value="1"    th:value="${row.tpId}"  ></td>
         				<td  th:text="${row.tpTitle}"  >${unit.subjUnitTitle }</td>
-        				<td  th:text="${#dates.format(row.tpDate, 'yyyy-MM-dd')}" >${row.tpDate }</td>
+        				<td  th:text="${row.tpTotal}" >${row.tpDate }</td>
         				<td th:switch="${row.tpType}">
 								<span  th:case="'1'">固定出题</span>
 								<span  th:case="'0'">随机出题</span>

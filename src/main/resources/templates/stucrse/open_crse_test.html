@@ -216,12 +216,17 @@
 				miao2 = 0;
 				if(fen1 == 9){
 					fen1 = 0;
-					if(fen2 == 2 ){
+					if(fen2 == 1 ){
 						//fen2 = 0;
 						//提交
 						document.form1.submit();
 					}else{
 						fen2++;
+						if(fen2 == 2 ){
+							//fen2 = 0;
+							//提交
+							document.form1.submit();
+						}
 					}
 				}else{
 					fen1++;

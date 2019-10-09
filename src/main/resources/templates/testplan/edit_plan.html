@@ -62,11 +62,11 @@
 										<div class="form-group">
 											<label for="name" class="col-sm-2 control-label">开始时间</label>
 											<div class="col-sm-4">
-												<input type="date" class="form-control" name="tpBeginDate"   th:field="*{tpBeginDate}"  placeholder="请输入开始时间" required="required">
+												<input type="date" class="form-control" name="tpBeginDate"   th:field="*{tpBeginDate}"  placeholder="请输入开始时间"  >
 											</div>
-											<label for="name" class="col-sm-2 control-label">结束时间</label>
+											<label for="name" class="col-sm-2 control-label">时长(分钟)</label>
 											<div class="col-sm-4">
-												<input type="date" class="form-control" name="tpEndDate"   th:field="*{tpEndDate}"  placeholder="请输入结束时间" required="required">
+												<input type="number" class="form-control" name="tpTotal" th:field="*{tpTotal}"     min="10" step="1"  placeholder="请输入时长" required="required">
 											</div>
 										</div>
 										<div class="form-group">
