@@ -146,6 +146,7 @@ public class QuestionServiceImpl implements IQuestionService{
 	@Override
 	public List<Question> queryAll(QuestionPage page) {
 		// TODO Auto-generated method stub
+		System.out.println(page);
 		return qstnMapper.queryAll(page);
 	}
 
