@@ -89,7 +89,7 @@
 							<div class="box-search">
 								<div class="input-group">
 									<span class="input-group-addon" style="background: #EEEEEE;">科目单元</span>
-									<select class="form-control" name="subjId"  onchange="selectSubj(this.value)"  th:field="*{subjId}"  >
+									<select class="form-control" name="subjId" onclick="selectSubj(this.value)" onchange="selectSubj(this.value)"  th:field="*{subjId}"  >
 										<option value="">请选择</option>
 										<option  th:value = "${subj.subjId }"   th:each="subj,i:${subjList}"   th:text="${subj.subjTitle }"  >科目单元</option>
 									</select>
@@ -98,7 +98,7 @@
 							<div class="box-search">
 								<div class="input-group">
 									<span class="input-group-addon" style="background: #EEEEEE;">知识章</span>
-									<select class="form-control" name="unitId"  onchange="selectUnit(this.value)"  id="unitSelect"  th:field="*{unitId}"   >
+									<select class="form-control" name="unitId"  onclick="selectUnit(this.value)"  onchange="selectUnit(this.value)"  id="unitSelect"  th:field="*{unitId}"   >
 										<option value="">请选择</option>									
 										<option  th:value = "${unit.subjUnitId}"   th:each="unit,i:${subjUnitList}"   th:text="${unit.subjUnitTitle }"  >知识章</option>
 									</select>
