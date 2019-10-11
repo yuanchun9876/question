@@ -20,7 +20,9 @@
      <result column="SUBJ_UNIT_TITLE" property="subjUnitTitle" jdbcType="VARCHAR" />
     <result column="SUBJ_TITLE" property="subjTitle" jdbcType="VARCHAR" />
     
+     <result column="SUBJ_ID" property="subjId" jdbcType="VARCHAR" />
     <result column="SUBJ_CODE" property="subjCode" jdbcType="VARCHAR" />
+     <result column="SUBJ_UNIT_ID" property="subjUnitId" jdbcType="VARCHAR" />
      <result column="SUBJ_UNIT_CODE" property="subjUnitCode" jdbcType="VARCHAR" />
     <result column="SUBJ_SCTN_CODE" property="subjSctnCode" jdbcType="VARCHAR" />
 
@@ -167,6 +169,7 @@
     	select QSTN_ID, QSTN_TITLE, QSTN_INPUT_TIME, qstn.QSTN_TYPE_ID, qstn.QSTN_FROM_TYPE_ID, QSTN_CODE, QSTN_PICTEXT, QSTN_NUM, qstn.SUBJ_SCTN_ID
 		,qttype.QSTN_TYPE_NAME , qtfrom.QSTN_FROM_TYPE_CODE  , sctn.SUBJ_SCTN_TITLE 
 		,unit.SUBJ_UNIT_TITLE, subj.SUBJ_TITLE, qstn_level
+		,unit.SUBJ_UNIT_ID , subj.SUBJ_ID
 		FROM question qstn
 			left JOIN question_type qttype  on qttype.QSTN_TYPE_ID = qstn.QSTN_TYPE_ID
 			LEFT JOIN qstn_from_type  qtfrom on qtfrom.QSTN_FROM_TYPE_ID = qstn.QSTN_FROM_TYPE_ID

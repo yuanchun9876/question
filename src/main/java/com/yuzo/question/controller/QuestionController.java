@@ -180,6 +180,7 @@ public class QuestionController {
 	public String editPage(String id,Model model){
 		
 		Question qstn = qstnService.queryById(id);
+		System.out.println("qstn:" + qstn);
 		model.addAttribute("qstn", qstn);
 		List<QstnFromType> qstnFromList = qstnService.queryQstnFrom();
 		model.addAttribute("qstnFromList", qstnFromList);

@@ -36,7 +36,11 @@ public class Question {
     private String subjTitle;
     
     
+    private String subjId;
+    
     private String subjCode;
+    
+    private String subjUnitId;
     
     private String subjUnitCode;
     
@@ -49,6 +53,10 @@ public class Question {
     // 答案列表
     private List<Answer>  ansList;
     
+
+
+
+
 	@Override
 	public String toString() {
 		return "Question [qstnId=" + qstnId + ", subjSctnId=" + subjSctnId + ", qstnTypeId=" + qstnTypeId
@@ -56,11 +64,10 @@ public class Question {
 				+ ", qstnPictext=" + qstnPictext + ", qstnCode=" + qstnCode + ", qstnNum=" + qstnNum + ", qstnLevel="
 				+ qstnLevel + ", subjSctnTitle=" + subjSctnTitle + ", qstnTypeName=" + qstnTypeName
 				+ ", qstnFromTypeCode=" + qstnFromTypeCode + ", subjUnitTitle=" + subjUnitTitle + ", subjTitle="
-				+ subjTitle + ", subjCode=" + subjCode + ", subjUnitCode=" + subjUnitCode + ", subjSctnCode="
-				+ subjSctnCode + ", qstnCount=" + qstnCount + ", ansList=" + ansList + "]";
+				+ subjTitle + ", subjId=" + subjId + ", subjCode=" + subjCode + ", subjUnitId=" + subjUnitId
+				+ ", subjUnitCode=" + subjUnitCode + ", subjSctnCode=" + subjSctnCode + ", qstnCount=" + qstnCount
+				+ ", ansList=" + ansList + "]";
 	}
-
-
 
 	public List<Answer> getAnsList() {
 		return ansList;
@@ -220,6 +227,30 @@ public class Question {
 
 	public void setQstnLevel(Integer qstnLevel) {
 		this.qstnLevel = qstnLevel;
+	}
+
+
+
+	public String getSubjId() {
+		return subjId;
+	}
+
+
+
+	public void setSubjId(String subjId) {
+		this.subjId = subjId;
+	}
+
+
+
+	public String getSubjUnitId() {
+		return subjUnitId;
+	}
+
+
+
+	public void setSubjUnitId(String subjUnitId) {
+		this.subjUnitId = subjUnitId;
 	}
     
     
