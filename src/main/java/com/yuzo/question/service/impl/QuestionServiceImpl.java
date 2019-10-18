@@ -139,7 +139,8 @@ public class QuestionServiceImpl implements IQuestionService{
 	@Override
 	public int save(Question qstn) {
 		// TODO Auto-generated method stub
-		qstn.setQstnLevel(0);;
+		qstn.setQstnLevel(0);
+		qstn.setQstnState("1");
 		return qstnMapper.insertSelective(qstn);
 	}
 
@@ -355,5 +356,15 @@ public class QuestionServiceImpl implements IQuestionService{
 		qf.setQtfbState("O");
 		
 		return fdMapper.updateByPrimaryKeySelective(qf);
+	}
+
+	@Override
+	public int setState(String id) {
+		// TODO Auto-generated method stub
+		Question qstn = new Question();
+		qstn.setQstnId(id);
+		qstn.setQstnState("0");
+		
+		return qstnMapper.updateByPrimaryKeySelective(qstn);
 	}
 }

@@ -65,4 +65,6 @@ public interface IQuestionService {
 
 	int okfbPage(String qtfbId);
 
+	int setState(String id);
+
 }

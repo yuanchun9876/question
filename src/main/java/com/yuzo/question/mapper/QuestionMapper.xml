@@ -11,6 +11,11 @@
     <result column="QSTN_PICTEXT" property="qstnPictext" jdbcType="VARCHAR" />
     <result column="QSTN_CODE" property="qstnCode" jdbcType="VARCHAR" />
     
+    <result column="QSTN_STATE" property="qstnState" jdbcType="VARCHAR" />
+    <result column="QSTN_STATE_NAME" property="qstnStateName" jdbcType="VARCHAR" />
+    <result column="USER_ID" property="userId" jdbcType="VARCHAR" />
+    <result column="NICK_NAME" property="nickName" jdbcType="VARCHAR" />
+    
     <result column="QSTN_NUM" property="qstnNum" jdbcType="INTEGER" />
     <result column="QSTN_LEVEL" property="qstnLevel" jdbcType="INTEGER" />
      
@@ -29,7 +34,7 @@
   </resultMap>
   <sql id="Base_Column_List" >
     QSTN_ID, SUBJ_SCTN_ID, QSTN_TYPE_ID, QSTN_FROM_TYPE_ID, QSTN_TITLE, QSTN_INPUT_TIME, 
-    QSTN_PICTEXT, QSTN_NUM , QSTN_CODE, qstn_level
+    QSTN_PICTEXT, QSTN_NUM , QSTN_CODE, qstn_level, QSTN_STATE
   </sql>
   
   
@@ -38,7 +43,7 @@
 		from question  qstn 
 			left join study_course_question  cq on cq.qstn_id = qstn.qstn_id
 			left join study_course  crse   on crse.crse_id = cq.crse_id
-			where crse.crse_id = #{crseId}   and qstn.QSTN_TYPE_ID = #{type}  and cq.crse_qstn_flag = #{flag}
+			where crse.crse_id = #{crseId}   and qstn.QSTN_TYPE_ID = #{type}  and cq.crse_qstn_flag = #{flag} and QSTN_STATE = '1'
   </select>
   
   <select id="queryBySctnId" resultMap="BaseResultMap" parameterType="string" >
@@ -52,7 +57,7 @@
 			LEFT JOIN subj_unit unit on sctn.SUBJ_UNIT_ID = unit.SUBJ_UNIT_ID
 			LEFT JOIN subject_course subj on subj.SUBJ_ID = unit.SUBJ_ID
 		where
-		    qstn.SUBJ_SCTN_ID = #{subjSctnId}
+		    qstn.SUBJ_SCTN_ID = #{subjSctnId}  and QSTN_STATE = '1'
   </select>
   
   <select id="queryQuesByParams" resultMap="BaseResultMap" parameterType="string" >
@@ -67,6 +72,7 @@
 			LEFT JOIN subject_course subj on subj.SUBJ_ID = unit.SUBJ_ID
 		where
 		   qstn.QSTN_TYPE_ID = #{qstnTypeId}  and  qstn.QSTN_FROM_TYPE_ID = #{qstnFromTypeId}  and qstn.SUBJ_SCTN_ID = #{subjSctnId}
+		    and QSTN_STATE = '1'
   </select>
   
   
@@ -75,8 +81,8 @@
 		select tpd.SUBJ_SCTN_ID 
 		from test_plan_detailed  tpd 
 					LEFT JOIN test_plan tp  on tpd.TP_ID = tp.TP_ID  
-			where tp.TP_ID = #{value}  and tpd.TP_DTD_TYPE = '5'
-		)
+			where tp.TP_ID = #{value}  and tpd.TP_DTD_TYPE = '5' 
+		)   and QSTN_STATE = '1'
 		order by qstn.QSTN_INPUT_TIME
   </select>
   
@@ -91,6 +97,7 @@
 			LEFT JOIN subj_section sctn on sctn.SUBJ_SCTN_ID = qstn.SUBJ_SCTN_ID
 			LEFT JOIN subj_unit unit on sctn.SUBJ_UNIT_ID = unit.SUBJ_UNIT_ID
 			LEFT JOIN subject_course subj on subj.SUBJ_ID = unit.SUBJ_ID
+		where  QSTN_STATE = '1'
 		order by QSTN_INPUT_TIME
   </select>
   
@@ -127,6 +134,7 @@
 		<if test="qstnTitle != null   and  qstnTitle  != ''  ">
 			and qstn.QSTN_TITLE like CONCAT('%', #{qstnTitle}, '%')
 		</if>
+		and  QSTN_STATE = '1'
 	</where>
 		order by QSTN_INPUT_TIME
   </select>
@@ -160,6 +168,7 @@
 		<if test="subjSctnId != null   and  subjSctnId  != ''  ">
 			and qstn.SUBJ_SCTN_ID = #{subjSctnId}
 		</if>
+			and  QSTN_STATE = '1'
 	</where>
 	
   </select>
@@ -176,7 +185,7 @@
 			LEFT JOIN subj_section sctn on sctn.SUBJ_SCTN_ID = qstn.SUBJ_SCTN_ID
 			LEFT JOIN subj_unit unit on sctn.SUBJ_UNIT_ID = unit.SUBJ_UNIT_ID
 			LEFT JOIN subject_course subj on subj.SUBJ_ID = unit.SUBJ_ID
-    where QSTN_ID = #{qstnId,jdbcType=VARCHAR}
+    where QSTN_ID = #{qstnId,jdbcType=VARCHAR} 	and  QSTN_STATE = '1'
   </select>
   
   
@@ -187,10 +196,10 @@
  <insert id="insert" parameterType="com.yuzo.question.entity.Question" >
     insert into question (QSTN_ID, SUBJ_SCTN_ID, QSTN_TYPE_ID, 
       QSTN_FROM_TYPE_ID, QSTN_TITLE, QSTN_INPUT_TIME,  QSTN_CODE,
-      QSTN_PICTEXT, QSTN_NUM), qstn_level
+      QSTN_PICTEXT, QSTN_NUM), qstn_level , QSTN_STATE, user_id, nick_name
     values (#{qstnId,jdbcType=VARCHAR}, #{subjSctnId,jdbcType=VARCHAR}, #{qstnTypeId,jdbcType=VARCHAR}, 
       #{qstnFromTypeId,jdbcType=VARCHAR}, #{qstnTitle,jdbcType=VARCHAR}, #{qstnInputTime,jdbcType=TIMESTAMP},   #{qstnCode,jdbcType=VARCHAR},
-      #{qstnPictext,jdbcType=VARCHAR}, #{qstnNum,jdbcType=INTEGER})
+      #{qstnPictext,jdbcType=VARCHAR}, #{qstnNum,jdbcType=INTEGER}, '1', #{userId,jdbcType=VARCHAR}, #{nickName,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.yuzo.question.entity.Question" >
     insert into question
@@ -225,6 +234,17 @@
       <if test="qstnLevel != null" >
         QSTN_LEVEL,
       </if>
+      
+       <if test="qstnState != null" >
+        QSTN_STATE,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="nickName != null" >
+        nick_name,
+      </if>
+      
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="qstnId != null" >
@@ -256,6 +276,16 @@
       </if>
       <if test="qstnLevel != null" >
         #{qstnLevel,jdbcType=INTEGER},
+      </if>
+     
+     <if test="qstnState != null" >
+       '1'
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="nickName != null" >
+        #{nickName,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -289,6 +319,9 @@
        <if test="qstnLevel != null" >
        QSTN_LEVEL =  #{qstnLevel,jdbcType=INTEGER},
      	</if>
+     	 <if test="qstnState != null" >
+       QSTN_STATE = #{qstnState,jdbcType=VARCHAR},
+      </if>
     </set>
     where QSTN_ID = #{qstnId,jdbcType=VARCHAR}
   </update>
@@ -302,6 +335,7 @@
        QSTN_CODE = #{qstnCode,jdbcType=VARCHAR},
       QSTN_PICTEXT = #{qstnPictext,jdbcType=VARCHAR},
         QSTN_LEVEL =  #{qstnLevel,jdbcType=INTEGER},
+          QSTN_STATE = #{qstnState,jdbcType=VARCHAR},
       QSTN_NUM = #{qstnNum,jdbcType=INTEGER}
       
     where QSTN_ID = #{qstnId,jdbcType=VARCHAR}

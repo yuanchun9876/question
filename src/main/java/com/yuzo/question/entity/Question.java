@@ -25,6 +25,12 @@ public class Question {
     private Integer qstnLevel;
     
     
+    private String qstnState;  // 0 不可用 1 可用
+    private String qstnStateName;
+    private String userId;
+    private String nickName;
+    
+    
     private String subjSctnTitle;
 
     private String qstnTypeName;
@@ -57,12 +63,15 @@ public class Question {
 
 
 
+
+
 	@Override
 	public String toString() {
 		return "Question [qstnId=" + qstnId + ", subjSctnId=" + subjSctnId + ", qstnTypeId=" + qstnTypeId
 				+ ", qstnFromTypeId=" + qstnFromTypeId + ", qstnTitle=" + qstnTitle + ", qstnInputTime=" + qstnInputTime
 				+ ", qstnPictext=" + qstnPictext + ", qstnCode=" + qstnCode + ", qstnNum=" + qstnNum + ", qstnLevel="
-				+ qstnLevel + ", subjSctnTitle=" + subjSctnTitle + ", qstnTypeName=" + qstnTypeName
+				+ qstnLevel + ", qstnState=" + qstnState + ", qstnStateName=" + qstnStateName + ", userId=" + userId
+				+ ", nickName=" + nickName + ", subjSctnTitle=" + subjSctnTitle + ", qstnTypeName=" + qstnTypeName
 				+ ", qstnFromTypeCode=" + qstnFromTypeCode + ", subjUnitTitle=" + subjUnitTitle + ", subjTitle="
 				+ subjTitle + ", subjId=" + subjId + ", subjCode=" + subjCode + ", subjUnitId=" + subjUnitId
 				+ ", subjUnitCode=" + subjUnitCode + ", subjSctnCode=" + subjSctnCode + ", qstnCount=" + qstnCount
@@ -251,6 +260,38 @@ public class Question {
 
 	public void setSubjUnitId(String subjUnitId) {
 		this.subjUnitId = subjUnitId;
+	}
+
+	public String getQstnState() {
+		return qstnState;
+	}
+
+	public void setQstnState(String qstnState) {
+		this.qstnState = qstnState;
+	}
+
+	public String getQstnStateName() {
+		return qstnStateName;
+	}
+
+	public void setQstnStateName(String qstnStateName) {
+		this.qstnStateName = qstnStateName;
+	}
+
+	public String getUserId() {
+		return userId;
+	}
+
+	public void setUserId(String userId) {
+		this.userId = userId;
+	}
+
+	public String getNickName() {
+		return nickName;
+	}
+
+	public void setNickName(String nickName) {
+		this.nickName = nickName;
 	}
     
     

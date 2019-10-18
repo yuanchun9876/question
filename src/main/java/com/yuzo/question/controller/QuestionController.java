@@ -116,6 +116,11 @@ public class QuestionController {
 		
 		return "qstn/list_sel_qstn";
 	}
+	@RequestMapping("setState") 
+	public String setState(String id, Model model){
+		int count = qstnService.setState(id);
+		return "redirect:query";
+	}
 	
 	@RequestMapping("addPage")
 	public String addPage(Model model){
@@ -168,9 +173,14 @@ public class QuestionController {
 	
 
 	@RequestMapping("addSave")
-	public String addSave(Question qstn, Model model){
+	public String addSave(Question qstn, Model model, HttpSession session){
 		qstn.setQstnId(UUID.randomUUID().toString());
 		qstn.setQstnInputTime(new Date());
+		
+		SysUser user = (SysUser)session.getAttribute("user");
+		qstn.setUserId(user.getUserId());
+		qstn.setNickName(user.getNickName());
+		
 		int count = qstnService.save(qstn);
 		logger.debug("count:" + count);
 		return "redirect:query";

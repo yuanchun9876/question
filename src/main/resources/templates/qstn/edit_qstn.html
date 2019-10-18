@@ -47,7 +47,7 @@
 								<!-- general form elements -->
 								<div class="box box-primary">
 									<div class="box-header with-border">
-										<h3 class="box-title">基本信息</h3>
+										<h3 class="box-title"><button type="button"  th:onclick="setState([[${qstn.qstnId}]])" class="btn btn-danger pull-right">状态</button></h3>
 										<div class="box-search">
 											<button type="submit" class="btn btn-info pull-right">提交</button>
 										</div>
@@ -158,6 +158,13 @@
 
 	<script type="text/javascript">
 		
+	function setState(qstnId){
+		if(confirm("确定要改变试题状态吗?")){
+			window.location.href = "/qstn/setState?id=" + qstnId;
+		}
+		
+	}
+	
 	
 	function selectSubj(subjId){
 		var url = "/subjUnit/selectSubj";
