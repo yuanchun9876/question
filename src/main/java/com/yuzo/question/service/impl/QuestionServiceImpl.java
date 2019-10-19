@@ -141,6 +141,7 @@ public class QuestionServiceImpl implements IQuestionService{
 		// TODO Auto-generated method stub
 		qstn.setQstnLevel(0);
 		qstn.setQstnState("1");
+		System.out.println("qstn:" + qstn);
 		return qstnMapper.insertSelective(qstn);
 	}
 

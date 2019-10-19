@@ -6,7 +6,8 @@ import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -38,7 +39,8 @@ import com.yuzo.question.service.IUserReplyService;
 @RequestMapping("/userreply")
 public class UserReplyController {
 	
-
+	private static final Logger logger = LoggerFactory.getLogger(UserReplyController.class);
+	
 	@Autowired
 	private IUserReplyService userReplyService;
 	

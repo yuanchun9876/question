@@ -279,7 +279,7 @@
       </if>
      
      <if test="qstnState != null" >
-       '1'
+        #{qstnState,jdbcType=VARCHAR},
       </if>
       <if test="userId != null" >
         #{userId,jdbcType=VARCHAR},

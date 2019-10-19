@@ -7,7 +7,8 @@ import java.util.UUID;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -38,7 +39,7 @@ import com.yuzo.question.service.IQuestionService;
 @SessionAttributes("qstnpage")
 public class QuestionController {
 	
-	private Logger logger = Logger.getLogger(QuestionController.class);
+	private static final Logger logger = LoggerFactory.getLogger(QuestionController.class);
 	
 	@Autowired
 	private IQuestionService qstnService;
@@ -57,7 +58,7 @@ public class QuestionController {
 			BeanUtils.copyProperties(new QuestionPage(), page);
 		}
 		//	
-		System.out.println("page: " + page);
+		logger.debug("page:" + page);
 		
 		model.addAttribute("page", page);
 		

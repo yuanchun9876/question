@@ -9,7 +9,8 @@ import java.util.UUID;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpSession;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -35,7 +36,7 @@ import com.yuzo.question.service.ISubjSectionService;
 public class SubjSectionController {
 
 	// 日志
-	static Logger logger = Logger.getLogger(SubjSectionController.class);
+	private static final Logger logger = LoggerFactory.getLogger(SubjSectionController.class);
 	
 	@Autowired
 	private ISubjSectionService  subjSctnService;

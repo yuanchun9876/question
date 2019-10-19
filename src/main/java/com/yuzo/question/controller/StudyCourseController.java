@@ -13,7 +13,8 @@ import java.util.UUID;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpSession;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -40,7 +41,7 @@ import com.yuzo.question.service.ISysRoleService;
 @RequestMapping("/stdycrse")
 public class StudyCourseController {
 	
-	static Logger logger = Logger.getLogger(StudyCourseController.class);
+	private static final Logger logger = LoggerFactory.getLogger(StudyCourseController.class);
 	
 	@Autowired
 	private IStudyCourseService  stdycrseService;

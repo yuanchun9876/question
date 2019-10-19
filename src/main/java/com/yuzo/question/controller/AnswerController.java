@@ -5,7 +5,8 @@ import java.util.UUID;
 
 import javax.servlet.http.HttpSession;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,14 +14,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.yuzo.question.entity.Answer;
 import com.yuzo.question.entity.Question;
-import com.yuzo.question.entity.SubjectCourse;
+
 import com.yuzo.question.service.IAnswerService;
+
+
 
 @Controller
 @RequestMapping("/ans")
 public class AnswerController {
 	
-	private Logger logger = Logger.getLogger(AnswerController.class);
+	private static final Logger logger = LoggerFactory.getLogger(AnswerController.class);
 	
 	@Autowired
 	private IAnswerService ansService;
