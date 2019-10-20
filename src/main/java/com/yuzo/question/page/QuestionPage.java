@@ -12,15 +12,18 @@ public class QuestionPage {
 	private String	subjSctnId;
 	private String	qstnCode;
 	private String  qstnTitle;
+	private String  qstnState;
+	
+
+
 	
 	@Override
 	public String toString() {
 		return "QuestionPage [pageNum=" + pageNum + ", pageSize=" + pageSize + ", qstnTypeId=" + qstnTypeId
 				+ ", qstnFromTypeId=" + qstnFromTypeId + ", subjId=" + subjId + ", unitId=" + unitId + ", subjSctnId="
-				+ subjSctnId + ", qstnCode=" + qstnCode + ", qstnTitle=" + qstnTitle + "]";
+				+ subjSctnId + ", qstnCode=" + qstnCode + ", qstnTitle=" + qstnTitle + ", qstnState=" + qstnState + "]";
 	}
 
-	
 	public Integer getPageNum() {
 		return pageNum;
 	}
@@ -99,6 +102,16 @@ public class QuestionPage {
 
 	public void setQstnTitle(String qstnTitle) {
 		this.qstnTitle = qstnTitle;
+	}
+
+
+	public String getQstnState() {
+		return qstnState;
+	}
+
+
+	public void setQstnState(String qstnState) {
+		this.qstnState = qstnState;
 	}
 	
 	

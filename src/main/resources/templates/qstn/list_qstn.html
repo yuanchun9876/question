@@ -75,7 +75,16 @@
 									<input type="text" class="form-control" name='qstnCode'  th:field="*{qstnCode}" placeholder="试题代号"  >
 								</div>
 							</div>
-						
+												<div class="box-search">
+								<div class="input-group">
+									<span class="input-group-addon" style="background: #EEEEEE;">试题状态</span>
+									<select class="form-control" name="qstnState"    >
+										<option value="">请选择</option>
+										<option value="1"   th:field="*{qstnState}"  th:value="1"  th:selected="selected"     >可用</option>
+										<option value="0"  th:field="*{qstnState}"  th:value="0"  th:selected="selected" >不可用</option>
+									</select>
+								</div>
+							</div>	
 							<div class="box-search btn-group">
 								<button class="btn btn-info" name="queryInfo">查询</button>
 							
@@ -127,6 +136,7 @@
 									<input type="text" class="form-control" value="" name="qstnTitle"  th:field="*{qstnTitle}"  style="width:600px;" placeholder="请输入试题内容">
 								</div>
 							</div>
+
 						<div class="box-search btn-group">
 							
 						</div>

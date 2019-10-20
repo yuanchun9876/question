@@ -88,7 +88,7 @@
   
   <select id="selectAll" resultMap="BaseResultMap"  >
    	select QSTN_ID, QSTN_TITLE, QSTN_INPUT_TIME, qstn.QSTN_TYPE_ID, qstn.QSTN_FROM_TYPE_ID, QSTN_CODE, QSTN_PICTEXT, QSTN_NUM, qstn.SUBJ_SCTN_ID
-		,qttype.QSTN_TYPE_NAME , qtfrom.QSTN_FROM_TYPE_CODE  , sctn.SUBJ_SCTN_TITLE 
+		,qttype.QSTN_TYPE_NAME , qtfrom.QSTN_FROM_TYPE_CODE  , sctn.SUBJ_SCTN_TITLE ,  QSTN_STATE, USER_ID , NICK_NAME
 		,unit.SUBJ_UNIT_TITLE, subj.SUBJ_TITLE, qstn_level
 		,unit.SUBJ_UNIT_CODE, subj.SUBJ_CODE, sctn.SUBJ_SCTN_CODE
 		FROM question qstn
@@ -97,7 +97,7 @@
 			LEFT JOIN subj_section sctn on sctn.SUBJ_SCTN_ID = qstn.SUBJ_SCTN_ID
 			LEFT JOIN subj_unit unit on sctn.SUBJ_UNIT_ID = unit.SUBJ_UNIT_ID
 			LEFT JOIN subject_course subj on subj.SUBJ_ID = unit.SUBJ_ID
-		where  QSTN_STATE = '1'
+		
 		order by QSTN_INPUT_TIME
   </select>
   
@@ -134,7 +134,10 @@
 		<if test="qstnTitle != null   and  qstnTitle  != ''  ">
 			and qstn.QSTN_TITLE like CONCAT('%', #{qstnTitle}, '%')
 		</if>
-		and  QSTN_STATE = '1'
+		<if test="qstnState != null   and  qstnState  != ''  ">
+			and  QSTN_STATE = #{qstnState}
+		</if>
+		
 	</where>
 		order by QSTN_INPUT_TIME
   </select>
@@ -168,7 +171,7 @@
 		<if test="subjSctnId != null   and  subjSctnId  != ''  ">
 			and qstn.SUBJ_SCTN_ID = #{subjSctnId}
 		</if>
-			and  QSTN_STATE = '1'
+			
 	</where>
 	
   </select>
