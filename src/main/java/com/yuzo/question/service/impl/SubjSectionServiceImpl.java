@@ -8,9 +8,11 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.yuzo.question.entity.Question;
 import com.yuzo.question.entity.SubjSection;
 import com.yuzo.question.entity.SubjUnit;
 import com.yuzo.question.entity.SubjectCourse;
+import com.yuzo.question.mapper.QuestionMapper;
 import com.yuzo.question.mapper.SubjSectionMapper;
 import com.yuzo.question.mapper.SubjUnitMapper;
 import com.yuzo.question.mapper.SubjectCourseMapper;
@@ -30,6 +32,9 @@ public class SubjSectionServiceImpl implements ISubjSectionService{
 	
 	@Autowired
 	private SubjectCourseMapper subjMapper;
+	
+	@Autowired
+	private QuestionMapper qstnMapper;
 
 	@Override
 	public List<SubjSection> queryByTchId(String tchId) {
@@ -132,7 +137,14 @@ public class SubjSectionServiceImpl implements ISubjSectionService{
 						List<Map<String, Object>> unitChdList = new ArrayList<>();
 						for (SubjSection sctn : sctnList) {
 							Map<String, Object> sctnMap = new HashMap<>();
-							sctnMap.put("name", sctn.getSubjSctnTitle()+" [ "+sctn.getSctnCount()+" ]");
+							
+							List<Question> qstn0s = qstnMapper.queryQuesByParams("0", "1", sctn.getSubjSctnId());
+							List<Question> qstn1s = qstnMapper.queryQuesByParams("1", "1", sctn.getSubjSctnId());
+							List<Question> qstn2s = qstnMapper.queryQuesByParams("2", "1", sctn.getSubjSctnId());
+							List<Question> qstn3s = qstnMapper.queryQuesByParams("3", "1", sctn.getSubjSctnId());
+							List<Question> qstn4s = qstnMapper.queryQuesByParams("4", "1", sctn.getSubjSctnId());
+							
+							sctnMap.put("name", sctn.getSubjSctnTitle()+" [ "+sctn.getSctnCount()+" ---- ( 单:" + (qstn0s!=null?qstn0s.size():0) + " )_( 多:" + (qstn1s!=null?qstn1s.size():0) + " )_( 空:" + (qstn2s!=null?qstn2s.size():0) + " )_( 判:" + (qstn3s!=null?qstn3s.size():0) + " )_( 答:" + (qstn4s!=null?qstn4s.size():0) + " ) ]");
 							unitChdList.add(sctnMap);
 						}
 						unitMap.put("children", unitChdList);
