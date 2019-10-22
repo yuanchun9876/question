@@ -111,7 +111,7 @@
 	$(function(){
 		
 		var url1 = "/stucrse/ajaxCharsCrse";
-		$.post(url1,{"crseId":"[[${crse.crseId}]]"},function(resp){
+		$.post(url1,{"crseId":"[[${crse.crseId}]]","userId":"[[${userId}]]"},function(resp){
 			 option1 = {
 					    title : {
 					        text: resp.crseName + '得分',
@@ -187,7 +187,7 @@
 		
 		
 		var url2 = "/stucrse/ajaxCharsCrseBySctn";
-		$.post(url2,{"crseId":"[[${crse.crseId}]]"},function(resp){
+		$.post(url2,{"crseId":"[[${crse.crseId}]]","userId":"[[${userId}]]"},function(resp){
 			option2 = {
 					   title : {
 					        text: '知识节统计'

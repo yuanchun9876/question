@@ -102,7 +102,7 @@ public class StuCrseController {
 	
 	@RequestMapping("/ajaxCharsPlanMcSctn")
 	@ResponseBody
-	public Map<String, Object> ajaxCharsPlanMcSctn(String crseId,String mcId, Model model) {
+	public Map<String, Object> ajaxCharsPlanMcSctn(String crseId, String mcId, Model model) {
 		System.out.println(crseId + ":" + mcId);
 		
 		Map<String, Object> map = stuCrseService.querySctnsByCrseAndMc(crseId, mcId);
@@ -147,11 +147,15 @@ public class StuCrseController {
 	
 	@RequestMapping("ajaxCharsCrse")
 	@ResponseBody
-	public Map<String, Object> ajaxCharsCrse(String crseId, HttpServletRequest request) {
+	public Map<String, Object> ajaxCharsCrse(String crseId, String userId,  HttpServletRequest request) {
 		Map<String, Object> map = new HashMap<String, Object>();
-		
-		SysUser user = (SysUser) request.getSession().getAttribute("user");
-		List<StuCrseTest> list = stuCrseService.querySctByCrseId(crseId, user.getUserId());
+		if(userId==null) {
+
+			SysUser user = (SysUser) request.getSession().getAttribute("user");
+			userId = user.getUserId();
+		}
+
+		List<StuCrseTest> list = stuCrseService.querySctByCrseId(crseId, userId);
 		StudyCourse crse = stuCrseService.queryCrseById(crseId);
 		map.put("crseName", crse.getCrseName());
 		String[] sctNums = new String[list.size()];
@@ -169,16 +173,20 @@ public class StuCrseController {
 	}
 	@RequestMapping("ajaxCharsCrseBySctn")
 	@ResponseBody
-	public Map<String, Object> ajaxCharsCrseBySctn(String crseId, HttpServletRequest request) {
+	public Map<String, Object> ajaxCharsCrseBySctn(String crseId, String userId,  HttpServletRequest request) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		
-		SysUser user = (SysUser) request.getSession().getAttribute("user");
+		if(userId==null) {
+
+			SysUser user = (SysUser) request.getSession().getAttribute("user");
+			userId = user.getUserId();
+		}
 		
 //		List<StuCrseTest> sctList = stuCrseService.querySctByCrseId(crseId, user.getUserId());
 //		
 //		List<StuCrseList> sclList = stuCrseService.querySclByCrseAndUser(crseId, user.getUserId());
 		
-		List<Map<String, Object>> sclCountList = stuCrseService.querySclCountByCrseAndUser(crseId, user.getUserId());
+		List<Map<String, Object>> sclCountList = stuCrseService.querySclCountByCrseAndUser(crseId, userId);
 		// qstn_count,SUBJ_SCTN_ID,SUBJ_SCTN_TITLE
 		System.out.println(sclCountList);
 		// 知识节
@@ -192,7 +200,7 @@ public class StuCrseController {
 			Map<String, Object> countMap = sclCountList.get(i);
 			Map<String, Object> cMap = new HashMap<>();
 			
-			sctn_yes[i] = stuCrseService.totalSctnYes(crseId, user.getUserId(), countMap.get("SUBJ_SCTN_ID").toString());
+			sctn_yes[i] = stuCrseService.totalSctnYes(crseId, userId, countMap.get("SUBJ_SCTN_ID").toString());
 			
 			sctn_count[i] = Integer.parseInt(countMap.get("qstn_count").toString());
 			cMap.put("text",countMap.get("SUBJ_SCTN_TITLE").toString());
@@ -238,13 +246,15 @@ public class StuCrseController {
 		
 		StudyCourse crse = stuCrseService.queryCrseById(crseId);
 		model.addAttribute("crse", crse);
-		System.out.println("userId:" + userId);
+		
+		System.err.println("userId:" + userId);
+	
 		if(userId==null) {
 
 			SysUser user = (SysUser) request.getSession().getAttribute("user");
 			userId = user.getUserId();
 		}
-		
+		model.addAttribute("userId", userId);
 //		System.out.println(user);
 		
 		List<StuCrseTest> list = stuCrseService.queryStuCrseTest(crseId, userId);
