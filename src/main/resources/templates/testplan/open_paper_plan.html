@@ -218,10 +218,13 @@
 					fen1 = 0;
 					if(fen2 >= maxFen2-1 ){
 						//fen2 = 0;
+						doSub();
 						document.form1.submit();
 					}else{
 						fen2++;
 						if(fen2 >= maxFen2){
+							console.log("fen2:" + fen2);
+							doSub();
 							document.form1.submit();
 						}
 					}
