@@ -293,4 +293,25 @@ public class StudyCourseServiceImpl implements IStudyCourseService {
 		return list;
 	}
 
+	@Override
+	public int addCrseQstn(String crseId, String qstnId) {
+		// TODO Auto-generated method stub
+		StudyCourseQuestion  cq = new StudyCourseQuestion();
+		cq.setCrseQstnId(UUID.randomUUID().toString());
+		cq.setCrseId(crseId);
+		cq.setQstnId(qstnId);
+		Question qstn = qstnMapper.selectByPrimaryKey(qstnId);
+		cq.setQstnTypeId(qstn.getQstnTypeId());
+		cq.setSubjSctnId(qstn.getSubjSctnId());
+		cq.setCrseQstnFlag("false");
+		return crseQstnMapper.insertSelective(cq);
+	}
+
+	@Override
+	public int delCrseQstn(String crseId, String qstnId) {
+		// TODO Auto-generated method stub
+		
+		return crseQstnMapper.delByCrseQstn(crseId, qstnId);
+	}
+
 }

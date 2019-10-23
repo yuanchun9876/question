@@ -105,7 +105,10 @@
 											</div>
 										</div>
 										<div class="form-group" >
-											<label class="col-sm-1 control-label"  >选择</label>
+											<div class="col-sm-1 "  >
+												<button type="button" class="btn btn-danger btn-sm"  th:onclick="delCrseQstn(this, [[${crse.crseId}]], [[${qstn.qstnId}]])" >取消</button>
+												<button type="button" class="btn btn-primary btn-sm"  th:onclick="addCrseQstn(this, [[${crse.crseId}]], [[${qstn.qstnId}]])"  disabled="disabled"   >确认</button>
+											</div>
 											<div class="col-sm-11 radio text-left" >
 												<div  th:each="ans,i:${qstn.ansList}">
 												<label  class="questionanswer">
@@ -138,7 +141,10 @@
 											</div>
 										</div>
 										<div class="form-group" >
-											<label for="name" class="col-sm-1 control-label"  >回答</label>
+									<div class="col-sm-1 "  >
+												<button type="button" class="btn btn-danger btn-sm"  th:onclick="delCrseQstn(this, [[${crse.crseId}]], [[${qstn.qstnId}]])" >取消</button>
+												<button type="button" class="btn btn-primary btn-sm"  th:onclick="addCrseQstn(this, [[${crse.crseId}]], [[${qstn.qstnId}]])"  disabled="disabled"   >确认</button>
+											</div>
 											<div class="col-sm-11" >
 												<input   class="form-control"  name="ans2" >
 											</div>
@@ -166,7 +172,10 @@
 											</div>
 										</div>
 										<div class="form-group" >
-											<label for="name" class="col-sm-1 control-label"  >回答</label>
+											<div class="col-sm-1 "  >
+												<button type="button" class="btn btn-danger btn-sm"  th:onclick="delCrseQstn(this, [[${crse.crseId}]], [[${qstn.qstnId}]])" >取消</button>
+												<button type="button" class="btn btn-primary btn-sm"  th:onclick="addCrseQstn(this, [[${crse.crseId}]], [[${qstn.qstnId}]])"  disabled="disabled"   >确认</button>
+											</div>
 											<div class="col-sm-11" >
 												<textarea rows="3"  class="form-control"  name="ans4" ></textarea>
 											</div>
@@ -200,6 +209,26 @@
 	</body>
 	
 	<script type="text/javascript">
+		
+		function delCrseQstn(delbtn, crseId, qstnId){	
+			console.log("del:" + crseId + ":" + qstnId);
+			var url = "/stdycrse/ajaxDelCrseQstn";
+			$.post(url,{"crseId":crseId,"qstnId":qstnId},function(){
+				$(delbtn).attr("disabled","disabled");
+				$(delbtn).next("button").removeAttr("disabled");
+			});
+		}
+		
+		function addCrseQstn(addbtn, crseId, qstnId){
+		
+			console.log("add:" + crseId + ":" + qstnId);
+		 	var url = "/stdycrse/ajaxAddCrseQstn";
+			$.post(url,{"crseId":crseId,"qstnId":qstnId},function(){
+				$(addbtn).attr("disabled","disabled");
+				$(addbtn).prev("button").removeAttr("disabled");
+			});
+		}
+	
 
 	 	$(function () {
 		    $('input').iCheck({

@@ -49,6 +49,11 @@
     where crse_qstn_id = #{crseQstnId,jdbcType=VARCHAR}
   </select>
    
+  <delete id="delByCrseQstn"  >
+    delete from study_course_question
+    where crse_id = #{crseId, jdbcType=VARCHAR}  and qstn_id = #{qstnId, jdbcType=VARCHAR}
+  </delete>
+  
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
     delete from study_course_question
     where crse_qstn_id = #{crseQstnId,jdbcType=VARCHAR}

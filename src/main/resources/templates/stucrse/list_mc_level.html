@@ -59,7 +59,7 @@
         		<table class="table table-striped">
         			<tr>
         				<th>序号</th>       				
-        				<th>ID</th>     				
+        				   				
         				<th>姓名</th>     				
         				<th>课程</th>
         				<th>进度</th>
@@ -68,7 +68,7 @@
         			<tbody th:remove="all-but-first" >       			  	
         			<tr  th:each="row,i:${list}" >
 	        			<td th:text="${i.count }">1</td>
-	       				<td th:text="${row.userId}" >JavaSE</td>
+	       			
 	       				<td th:text="${row.nickName}" >JavaSE</td>
 	       				<td th:text="${row.crseName}">1</td>
 	       				<td th:text="${row.crseNum}">1</td>

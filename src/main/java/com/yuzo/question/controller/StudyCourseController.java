@@ -139,6 +139,24 @@ public class StudyCourseController {
 		return "stdycrse/qstn_flag_crse";
 	}
 	
+	
+	@RequestMapping("/ajaxAddCrseQstn")
+	@ResponseBody
+	public String ajaxAddCrseQstn(String crseId, String qstnId) {
+		
+		int count = stdycrseService.addCrseQstn(crseId, qstnId);
+		
+		return "add";
+	}
+	@RequestMapping("/ajaxDelCrseQstn")
+	@ResponseBody
+	public String ajaxDelCrseQstn(String crseId, String qstnId) {
+		
+		int count = stdycrseService.delCrseQstn(crseId, qstnId);
+		
+		return "del";
+	}
+	
 	@RequestMapping("/showqstnpage")
 	public String showqstnpage(String crseId, Model model) {
 		

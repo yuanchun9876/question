@@ -26,4 +26,6 @@ public interface StudyCourseQuestionMapper {
 	Integer totalUnitCount(@Param("crseId")String crseId, @Param("subjUnitId")String subjUnitId);
 
 	Integer totalSctnCount(@Param("crseId")String crseId, @Param("subjSctnId")String subjSctnId);
+
+	int delByCrseQstn(@Param("crseId")String crseId, @Param("qstnId")String qstnId);
 }

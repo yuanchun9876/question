@@ -55,4 +55,8 @@ public interface IStudyCourseService {
 
 	List<StudyCourseQuestion> queryScqByCrseIdForSctn(String crseId);
 
+	int addCrseQstn(String crseId, String qstnId);
+
+	int delCrseQstn(String crseId, String qstnId);
+
 }
