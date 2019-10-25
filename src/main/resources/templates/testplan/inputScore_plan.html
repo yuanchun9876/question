@@ -62,7 +62,7 @@
 					
 											<label for="name" class="col-sm-2 control-label">所属班级</label>
 											<div class="col-sm-4">
-												<select class="form-control" name="tpTarget"  th:field="*{tpTarget}"  onchange="queryCharts(this.value)"   >
+												<select class="form-control" name="tpTarget"  th:field="*{tpTarget}"  th:onclick="queryCharts(this.value)"  onchange="queryCharts(this.value)"   >
 													<option value="">请选择</option>
 													<option  th:value = "${mc.mcId}"   th:each="mc,i:${mclist}"   th:text="${mc.mcCode }"  >所属班级</option>
 												</select>

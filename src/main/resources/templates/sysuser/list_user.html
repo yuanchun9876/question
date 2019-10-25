@@ -52,7 +52,7 @@
 				<div class="box-search">
 					<div class="input-group">
 						<span class="input-group-addon" style="background: #EEEEEE;">所属班级</span>
-						<select class="form-control" name="mcId"   th:field="*{mcId}"   th:onchange="selectTm(this.value)" >
+						<select class="form-control" name="mcId"   th:field="*{mcId}"   th:onclick="selectTm(this.value)"   th:onchange="selectTm(this.value)" >
 							<option value="">请选择</option>
 							<option  th:value = "${mc.mcId}"   th:each="mc,i:${mclist}"   th:text="${mc.mcCode }"  >所属班级</option>
 						</select>
