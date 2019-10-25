@@ -767,7 +767,13 @@ public class TestPlanServiceImpl implements ITestPlanService {
 			for (int j = 0; j < userList.size(); j++) {
 				SysUser user = userList.get(j);
 				List<UserTestList> utlList = utlMapper.queryByUserAndTp(user.getUserId(), tp.getTpId());
-				data.add( utlList.get(0).getUtsTotal() );
+			//	System.err.println(utlList);
+				if (utlList!=null  && utlList.size()>0) {
+					data.add( utlList.get(0).getUtsTotal() );
+				} else {
+					data.add( 0 );
+				}
+				
 			}
 			mm.put("data", data);
 			tpProintsList.add(mm);
