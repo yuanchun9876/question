@@ -253,6 +253,10 @@ public class StuCrseController {
 
 			SysUser user = (SysUser) request.getSession().getAttribute("user");
 			userId = user.getUserId();
+			model.addAttribute("user", user);
+		}else {
+			SysUser user = stuCrseService.queryUserById(userId);
+			model.addAttribute("user", user);
 		}
 		model.addAttribute("userId", userId);
 //		System.out.println(user);

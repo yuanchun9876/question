@@ -40,6 +40,19 @@
    	order by crse_num
   </select>
   
+  <select id="queryPrevByNum" resultMap="BaseResultMap"  >
+  <![CDATA[ 
+    select 
+   crse_id, crse.pd_id, crse_name, crse_info, crse_num
+   , qstn_count0, qstn_count1, qstn_count2, 
+    qstn_count3, qstn_count4, qstn_test0, qstn_test1, qstn_test2, qstn_test3, qstn_test4 , qstn_flag
+   , pd.pd_name
+    from study_course crse left  join study_period pd  on crse.pd_id = pd.pd_id
+    where crse_num <= #{crseNum}   and  crse_num >= #{start}
+   	order by crse_num  
+   	]]>
+  </select>
+  
   <select id="query" resultMap="BaseResultMap"  >
     select 
    crse_id, crse.pd_id, crse_name, crse_info, crse_num

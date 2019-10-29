@@ -2,6 +2,8 @@ package com.yuzo.question.mapper;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+
 import com.yuzo.question.entity.StudyCourse;
 
 public interface StudyCourseMapper {
@@ -20,4 +22,6 @@ public interface StudyCourseMapper {
 	List<StudyCourse> query();
 
 	List<StudyCourse> queryNextByNum(String crseNum);
+
+	List<StudyCourse> queryPrevByNum(@Param("crseNum")String crseNum, @Param("start")String start);
 }

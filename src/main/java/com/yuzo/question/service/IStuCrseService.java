@@ -57,4 +57,6 @@ public interface IStuCrseService {
 
 	List<StuLevel> querySlsByMcId(String mcId);
 
+	SysUser queryUserById(String userId);
+
 }

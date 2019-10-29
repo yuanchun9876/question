@@ -63,7 +63,7 @@
         				<th>姓名</th>     				
         				<th>课程</th>
         				<th>进度</th>
-						<th>操作</th>
+						
         			</tr> 
         			<tbody th:remove="all-but-first" >       			  	
         			<tr  th:each="row,i:${list}" >
@@ -71,11 +71,9 @@
 	       			
 	       				<td th:text="${row.nickName}" >JavaSE</td>
 	       				<td th:text="${row.crseName}">1</td>
-	       				<td th:text="${row.crseNum}">1</td>
+	       				<td th:utext="${row.levBtnList}">1</td>
 
-						<td  >
-							<button type="button"    class="btn btn-danger btn-sm"  th:onclick="showCrseLevelPage([[${row.userCrseLevel}]],[[${row.userId}]])"     onclick="javascript:editpage('1')"    >查看成绩</button>
-						</td>
+						
        				</tr>	       			  		
         		</tbody>
        

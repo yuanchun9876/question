@@ -83,6 +83,8 @@ public class StuCrseServiceImpl implements IStuCrseService {
 	@Autowired
 	private StuLevelMapper slMapper;
 	
+
+	
 	
 	@Override
 	public List<StudyCourse> queryStudyCourse() {
@@ -645,7 +647,9 @@ public class StuCrseServiceImpl implements IStuCrseService {
 		List<StuLevel> slList = new ArrayList<>();
 		List<SysUser> list = userMapper.queryByMcId(mcId);
 		
+		
 		for (SysUser sysUser : list) {
+			String lbList = "";
 			StuLevel sl = slMapper.selectByPrimaryKey(sysUser.getUserId());
 			if(sl == null ) {
 				
@@ -654,10 +658,45 @@ public class StuCrseServiceImpl implements IStuCrseService {
 				sl.setUserCrseLevel("");
 				sl.setUserId(sysUser.getUserId());
 				sl.setUserName(sysUser.getUserName());
+				sl.setLevBtnList(lbList);
 			}
+			
+			List<StudyCourse> crseList = crseMapper.queryPrevByNum(sl.getCrseNum(), "211");
+			for (int i = 0; i < crseList.size(); i++) {
+				StudyCourse crse = crseList.get(i);
+				System.out.println(crse.getCrseNum());
+				if((i+1)%5==1) {
+					lbList += "&nbsp;<button type=\"button\" class=\"btn btn-primary btn-xs\"   onclick=\"showCrseLevelPage('" + crse.getCrseId() + "','" + sysUser.getUserId() + "')\"   >" + crse.getCrseNum() + "</button>";
+				}
+				if((i+1)%5==2) {
+					lbList += "&nbsp;<button type=\"button\" class=\"btn btn-info btn-xs\"   onclick=\"showCrseLevelPage('" + crse.getCrseId() + "','" + sysUser.getUserId() + "')\"   >" + crse.getCrseNum() + "</button>";
+				}
+				if((i+1)%5==3) {
+					lbList += "&nbsp;<button type=\"button\" class=\"btn  btn-xs\"   onclick=\"showCrseLevelPage('" + crse.getCrseId() + "','" + sysUser.getUserId() + "')\"   >" + crse.getCrseNum() + "</button>";
+				}
+				if((i+1)%5==4) {
+					lbList += "&nbsp;<button type=\"button\" class=\"btn btn-warning btn-xs\"   onclick=\"showCrseLevelPage('" + crse.getCrseId() + "','" + sysUser.getUserId() + "')\"   >" + crse.getCrseNum() + "</button>";
+				}
+				
+				if((i+1)%5==0) {
+					lbList += "&nbsp;<button type=\"button\" class=\"btn btn-danger btn-xs\"   onclick=\"showCrseLevelPage('" + crse.getCrseId() + "','" + sysUser.getUserId() + "')\"   >" + crse.getCrseNum() + "</button><br/>";
+				}
+			
+			}
+			sl.setLevBtnList(lbList);
 			slList.add(sl);
+			
 		}
 		
 		return slList;
+	}
+
+
+
+
+	@Override
+	public SysUser queryUserById(String userId) {
+		// TODO Auto-generated method stub
+		return userMapper.selectByPrimaryKey(userId);
 	}
 }

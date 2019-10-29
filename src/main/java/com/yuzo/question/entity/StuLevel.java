@@ -15,14 +15,16 @@ public class StuLevel {
     private String crseName;
     
     
-
+    private String levBtnList;
+    
 
 
 
 	@Override
 	public String toString() {
 		return "StuLevel [userId=" + userId + ", userCrseLevel=" + userCrseLevel + ", userName=" + userName
-				+ ", nickName=" + nickName + ", crseNum=" + crseNum + ", crseName=" + crseName + "]";
+				+ ", nickName=" + nickName + ", crseNum=" + crseNum + ", crseName=" + crseName + ", levBtnList="
+				+ levBtnList + "]";
 	}
 
 	public String getUserId() {
@@ -71,6 +73,14 @@ public class StuLevel {
 
 	public void setCrseName(String crseName) {
 		this.crseName = crseName;
+	}
+
+	public String getLevBtnList() {
+		return levBtnList;
+	}
+
+	public void setLevBtnList(String levBtnList) {
+		this.levBtnList = levBtnList;
 	}
     
 	
