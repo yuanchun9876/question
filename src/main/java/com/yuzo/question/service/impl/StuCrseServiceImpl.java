@@ -274,9 +274,15 @@ public class StuCrseServiceImpl implements IStuCrseService {
 			anscontent = anscontent.replaceAll("&lt;", "<");
 			anscontent = anscontent.replaceAll("&gt;", ">");
 			anscontent = anscontent.replaceAll("&amp;", "&");
-//			System.out.println(answer.trim().toLowerCase());
-			System.err.println("anscontent:" + anscontent);
-			System.err.println(answer.trim().toLowerCase());
+			
+			anscontent = anscontent.replaceAll("&nbsp;", " ");
+			
+			anscontent = anscontent.replaceAll(" ", "");
+			answer = answer.replaceAll(" ", "");
+			
+//			System.err.println("anscontent:" + anscontent.trim().toLowerCase());
+//			System.err.println("answer:" + answer.trim().toLowerCase());
+			
 			if(anscontent.equals(answer.trim().toLowerCase())) {
 				
 				total = 1;		
