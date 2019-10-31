@@ -8,18 +8,19 @@
     <result column="qstn_type_id" property="qstnTypeId" jdbcType="VARCHAR" />
     <result column="subj_sctn_id" property="subjSctnId" jdbcType="VARCHAR" />
     <result column="crse_qstn_flag" property="crseQstnFlag" jdbcType="VARCHAR" />
+    <result column="crse_qstn_type" property="crseQstnType" jdbcType="VARCHAR" />
     
     <result column="QSTN_CODE" property="qstnCode" jdbcType="VARCHAR" />
     <result column="QSTN_TYPE_NAME" property="qstnTypeName" jdbcType="VARCHAR" />
     <result column="SUBJ_SCTN_TITLE" property="subjSctnTitle" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
-    crse_qstn_id, crse_id, qstn_id, qstn_type_id, subj_sctn_id, crse_qstn_flag
+    crse_qstn_id, crse_id, qstn_id, qstn_type_id, subj_sctn_id, crse_qstn_flag , crse_qstn_type
   </sql>
   
   <select id="queryScqByCrseId" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
-    crse_qstn_id, crse_id, scq.qstn_id, scq.qstn_type_id, scq.subj_sctn_id, crse_qstn_flag
+    crse_qstn_id, crse_id, scq.qstn_id, scq.qstn_type_id, scq.subj_sctn_id, crse_qstn_flag , crse_qstn_type
     , qstn.QSTN_CODE , qt.QSTN_TYPE_NAME , sctn.SUBJ_SCTN_TITLE
     from study_course_question  scq  
     	left join question qstn  on qstn.QSTN_ID = scq.qstn_id
@@ -66,9 +67,9 @@
   
   <insert id="insert" parameterType="com.yuzo.question.entity.StudyCourseQuestion" >
     insert into study_course_question (crse_qstn_id, crse_id, qstn_id, 
-      qstn_type_id, subj_sctn_id, crse_qstn_flag)
+      qstn_type_id, subj_sctn_id, crse_qstn_flag, crse_qstn_type )
     values (#{crseQstnId,jdbcType=VARCHAR}, #{crseId,jdbcType=VARCHAR}, #{qstnId,jdbcType=VARCHAR}, 
-      #{qstnTypeId,jdbcType=VARCHAR}, #{subjSctnId,jdbcType=VARCHAR}, #{crseQstnFlag,jdbcType=VARCHAR})
+      #{qstnTypeId,jdbcType=VARCHAR}, #{subjSctnId,jdbcType=VARCHAR}, #{crseQstnFlag,jdbcType=VARCHAR} , #{crseQstnType,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.yuzo.question.entity.StudyCourseQuestion" >
     insert into study_course_question
@@ -91,6 +92,9 @@
       <if test="crseQstnFlag != null" >
         crse_qstn_flag,
       </if>
+      <if test="crseQstnType != null" >
+        crse_qstn_type,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="crseQstnId != null" >
@@ -109,7 +113,10 @@
         #{subjSctnId,jdbcType=VARCHAR},
       </if>
        <if test="crseQstnFlag != null" >
-       #{crseQstnFlag,jdbcType=VARCHAR}
+       #{crseQstnFlag,jdbcType=VARCHAR},
+      </if>
+       <if test="crseQstnType != null" >
+        #{crseQstnType,jdbcType=VARCHAR}
       </if>
     </trim>
   </insert>
@@ -129,7 +136,10 @@
         subj_sctn_id = #{subjSctnId,jdbcType=VARCHAR},
       </if>
         <if test="crseQstnFlag != null" >
-        crse_qstn_flag = #{crseQstnFlag,jdbcType=VARCHAR}
+        crse_qstn_flag = #{crseQstnFlag,jdbcType=VARCHAR},
+      </if>
+        <if test="crseQstnType != null" >
+        crse_qstn_type = #{crseQstnType,jdbcType=VARCHAR}
       </if>
     </set>
     where crse_qstn_id = #{crseQstnId,jdbcType=VARCHAR}
@@ -140,7 +150,9 @@
       qstn_id = #{qstnId,jdbcType=VARCHAR},
       qstn_type_id = #{qstnTypeId,jdbcType=VARCHAR},
        crse_qstn_flag = #{crseQstnFlag,jdbcType=VARCHAR},
-      subj_sctn_id = #{subjSctnId,jdbcType=VARCHAR}
+      subj_sctn_id = #{subjSctnId,jdbcType=VARCHAR},
+        crse_qstn_flag = #{crseQstnFlag,jdbcType=VARCHAR},
+        crse_qstn_type = #{crseQstnType,jdbcType=VARCHAR}
     where crse_qstn_id = #{crseQstnId,jdbcType=VARCHAR}
   </update>
 </mapper>

@@ -17,6 +17,10 @@ public class StudyCourseQuestion {
     private String subjSctnTitle;
     
     private String crseQstnFlag;
+    
+    private String crseQstnType; // 0 当日强化  1 明日预习  2 相关复习
+    
+    
 
     public String getCrseQstnId() {
         return crseQstnId;
@@ -88,6 +92,14 @@ public class StudyCourseQuestion {
 
 	public void setCrseQstnFlag(String crseQstnFlag) {
 		this.crseQstnFlag = crseQstnFlag;
+	}
+
+	public String getCrseQstnType() {
+		return crseQstnType;
+	}
+
+	public void setCrseQstnType(String crseQstnType) {
+		this.crseQstnType = crseQstnType;
 	}
     
     
