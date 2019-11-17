@@ -13,4 +13,12 @@ public interface ILoginService {
 
 	List<SysMenu> queryChdMenu(String userId);
 
+	int queryUserPoints(SysUser uu);
+
+	String queryUserCrse(SysUser uu);
+
+	int queryUserFeedback(SysUser uu);
+
+	int userTp(SysUser uu);
+
 }

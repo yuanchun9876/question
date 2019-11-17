@@ -57,24 +57,23 @@
         				<th>序号</th>
         				<th>内容</th>
         				<th>试题编号</th>     				
-        				<th>提出人</th>     				
+        						
         				<th>状态</th>     				
         				<th>时间</th>     				
-						<th>操作</th>
+						
         			</tr>    
         			<tbody th:remove="all-but-first" >       			  	
         			<tr  th:each="row,i:${list}" >
 	        			<td th:text="${i.count }">1</td>
 	        		
 	       				<td th:text="${row.qtfbInfo}">1</td>
-	       				<td th:text="${row.qstnCode}">1</td>
-	       				<td th:text="${row.nickName}">1</td>
+	       				<td >
+<button type="button" class="btn btn-danger btn-sm"  th:onclick="testpage([[${row.qstnId}]],[[${row.qstnTypeId}]])"   th:text="${row.qstnCode}" >测试</button>
+						</td>
+	       			
 	       				<td th:text="${row.qtfbState}">1</td>
 	       				<td  th:text="${#dates.format(row.qtfbTime, 'yyyy-MM-dd')}" ></td>
-						<td>
-							<button type="button" th:if="${row.qtfbState ne 'O'}" class="btn btn-primary btn-sm"  th:onclick="editpage([[${row.qtfbId}]])"     onclick="javascript:editpage('1')"    >确认</button>
-						<button type="button" class="btn btn-danger btn-sm"  th:onclick="testpage([[${row.qstnId}]],[[${row.qstnTypeId}]])"   >测试</button>
-						</td>
+						
        				</tr>	       			  		
         		</tbody>
         		
@@ -128,7 +127,6 @@
 			   
 			});
 	}
-
 
 </script>
 

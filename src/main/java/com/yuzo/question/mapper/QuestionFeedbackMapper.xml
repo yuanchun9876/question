@@ -10,20 +10,33 @@
     <result column="qtfb_state" property="qtfbState" jdbcType="VARCHAR" />
     <result column="QSTN_CODE" property="qstnCode" jdbcType="VARCHAR" />
     <result column="nick_name" property="nickName" jdbcType="VARCHAR" />
+    <result column="QSTN_TYPE_ID" property="qstnTypeId" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
     qtfb_id, qstn_id, user_id, qtfb_info, qtfb_time, qtfb_state
   </sql>
-  <select id="queryAll" resultMap="BaseResultMap" parameterType="java.lang.String" >
+  <select id="queryAll" resultMap="BaseResultMap"  >
     select 
      qtfb_id, fb.qstn_id, fb.user_id, qtfb_info, qtfb_time, qtfb_state
-     ,qstn.QSTN_CODE
+     ,qstn.QSTN_CODE, qstn.QSTN_TYPE_ID
      ,user.nick_name
     from question_feedback fb 
     	left join question qstn on fb.qstn_id = qstn.qstn_id
     	left join sys_user user on fb.user_id = user.user_id
  	order by qtfb_time desc
   </select>
+  
+  <select id="queryByUserId" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+     qtfb_id, fb.qstn_id, fb.user_id, qtfb_info, qtfb_time, qtfb_state
+     ,qstn.QSTN_CODE, qstn.QSTN_TYPE_ID
+     ,user.nick_name
+    from question_feedback fb 
+    	left join question qstn on fb.qstn_id = qstn.qstn_id
+    	left join sys_user user on fb.user_id = user.user_id
+ 	where fb.user_id = #{userId}
+  </select>
+  
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />

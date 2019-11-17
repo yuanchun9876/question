@@ -312,4 +312,14 @@ public class QuestionController {
 		return "redirect:queryQtfb";
 	}
 	
+	//------------------------------------------------
+	
+	@RequestMapping("/queryQtfbByUserId")
+	public String queryQtfbByUserId( HttpServletRequest request, Model model) {	
+		SysUser user = (SysUser) request.getSession().getAttribute("user");
+		List<QuestionFeedback> list = qstnService.queryQtfbByUserId(user.getUserId());
+		model.addAttribute("list", list );
+		return "feedback/list_fdbk_user";
+	}
+	
 }

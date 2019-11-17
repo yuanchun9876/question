@@ -19,7 +19,7 @@ public class QuestionFeedback {
     private String qstnCode;
     private String nickName;
     
-    
+    private String qstnTypeId;
     
 
 
@@ -94,4 +94,14 @@ public class QuestionFeedback {
     public void setQtfbState(String qtfbState) {
         this.qtfbState = qtfbState == null ? null : qtfbState.trim();
     }
+
+	public String getQstnTypeId() {
+		return qstnTypeId;
+	}
+
+	public void setQstnTypeId(String qstnTypeId) {
+		this.qstnTypeId = qstnTypeId;
+	}
+    
+    
 }

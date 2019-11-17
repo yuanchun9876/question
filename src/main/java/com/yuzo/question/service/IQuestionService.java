@@ -67,4 +67,6 @@ public interface IQuestionService {
 
 	int setState(String id);
 
+	List<QuestionFeedback> queryQtfbByUserId(String userId);
+
 }

@@ -62,8 +62,26 @@ public class LoginController {
 				System.out.println("cmenuList:" + cmenuList);
 				model.addAttribute("cmenuList", cmenuList);
 				System.err.println(userList.get(0).getNickName() + ":login");
+				SysUser uu = userList.get(0);
+				session.setAttribute("user", uu);
+				// 查询用户的相关信息 存储到session里
+				// userPoints
+				int userPoints = loginService.queryUserPoints(uu);
+				session.setAttribute("userPoints", userPoints);
 				
-				session.setAttribute("user", userList.get(0));
+				// userCrse
+				String userCrse = loginService.queryUserCrse(uu);
+				session.setAttribute("userCrse", userCrse);
+				
+				// userFeedback
+				int userFeedback = loginService.queryUserFeedback(uu);
+				session.setAttribute("userFeedback", userFeedback);
+				
+				// userTp
+				int userTp = loginService.userTp(uu);
+				session.setAttribute("userTp", userTp);
+				
+				
 				Cookie cookieUsername = null;
 				Cookie cookiePassword = null;
 				Cookie cookieRememberMe = null;

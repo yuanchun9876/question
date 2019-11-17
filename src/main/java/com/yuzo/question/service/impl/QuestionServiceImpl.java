@@ -368,4 +368,10 @@ public class QuestionServiceImpl implements IQuestionService{
 		
 		return qstnMapper.updateByPrimaryKeySelective(qstn);
 	}
+
+	@Override
+	public List<QuestionFeedback> queryQtfbByUserId(String userId) {
+		// TODO Auto-generated method stub
+		return fdMapper.queryByUserId(userId);
+	}
 }

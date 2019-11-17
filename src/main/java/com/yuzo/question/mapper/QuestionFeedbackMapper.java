@@ -18,4 +18,6 @@ public interface QuestionFeedbackMapper {
     int updateByPrimaryKey(QuestionFeedback record);
 
 	List<QuestionFeedback> queryAll();
+	
+	List<QuestionFeedback> queryByUserId(String userId);
 }
