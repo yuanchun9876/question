@@ -109,7 +109,7 @@ public class UserUpdatePointsController {
 		
 		model.addAttribute("uupList", uupList);	
 		
-		return "updatepoints/list_uup_uup";
+		return "updatepoints/list_uup_uup_user";
 	}
 	
 	
