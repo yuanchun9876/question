@@ -27,6 +27,7 @@
     		left join work_type wt on wl.wt_id = wt.wt_id  
     		left join user_class_history uch on uup.user_id = uch.user_id
     where uup.user_id = #{userId}  and uup.wl_id = #{wlId} and uch.mc_id = #{mcId}  and uup_time >= uc_in_date
+    order by  uup_time desc
   </select>
   
   <select id="queryByUser" resultMap="BaseResultMap" parameterType="java.lang.String" >
@@ -40,7 +41,7 @@
     		
     		
     WHERE uup.user_id = #{value}  AND uup_time > hh.uc_in_date
-    
+    order by  uup_time desc
   </select>
   
   
