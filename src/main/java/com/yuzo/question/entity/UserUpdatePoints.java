@@ -23,10 +23,30 @@ public class UserUpdatePoints {
     
     private String wtCode;
     
+    private String relationUupId;
+    
+    
+    
     
     
 
-    public String getUuptInfo() {
+    @Override
+	public String toString() {
+		return "UserUpdatePoints [uupId=" + uupId + ", uuptId=" + uuptId + ", userId=" + userId + ", uupTime=" + uupTime
+				+ ", uupInfo=" + uupInfo + ", uuptInfo=" + uuptInfo + ", uuptPrimaryPoint=" + uuptPrimaryPoint
+				+ ", wlId=" + wlId + ", wlTitle=" + wlTitle + ", wtCode=" + wtCode + ", relationUupId=" + relationUupId
+				+ "]";
+	}
+
+	public String getRelationUupId() {
+		return relationUupId;
+	}
+
+	public void setRelationUupId(String relationUupId) {
+		this.relationUupId = relationUupId;
+	}
+
+	public String getUuptInfo() {
 		return uuptInfo;
 	}
 

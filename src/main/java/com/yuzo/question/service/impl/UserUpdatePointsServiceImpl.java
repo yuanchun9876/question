@@ -2,6 +2,7 @@ package com.yuzo.question.service.impl;
 
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -54,11 +55,13 @@ public class UserUpdatePointsServiceImpl implements IUserUpdatePointsService {
 		
 		UserUpdatePoints olduup = uupMapper.selectByPrimaryKey(uup.getUupId());
 		String olduuptId = olduup.getUuptId();
+		// 查询 修改前的类型
 		UserUpdatePointsType olduupt = uuptMapper.selectByPrimaryKey(olduuptId);
 		
 		int count = uupMapper.updateByPrimaryKeySelective(uup);
 		
 		if(count > 0) {
+			
 			UserUpdatePointsType uupt = uuptMapper.selectByPrimaryKey(uup.getUuptId());
 			SysUser user = userMapper.selectByPrimaryKey(uup.getUserId());
 			UserClassHistory uch = uchMapper.queryByUserId(uup.getUserId());
@@ -67,27 +70,51 @@ public class UserUpdatePointsServiceImpl implements IUserUpdatePointsService {
 			uch.setUcPoints(points - olduupt.getUuptPrimaryPoint() + uupt.getUuptPrimaryPoint());
 			uchMapper.updateByPrimaryKeySelective(uch);
 			
-			if ("1".equals(uupt.getUuptType())) {
+			// 如果 原来是团队的
+			if("1".equals(olduupt.getUuptType())) {
 				List<SysUser> tmList = userMapper.queryTmByUser(uup.getUserId());
 				for (SysUser sysUser : tmList) {
 					if(!user.getUserId().equals(sysUser.getUserId())) {
-						UserClassHistory uch1 = uchMapper.queryByUserId(sysUser.getUserId());
-						Integer points1 = uch1.getUcPoints();
-						uch1.setUcPoints(points1 - olduupt.getUuptTeamPoint() + uupt.getUuptTeamPoint());
-						uchMapper.updateByPrimaryKeySelective(uch1);
-					}
-				}
-			} else if("1".equals(olduupt.getUuptType())) {
-				List<SysUser> tmList = userMapper.queryTmByUser(uup.getUserId());
-				for (SysUser sysUser : tmList) {
-					if(!user.getUserId().equals(sysUser.getUserId())) {
+						// 恢复 团队其它成员扣的分
 						UserClassHistory uch1 = uchMapper.queryByUserId(sysUser.getUserId());
 						Integer points1 = uch1.getUcPoints();
 						uch1.setUcPoints(points1 - olduupt.getUuptTeamPoint());
 						uchMapper.updateByPrimaryKeySelective(uch1);
+						
+						// 删除原来的相关扣分记录
+						uupMapper.delByRela(uup.getUupId());
 					}
 				}
 			}
+			
+			
+			// 如果 是 团队
+			if ("1".equals(uupt.getUuptType())) {
+				List<SysUser> tmList = userMapper.queryTmByUser(uup.getUserId());
+				for (SysUser sysUser : tmList) {
+					if(!user.getUserId().equals(sysUser.getUserId())) {
+						// 团队其它队员扣分
+						UserClassHistory uch1 = uchMapper.queryByUserId(sysUser.getUserId());
+						Integer points1 = uch1.getUcPoints();
+						uch1.setUcPoints(points1 - olduupt.getUuptTeamPoint() + uupt.getUuptTeamPoint());
+						uchMapper.updateByPrimaryKeySelective(uch1);
+						
+						// 并 增加记录
+						UserUpdatePoints uupUser = new UserUpdatePoints();
+						uupUser.setUupId(UUID.randomUUID().toString());
+						uupUser.setUserId(sysUser.getUserId());
+						uupUser.setUupInfo("关联人:" + user.getNickName() );
+						uupUser.setUuptId(uup.getUuptId());
+						uupUser.setUupTime(new Date());
+						uupUser.setWlId(uup.getWlId());
+						uupUser.setRelationUupId(uup.getUupId());
+						uupMapper.insertSelective(uupUser);
+						
+					}
+				}
+			} 
+			
+
 		}
 		return count;
 	}
@@ -97,6 +124,40 @@ public class UserUpdatePointsServiceImpl implements IUserUpdatePointsService {
 		// TODO Auto-generated method stub
 		int count = 0;
 		for (int i = 0; i < ids.length; i++) {
+			UserUpdatePoints uup = uupMapper.selectByPrimaryKey(ids[i]);
+			System.out.println("uup:" + uup);
+			if(uup.getRelationUupId()!=null && !"".equals(uup.getRelationUupId())) {
+				continue;
+			}
+			String uuptId = uup.getUuptId();
+			// 查询 修改前的类型
+			UserUpdatePointsType uupt = uuptMapper.selectByPrimaryKey(uuptId);
+			
+		
+			SysUser user = userMapper.selectByPrimaryKey(uup.getUserId());
+			UserClassHistory uch = uchMapper.queryByUserId(uup.getUserId());
+			Integer points = uch.getUcPoints();
+			
+			uch.setUcPoints(points - uupt.getUuptPrimaryPoint());
+			uchMapper.updateByPrimaryKeySelective(uch);
+			
+			// 如果 原来是团队的
+			if("1".equals(uupt.getUuptType())) {
+				List<SysUser> tmList = userMapper.queryTmByUser(uup.getUserId());
+				for (SysUser sysUser : tmList) {
+					if(!user.getUserId().equals(sysUser.getUserId())) {
+						// 恢复 团队其它成员扣的分
+						UserClassHistory uch1 = uchMapper.queryByUserId(sysUser.getUserId());
+						Integer points1 = uch1.getUcPoints();
+						uch1.setUcPoints(points1 - uupt.getUuptTeamPoint());
+						uchMapper.updateByPrimaryKeySelective(uch1);
+						
+						// 删除原来的相关扣分记录
+						uupMapper.delByRela(uup.getUupId());
+					}
+				}
+			}
+			
 			count += uupMapper.deleteByPrimaryKey(ids[i]);
 		}	
 		return count;
@@ -141,6 +202,16 @@ public class UserUpdatePointsServiceImpl implements IUserUpdatePointsService {
 						Integer points1 = uch1.getUcPoints();
 						uch1.setUcPoints(points1 + uupt.getUuptTeamPoint());
 						uchMapper.updateByPrimaryKeySelective(uch1);
+						
+						UserUpdatePoints uupUser = new UserUpdatePoints();
+						uupUser.setUupId(UUID.randomUUID().toString());
+						uupUser.setUserId(sysUser.getUserId());
+						uupUser.setUupInfo("关联人:" + user.getNickName() );
+						uupUser.setUuptId(uup.getUuptId());
+						uupUser.setUupTime(new Date());
+						uupUser.setWlId(uup.getWlId());
+						uupUser.setRelationUupId(uup.getUupId());
+						uupMapper.insertSelective(uupUser);
 					}
 				}
 			} 

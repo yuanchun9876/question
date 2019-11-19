@@ -72,7 +72,7 @@
         			<tbody th:remove="all-but-first" >       			  	
         			<tr  th:each="row,i:${uupList}" >
 	        			<td th:text="${i.count }">1</td>
-	        			<td ><input type="checkbox" name="ids"  value="1"    th:value="${row.uuptId}"  ></td>
+	        			<td ><input type="checkbox" name="ids"  value="1"    th:value="${row.uupId}"  ></td>
 	       				<td th:text="${row.uuptInfo}" >JavaSE</td>
 	       				<td th:text="${#dates.format(row.uupTime, 'yyyy-MM-dd')}" >1</td>
 	       				<td th:text="${row.wlTitle}">JAVASE</td>

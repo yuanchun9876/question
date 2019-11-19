@@ -1,10 +1,9 @@
 package com.yuzo.question.controller;
 
-import java.io.IOException;
 import java.util.List;
 import java.util.UUID;
 
-import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.BeanUtils;
@@ -17,7 +16,6 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.yuzo.question.entity.SubjectCourse;
 import com.yuzo.question.entity.SysUser;
 import com.yuzo.question.entity.UserMyclass;
 import com.yuzo.question.entity.UserReplyList;
@@ -26,10 +24,8 @@ import com.yuzo.question.entity.UserUpdatePoints;
 import com.yuzo.question.entity.UserUpdatePointsType;
 import com.yuzo.question.entity.WorkList;
 import com.yuzo.question.page.SysUserPage;
-import com.yuzo.question.service.ISubjectCourseService;
 import com.yuzo.question.service.ISysUserService;
 import com.yuzo.question.service.IUserUpdatePointsService;
-import com.yuzo.question.service.IUserUpdateTypeService;
 
 @Controller
 @RequestMapping("/updatepoints")
@@ -95,6 +91,21 @@ public class UserUpdatePointsController {
 		model.addAttribute("user", user);	
 		
 		List<UserUpdatePoints> uupList = userUpdatePointsService.queryUupByUserId(userId);
+		
+		model.addAttribute("uupList", uupList);	
+		
+		return "updatepoints/list_uup_uup";
+	}
+	
+	
+	@RequestMapping("/uuppageByUser")
+	public String uuppageByUser(String userId, Model model, HttpServletRequest request) {
+		
+		
+		SysUser user = (SysUser)request.getSession().getAttribute("user");
+		model.addAttribute("user", user);	
+		
+		List<UserUpdatePoints> uupList = userUpdatePointsService.queryUupByUserId(user.getUserId());
 		
 		model.addAttribute("uupList", uupList);	
 		

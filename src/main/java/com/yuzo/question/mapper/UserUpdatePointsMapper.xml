@@ -11,10 +11,11 @@
     <result column="wl_id" property="wlId" jdbcType="VARCHAR" />
     <result column="wl_title" property="wlTitle" jdbcType="VARCHAR" />
     <result column="wt_code" property="wtCode" jdbcType="VARCHAR" />
+    <result column="relation_uup_id" property="relationUupId" jdbcType="VARCHAR" />
      <result column="uupt_primary_point" property="uuptPrimaryPoint" jdbcType="INTEGER" />
   </resultMap>
   <sql id="Base_Column_List" >
-    uup_id, uupt_id, user_id, uup_time, uup_info, wl_id
+    uup_id, uupt_id, user_id, uup_time, uup_info, wl_id,relation_uup_id
   </sql>
   
   <select id="queryByUserAndWl" resultMap="BaseResultMap"  >
@@ -55,6 +56,12 @@
     delete from user_update_points
     where uup_id = #{uupId,jdbcType=VARCHAR}
   </delete>
+  
+  <delete id="delByRela" parameterType="java.lang.String" >
+    delete from user_update_points
+    where relation_uup_id = #{uupId,jdbcType=VARCHAR}
+  </delete>
+  
   <insert id="insert" parameterType="com.yuzo.question.entity.UserUpdatePoints" >
     insert into user_update_points (uup_id, uupt_id, user_id, 
       uup_time, uup_info, wl_id)
@@ -82,6 +89,9 @@
       <if test="wlId != null  and wlId != '' " >
         wl_id,
       </if>
+      <if test="relationUupId != null  and relationUupId != '' " >
+        relation_uup_id,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="uupId != null" >
@@ -101,6 +111,9 @@
       </if>
       <if test="wlId != null  and wlId != '' " >
        #{wlId,jdbcType=VARCHAR},
+      </if>
+        <if test="relationUupId != null  and relationUupId != '' " >
+       #{relationUupId,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>

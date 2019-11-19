@@ -14,8 +14,18 @@ public class UserClassHistory {
     private Date ucInDate;
 
     private String ucState;
+    
+    
+    
+    
 
-    public String getUcId() {
+    @Override
+	public String toString() {
+		return "UserClassHistory [ucId=" + ucId + ", userId=" + userId + ", mcId=" + mcId + ", ucPoints=" + ucPoints
+				+ ", ucInDate=" + ucInDate + ", ucState=" + ucState + "]";
+	}
+
+	public String getUcId() {
         return ucId;
     }
 

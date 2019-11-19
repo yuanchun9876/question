@@ -9,10 +9,13 @@ import com.yuzo.question.entity.QuestionFeedback;
 import com.yuzo.question.entity.StuLevel;
 import com.yuzo.question.entity.SysMenu;
 import com.yuzo.question.entity.SysUser;
+import com.yuzo.question.entity.UserClassHistory;
 import com.yuzo.question.mapper.QuestionFeedbackMapper;
 import com.yuzo.question.mapper.StuLevelMapper;
 import com.yuzo.question.mapper.SysMenuMapper;
 import com.yuzo.question.mapper.SysUserMapper;
+import com.yuzo.question.mapper.UserClassHistoryMapper;
+import com.yuzo.question.mapper.UserMyclassMapper;
 import com.yuzo.question.service.ILoginService;
 
 @Service
@@ -26,6 +29,9 @@ public class LoginServiceImpl implements ILoginService {
 	
 	@Autowired
 	private StuLevelMapper slMapper;
+	
+	@Autowired
+	private UserClassHistoryMapper uchMapper;
 	
 	@Autowired
 	private QuestionFeedbackMapper questionFeedbackMapper;
@@ -57,8 +63,9 @@ public class LoginServiceImpl implements ILoginService {
 	@Override
 	public int queryUserPoints(SysUser uu) {
 		// TODO Auto-generated method stub
-		
-		return 0;
+		UserClassHistory uch = uchMapper.queryByUserId(uu.getUserId());
+		System.out.println(uch);
+		return uch.getUcPoints();
 	}
 
 	@Override
