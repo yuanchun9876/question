@@ -50,8 +50,7 @@
          <form name="infoForm" id="queryForm" method="post" >
         	<div class="box-header clearfix">
 				<div class="box-search btn-group">
-					<button class="btn btn-success"  type="button" name="queryInfo"  th:onclick="addPage([[${user.userId}]])" >添加</button>
-					<button class="btn btn-warning"  type="button" name="delBtn"  onclick="dels()" >删除</button>
+					
 					<button type="button" class="btn btn-default"  onclick="window.history.back()">返回</button>
 				</div>
         	</div>
@@ -61,7 +60,7 @@
         		<table class="table table-striped">
         			<tr>
         				<th>序号</th>
-        				<th>全选</th>
+        			
         				<th>调分类型</th>     				
         				<th>调分时间</th>
         				<th>关联作业</th>
@@ -72,7 +71,7 @@
         			<tbody th:remove="all-but-first" >       			  	
         			<tr  th:each="row,i:${uupList}" >
 	        			<td th:text="${i.count }">1</td>
-	        			<td ><input type="checkbox" name="ids"  value="1"    th:value="${row.uupId}"  ></td>
+	        			
 	       				<td th:text="${row.uuptInfo}" >JavaSE</td>
 	       				<td th:text="${#dates.format(row.uupTime, 'yyyy-MM-dd')}" >1</td>
 	       				<td th:text="${row.wlTitle}">JAVASE</td>
