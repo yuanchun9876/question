@@ -426,16 +426,15 @@ public class QuestionServiceImpl implements IQuestionService{
 		// 加分 
 		UserClassHistory uch = uchMapper.queryByUserId(qf.getUserId());
 		
-			Integer points = uch.getUcPoints();		
-			uch.setUcPoints(points - 1);
-			uchMapper.updateByPrimaryKeySelective(uch);
-			
-			UserUpdatePoints uupUser = uupMapper.queryByQfId(qtfbId);
+		Integer points = uch.getUcPoints();		
+		uch.setUcPoints(points - 1);
+		uchMapper.updateByPrimaryKeySelective(uch);
 		
+		UserUpdatePoints uupUser = uupMapper.queryByQfId(qtfbId);
+		if(uupUser!=null) {
 			uupMapper.deleteByPrimaryKey(uupUser.getUupId());
+		}
 		
-	
-				
 		return count;
 	}
 }

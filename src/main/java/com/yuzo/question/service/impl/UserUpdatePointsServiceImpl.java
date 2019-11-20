@@ -185,6 +185,12 @@ public class UserUpdatePointsServiceImpl implements IUserUpdatePointsService {
 	public int save(UserUpdatePoints uup) {
 		// TODO Auto-generated method stub
 		uup.setUupTime(new Date());
+		
+		if("4141803c-4be5-4233-81a3-e64c43f4785d".equals(uup.getUuptId())) {
+			// 这类是 试题意见
+		}
+		
+		
 		int count = uupMapper.insertSelective(uup);
 		if(count > 0) {
 			UserUpdatePointsType uupt = uuptMapper.selectByPrimaryKey(uup.getUuptId());
