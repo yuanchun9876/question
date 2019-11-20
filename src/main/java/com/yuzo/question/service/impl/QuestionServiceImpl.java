@@ -19,7 +19,11 @@ import com.yuzo.question.entity.QuestionType;
 import com.yuzo.question.entity.SubjSection;
 import com.yuzo.question.entity.SubjUnit;
 import com.yuzo.question.entity.SubjectCourse;
+import com.yuzo.question.entity.SysUser;
 import com.yuzo.question.entity.Topic;
+import com.yuzo.question.entity.UserClassHistory;
+import com.yuzo.question.entity.UserUpdatePoints;
+import com.yuzo.question.entity.UserUpdatePointsType;
 import com.yuzo.question.mapper.AnswerMapper;
 import com.yuzo.question.mapper.QstnFromTypeMapper;
 import com.yuzo.question.mapper.QuestionFeedbackMapper;
@@ -28,7 +32,11 @@ import com.yuzo.question.mapper.QuestionTypeMapper;
 import com.yuzo.question.mapper.SubjSectionMapper;
 import com.yuzo.question.mapper.SubjUnitMapper;
 import com.yuzo.question.mapper.SubjectCourseMapper;
+import com.yuzo.question.mapper.SysUserMapper;
 import com.yuzo.question.mapper.TopicMapper;
+import com.yuzo.question.mapper.UserClassHistoryMapper;
+import com.yuzo.question.mapper.UserUpdatePointsMapper;
+import com.yuzo.question.mapper.UserUpdatePointsTypeMapper;
 import com.yuzo.question.page.QuestionPage;
 import com.yuzo.question.page.SubjSectionPage;
 import com.yuzo.question.service.IQuestionService;
@@ -64,9 +72,20 @@ public class QuestionServiceImpl implements IQuestionService{
 	@Autowired
 	private AnswerMapper ansMapper;
 	
+	@Autowired
+	private UserUpdatePointsTypeMapper uuptMapper;
+	
+	@Autowired
+	private UserUpdatePointsMapper uupMapper;
 	
 	@Autowired
 	private TopicMapper topicMapper;
+	
+	@Autowired
+	private SysUserMapper userMapper;
+	
+	@Autowired
+	private UserClassHistoryMapper uchMapper;
 
 	@Override
 	public List<QstnFromType> queryQstnFrom() {
@@ -352,11 +371,32 @@ public class QuestionServiceImpl implements IQuestionService{
 	@Override
 	public int okfbPage(String qtfbId) {
 		// TODO Auto-generated method stub
-		QuestionFeedback qf = new QuestionFeedback();
+		QuestionFeedback qf = fdMapper.selectByPrimaryKey(qtfbId);
 		qf.setQtfbId(qtfbId);
 		qf.setQtfbState("O");
+		int count = fdMapper.updateByPrimaryKeySelective(qf);
+	
+		// 加分 
+		UserClassHistory uch = uchMapper.queryByUserId(qf.getUserId());
+		Integer points = uch.getUcPoints();		
+		uch.setUcPoints(points + 1);
+		uchMapper.updateByPrimaryKeySelective(uch);
 		
-		return fdMapper.updateByPrimaryKeySelective(qf);
+		// 加记录
+		Question qstn = qstnMapper.selectByPrimaryKey(qf.getQstnId());
+		
+		UserUpdatePoints uupUser = new UserUpdatePoints();
+		uupUser.setUupId(UUID.randomUUID().toString());
+		uupUser.setUserId(qf.getUserId());
+		uupUser.setUupInfo(qstn.getQstnCode());
+		uupUser.setUuptId("4141803c-4be5-4233-81a3-e64c43f4785d");
+		uupUser.setUupTime(new Date());
+		//uupUser.setWlId("");
+		uupUser.setRelationUupId(qtfbId);
+		uupMapper.insertSelective(uupUser);
+		
+		
+		return count;
 	}
 
 	@Override
@@ -373,5 +413,29 @@ public class QuestionServiceImpl implements IQuestionService{
 	public List<QuestionFeedback> queryQtfbByUserId(String userId) {
 		// TODO Auto-generated method stub
 		return fdMapper.queryByUserId(userId);
+	}
+
+	@Override
+	public int cancelfbPage(String qtfbId) {
+		// TODO Auto-generated method stub
+		QuestionFeedback qf = fdMapper.selectByPrimaryKey(qtfbId);
+		qf.setQtfbId(qtfbId);
+		qf.setQtfbState("A");
+		int count = fdMapper.updateByPrimaryKeySelective(qf);
+		// 取消加分 取消              加记录
+		// 加分 
+		UserClassHistory uch = uchMapper.queryByUserId(qf.getUserId());
+		
+			Integer points = uch.getUcPoints();		
+			uch.setUcPoints(points - 1);
+			uchMapper.updateByPrimaryKeySelective(uch);
+			
+			UserUpdatePoints uupUser = uupMapper.queryByQfId(qtfbId);
+		
+			uupMapper.deleteByPrimaryKey(uupUser.getUupId());
+		
+	
+				
+		return count;
 	}
 }

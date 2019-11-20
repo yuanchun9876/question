@@ -69,4 +69,6 @@ public interface IQuestionService {
 
 	List<QuestionFeedback> queryQtfbByUserId(String userId);
 
+	int cancelfbPage(String qtfbId);
+
 }

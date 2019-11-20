@@ -312,6 +312,12 @@ public class QuestionController {
 		return "redirect:queryQtfb";
 	}
 	
+	@RequestMapping("/cancelfbPage")
+	public String cancelfbPage(String qtfbId) {		
+		int count = qstnService.cancelfbPage(qtfbId);
+		return "redirect:queryQtfb";
+	}
+	
 	//------------------------------------------------
 	
 	@RequestMapping("/queryQtfbByUserId")

@@ -73,7 +73,8 @@
 	       				<td  th:text="${#dates.format(row.qtfbTime, 'yyyy-MM-dd')}" ></td>
 						<td>
 							<button type="button" th:if="${row.qtfbState ne 'O'}" class="btn btn-primary btn-sm"  th:onclick="editpage([[${row.qtfbId}]])"     onclick="javascript:editpage('1')"    >确认</button>
-						<button type="button" class="btn btn-danger btn-sm"  th:onclick="testpage([[${row.qstnId}]],[[${row.qstnTypeId}]])"   >测试</button>
+							<button type="button" th:if="${row.qtfbState eq 'O'}" class="btn btn-danger btn-sm"  th:onclick="cancelpage([[${row.qtfbId}]])"     onclick="javascript:editpage('1')"    >取消</button>
+						<button type="button" class="btn  btn-sm"  th:onclick="testpage([[${row.qstnId}]],[[${row.qstnTypeId}]])"   >测试</button>
 						</td>
        				</tr>	       			  		
         		</tbody>
@@ -95,6 +96,9 @@
 	
 <script type="text/javascript">
 
+	function cancelpage(id){
+		location.href = "/qstn/cancelfbPage?qtfbId=" + id; 
+	}
 
 
 	function editpage(id){

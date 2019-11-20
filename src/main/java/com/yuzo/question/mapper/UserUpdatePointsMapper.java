@@ -24,4 +24,6 @@ public interface UserUpdatePointsMapper {
 	UserUpdatePoints queryByUserAndWl(@Param("mcId")String mcId, @Param("userId")String userId, @Param("wlId")String wlId);
 
 	int delByRela(String uupId);
+
+	UserUpdatePoints queryByQfId(String qtfbId);
 }
